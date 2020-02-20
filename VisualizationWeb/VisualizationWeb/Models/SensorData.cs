@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace VisualizationWeb.Models
+{
+    public class SensorData
+    {
+        [Key]
+        public int SensorDataID { get; set; }
+        [Display(Name = "Echtzeit")]
+        public DateTime RealTime { get; set; }
+        [Display(Name = "Simulationszeit")]
+        public DateTime SimulationTime { get; set; }
+        public int SensorID { get; set; }
+        public double SValue { get; set; }
+
+        public virtual Sensor Sensor { get; set; }
+    }
+}
