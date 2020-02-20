@@ -1,0 +1,58 @@
+﻿@model VisualizationWeb.Models.SimData
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SimData</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SimType.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SimType.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SimTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SimTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Wind)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Wind)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sun)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sun)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Consumption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consumption)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SimDataID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

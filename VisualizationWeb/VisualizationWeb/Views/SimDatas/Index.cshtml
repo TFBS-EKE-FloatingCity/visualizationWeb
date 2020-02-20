@@ -1,0 +1,57 @@
+﻿@model IEnumerable<VisualizationWeb.Models.SimData>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SimType.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SimTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wind)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sun)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Consumption)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SimType.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SimTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wind)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sun)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Consumption)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SimDataID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SimDataID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SimDataID })
+        </td>
+    </tr>
+}
+
+</table>
