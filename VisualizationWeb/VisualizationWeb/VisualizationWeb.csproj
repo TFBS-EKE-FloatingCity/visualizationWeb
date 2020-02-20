@@ -177,6 +177,10 @@
     <Compile Include="Migrations\202002200758537_Create Database.Designer.cs">
       <DependentUpon>202002200758537_Create Database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002200913021_create table settings.cs" />
+    <Compile Include="Migrations\202002200913021_create table settings.Designer.cs">
+      <DependentUpon>202002200913021_create table settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -265,6 +269,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002200758537_Create Database.resx">
       <DependentUpon>202002200758537_Create Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002200913021_create table settings.resx">
+      <DependentUpon>202002200913021_create table settings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
