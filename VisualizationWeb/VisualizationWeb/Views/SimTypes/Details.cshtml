@@ -4,11 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Simulation type detail</h2>
 
 <div>
-    <h4>SimType</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -33,10 +31,11 @@
         <dd>
             @Html.DisplayFor(model => model.Notes)
         </dd>
-
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SimTypeID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))

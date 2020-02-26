@@ -11,13 +11,16 @@ namespace VisualizationWeb.Models
         [Key]
         public int SimDataID { get; set; }
         public int SimTypeID { get; set; }
-        [Display(Name = "Simulationszeit")]
-        public DateTime SimTime { get; set; }
+        [Display(Name = "Simulationtime")]
+        public TimeSpan SimTime { get; set; }
         [Range(0.0, 100.0)]
+        [Display(Name = "Maximum Wind")]
         public double Wind { get; set; }
         [Range(0.0, 100.0)]
+        [Display(Name = "Maximum Sun")]
         public double Sun { get; set; }
         [Range(0.0, 100.0)]
+        [Display(Name = "Consumption")]
         public double Consumption { get; set; }
 
         public virtual SimType SimType { get; set; }

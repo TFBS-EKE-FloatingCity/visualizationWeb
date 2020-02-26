@@ -178,13 +178,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UnitCalc.cs" />
-    <Compile Include="Migrations\202002200758537_Create Database.cs" />
-    <Compile Include="Migrations\202002200758537_Create Database.Designer.cs">
-      <DependentUpon>202002200758537_Create Database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002200913021_create table settings.cs" />
-    <Compile Include="Migrations\202002200913021_create table settings.Designer.cs">
-      <DependentUpon>202002200913021_create table settings.cs</DependentUpon>
+    <Compile Include="Migrations\202002261351087_create database.cs" />
+    <Compile Include="Migrations\202002261351087_create database.Designer.cs">
+      <DependentUpon>202002261351087_create database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -258,7 +254,7 @@
     <Content Include="Views\Shared\Partials\_NavigationLoginPartial.cshtml" />
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
- <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
     <Content Include="Views\Sensors\Details.cshtml" />
@@ -280,7 +276,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\General\" />
-<Folder Include="Models\ViewModel\" />
+    <Folder Include="Models\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -296,11 +292,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002200758537_Create Database.resx">
-      <DependentUpon>202002200758537_Create Database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002200913021_create table settings.resx">
-      <DependentUpon>202002200913021_create table settings.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002261351087_create database.resx">
+      <DependentUpon>202002261351087_create database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -3,7 +3,7 @@ namespace VisualizationWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateDatabase : DbMigration
+    public partial class createdatabase : DbMigration
     {
         public override void Up()
         {
@@ -59,12 +59,26 @@ namespace VisualizationWeb.Migrations
                 .PrimaryKey(t => t.SensorID);
             
             CreateTable(
+                "dbo.Settings",
+                c => new
+                    {
+                        SettingID = c.Int(nullable: false, identity: true),
+                        WindMax = c.Double(nullable: false),
+                        SunMax = c.Double(nullable: false),
+                        ConsumptionMax = c.Double(nullable: false),
+                        WindActive = c.Boolean(nullable: false),
+                        SunActive = c.Boolean(nullable: false),
+                        ConsumptionActive = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.SettingID);
+            
+            CreateTable(
                 "dbo.SimDatas",
                 c => new
                     {
                         SimDataID = c.Int(nullable: false, identity: true),
                         SimTypeID = c.Int(nullable: false),
-                        SimTime = c.DateTime(nullable: false),
+                        SimTime = c.Time(nullable: false, precision: 7),
                         Wind = c.Double(nullable: false),
                         Sun = c.Double(nullable: false),
                         Consumption = c.Double(nullable: false),
@@ -152,6 +166,7 @@ namespace VisualizationWeb.Migrations
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.SimTypes");
             DropTable("dbo.SimDatas");
+            DropTable("dbo.Settings");
             DropTable("dbo.Sensors");
             DropTable("dbo.SensorDatas");
             DropTable("dbo.AspNetUserRoles");

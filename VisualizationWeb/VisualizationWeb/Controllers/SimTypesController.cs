@@ -18,6 +18,10 @@ namespace VisualizationWeb.Controllers
         // GET: SimTypes
         public async Task<ActionResult> Index()
         {
+            var SimTypes = from s in db.SimTypes
+                           orderby s.SimDatas, s.SimFactor
+                           select s;
+
             return View(await db.SimTypes.ToListAsync());
         }
 
@@ -33,6 +37,7 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
+            
             return View(simType);
         }
 
