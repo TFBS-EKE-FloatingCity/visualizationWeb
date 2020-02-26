@@ -12,28 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SimType.Title)
+            @Html.DisplayNameFor(model => model.SimTime) in hours
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SimTime)
+            @Html.DisplayNameFor(model => model.Wind) in %
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Wind)
+            @Html.DisplayNameFor(model => model.Sun) in %
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sun)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Consumption)
+            @Html.DisplayNameFor(model => model.Consumption) in %
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SimType.Title)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.SimTime)
         </td>
