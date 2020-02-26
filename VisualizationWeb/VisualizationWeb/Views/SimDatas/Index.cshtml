@@ -41,9 +41,11 @@
             @Html.DisplayFor(modelItem => item.Consumption)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SimDataID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SimDataID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SimDataID })
+            <div class="actions-bar">
+                @Html.ActionLink(" ", "Edit", new { id = item.SimDataID }, new { @class = "glyphicon glyphicon-pencil" })
+                @Html.ActionLink(" ", "Details", new { id = item.SimDataID }, new { @class = "glyphicon glyphicon-eye-open" })
+                @Html.ActionLink(" ", "Delete", new { id = item.SimDataID }, new { @class = "glyphicon glyphicon-trash" })
+            </div>
         </td>
     </tr>
 }

@@ -35,9 +35,11 @@
             @Html.DisplayFor(modelItem => item.Notes)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SimTypeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SimTypeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SimTypeID })
+            <div class="actions-bar">
+                @Html.ActionLink(" ", "Edit", new { id = item.SimTypeID }, new { @class = "glyphicon glyphicon-pencil" })
+                @Html.ActionLink(" ", "Details", new { id = item.SimTypeID }, new { @class = "glyphicon glyphicon-eye-open" })
+                @Html.ActionLink(" ", "Delete", new { id = item.SimTypeID }, new { @class = "glyphicon glyphicon-trash" })
+            </div>
         </td>
     </tr>
 }
