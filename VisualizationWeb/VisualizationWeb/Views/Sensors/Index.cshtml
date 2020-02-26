@@ -1,0 +1,108 @@
+﻿@model IEnumerable<VisualizationWeb.Models.Sensor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sensoren</h2>
+<br />
+
+<p>
+    <button type="button" class="btn btn-default"> @Html.ActionLink("To Add", "Create")</button>
+</p>
+<br
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Factor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Einheiten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prefix)
+            </th>
+            <th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @*<tr>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Factor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Einheiten)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prefix)
+                    </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SensorID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SensorID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SensorID })
+                </td>
+            </tr>*@
+    }
+
+</table>
+
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table ">
+                        <tr>
+                            <th data-toggle="tooltip" data-placement="bottom" title="Das ist der Name des Sensor">@Html.DisplayNameFor(model => model.Title)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Factor)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Factor)</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Einheiten)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Einheiten)</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.SCode)</th>
+                            <td>@Html.DisplayFor(modelItem => item.SCode)</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Prefix)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Prefix)</td>
+                        </tr>
+                        <tr>
+                            <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Notes)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Notes)</td>
+                        </tr>
+                    </table>
+                    <div style="margin-left: 25px; ">
+                        <div class="btn btn-default" href="#" role="button">@Html.ActionLink("Edit", "Edit", new { id = item.SensorID })</div>
+                        <div class="btn btn-default" href="#" role="button">@Html.ActionLink("Details", "Details", new { id = item.SensorID })</div>
+                        <div class="btn btn-default" href="#" role="button">@Html.ActionLink("Delete", "Delete", new { id = item.SensorID })</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
