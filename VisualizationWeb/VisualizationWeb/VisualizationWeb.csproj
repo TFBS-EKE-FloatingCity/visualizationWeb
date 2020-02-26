@@ -195,6 +195,7 @@
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
+    <Compile Include="Models\ViewModel\SettingVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -258,7 +259,7 @@
     <Content Include="Views\Shared\Partials\_NavigationLoginPartial.cshtml" />
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
- <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
     <Content Include="Views\Sensors\Details.cshtml" />
@@ -280,7 +281,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\General\" />
-<Folder Include="Models\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
