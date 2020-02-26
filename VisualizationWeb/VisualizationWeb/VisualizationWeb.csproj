@@ -195,6 +195,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Account\Register.css" />
+    <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\General\FormElements.css" />
+    <Content Include="Content\General\Buttons.css" />
     <Content Include="Content\Navigation.css" />
     <Content Include="Content\Layouts\EmptyLayout.css" />
     <Content Include="Content\bootstrap-theme.css" />

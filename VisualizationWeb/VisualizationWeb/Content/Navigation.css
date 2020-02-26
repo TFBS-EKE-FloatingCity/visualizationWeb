@@ -1,5 +1,5 @@
 ﻿.navigation {
-    width: 570px;
+    width: 240px;
     height: 100%;
 }
 
@@ -12,10 +12,14 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 5px 0;
+}
+
+.navigation-header {
+    width: 100%;
 }
 
 .navbar-nav li {
-    
 }
 
 .navbar-nav > li > a {
@@ -24,6 +28,9 @@
     width: 100%;
     color: black;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 9px 15px;
+    margin: 0 5px;
+    border-radius: 4px;
 }
 
 .navbar-nav > li > a::before {
