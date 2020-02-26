@@ -66,7 +66,7 @@ namespace VisualizationWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(setting).State = EntityState.Modified;
-                //db.SaveChanges();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(setting);
