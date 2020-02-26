@@ -15,8 +15,11 @@
     padding: 5px 0;
 }
 
+.navigation-header {
+    width: 100%;
+}
+
 .navbar-nav li {
-    
 }
 
 .navbar-nav > li > a {

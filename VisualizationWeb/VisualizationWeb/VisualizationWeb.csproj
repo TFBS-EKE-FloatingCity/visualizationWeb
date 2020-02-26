@@ -199,6 +199,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Account\Register.css" />
+    <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\General\FormElements.css" />
+    <Content Include="Content\General\Buttons.css" />
     <Content Include="Content\Navigation.css" />
     <Content Include="Content\Layouts\EmptyLayout.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -258,7 +262,7 @@
     <Content Include="Views\Shared\Partials\_NavigationLoginPartial.cshtml" />
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
- <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
     <Content Include="Views\Sensors\Details.cshtml" />
@@ -279,8 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\General\" />
-<Folder Include="Models\ViewModel\" />
+    <Folder Include="Models\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
