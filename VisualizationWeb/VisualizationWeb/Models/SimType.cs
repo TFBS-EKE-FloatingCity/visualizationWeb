@@ -18,6 +18,13 @@ namespace VisualizationWeb.Models
         [StringLength(200)]
         [Display(Name = "Description")]
         public string Notes { get; set; }
+        [Display(Name = "Starttime")]
+        public TimeSpan StartTime { get; set; }
+        [Display(Name = "Interval")]
+        public TimeSpan Interval { get; set; }
+        [Display(Name = "Endtime")]
+        public TimeSpan EndTime { get; set; }
+
 
         public virtual ICollection<SimData> SimDatas { get; set; }
 
