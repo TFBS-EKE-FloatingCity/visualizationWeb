@@ -35,5 +35,6 @@ namespace VisualizationWeb.Models
         {
             return new ApplicationDbContext();
         }
+
     }
 }

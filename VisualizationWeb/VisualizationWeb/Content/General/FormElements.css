@@ -1,0 +1,4 @@
+﻿.checkbox input[type="checkbox"] {
+    position: static;
+    margin: 0;
+}

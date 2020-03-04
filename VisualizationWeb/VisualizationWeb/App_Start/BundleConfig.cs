@@ -19,11 +19,19 @@ namespace VisualizationWeb
                         "~/Scripts/modernizr-*" ) );
 
             bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
-                      "~/Scripts/bootstrap.js" ) );
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/init.js") );
 
             bundles.Add( new StyleBundle( "~/Content/css" ).Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/navigation.css") );
+                      "~/Content/bootstrap/bootstrap.css",
+                      "~/Content/general/buttons.css",
+                      "~/Content/general/formelements.css",
+                      "~/Content/account/login.css",
+                      "~/Content/account/register.css",
+                      "~/Content/navigation.css",
+                      "~/Content/actionsbar.css",
+                      "~/Content/sensors.css",
+                      "~/Content/settings.css" ));
 
             bundles.Add(new StyleBundle("~/Content/layouts/css").Include(
                       "~/Content/layouts/applayout.css",

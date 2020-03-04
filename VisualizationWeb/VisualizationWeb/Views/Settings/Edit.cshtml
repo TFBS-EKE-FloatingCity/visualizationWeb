@@ -1,10 +1,15 @@
-﻿@model VisualizationWeb.Models.Setting
+﻿@model VisualizationWeb.Models.ViewModel.SettingVM
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Application Settings";
 }
 
-<h2>Edit</h2>
+<h2>Application Settings</h2>
+<hr />
+<div class="alert alert-warning">
+    Values ​​are always converted to the highest unit!
+</div>
+
 
 
 @using (Html.BeginForm())
@@ -12,14 +17,14 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Setting</h4>
-        <hr />
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         @Html.HiddenFor(model => model.SettingID)
 
         <div class="form-group">
             @Html.LabelFor(model => model.WindMax, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.WindMax, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.WindMax, "", new { @class = "text-danger" })
             </div>
@@ -27,7 +32,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.SunMax, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.SunMax, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SunMax, "", new { @class = "text-danger" })
             </div>
@@ -35,7 +40,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ConsumptionMax, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.ConsumptionMax, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ConsumptionMax, "", new { @class = "text-danger" })
             </div>
@@ -43,7 +48,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.WindActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.WindActive)
                     @Html.ValidationMessageFor(model => model.WindActive, "", new { @class = "text-danger" })
@@ -53,7 +58,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.SunActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.SunActive)
                     @Html.ValidationMessageFor(model => model.SunActive, "", new { @class = "text-danger" })
@@ -78,10 +83,6 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
