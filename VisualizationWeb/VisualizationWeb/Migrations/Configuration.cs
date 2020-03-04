@@ -174,6 +174,19 @@ namespace VisualizationWeb.Migrations
 
             );
 
+            //context.Sensors.AddOrUpdate(
+            //    new SimType
+            //    {
+            //        SimTypeID = 1,
+            //        Title = "Sun",
+            //        SimFactor = 10,
+            //        Notes = "Testing Sun",
+            //        StartTime = 07:00:00,
+            //        Interval = 01:00:00,
+            //        EndTime = 12:00:00,
+            //    }
+            //);
+
             context.Roles.AddOrUpdate(
                 r => r.Id,
                 new IdentityRole
