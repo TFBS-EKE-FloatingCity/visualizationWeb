@@ -182,6 +182,14 @@
     <Compile Include="Migrations\202002261351087_create database.Designer.cs">
       <DependentUpon>202002261351087_create database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002261412486_Model Sensor edit.cs" />
+    <Compile Include="Migrations\202002261412486_Model Sensor edit.Designer.cs">
+      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041000376_test.cs" />
+    <Compile Include="Migrations\202003041000376_test.Designer.cs">
+      <DependentUpon>202003041000376_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -298,6 +306,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002261351087_create database.resx">
       <DependentUpon>202002261351087_create database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002261412486_Model Sensor edit.resx">
+      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041000376_test.resx">
+      <DependentUpon>202003041000376_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
