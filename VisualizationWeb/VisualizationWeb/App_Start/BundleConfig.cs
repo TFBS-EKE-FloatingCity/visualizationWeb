@@ -22,12 +22,13 @@ namespace VisualizationWeb
                       "~/Scripts/bootstrap.js" ) );
 
             bundles.Add( new StyleBundle( "~/Content/css" ).Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap/bootstrap.css",
                       "~/Content/general/buttons.css",
                       "~/Content/general/formelements.css",
-                      "~/Content/navigation.css",
                       "~/Content/account/login.css",
-                      "~/Content/account/register.css") );
+                      "~/Content/account/register.css",
+                      "~/Content/navigation.css",
+                      "~/Content/actionsbar.css" ));
 
             bundles.Add(new StyleBundle("~/Content/layouts/css").Include(
                       "~/Content/layouts/applayout.css",

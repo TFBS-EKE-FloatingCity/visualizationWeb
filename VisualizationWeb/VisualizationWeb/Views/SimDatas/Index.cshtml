@@ -1,39 +1,33 @@
 ﻿@model IEnumerable<VisualizationWeb.Models.SimData>
 
-@{
+@*@{
     ViewBag.Title = "Index";
-}
+}*@
 
-<h2>Index</h2>
+<h2>Simulation data</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SimType.Title)
+            @Html.DisplayNameFor(model => model.SimTime) in hours
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SimTime)
+            @Html.DisplayNameFor(model => model.Wind) in %
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Wind)
+            @Html.DisplayNameFor(model => model.Sun) in %
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sun)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Consumption)
+            @Html.DisplayNameFor(model => model.Consumption) in %
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SimType.Title)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.SimTime)
         </td>
@@ -47,9 +41,11 @@
             @Html.DisplayFor(modelItem => item.Consumption)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SimDataID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SimDataID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SimDataID })
+            <div class="actions-bar">
+                @Html.ActionLink(" ", "Edit", new { id = item.SimDataID }, new { @class = "glyphicon glyphicon-pencil" })
+                @Html.ActionLink(" ", "Details", new { id = item.SimDataID }, new { @class = "glyphicon glyphicon-eye-open" })
+                @Html.ActionLink(" ", "Delete", new { id = item.SimDataID }, new { @class = "glyphicon glyphicon-trash" })
+            </div>
         </td>
     </tr>
 }

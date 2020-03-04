@@ -13,8 +13,10 @@ namespace VisualizationWeb.Models
         [StringLength(50)]
         [Display (Name = "Simulation")]
         public string Title { get; set; }
+        [Display(Name = "Calculation factor")]
         public double SimFactor { get; set; }
         [StringLength(200)]
+        [Display(Name = "Description")]
         public string Notes { get; set; }
 
         public virtual ICollection<SimData> SimDatas { get; set; }
