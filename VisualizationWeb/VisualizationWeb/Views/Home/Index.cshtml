@@ -6,10 +6,10 @@
     <div class="col-md-12">
         <h2>Action Bar:</h2>
         @*Actions COPY BELOW*@
-        <div class="actions-bar">
-            @Html.ActionLink(" ", "Edit", new {  }, new { @class = "glyphicon glyphicon-pencil" }) 
-            @Html.ActionLink(" ", "Details", new {  }, new { @class = "glyphicon glyphicon-eye-open" }) 
-            @Html.ActionLink(" ", "Delete", new {  }, new { @class = "glyphicon glyphicon-trash" })
+        <div class="actions-bar btn-group">
+            @Html.ActionLink(" ", "Edit", new {  }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm", data_toggle = "tooltip", data_placement = "bottom" }) 
+            @Html.ActionLink(" ", "Details", new {  }, new { title = "Details", @class = "glyphicon glyphicon-eye-open btn btn-default btn-sm", data_toggle = "tooltip", data_placement = "bottom" }) 
+            @Html.ActionLink(" ", "Delete", new {  }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm", data_toggle = "tooltip", data_placement = "bottom" })
         </div>
         @* STOP COPYING *@
     </div>

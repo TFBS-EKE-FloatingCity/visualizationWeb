@@ -19,7 +19,8 @@ namespace VisualizationWeb
                         "~/Scripts/modernizr-*" ) );
 
             bundles.Add( new ScriptBundle( "~/bundles/bootstrap" ).Include(
-                      "~/Scripts/bootstrap.js" ) );
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/init.js") );
 
             bundles.Add( new StyleBundle( "~/Content/css" ).Include(
                       "~/Content/bootstrap/bootstrap.css",
@@ -28,7 +29,8 @@ namespace VisualizationWeb
                       "~/Content/account/login.css",
                       "~/Content/account/register.css",
                       "~/Content/navigation.css",
-                      "~/Content/actionsbar.css" ));
+                      "~/Content/actionsbar.css",
+                      "~/Content/sensors.css"));
 
             bundles.Add(new StyleBundle("~/Content/layouts/css").Include(
                       "~/Content/layouts/applayout.css",

@@ -1,0 +1,3 @@
+﻿.sensores .table tr:first-child th, .sensores .table tr:first-child td {
+    border-top: none;
+}

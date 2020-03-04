@@ -43,6 +43,8 @@ namespace VisualizationWeb.Controllers
             settingVM.WindActive = setting.WindActive;
             settingVM.ConsumptionActive = setting.ConsumptionActive;
 
+            UnitCalc.PrefixToNumber("10 GW");
+
             return View(settingVM);
         }
 

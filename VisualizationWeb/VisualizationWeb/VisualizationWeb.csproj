@@ -206,6 +206,7 @@
   <ItemGroup>
     <Content Include="Content\Account\Register.css" />
     <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Sensors.css" />
     <Content Include="Content\General\FormElements.css" />
     <Content Include="Content\General\Buttons.css" />
     <Content Include="Content\ActionsBar.css" />
@@ -219,6 +220,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
