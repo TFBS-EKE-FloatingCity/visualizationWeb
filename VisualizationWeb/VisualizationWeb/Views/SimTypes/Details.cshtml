@@ -25,6 +25,30 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Notes)
         </dt>
 
@@ -34,7 +58,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SimTypeID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SimTypeID }, new { @class = "glyphicon glyphicon-pencil" }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 
