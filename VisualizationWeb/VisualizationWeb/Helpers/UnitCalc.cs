@@ -42,11 +42,11 @@ namespace VisualizationWeb.Helpers
 
             if (digits >= 9)
             {
-                valueString = value.ToString() + " gW";
+                valueString = value.ToString() + " GW";
             }
             else if (digits >= 6)
             {
-                valueString = value.ToString() + " mW";
+                valueString = value.ToString() + " MW";
             }
             else if (digits < 3)
             {
