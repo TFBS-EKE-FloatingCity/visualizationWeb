@@ -58,7 +58,6 @@
 .navbar-nav > li > a {
     display: flex;
     align-items: center;
-    width: 100%;
     color: black;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     padding: 9px 15px;
