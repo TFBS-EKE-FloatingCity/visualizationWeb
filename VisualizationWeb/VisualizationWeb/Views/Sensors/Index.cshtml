@@ -4,12 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Sensoren</h2>
-<br />
+<div class="app-headline">
+    <h2>Sensoren</h2>
+    <p>
+        @Html.ActionLink("To Add", "Create", new { }, new { @class = "btn btn-info" })
+    </p>
+    <hr />
+</div>
 
-<p>
-     @Html.ActionLink("To Add", "Create", new {  }, new { @class = "btn btn-info" })
-</p>
 
 <section class="sensores">
     <div class="row">

@@ -13,14 +13,21 @@ using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        SettingVM settingVM = new SettingVM();
 
         // GET: Settings
+        [Authorize(Roles = "Gast")]
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Edit");
+
+            }
             Setting setting = db.Settings.FirstOrDefault();
             if (setting == null)
             {
@@ -29,19 +36,25 @@ namespace VisualizationWeb.Controllers
                     SunActive = true,
                     WindActive = true,
                     ConsumptionActive = true,
-                    SunMax = 10000000.0,
-                    WindMax = 100000.0,
-                    ConsumptionMax = 5000000.0
+                    SunMax = 00.00,
+                    WindMax = 00.00,
+                    ConsumptionMax = 00.00
                 };
+
+                db.Settings.Add(setting);
+                db.SaveChanges();
             }
 
-            settingVM.SettingID = setting.SettingID;
-            settingVM.WindMax = UnitCalc.NumberToPrefix(setting.WindMax);
-            settingVM.SunMax = UnitCalc.NumberToPrefix(setting.SunMax);
-            settingVM.ConsumptionMax = UnitCalc.NumberToPrefix(setting.ConsumptionMax);
-            settingVM.SunActive = setting.SunActive;
-            settingVM.WindActive = setting.WindActive;
-            settingVM.ConsumptionActive = setting.ConsumptionActive;
+            SettingVM settingVM = new SettingVM
+            {
+                SettingID = setting.SettingID,
+                WindMax = UnitCalc.NumberToPrefix(setting.WindMax),
+                SunMax = UnitCalc.NumberToPrefix(setting.SunMax),
+                ConsumptionMax = UnitCalc.NumberToPrefix(setting.ConsumptionMax),
+                SunActive = setting.SunActive,
+                WindActive = setting.WindActive,
+                ConsumptionActive = setting.ConsumptionActive,
+            };
 
             return View(settingVM);
         }
@@ -49,10 +62,28 @@ namespace VisualizationWeb.Controllers
         // GET: Settings/Edit/5
         public ActionResult Edit(int? id)
         {
+            Setting setting = new Setting();
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                setting = db.Settings.FirstOrDefault();
             }
+            else
+            {
+                setting = db.Settings.Find(id);
+            }
+            if (setting == null)
+            {
+                return HttpNotFound();
+            }
+            SettingVM settingVM = new SettingVM {
+                SettingID = setting.SettingID,
+                SunActive = setting.SunActive,
+                WindActive = setting.WindActive,
+                ConsumptionActive = setting.ConsumptionActive,
+                SunMax = UnitCalc.NumberToPrefix(setting.SunMax),
+                WindMax = UnitCalc.NumberToPrefix(setting.WindMax),
+                ConsumptionMax = UnitCalc.NumberToPrefix(setting.ConsumptionMax)
+            };
             return View(settingVM);
         }
 
@@ -63,11 +94,15 @@ namespace VisualizationWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                Setting set = db.Settings.Find(settingVM.SettingID);
-                set.WindMax = UnitCalc.PrefixToNumber(settingVM.WindMax);
-                set.SunMax = UnitCalc.PrefixToNumber(settingVM.SunMax);
-                set.ConsumptionMax = UnitCalc.PrefixToNumber(settingVM.ConsumptionMax);
+                Setting setting = db.Settings.Find(settingVM.SettingID);
+                setting.WindMax = UnitCalc.PrefixToNumber(settingVM.WindMax);
+                setting.SunMax = UnitCalc.PrefixToNumber(settingVM.SunMax);
+                setting.ConsumptionMax = UnitCalc.PrefixToNumber(settingVM.ConsumptionMax);
+                setting.SunActive = settingVM.SunActive;
+                setting.WindActive = settingVM.WindActive;
+                setting.ConsumptionActive = settingVM.ConsumptionActive;
 
+                db.Entry(setting).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
