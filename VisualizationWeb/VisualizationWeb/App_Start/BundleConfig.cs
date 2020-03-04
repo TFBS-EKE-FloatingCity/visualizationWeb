@@ -30,7 +30,8 @@ namespace VisualizationWeb
                       "~/Content/account/register.css",
                       "~/Content/navigation.css",
                       "~/Content/actionsbar.css",
-                      "~/Content/sensors.css"));
+                      "~/Content/sensors.css",
+                      "~/Content/settings.css" ));
 
             bundles.Add(new StyleBundle("~/Content/layouts/css").Include(
                       "~/Content/layouts/applayout.css",

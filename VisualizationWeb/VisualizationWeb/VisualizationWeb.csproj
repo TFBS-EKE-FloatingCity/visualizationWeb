@@ -210,6 +210,7 @@
   <ItemGroup>
     <Content Include="Content\Account\Register.css" />
     <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Settings.css" />
     <Content Include="Content\Sensors.css" />
     <Content Include="Content\General\FormElements.css" />
     <Content Include="Content\General\Buttons.css" />

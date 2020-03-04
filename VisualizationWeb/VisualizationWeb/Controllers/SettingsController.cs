@@ -20,8 +20,14 @@ namespace VisualizationWeb.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Settings
+        [Authorize(Roles = "Gast")]
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Edit");
+
+            }
             Setting setting = db.Settings.FirstOrDefault();
             if (setting == null)
             {
@@ -56,11 +62,15 @@ namespace VisualizationWeb.Controllers
         // GET: Settings/Edit/5
         public ActionResult Edit(int? id)
         {
+            Setting setting = new Setting();
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                setting = db.Settings.FirstOrDefault();
             }
-            Setting setting = db.Settings.Find(id);
+            else
+            {
+                setting = db.Settings.Find(id);
+            }
             if (setting == null)
             {
                 return HttpNotFound();

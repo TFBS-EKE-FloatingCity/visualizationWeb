@@ -205,7 +205,6 @@ namespace VisualizationWeb.Migrations
                 {
                     Id = "2",
                     UserName = "Gast",
-
                     PasswordHash = ""
 
                 }
