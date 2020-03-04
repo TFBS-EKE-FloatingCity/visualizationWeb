@@ -10,8 +10,10 @@ using VisualizationWeb.Models;
 
 namespace VisualizationWeb.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class SensorsController : Controller
     {
+        
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Sensors
@@ -36,6 +38,7 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: Sensors/Create
+
         public ActionResult Create()
         {
             return View();
@@ -59,6 +62,7 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: Sensors/Edit/5
+
         public ActionResult Edit(int? id)
         {
             if (id == null)

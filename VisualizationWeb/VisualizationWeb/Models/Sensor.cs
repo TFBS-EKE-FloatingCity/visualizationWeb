@@ -18,8 +18,7 @@ namespace VisualizationWeb.Models
         public decimal Factor { get; set; }
         [StringLength(10)]
         public string Einheiten { get; set; }
-        [StringLength(3)]
-        public string SCode { get; set; }
+        public int SCode { get; set; }
         [StringLength(50)]
         public string Prefix { get; set; }
 

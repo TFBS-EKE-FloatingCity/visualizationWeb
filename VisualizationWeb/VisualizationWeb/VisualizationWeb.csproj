@@ -186,6 +186,10 @@
     <Compile Include="Migrations\202002200913021_create table settings.Designer.cs">
       <DependentUpon>202002200913021_create table settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002261412486_Model Sensor edit.cs" />
+    <Compile Include="Migrations\202002261412486_Model Sensor edit.Designer.cs">
+      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -215,6 +219,7 @@
     <Content Include="Content\Layouts\AppLayout.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -262,7 +267,6 @@
     <Content Include="Views\Shared\Partials\_NavigationLoginPartial.cshtml" />
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
     <Content Include="Views\Sensors\Details.cshtml" />
@@ -304,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002200913021_create table settings.resx">
       <DependentUpon>202002200913021_create table settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002261412486_Model Sensor edit.resx">
+      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
