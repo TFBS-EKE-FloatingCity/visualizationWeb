@@ -10,7 +10,7 @@ namespace VisualizationWeb.Models
     public class Sensor
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SensorID { get; set; }
         [StringLength(50)]
         [Display(Name = "Sensoren")]

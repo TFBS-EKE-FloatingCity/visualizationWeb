@@ -206,35 +206,37 @@ namespace VisualizationWeb.Migrations
                 }
             );
 
-            context.Users.AddOrUpdate(
-                new ApplicationUser
-                {
-                    Id = "1",
-                    UserName = "Admin",
-                    PasswordHash = "AOPYVSJfQbP9b64NySmU2NJyapRr8G8dmLrnsXkjumfMAr5UdyHmOCF5MaGa8x0hTg=="
+            //context.Users.AddOrUpdate(
+            //    new ApplicationUser
+            //    {
+            //        Id = "1",
+            //        UserName = "Admin",
+            //        PasswordHash = "AOPYVSJfQbP9b64NySmU2NJyapRr8G8dmLrnsXkjumfMAr5UdyHmOCF5MaGa8x0hTg=="
 
-                },
-                new ApplicationUser
-                {
-                    Id = "2",
-                    UserName = "Gast",
-                    PasswordHash = ""
+            //    },
+            //    new ApplicationUser
+            //    {
+            //        Id = "2",
+            //        UserName = "Gast",
+            //        PasswordHash = ""
 
-                }
-            );
+            //    }
+            //);
 
             context.Settings.AddOrUpdate(
-                s => s.SunActive,
                 new Setting
                 {
+                    SettingID = 1,
                     SunActive = true,
                     WindActive = true,
                     ConsumptionActive = true,
-                    SunMax = 10000000.0,
-                    WindMax = 100000.0,
-                    ConsumptionMax = 5000000.0
+                    SunMax = 00.00,
+                    WindMax = 00.00,
+                    ConsumptionMax = 00.00
                 }
             );
+
+            context.SaveChanges();
         }    
     }
 }
