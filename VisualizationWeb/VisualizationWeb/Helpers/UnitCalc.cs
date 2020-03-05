@@ -11,7 +11,12 @@ namespace VisualizationWeb.Helpers
         public static double PrefixToNumber(string value)
         {
             var val_arr = Regex.Split(value, @"([a-zA-Z]+)");
-            
+
+            if(val_arr.Count() < 2)
+            {
+                return Convert.ToDouble(val_arr[0]);
+            }
+
             switch (val_arr[1].ToLower())
             {
                 case "w":
@@ -32,7 +37,7 @@ namespace VisualizationWeb.Helpers
             int digits = 0;
             string valueString = "";
 
-            while (value > 1)
+            while (value > 10)
             {
                 if (digits >= 3) break;
 
@@ -40,24 +45,9 @@ namespace VisualizationWeb.Helpers
                 value /= 1000;
             }
 
-            if (digits >= 3)
-            {
-                valueString = value.ToString() + " GW";
-            }
-            else if (digits == 2)
-            {
-                valueString = value.ToString() + " MW";
-            }
-            else if (digits == 1)
-            {
-                valueString = value.ToString() + " kW";
-            }
-            else
-            {
-                valueString = value.ToString() + " W";
-            }
-            
-           
+            string[] units = new string[] { "W", "kW", "MW", "GW" };
+
+            valueString = value.ToString() + " " + units[digits];
 
             return valueString;
         }
