@@ -116,7 +116,7 @@ namespace VisualizationWeb.Controllers
 
                 db.Entry(simType).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details", simType.SimTypeID);
+                return RedirectToAction("Index");
             }
             return View(simType);
         }
