@@ -47,7 +47,7 @@ namespace VisualizationWeb.Helpers
 
             string[] units = new string[] { "W", "kW", "MW", "GW", "TW" };
 
-            valueString = value.ToString() + " " + units[digits];
+            valueString = value.ToString() + units[digits];
 
             return valueString;
         }
