@@ -198,17 +198,9 @@
     <Compile Include="Migrations\202002261412486_Model Sensor edit.Designer.cs">
       <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003041000376_test.cs" />
-    <Compile Include="Migrations\202003041000376_test.Designer.cs">
-      <DependentUpon>202003041000376_test.cs</DependentUpon>
-    </Compile>
-	  <Compile Include="Migrations\202003041253580_edit SimTypeModel.cs" />
-    <Compile Include="Migrations\202003041253580_edit SimTypeModel.Designer.cs">
-      <DependentUpon>202003041253580_edit SimTypeModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003041312311_test1.cs" />
-    <Compile Include="Migrations\202003041312311_test1.Designer.cs">
-      <DependentUpon>202003041312311_test1.cs</DependentUpon>
+    <Compile Include="Migrations\202003050733457_update simtypes.cs" />
+    <Compile Include="Migrations\202003050733457_update simtypes.Designer.cs">
+      <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -313,8 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\General\" />
-<Folder Include="Models\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -336,14 +326,8 @@
     <EmbeddedResource Include="Migrations\202002261412486_Model Sensor edit.resx">
       <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003041000376_test.resx">
-      <DependentUpon>202003041000376_test.cs</DependentUpon>
-    </EmbeddedResource> 
-	<EmbeddedResource Include="Migrations\202003041253580_edit SimTypeModel.resx">
-      <DependentUpon>202003041253580_edit SimTypeModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003041312311_test1.resx">
-      <DependentUpon>202003041312311_test1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003050733457_update simtypes.resx">
+      <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
