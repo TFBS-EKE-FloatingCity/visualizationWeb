@@ -27,23 +27,7 @@ namespace VisualizationWeb.Controllers
             return View(db.Sensors.ToList());
         }
 
-        // GET: Sensors/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Sensor sensor = db.Sensors.Find(id);
-            if (sensor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sensor);
-        }
-
         // GET: Sensors/Create
-
         public ActionResult Create()
         {
             return View();

@@ -238,6 +238,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -292,7 +293,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
-    <Content Include="Views\Sensors\Details.cshtml" />
     <Content Include="Views\Sensors\Edit.cshtml" />
     <Content Include="Views\Sensors\Index.cshtml" />
     <Content Include="Views\Settings\Edit.cshtml" />
@@ -312,7 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Charts\" />
     <Folder Include="Views\Dashboard\" />
   </ItemGroup>
   <ItemGroup>

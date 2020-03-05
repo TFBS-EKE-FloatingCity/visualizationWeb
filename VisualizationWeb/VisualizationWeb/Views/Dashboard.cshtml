@@ -1,4 +1,4 @@
-﻿<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+﻿@Scripts.Render("~/Scripts/Charts/Chart.js")
 
 @{
     ViewBag.Title = "Dashboard";
@@ -6,4 +6,13 @@
 
 <h2>Dashboard</h2>
 
-@Html.Partial("../Charts/PieChart")
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.Partial("../Charts/PieChart")
+            </div>
+        </div>
+    </div>
+</div>
+
