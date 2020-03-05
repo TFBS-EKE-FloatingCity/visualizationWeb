@@ -4,7 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-    <h2>Simulation @Html.DisplayFor(model => model.Title)</h2>
+    
+    <div class="app-headline app-headline--no-line">
+        <h2>Simulation @Html.DisplayFor(model => model.Title)</h2>
+        <div class="app-headline-actions">
+            @Html.ActionLink(" ", "EditHead", new { id = Model.SimTypeID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" }) |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
 
 <div>
     <dl class="dl-horizontal">
@@ -50,15 +57,11 @@
         </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink(" ", "Edit", new { id = Model.SimTypeID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 <div class="app-headline app-headline--no-line">
     <h3>Simulation Types</h3>
     <div class="app-headline-actions">
-        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+        @Html.ActionLink("Create", "Edit", new { id = Model.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
     </div>
 </div>
 

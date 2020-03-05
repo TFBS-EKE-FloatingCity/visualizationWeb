@@ -69,6 +69,37 @@ namespace VisualizationWeb.Controllers
             return View(simType);
         }
 
+        // GET: SimDatas/Edit/5
+        public async Task<ActionResult> EditHead(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SimType simType = await db.SimTypes.FindAsync(id);
+            if (simType == null)
+            {
+                return HttpNotFound();
+            }
+            return View("../SimTypes/Edit", simType);
+        }
+
+        // POST: SimDatas/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditHead([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(simType).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(simType);
+        }
+
         // GET: SimTypes/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -81,50 +112,54 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
-            return View(simType);
+
+
+            var t = simType.EndTime - simType.StartTime;
+            int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
+
+            var simtime = simType.StartTime;
+
+            for (int i = 0; i < x + 1; i++)
+            {
+                db.SimDatas.Add(new SimData()
+                {
+                    SimTime = simtime,
+                    SimTypeID = simType.SimTypeID,
+                    Wind = 10,
+                    Sun = 10,
+                    Consumption = 20
+                });
+
+                simtime += simType.Interval;
+            }
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Details", id);
         }
 
         // POST: SimTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
-        {
-            if (ModelState.IsValid)
-            {
-                if (simType.StartTime > simType.EndTime)
-                {
-                    return RedirectToAction("Edit");
-                }
-                else
-                {
-                    var t = simType.EndTime - simType.StartTime;
-                    int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (simType.StartTime > simType.EndTime)
+        //        {
+        //            return RedirectToAction("Edit");
+        //        }
+        //        else
+        //        {
+        //        }
 
-                    var simtime = simType.StartTime;
-
-                    for (int i = 0; i < x + 1; i++)
-                    {
-                        db.SimDatas.Add(new SimData()
-                        {
-                            SimTime = simtime,
-                            SimTypeID = simType.SimTypeID,
-                            Wind = 10,
-                            Sun = 10,
-                            Consumption = 20
-                        }) ;
-
-                        simtime += simType.Interval;
-                    }
-                }
-
-                db.Entry(simType).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(simType);
-        }
+        //        db.Entry(simType).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(simType);
+        //}
 
         // GET: SimTypes/Delete/5
         public async Task<ActionResult> Delete(int? id)
