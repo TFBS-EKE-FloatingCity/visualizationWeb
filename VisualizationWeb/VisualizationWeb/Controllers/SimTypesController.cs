@@ -81,6 +81,7 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["ReturnTo"] = "Details/" + id.ToString();
             return View("../SimTypes/Edit", simType);
         }
 
@@ -89,13 +90,21 @@ namespace VisualizationWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditHead([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
+        public async Task<ActionResult> EditHead([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType, string ReturnTo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(simType).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (simType.StartTime < simType.EndTime)
+                {
+                    db.Entry(simType).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction(ReturnTo.ToString());
+                }
+                else
+                {
+                    // TODO
+                }
+                
             }
             return View(simType);
         }
@@ -134,32 +143,9 @@ namespace VisualizationWeb.Controllers
             }
             await db.SaveChangesAsync();
 
-            return RedirectToAction("Details", id);
+            string view = "Details/" + simType.SimTypeID.ToString();
+            return RedirectToAction(view);
         }
-
-        // POST: SimTypes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Edit([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (simType.StartTime > simType.EndTime)
-        //        {
-        //            return RedirectToAction("Edit");
-        //        }
-        //        else
-        //        {
-        //        }
-
-        //        db.Entry(simType).State = EntityState.Modified;
-        //        await db.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(simType);
-        //}
 
         // GET: SimTypes/Delete/5
         public async Task<ActionResult> Delete(int? id)
@@ -179,12 +165,12 @@ namespace VisualizationWeb.Controllers
         // POST: SimTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id, string ReturnTo)
         {
             SimType simType = await db.SimTypes.FindAsync(id);
             db.SimTypes.Remove(simType);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(ReturnTo);
         }
 
         protected override void Dispose(bool disposing)

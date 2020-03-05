@@ -309,6 +309,7 @@
     <Content Include="Views\SimTypes\Index.cshtml" />
     <Content Include="Views\Dashboard.cshtml" />
     <Content Include="Views\Charts\PieChart.cshtml" />
+    <Content Include="Views\SimDatas\EditModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

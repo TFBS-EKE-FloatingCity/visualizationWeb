@@ -66,3 +66,20 @@
 </div>
 
 @Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Edit Simulation Data</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("../SimDatas/EditModal", new VisualizationWeb.Models.SimData { SimTypeID = Model.SimTypeID })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
