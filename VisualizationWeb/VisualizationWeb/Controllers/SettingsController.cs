@@ -14,21 +14,22 @@ using VisualizationWeb.Models.ViewModel;
 namespace VisualizationWeb.Controllers
 {
 
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Settings
-        [Authorize(Roles = "Gast")]
+        //[Authorize(Roles = "Gast, Admin")]
         public ActionResult Index()
         {
-            if (User.IsInRole("Admin"))
-            {
-                return RedirectToAction("Edit");
+            //if (User.IsInRole("Admin"))
+            //{
+            //    return RedirectToAction("Edit");
+            //}
 
-            }
             Setting setting = db.Settings.FirstOrDefault();
+
             if (setting == null)
             {
                 setting = new Setting
@@ -75,15 +76,17 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
+
             SettingVM settingVM = new SettingVM {
                 SettingID = setting.SettingID,
-                SunActive = setting.SunActive,
                 WindActive = setting.WindActive,
+                SunActive = setting.SunActive,
                 ConsumptionActive = setting.ConsumptionActive,
                 SunMax = UnitCalc.NumberToPrefix(setting.SunMax),
                 WindMax = UnitCalc.NumberToPrefix(setting.WindMax),
                 ConsumptionMax = UnitCalc.NumberToPrefix(setting.ConsumptionMax)
             };
+
             return View(settingVM);
         }
 
@@ -106,6 +109,7 @@ namespace VisualizationWeb.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
             return View(settingVM);
         }
 
@@ -115,6 +119,7 @@ namespace VisualizationWeb.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

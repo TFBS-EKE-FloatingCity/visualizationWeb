@@ -100,7 +100,7 @@ namespace VisualizationWeb.Migrations
                     SCode = 0,
                     Prefix = "",
                     Notes = ""
-                }, 
+                },
                 new Sensor
                 {
                     SensorID = 9,
@@ -191,7 +191,7 @@ namespace VisualizationWeb.Migrations
                 r => r.Id,
                 new IdentityRole
                 {
-                    Id  = "1",
+                    Id = "1",
                     Name = "Admin",
                 },
                 new IdentityRole
