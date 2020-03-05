@@ -205,9 +205,21 @@ namespace VisualizationWeb.Migrations
                 {
                     Id = "2",
                     UserName = "Gast",
-
                     PasswordHash = ""
 
+                }
+            );
+
+            context.Settings.AddOrUpdate(
+                s => s.SunActive,
+                new Setting
+                {
+                    SunActive = true,
+                    WindActive = true,
+                    ConsumptionActive = true,
+                    SunMax = 10000000.0,
+                    WindMax = 100000.0,
+                    ConsumptionMax = 5000000.0
                 }
             );
         }    

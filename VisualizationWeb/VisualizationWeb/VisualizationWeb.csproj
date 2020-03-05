@@ -188,6 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SeedSimHelper.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Migrations\202002261351087_create database.cs" />
     <Compile Include="Migrations\202002261351087_create database.Designer.cs">
@@ -200,6 +201,10 @@
     <Compile Include="Migrations\202003041000376_test.cs" />
     <Compile Include="Migrations\202003041000376_test.Designer.cs">
       <DependentUpon>202003041000376_test.cs</DependentUpon>
+    </Compile>
+	  <Compile Include="Migrations\202003041253580_edit SimTypeModel.cs" />
+    <Compile Include="Migrations\202003041253580_edit SimTypeModel.Designer.cs">
+      <DependentUpon>202003041253580_edit SimTypeModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202003041312311_test1.cs" />
     <Compile Include="Migrations\202003041312311_test1.Designer.cs">
@@ -221,6 +226,8 @@
   <ItemGroup>
     <Content Include="Content\Account\Register.css" />
     <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Settings.css" />
+    <Content Include="Content\Sensors.css" />
     <Content Include="Content\General\FormElements.css" />
     <Content Include="Content\General\Buttons.css" />
     <Content Include="Content\ActionsBar.css" />
@@ -234,6 +241,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
@@ -284,6 +292,7 @@
     <Content Include="Views\Shared\Partials\_NavigationLoginPartial.cshtml" />
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
     <Content Include="Views\Sensors\Details.cshtml" />
@@ -304,6 +313,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\General\" />
+<Folder Include="Models\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -327,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003041000376_test.resx">
       <DependentUpon>202003041000376_test.cs</DependentUpon>
+    </EmbeddedResource> 
+	<EmbeddedResource Include="Migrations\202003041253580_edit SimTypeModel.resx">
+      <DependentUpon>202003041253580_edit SimTypeModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003041312311_test1.resx">
       <DependentUpon>202003041312311_test1.cs</DependentUpon>
