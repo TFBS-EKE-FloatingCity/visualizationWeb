@@ -19,4 +19,11 @@ namespace VisualizationWeb.Models
 
         public virtual Sensor Sensor { get; set; }
     }
+    public class SensorDataApi
+    {
+        public int Sensor { get; set; }
+        public int Value0 { get; set; }
+        public int Value1 { get; set; }
+    }
+   
 }
