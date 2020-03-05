@@ -81,12 +81,6 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
-            else
-            {
-                
-
-
-            }
             return View(simType);
         }
 
@@ -108,20 +102,26 @@ namespace VisualizationWeb.Controllers
                     var t = simType.EndTime - simType.StartTime;
                     int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
 
-                    for (int i = 0; i < x; i++)
+                    var simtime = simType.StartTime;
+
+                    for (int i = 0; i < x + 1; i++)
                     {
-                        simType.SimDatas.Add(new SimData()
+                        db.SimDatas.Add(new SimData()
                         {
-                            SimTime = simType.StartTime,
+                            SimTime = simtime,
+                            SimTypeID = simType.SimTypeID,
                             Wind = 10,
                             Sun = 10,
                             Consumption = 20
-                        });
+                        }) ;
+
+                        simtime += simType.Interval;
                     }
                 }
+
                 db.Entry(simType).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details");
+                return RedirectToAction("Details", simType.SimTypeID);
             }
             return View(simType);
         }
