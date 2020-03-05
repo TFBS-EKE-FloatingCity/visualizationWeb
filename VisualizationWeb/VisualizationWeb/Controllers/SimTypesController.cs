@@ -52,7 +52,7 @@ namespace VisualizationWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "SimTypeID,Title,SimFactor,Notes")] SimType simType)
+        public async Task<ActionResult> Create([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
         {
             if (ModelState.IsValid)
             {
@@ -76,6 +76,12 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
+            else
+            {
+                
+
+
+            }
             return View(simType);
         }
 
@@ -84,13 +90,33 @@ namespace VisualizationWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "SimTypeID,Title,SimFactor,Notes")] SimType simType)
+        public async Task<ActionResult> Edit([Bind(Include = "SimTypeID,Title,SimFactor,StartTime,Interval,EndTime,Notes")] SimType simType)
         {
             if (ModelState.IsValid)
             {
+                if (simType.StartTime > simType.EndTime)
+                {
+                    return RedirectToAction("Edit");
+                }
+                else
+                {
+                    //var t = simType.EndTime - simType.StartTime;
+                    //int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
+
+                    //for (int i = 0; i < x; i++)
+                    //{
+                    //    SimData sd = new SimData();
+
+                    //    sd.SimTime = simType.StartTime;
+                        
+                    //    simType.StartTime += simType.Interval;
+
+                    //    simType.SimDatas.Add(sd);
+                    //}
+                }
                 db.Entry(simType).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             return View(simType);
         }
