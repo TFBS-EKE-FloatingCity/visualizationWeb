@@ -100,19 +100,19 @@ namespace VisualizationWeb.Controllers
                 }
                 else
                 {
-                    //var t = simType.EndTime - simType.StartTime;
-                    //int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
+                    var t = simType.EndTime - simType.StartTime;
+                    int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
 
-                    //for (int i = 0; i < x; i++)
-                    //{
-                    //    SimData sd = new SimData();
-
-                    //    sd.SimTime = simType.StartTime;
-                        
-                    //    simType.StartTime += simType.Interval;
-
-                    //    simType.SimDatas.Add(sd);
-                    //}
+                    for (int i = 0; i < x; i++)
+                    {
+                        simType.SimDatas.Add(new SimData()
+                        {
+                            SimTime = simType.StartTime,
+                            Wind = 10,
+                            Sun = 10,
+                            Consumption = 20
+                        });
+                    }
                 }
                 db.Entry(simType).State = EntityState.Modified;
                 await db.SaveChangesAsync();
