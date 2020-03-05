@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,19 +15,20 @@ namespace PopulateSensorDatas
 
 
             #region SetSimulationStartDateTime
-            Console.WriteLine("Enter SimulationStartTime (dd/mm/YYYY hh:mm:ss)");
+            //Console.WriteLine("Enter SimulationStartTime (dd/mm/YYYY hh:mm:ss)");
 
-            string datestring = Console.ReadLine();
+            //string datestring = Console.ReadLine();
 
-            if (DateTime.TryParse(datestring, out DateTime dateValue))
-            {
-                Console.WriteLine("Converted '{0}' to {1}.", datestring, dateValue);
-                //dh.SimulationTime = dateValue;
-            }
-            else
-            {
-                Console.WriteLine("Unable to convert '{0}' to a date.", datestring);
-            }
+            //if (DateTime.TryParse(datestring, out DateTime dateValue))
+            //{
+            //    Console.WriteLine("Converted '{0}' to {1}.", datestring, dateValue);
+            //    //dh.SimulationTime = dateValue;
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Unable to convert '{0}' to a date.", datestring);
+            //}
+            Console.WriteLine("Data in DB");
 
             Console.ReadKey();
             #endregion  

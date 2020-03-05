@@ -6,21 +6,31 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using System.Diagnostics;
 
 namespace PopulateSensorDatas
 {
-    class DatabaseHelper
+    public class DatabaseHelper
     {
-        public int Factor;
+        #region variables
+        //initialize variables
+        static int Runs = 0;
 
-        static int SensorID = 1;
+        static List<int> SensorIDs = Enumerable.Range(1, 15).ToList();
 
-        public static DateTime SimulationTime;
+        public Timer timer = new Timer(PopulateDataBase, null, 0, 1000);
 
-        //Timer
-        readonly Timer t = new Timer(PopulateDataBase, null, 0, 1000);
+        static DateTime SimTime = new DateTime(2020, 03, 05, 07, 0, 0);
 
-        //SQL
+        static string StartTimeActual = DateTime.Now.ToString();
+
+        static DateTime SimEndTime = new DateTime(2020, 03, 05, 08, 0, 0);
+
+        static long Factor = 10;
+
+        #endregion  
+
+        #region sql
         static string CONNECTION = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FloatingCity;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public static SqlConnection con = new SqlConnection(CONNECTION);
@@ -30,59 +40,106 @@ namespace PopulateSensorDatas
             CommandText = "INSERT INTO [SensorDatas] ([RealTime], [SimulationTime], [SensorID], [SValue]) " +
                            "VALUES (@RealTime, @SimulationTime, @SensorID, @SValue)"
         };
+        #endregion  
 
         static public void PopulateDataBase(object stateinfo)
         {
-            Random random = new Random();
-
-            if (SensorID == 7)
+            //test for 20 times
+            if (SimTime < SimEndTime)
             {
-                SensorID = 1;
-            }
+                Stopwatch stopwatch = new Stopwatch();
 
-            float SValue = 0;
+                //initial start
+                if (stopwatch.IsRunning != true)
+                {
+                    stopwatch.Start();
+                }
 
-            switch (SensorID)
-            {
-                case 1:
-                    SValue = (float)SimulationValue(1, 1);
-                    break;
-                case 2:
-                    SValue = (float)SimulationValue(1, 1);
-                    break;
-                case 3:
-                    SValue = (float)SimulationValue(1, 1);
-                    break;
-                case 4:
-                    SValue = (float)SimulationValue(1, 1);
-                    break;
-                case 5:
-                    SValue = (float)SimulationValue(1, 1);
-                    break;
-                case 6:
-                    SValue = (float)SimulationValue(1, 1);
-                    break;
-                default:
-                    break;
-            }
-            double SimulationValue(float minparameter, float maxparameter)
-            {
-                return random.NextDouble() * (maxparameter - minparameter) + minparameter;
-            }
+                Random random = new Random();
 
-            //Check if connection is open. If already open, keep it that way
-            if (con == null || con.State == ConnectionState.Closed)
-            {
-                con.Open();
-            }
+                float SValue = 0;
 
-            command.Parameters.AddWithValue("@RealTime", DateTime.Now);
-            command.Parameters.AddWithValue("@SimulationTime", SimulationTime);
-            command.Parameters.AddWithValue("@SensorID", SensorID);
-            command.Parameters.AddWithValue("@SValue", SValue);
-            command.ExecuteNonQuery();
-            con.Close();
-            SensorID++;
+                double SimulationValue(float minparameter, float maxparameter)
+                {
+                    return random.NextDouble() * (maxparameter - minparameter) + minparameter;
+                }
+
+                //Check if connection is open. If already open, keep it that way
+                if (con == null || con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                foreach (var item in SensorIDs)
+                {
+                    command.Connection = con;
+                    command.Parameters.Clear();
+
+                    switch (item)
+                    {
+                        case 1:
+                            SValue = (float)SimulationValue(100, 500);
+                            break;
+                        case 2:
+                            SValue = (float)SimulationValue(100, 500);
+                            break;
+                        case 3:
+                            SValue = (float)SimulationValue(100, 500);
+                            break;
+                        case 4:
+                            SValue = (float)SimulationValue(5, 10);
+                            break;
+                        case 5:
+                            SValue = (float)SimulationValue(5, 10);
+                            break;
+                        case 6:
+                            SValue = (float)SimulationValue(5, 10);
+                            break;
+                        case 7:
+                            SValue = (float)SimulationValue(1000, 5000);
+                            break;
+                        case 8:
+                            SValue = (float)SimulationValue(1000, 5000);
+                            break;
+                        case 9:
+                            SValue = (float)SimulationValue(1000, 5000);
+                            break;
+                        case 10:
+                            SValue = (float)SimulationValue(1000, 5000);
+                            break;
+                        case 11:
+                            SValue = (float)SimulationValue(1000, 5000);
+                            break;
+                        case 12:
+                            SValue = (float)SimulationValue(1000, 5000);
+                            break;
+                        case 13:
+                            SValue = (float)SimulationValue(50, 100);
+                            break;
+                        case 14:
+                            SValue = (float)SimulationValue(50, 100);
+                            break;
+                        case 15:
+                            SValue = (float)SimulationValue(50, 100);
+                            break;
+                        default:
+                            break;
+                    }
+                    command.Parameters.AddWithValue("@RealTime", DateTime.Now);
+                    command.Parameters.AddWithValue("@SensorID", item);
+                    TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
+                    var result = TimeSpan.FromTicks(difference.Ticks * Factor);
+                    command.Parameters.AddWithValue("@SimulationTime", SimTime.Add(result));
+                    command.Parameters.AddWithValue("@SValue", SValue);
+                    if (con == null || con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    command.ExecuteNonQuery();
+                }
+                con.Close();
+                Runs++;
+            }
         }
 
     }
