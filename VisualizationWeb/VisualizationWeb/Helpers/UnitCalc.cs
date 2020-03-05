@@ -32,30 +32,31 @@ namespace VisualizationWeb.Helpers
             int digits = 0;
             string valueString = "";
 
-            while (value > 10)
+            while (value > 1)
             {
-                if (digits >= 9) break;
+                if (digits >= 3) break;
 
                 digits++;
-                value /= 10;
+                value /= 1000;
             }
 
-            if (digits >= 9)
+            if (digits >= 3)
             {
                 valueString = value.ToString() + " GW";
             }
-            else if (digits >= 6)
+            else if (digits == 2)
             {
                 valueString = value.ToString() + " MW";
             }
-            else if (digits < 3)
-            {
-                valueString = value.ToString() + " W";
-            }
-            else if (digits < 6)
+            else if (digits == 1)
             {
                 valueString = value.ToString() + " kW";
             }
+            else
+            {
+                valueString = value.ToString() + " W";
+            }
+            
            
 
             return valueString;
