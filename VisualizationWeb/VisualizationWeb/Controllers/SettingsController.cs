@@ -13,8 +13,7 @@ using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
-
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Benutzer,Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -25,14 +24,8 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: Settings
-        //[Authorize(Roles = "Gast, Admin")]
         public ActionResult Index()
         {
-            //if (User.IsInRole("Admin"))
-            //{
-            //    return RedirectToAction("Edit");
-            //}
-
             Setting setting = db.Settings.FirstOrDefault();
 
             if (setting == null)
@@ -66,6 +59,7 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: Settings/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             Setting setting = new Setting();
@@ -98,6 +92,7 @@ namespace VisualizationWeb.Controllers
         // POST: Settings/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive")] SettingVM settingVM)
         {
             if (ModelState.IsValid)
