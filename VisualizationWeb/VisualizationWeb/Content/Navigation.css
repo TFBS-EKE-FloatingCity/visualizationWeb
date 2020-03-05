@@ -1,6 +1,7 @@
 ﻿.navigation {
     width: 240px;
     height: 100%;
+    box-shadow: 0 0 12px -6px rgba(0, 0, 0, 0.4);
 }
 @media (max-width: 767px) {
     .navigation {

@@ -20,7 +20,7 @@ namespace VisualizationWeb.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Settings
-        [Authorize(Roles = "Gast")]
+        [Authorize(Roles = "Gast, Admin")]
         public ActionResult Index()
         {
             if (User.IsInRole("Admin"))
@@ -77,8 +77,8 @@ namespace VisualizationWeb.Controllers
             }
             SettingVM settingVM = new SettingVM {
                 SettingID = setting.SettingID,
-                SunActive = setting.SunActive,
                 WindActive = setting.WindActive,
+                SunActive = setting.SunActive,
                 ConsumptionActive = setting.ConsumptionActive,
                 SunMax = UnitCalc.NumberToPrefix(setting.SunMax),
                 WindMax = UnitCalc.NumberToPrefix(setting.WindMax),
