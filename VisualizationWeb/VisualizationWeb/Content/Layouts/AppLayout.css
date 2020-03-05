@@ -15,6 +15,7 @@
     overflow-y: auto;
 }
 
+
 .app-headline {
     display: flex;
     align-items: center;
@@ -43,3 +44,13 @@
     margin-right: 10px;
     font-family: "Glyphicons Halflings";
 }
+
+.app-headline .back-to-list {
+    color: black;
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.app-headline .back-to-list:hover, .app-headline .back-to-list:hover {
+    text-decoration: none;
+} 
