@@ -39,13 +39,13 @@ namespace VisualizationWeb.Helpers
 
             while (value > 10)
             {
-                if (digits >= 3) break;
+                if (digits >= 4) break;
 
                 digits++;
                 value /= 1000;
             }
 
-            string[] units = new string[] { "W", "kW", "MW", "GW" };
+            string[] units = new string[] { "W", "kW", "MW", "GW", "TW" };
 
             valueString = value.ToString() + " " + units[digits];
 
