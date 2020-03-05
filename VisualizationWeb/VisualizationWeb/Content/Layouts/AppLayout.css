@@ -24,10 +24,16 @@
     border-bottom: 1px solid #eaeaea;
 }
 
-.app-headline h2 {
+.app-headline--no-line {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.app-headline h2, .app-headline h3 {
     margin: 0px;
     margin-right: 15px;
 }
+
 .app-headline .btn.glyphicon {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     display: inline-flex;

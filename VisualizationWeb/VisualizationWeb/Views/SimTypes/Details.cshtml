@@ -55,6 +55,11 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-<h3>Simulation data</h3>
+<div class="app-headline app-headline--no-line">
+    <h3>Simulation Types</h3>
+    <div class="app-headline-actions">
+        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+    </div>
+</div>
 
 @Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
