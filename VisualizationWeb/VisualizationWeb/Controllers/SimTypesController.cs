@@ -15,6 +15,11 @@ namespace VisualizationWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public SimTypesController()
+        {
+            ViewBag.ActiveNav = "simulation";
+        }
+
         // GET: SimTypes
         public async Task<ActionResult> Index()
         {

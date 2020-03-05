@@ -6,10 +6,9 @@
 
 <div class="app-headline">
     <h2>Sensoren</h2>
-    <p>
-        @Html.ActionLink("To Add", "Create", new { }, new { @class = "btn btn-info" })
-    </p>
-    <hr />
+    <div class="app-headline-actions">
+        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+    </div>
 </div>
 
 
@@ -22,27 +21,27 @@
                     <div class="panel-body">
                         <table class="table ">
                             <tr>
-                                <th data-toggle="tooltip" data-placement="bottom" title="Das ist der Name des Sensor">@Html.DisplayNameFor(model => model.Title)</th>
+                                <th title="Das ist der Name des Sensor">@Html.DisplayNameFor(model => model.Title)</th>
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                             </tr>
                             <tr>
-                                <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Factor)</th>
+                                <th title=" ">@Html.DisplayNameFor(model => model.Factor)</th>
                                 <td>@Html.DisplayFor(modelItem => item.Factor)</td>
                             </tr>
                             <tr>
-                                <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Einheiten)</th>
+                                <th title=" ">@Html.DisplayNameFor(model => model.Einheiten)</th>
                                 <td>@Html.DisplayFor(modelItem => item.Einheiten)</td>
                             </tr>
                             <tr>
-                                <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.SCode)</th>
+                                <th title=" ">@Html.DisplayNameFor(model => model.SCode)</th>
                                 <td>@Html.DisplayFor(modelItem => item.SCode)</td>
                             </tr>
                             <tr>
-                                <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Prefix)</th>
+                                <th title=" ">@Html.DisplayNameFor(model => model.Prefix)</th>
                                 <td>@Html.DisplayFor(modelItem => item.Prefix)</td>
                             </tr>
                             <tr>
-                                <th data-toggle="tooltip" data-placement="right" title=" ">@Html.DisplayNameFor(model => model.Notes)</th>
+                                <th title=" ">@Html.DisplayNameFor(model => model.Notes)</th>
                                 <td>@Html.DisplayFor(modelItem => item.Notes)</td>
                             </tr>
                         </table>

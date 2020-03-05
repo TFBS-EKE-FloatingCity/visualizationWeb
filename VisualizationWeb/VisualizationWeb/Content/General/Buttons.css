@@ -1,3 +1,21 @@
 ﻿.btn {
     border-radius: 4px;
 }
+
+.btn-primary {
+    background-color: #1A73E8;
+    border-color: #1A73E8;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #1368d8;
+    border-color: #1368d8;
+}
+.btn-primary:active {
+    background-color: #0e5abf !important;
+    border-color: #0e5abf !important;
+}
+
+.btn-danger {
+    background-color: #d93025;
+    border-color: #d93025;
+}

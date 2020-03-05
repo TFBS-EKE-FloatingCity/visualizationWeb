@@ -179,6 +179,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APISensorsController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SimDatasController.cs" />
@@ -306,9 +307,13 @@
     <Content Include="Views\SimTypes\Details.cshtml" />
     <Content Include="Views\SimTypes\Edit.cshtml" />
     <Content Include="Views\SimTypes\Index.cshtml" />
+    <Content Include="Views\Dashboard.cshtml" />
+    <Content Include="Views\Charts\PieChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Charts\" />
+    <Folder Include="Views\Dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
