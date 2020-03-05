@@ -19,6 +19,11 @@ namespace VisualizationWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public SettingsController()
+        {
+            ViewBag.ActiveNav = "settings";
+        }
+
         // GET: Settings
         //[Authorize(Roles = "Gast, Admin")]
         public ActionResult Index()

@@ -16,6 +16,11 @@ namespace VisualizationWeb.Controllers
         
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public SensorsController()
+        {
+            ViewBag.ActiveNav = "sensor";
+        }
+
         // GET: Sensors
         public ActionResult Index()
         {
