@@ -42,7 +42,7 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             return View(simType);
         }
 
@@ -125,6 +125,7 @@ namespace VisualizationWeb.Controllers
 
             var t = simType.EndTime - simType.StartTime;
             int x = Convert.ToInt16(Math.Ceiling(t.TotalMinutes / simType.Interval.TotalMinutes));
+            Random random = new Random();
 
             var simtime = simType.StartTime;
 
@@ -134,9 +135,9 @@ namespace VisualizationWeb.Controllers
                 {
                     SimTime = simtime,
                     SimTypeID = simType.SimTypeID,
-                    Wind = 10,
-                    Sun = 10,
-                    Consumption = 20
+                    Wind = random.Next(100),
+                    Sun = random.Next(0, 100),
+                    Consumption = random.Next(10, 80),
                 });
 
                 simtime += simType.Interval;
@@ -165,12 +166,48 @@ namespace VisualizationWeb.Controllers
         // POST: SimTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id, string ReturnTo)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             SimType simType = await db.SimTypes.FindAsync(id);
             db.SimTypes.Remove(simType);
             await db.SaveChangesAsync();
-            return RedirectToAction(ReturnTo);
+            return RedirectToAction("Index");
+        }
+
+        //TODO
+
+        //// GET: SimTypes/Delete/5
+        //public async Task<ActionResult> DeletePos(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    SimType simType = await db.SimTypes.FindAsync(id);
+        //    if (simType == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    foreach (var item in simType.SimDatas.Where(x => x.SimTypeID == id))
+        //    {
+        //        db.SimDatas.Remove(item);
+        //    }
+
+        //    await db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
+
+
+        // POST: SimTypes/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmedPos(int id)
+        {
+            SimType simType = await db.SimTypes.FindAsync(id);
+            db.SimTypes.Remove(simType);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

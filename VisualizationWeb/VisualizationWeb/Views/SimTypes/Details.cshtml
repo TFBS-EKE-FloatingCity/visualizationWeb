@@ -62,10 +62,11 @@
     <h3>Simulation Types</h3>
     <div class="app-headline-actions">
         @Html.ActionLink("Create", "Edit", new { id = Model.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+        @*@Html.ActionLink(" ", "DeletePos", new { id = Model.SimTypeID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })*@
     </div>
 </div>
 
-@Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
+@Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimDataID))
 
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
