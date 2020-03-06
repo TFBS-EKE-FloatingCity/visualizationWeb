@@ -43,6 +43,8 @@ namespace VisualizationWeb.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.showGenerateButton = !db.SimDatas.Where(i => i.SimTypeID == simType.SimTypeID).Any();
+
             return View(simType);
         }
 
@@ -129,23 +131,26 @@ namespace VisualizationWeb.Controllers
 
             var simtime = simType.StartTime;
 
-            for (int i = 0; i < x + 1; i++)
+            if (!db.SimDatas.Where(i => i.SimTypeID == simType.SimTypeID).Any())
             {
-                db.SimDatas.Add(new SimData()
+                for (int i = 0; i < x + 1; i++)
                 {
-                    SimTime = simtime,
-                    SimTypeID = simType.SimTypeID,
-                    Wind = random.Next(100),
-                    Sun = random.Next(0, 100),
-                    Consumption = random.Next(10, 80),
-                });
+                    db.SimDatas.Add(new SimData()
+                    {
+                        SimTime = simtime,
+                        SimTypeID = simType.SimTypeID,
+                        Wind = random.Next(100),
+                        Sun = random.Next(0, 100),
+                        Consumption = random.Next(10, 80),
+                    });
 
-                simtime += simType.Interval;
+                    simtime += simType.Interval;
+                }
+                await db.SaveChangesAsync();   
             }
-            await db.SaveChangesAsync();
+            
 
-            string view = "Details/" + simType.SimTypeID.ToString();
-            return RedirectToAction(view);
+            return RedirectToAction("Details", new { id  });
         }
 
         // GET: SimTypes/Delete/5
@@ -176,27 +181,30 @@ namespace VisualizationWeb.Controllers
 
         //TODO
 
-        //// GET: SimTypes/Delete/5
-        //public async Task<ActionResult> DeletePos(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    SimType simType = await db.SimTypes.FindAsync(id);
-        //    if (simType == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+        // GET: SimTypes/Delete/5
+        public async Task<ActionResult> DeletePos(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SimType simType = await db.SimTypes.FindAsync(id);
+            if (simType == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    foreach (var item in simType.SimDatas.Where(x => x.SimTypeID == id))
-        //    {
-        //        db.SimDatas.Remove(item);
-        //    }
+            var simDatas = simType.SimDatas.Where(x => x.SimTypeID == id);
 
-        //    await db.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
+            if (simDatas == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            db.SimDatas.RemoveRange(simDatas);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details", new { id });
+        }
 
 
         // POST: SimTypes/Delete/5
