@@ -24,5 +24,6 @@ namespace VisualizationWeb.Models
         public double Consumption { get; set; }
 
         public virtual SimType SimType { get; set; }
+       
     }
 }
