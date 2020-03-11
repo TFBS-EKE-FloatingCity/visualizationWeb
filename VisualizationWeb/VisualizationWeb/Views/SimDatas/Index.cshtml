@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<VisualizationWeb.Models.SimData>
 
-
 <table class="table">
     <tr>
         <th>
@@ -15,16 +14,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Consumption) in %
         </th>
-        <th></th>
-    </tr>
-     <tr>
-        <td>
-            <a href="#" class="btn btn-sm btn-dashed" data-toggle="modal" data-target="#basicModal">Add Simulation Data</a>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <th>
+            @Html.ActionLink(" ", "Create", "SimDatas", new { id = ViewBag.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+        </th>
     </tr>
     @foreach (var item in Model)
     {
@@ -47,15 +39,6 @@
                     @Html.ActionLink(" ", "Delete", "SimDatas", new { id = item.SimDataID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-xs" })
                 </div>
             </td>
-        </tr>
-        <tr>
-            <td>
-                <a href="#" class="btn btn-sm btn-dashed" data-toggle="modal" data-target="#basicModal">Add Simulation Data</a>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
     }
 

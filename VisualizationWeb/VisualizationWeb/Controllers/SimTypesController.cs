@@ -42,7 +42,7 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.SimTypeID = id;
             ViewBag.showGenerateButton = !db.SimDatas.Where(i => i.SimTypeID == simType.SimTypeID).Any();
             ViewBag.showDeleteButton = db.SimDatas.Where(i => i.SimTypeID == simType.SimTypeID).Any();
 
