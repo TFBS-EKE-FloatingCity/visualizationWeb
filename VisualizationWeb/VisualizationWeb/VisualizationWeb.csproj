@@ -204,10 +204,6 @@
     <Compile Include="Migrations\202003050733457_update simtypes.Designer.cs">
       <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003111424317_tst.cs" />
-    <Compile Include="Migrations\202003111424317_tst.Designer.cs">
-      <DependentUpon>202003111424317_tst.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -244,6 +240,7 @@
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Objects\PortMultiplier.obj" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -256,6 +253,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\three.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -341,8 +339,8 @@
     <EmbeddedResource Include="Migrations\202003050733457_update simtypes.resx">
       <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003111424317_tst.resx">
-      <DependentUpon>202003111424317_tst.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003050755051_update senores.resx">
+      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
