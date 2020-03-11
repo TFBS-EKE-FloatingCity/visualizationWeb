@@ -12,7 +12,7 @@ namespace VisualizationWeb.Models
         public int SimDataID { get; set; }
         public int SimTypeID { get; set; }
         [Display(Name = "Simulationtime")]
-        public TimeSpan SimTime { get; set; }
+        public DateTime SimTime { get; set; }
         [Range(0.0, 100.0)]
         [Display(Name = "Maximum Wind")]
         public double Wind { get; set; }
