@@ -27,59 +27,72 @@ namespace VisualizationWeb.Controllers
         {
             var json = Request.Content.ReadAsStringAsync().Result;
             var account = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
-            foreach (var item in account)
+
+            JsonSerializer jsonSerializer = new JsonSerializer();
+
+            using (StreamWriter sw = new StreamWriter(Path.GetTempPath()))
+            using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                switch (item.Sensor)
-                {
-                    case 1:
-                        //do some magic
-                        break;
-                    case 2:
-                        //do some magic
-                        break;
-                    case 3:
-                        //do some magic
-                        break;
-                    case 4:
-                        //do some magic
-                        break;
-                    case 5:
-                        //do some magic
-                    case 6:
-                        //do some magic
-                        break;
-                    case 7:
-                        //do some magic
-                        break;
-                    case 8:
-                        //do some magic
-                        break;
-                    case 9:
-                        //do some magic
-                        break;
-                    case 10:
-                        //do some magic
-                        break;
-                    case 11:
-                        //do some magic
-                        break;
-                    case 12:
-                        //do some magic
-                        break;
-                    case 13:
-                        //do some magic
-                        break;
-                    case 14:
-                        //do some magic
-                        break;
-                    case 15:
-                        //do some magic
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
+                jsonSerializer.Serialize(writer, account);
             }
+
             return "";
+            //foreach (var item in account)
+            //{
+            //    switch (item.Sensor)
+            //    {
+            //        case 1:
+            //            //do some magic
+            //            break;
+            //        case 2:
+            //            //do some magic
+            //            break;
+            //        case 3:
+            //            //do some magic
+            //            break;
+            //        case 4:
+            //            //do some magic
+            //            break;
+            //        case 5:
+            //            //do some magic
+            //        case 6:
+            //            //do some magic
+            //            break;
+            //        case 7:
+            //            //do some magic
+            //            break;
+            //        case 8:
+            //            //do some magic
+            //            break;
+            //        case 9:
+            //            //do some magic
+            //            break;
+            //        case 10:
+            //            //do some magic
+            //            break;
+            //        case 11:
+            //            //do some magic
+            //            break;
+            //        case 12:
+            //            //do some magic
+            //            break;
+            //        case 13:
+            //            //do some magic
+            //            break;
+            //        case 14:
+            //            //do some magic
+            //            break;
+            //        case 15:
+            //            //do some magic
+            //            break;
+            //        default:
+            //            throw new NotImplementedException();
+            //    }
+            //}
+            //return "";
+
+
+
         }
 
         // GET: api/APISensors/5
