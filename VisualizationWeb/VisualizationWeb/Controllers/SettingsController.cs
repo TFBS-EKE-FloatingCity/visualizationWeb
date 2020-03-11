@@ -26,6 +26,11 @@ namespace VisualizationWeb.Controllers
         // GET: Settings
         public ActionResult Index()
         {
+            if(User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Edit");
+            }
+
             Setting setting = db.Settings.FirstOrDefault();
 
             if (setting == null)
