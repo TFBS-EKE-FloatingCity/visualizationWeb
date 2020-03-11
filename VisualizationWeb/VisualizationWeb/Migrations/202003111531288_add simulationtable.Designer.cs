@@ -7,13 +7,13 @@ namespace VisualizationWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class simulationTimeIDtoSimulationIDinSimModel : IMigrationMetadata
+    public sealed partial class addsimulationtable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(simulationTimeIDtoSimulationIDinSimModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addsimulationtable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003111455582_simulationTimeID to SimulationID in SimModel"; }
+            get { return "202003111531288_add simulationtable"; }
         }
         
         string IMigrationMetadata.Source
