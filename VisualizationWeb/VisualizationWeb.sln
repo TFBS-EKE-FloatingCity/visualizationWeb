@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualizationWeb", "Visuali
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulateSensorDatas", "PopulateSensorDatas\PopulateSensorDatas.csproj", "{408090CD-A556-4F5E-9178-9AA57A0CE50C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualisationTests", "VisualisationTests\VisualisationTests.csproj", "{5004BD9D-3367-4AA3-8D52-511F8C36361C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{408090CD-A556-4F5E-9178-9AA57A0CE50C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{408090CD-A556-4F5E-9178-9AA57A0CE50C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{408090CD-A556-4F5E-9178-9AA57A0CE50C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

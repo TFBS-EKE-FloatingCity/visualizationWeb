@@ -16,7 +16,7 @@ namespace VisualizationWeb.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: SimDatas
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string ReturnTo)
         {
             var simDatas = db.SimDatas.Include(s => s.SimType);
             return View(await simDatas.ToListAsync());
@@ -63,7 +63,7 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: SimDatas/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, string ReturnTo = "Index")
         {
             if (id == null)
             {
@@ -74,6 +74,7 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["ReturnTo"] = "../SimTypes/Details/" + simData.SimTypeID.ToString();
             ViewBag.SimTypeID = new SelectList(db.SimTypes, "SimTypeID", "Title", simData.SimTypeID);
             return View(simData);
         }
@@ -83,20 +84,20 @@ namespace VisualizationWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "SimDataID,SimTypeID,SimTime,Wind,Sun,Consumption")] SimData simData)
+        public async Task<ActionResult> Edit([Bind(Include = "SimDataID,SimTypeID,SimTime,Wind,Sun,Consumption")] SimData simData, string ReturnTo)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(simData).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(ReturnTo);
             }
             ViewBag.SimTypeID = new SelectList(db.SimTypes, "SimTypeID", "Title", simData.SimTypeID);
             return View(simData);
         }
 
         // GET: SimDatas/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id, string ReturnTo = "Index")
         {
             if (id == null)
             {
@@ -107,18 +108,20 @@ namespace VisualizationWeb.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["ReturnTo"] = "../SimTypes/Details/" + simData.SimTypeID.ToString();
             return View(simData);
         }
 
         // POST: SimDatas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id, string ReturnTo)
         {
             SimData simData = await db.SimDatas.FindAsync(id);
+            int sid = simData.SimTypeID;
             db.SimDatas.Remove(simData);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(ReturnTo);
         }
 
         protected override void Dispose(bool disposing)

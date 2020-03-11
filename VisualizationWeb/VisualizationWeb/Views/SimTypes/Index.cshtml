@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<VisualizationWeb.Models.SimType>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Simulation";
 }
 
-<h2>Simulation Types</h2>
+<div class="app-headline app-headline--no-line">
+    <h2>Simulation Types</h2>
+    <div class="app-headline-actions">
+        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -36,9 +38,8 @@
         </td>
         <td>
             <div class="actions-bar">
-                @Html.ActionLink(" ", "Edit", new { id = item.SimTypeID }, new { @class = "glyphicon glyphicon-pencil" })
-                @Html.ActionLink(" ", "Details", new { id = item.SimTypeID }, new { @class = "glyphicon glyphicon-eye-open" })
-                @Html.ActionLink(" ", "Delete", new { id = item.SimTypeID }, new { @class = "glyphicon glyphicon-trash" })
+                @Html.ActionLink(" ", "Details", new { id = item.SimTypeID }, new { title = "Details", @class = "glyphicon glyphicon-eye-open btn btn-default btn-sm" })
+                @Html.ActionLink(" ", "Delete", new { id = item.SimTypeID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })
             </div>
         </td>
     </tr>

@@ -179,6 +179,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APISensorsController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SimDatasController.cs" />
@@ -238,6 +239,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -292,7 +294,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Sensors\Create.cshtml" />
     <Content Include="Views\Sensors\Delete.cshtml" />
-    <Content Include="Views\Sensors\Details.cshtml" />
     <Content Include="Views\Sensors\Edit.cshtml" />
     <Content Include="Views\Sensors\Index.cshtml" />
     <Content Include="Views\Settings\Edit.cshtml" />
@@ -307,9 +308,13 @@
     <Content Include="Views\SimTypes\Details.cshtml" />
     <Content Include="Views\SimTypes\Edit.cshtml" />
     <Content Include="Views\SimTypes\Index.cshtml" />
+    <Content Include="Views\Dashboard.cshtml" />
+    <Content Include="Views\Charts\PieChart.cshtml" />
+    <Content Include="Views\SimDatas\EditModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

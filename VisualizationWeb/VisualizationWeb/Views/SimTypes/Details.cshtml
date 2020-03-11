@@ -4,17 +4,17 @@
     ViewBag.Title = "Details";
 }
 
+
+<div class="app-headline app-headline--no-line">
+    @Html.ActionLink(" ", "Index", new { }, new { @class = "glyphicon glyphicon-arrow-left back-to-list" })
     <h2>Simulation @Html.DisplayFor(model => model.Title)</h2>
+    <div class="app-headline-actions">
+        @Html.ActionLink("Edit", "EditHead", new { id = Model.SimTypeID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" })
+    </div>
+</div>
 
 <div>
     <dl class="dl-horizontal">
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.SimFactor)
@@ -57,9 +57,36 @@
         </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink(" ", "Edit", new { id = Model.SimTypeID }, new { @class = "glyphicon glyphicon-pencil" }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
-@Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
+<div class="app-headline app-headline--no-line">
+    <h3>Simulation Types</h3>
+    <div class="app-headline-actions">
+        @if (ViewBag.showGenerateButton)
+        {
+            @Html.ActionLink("Auto Generate", "Edit", new { id = Model.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+        }
+        @if (ViewBag.showDeleteButton)
+        {
+            @Html.ActionLink("Delete All", "DeletePos", new { id = Model.SimTypeID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })
+        }
+    </div>
+</div>
+
+@Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimDataID))
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Edit Simulation Data</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("../SimDatas/EditModal", new VisualizationWeb.Models.SimData { SimTypeID = Model.SimTypeID })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
