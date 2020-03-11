@@ -27,7 +27,100 @@ namespace VisualizationWeb.Controllers
         {
             var json = Request.Content.ReadAsStringAsync().Result;
             var account = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
+
+            string StartTimeActual = DateTime.Now.ToString();
+
+            DateTime SimStartTime = new DateTime(2020, 03, 05, 07, 0, 0);
+
+            int Factor = 10;
+
+            var account2 = new List<SensorData>();
+            foreach (var item in account)
+            {
+                string Value = Convert.ToString(item.Value0 + item.Value1, 2);
+
+                int finalValue = Convert.ToInt32(Value, 2);
+
+                foreach (var dataApi in account2)
+                {
+                    dataApi.SensorID = item.Sensor;
+                    dataApi.RealTime = DateTime.Now;
+                    dataApi.SValue = finalValue;
+                    TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
+                    var result = TimeSpan.FromTicks(difference.Ticks * Factor);
+                    dataApi.SimulationTime = SimStartTime.Add(result);
+                }
+            }
+
+
+            JsonSerializer jsonSerializer = new JsonSerializer();
+
+
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(Path.GetTempFileName(), "test.json")))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                jsonSerializer.Serialize(writer, account2);
+                //jsonSerializer.Serialize(writer, account);
+            }
+
             return "";
+            //foreach (var item in account)
+            //{
+            //    switch (item.Sensor)
+            //    {
+            //        case 1:
+            //            //do some magic
+            //            break;
+            //        case 2:
+            //            //do some magic
+            //            break;
+            //        case 3:
+            //            //do some magic
+            //            break;
+            //        case 4:
+            //            //do some magic
+            //            break;
+            //        case 5:
+            //            //do some magic
+            //        case 6:
+            //            //do some magic
+            //            break;
+            //        case 7:
+            //            //do some magic
+            //            break;
+            //        case 8:
+            //            //do some magic
+            //            break;
+            //        case 9:
+            //            //do some magic
+            //            break;
+            //        case 10:
+            //            //do some magic
+            //            break;
+            //        case 11:
+            //            //do some magic
+            //            break;
+            //        case 12:
+            //            //do some magic
+            //            break;
+            //        case 13:
+            //            //do some magic
+            //            break;
+            //        case 14:
+            //            //do some magic
+            //            break;
+            //        case 15:
+            //            //do some magic
+            //            break;
+            //        default:
+            //            throw new NotImplementedException();
+            //    }
+            //}
+            //return "";
+
+
+
         }
 
         // GET: api/APISensors/5
