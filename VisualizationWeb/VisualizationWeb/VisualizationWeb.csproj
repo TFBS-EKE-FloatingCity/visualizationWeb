@@ -208,6 +208,10 @@
     <Compile Include="Migrations\202003050755051_update senores.Designer.cs">
       <DependentUpon>202003050755051_update senores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003111455582_simulationTimeID to SimulationID in SimModel.cs" />
+    <Compile Include="Migrations\202003111455582_simulationTimeID to SimulationID in SimModel.Designer.cs">
+      <DependentUpon>202003111455582_simulationTimeID to SimulationID in SimModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -346,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003050755051_update senores.resx">
       <DependentUpon>202003050755051_update senores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003111455582_simulationTimeID to SimulationID in SimModel.resx">
+      <DependentUpon>202003111455582_simulationTimeID to SimulationID in SimModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

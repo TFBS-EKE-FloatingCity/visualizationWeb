@@ -16,6 +16,7 @@ namespace VisualizationWeb.Models
         public DateTime SimulationTime { get; set; }
         public int SensorID { get; set; }
         public double SValue { get; set; }
+        public int SimulationID { get; set; }
         public virtual Sensor Sensor { get; set; }
         public virtual Simulation Simulation { get; set; }
     }
