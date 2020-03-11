@@ -44,6 +44,7 @@ namespace VisualizationWeb.Controllers
             }
 
             ViewBag.showGenerateButton = !db.SimDatas.Where(i => i.SimTypeID == simType.SimTypeID).Any();
+            ViewBag.showDeleteButton = db.SimDatas.Where(i => i.SimTypeID == simType.SimTypeID).Any();
 
             return View(simType);
         }
@@ -106,7 +107,7 @@ namespace VisualizationWeb.Controllers
                 {
                     // TODO
                 }
-                
+
             }
             return View(simType);
         }
@@ -146,11 +147,11 @@ namespace VisualizationWeb.Controllers
 
                     simtime += simType.Interval;
                 }
-                await db.SaveChangesAsync();   
+                await db.SaveChangesAsync();
             }
-            
 
-            return RedirectToAction("Details", new { id  });
+
+            return RedirectToAction("Details", new { id });
         }
 
         // GET: SimTypes/Delete/5
@@ -208,7 +209,7 @@ namespace VisualizationWeb.Controllers
 
 
         // POST: SimTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeletePos")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmedPos(int id)
         {

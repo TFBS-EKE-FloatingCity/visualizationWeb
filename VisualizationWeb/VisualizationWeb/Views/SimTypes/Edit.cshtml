@@ -4,7 +4,10 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<div class="app-headline app-headline--no-line">
+    @Html.ActionLink(" ", "Details", "SimTypes", new { id = Model.SimTypeID }, new { @class = "glyphicon glyphicon-arrow-left back-to-list" })
+    <h2>Details</h2>
+</div>
 
 
 @using (Html.BeginForm("EditHead", "SimTypes", new { ReturnTo = ViewData["ReturnTo"] }))
@@ -68,10 +71,6 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

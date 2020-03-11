@@ -4,14 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-    
-    <div class="app-headline app-headline--no-line">
-        @Html.ActionLink(" ", "Index", new { }, new { @class = "glyphicon glyphicon-arrow-left back-to-list" })
-        <h2>Simulation @Html.DisplayFor(model => model.Title)</h2>
-        <div class="app-headline-actions">
-            @Html.ActionLink("Edit", "EditHead", new { id = Model.SimTypeID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" })
-        </div>
+
+<div class="app-headline app-headline--no-line">
+    @Html.ActionLink(" ", "Index", new { }, new { @class = "glyphicon glyphicon-arrow-left back-to-list" })
+    <h2>Simulation @Html.DisplayFor(model => model.Title)</h2>
+    <div class="app-headline-actions">
+        @Html.ActionLink("Edit", "EditHead", new { id = Model.SimTypeID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" })
     </div>
+</div>
 
 <div>
     <dl class="dl-horizontal">
@@ -65,7 +65,10 @@
         {
             @Html.ActionLink("Auto Generate", "Edit", new { id = Model.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
         }
-        @Html.ActionLink("Delete All", "DeletePos", new { id = Model.SimTypeID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })
+        @if (ViewBag.showDeleteButton)
+        {
+            @Html.ActionLink("Delete All", "DeletePos", new { id = Model.SimTypeID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })
+        }
     </div>
 </div>
 
