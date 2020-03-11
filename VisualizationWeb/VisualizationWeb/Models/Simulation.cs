@@ -16,7 +16,7 @@ namespace VisualizationWeb.Models
         [Display(Name = "Calculation factor")]
         public double SimFactor { get; set; }
         [Display(Name = "Start der Simulation")]
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         public virtual ICollection<SensorData> SensorDatas { get; set; }
     }

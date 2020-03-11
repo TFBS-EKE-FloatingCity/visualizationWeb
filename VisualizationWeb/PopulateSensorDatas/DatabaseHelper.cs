@@ -40,8 +40,8 @@ namespace PopulateSensorDatas
 
         static SqlCommand command = new SqlCommand
         {
-            CommandText = "INSERT INTO [SensorDatas] ([RealTime], [SimulationTime], [SensorID], [SValue]) " +
-                           "VALUES (@RealTime, @SimulationTime, @SensorID, @SValue)"
+            CommandText = "INSERT INTO [SensorDatas] ([RealTime], [SimulationTime], [SensorID], [SValue], [SimulationID]) " +
+                           "VALUES (@RealTime, @SimulationTime, @SensorID, @SValue, @1 )"
         };
         #endregion  
 
