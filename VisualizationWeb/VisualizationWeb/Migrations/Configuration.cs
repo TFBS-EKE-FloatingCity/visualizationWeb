@@ -20,7 +20,17 @@ namespace VisualizationWeb.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            
+
+            context.Simulations.AddOrUpdate(
+                new Simulation
+
+                {
+                    SimulationID = 1,
+                    SimTypeID = 1,
+                    RealStartTime = DateTime.Now,
+                    SimFactor = 10,
+                    StartTime = new DateTime(2020, 03, 05, 08, 0, 0)
+                });
 
             context.Sensors.AddOrUpdate(
                 new Sensor
