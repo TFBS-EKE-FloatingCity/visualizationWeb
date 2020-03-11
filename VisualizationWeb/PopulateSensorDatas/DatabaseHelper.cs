@@ -16,19 +16,22 @@ namespace PopulateSensorDatas
         //initialize variables
         static int Runs = 0;
 
+        //if you need more Sensors, set range and dont forget to add another case in PopulateDataBase-method
         static List<int> SensorIDs = Enumerable.Range(1, 15).ToList();
 
         public Timer timer = new Timer(PopulateDataBase, null, 0, 1000);
 
-        static DateTime SimTime = new DateTime(2020, 03, 05, 07, 0, 0);
+        //Simulation start time
+        static DateTime SimStartTime = new DateTime(2020, 03, 05, 07, 0, 0);
 
-        static string StartTimeActual = DateTime.Now.ToString();
-
+        //Simulation end time
         static DateTime SimEndTime = new DateTime(2020, 03, 05, 08, 0, 0);
 
+        //Factor from real to sim time
         static long Factor = 10;
 
-        #endregion  
+        static string StartTimeActual = DateTime.Now.ToString();
+        #endregion
 
         #region sql
         static string CONNECTION = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=FloatingCity;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -45,7 +48,7 @@ namespace PopulateSensorDatas
         static public void PopulateDataBase(object stateinfo)
         {
             //test for 20 times
-            if (SimTime < SimEndTime)
+            if (SimStartTime < SimEndTime)
             {
                 Stopwatch stopwatch = new Stopwatch();
 
@@ -75,6 +78,7 @@ namespace PopulateSensorDatas
                     command.Connection = con;
                     command.Parameters.Clear();
 
+                    //if you expanded the range in "static List<int> SensorIDs" you have to set the cases accordingly
                     switch (item)
                     {
                         case 1:
@@ -129,7 +133,7 @@ namespace PopulateSensorDatas
                     command.Parameters.AddWithValue("@SensorID", item);
                     TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
                     var result = TimeSpan.FromTicks(difference.Ticks * Factor);
-                    command.Parameters.AddWithValue("@SimulationTime", SimTime.Add(result));
+                    command.Parameters.AddWithValue("@SimulationTime", SimStartTime.Add(result));
                     command.Parameters.AddWithValue("@SValue", SValue);
                     if (con == null || con.State == ConnectionState.Closed)
                     {

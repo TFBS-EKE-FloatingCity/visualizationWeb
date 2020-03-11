@@ -178,6 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\APIDashboard.cs" />
     <Compile Include="Controllers\APISensorsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -207,6 +208,10 @@
     <Compile Include="Migrations\202003050755051_update senores.Designer.cs">
       <DependentUpon>202003050755051_update senores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003111249201_test.cs" />
+    <Compile Include="Migrations\202003111249201_test.Designer.cs">
+      <DependentUpon>202003111249201_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -216,6 +221,7 @@
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
+    <Compile Include="Models\Simulation.cs" />
     <Compile Include="Models\ViewModel\SettingVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -310,12 +316,13 @@
     <Content Include="Views\SimTypes\Edit.cshtml" />
     <Content Include="Views\SimTypes\Index.cshtml" />
     <Content Include="Views\Dashboard.cshtml" />
-    <Content Include="Views\Charts\PieChart.cshtml" />
+    <Content Include="Views\Charts\GeneratorsChart.cshtml" />
     <Content Include="Views\SimDatas\EditModal.cshtml" />
+    <Content Include="Views\Charts\PumpChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\APISimData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -342,6 +349,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003050755051_update senores.resx">
       <DependentUpon>202003050755051_update senores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003111249201_test.resx">
+      <DependentUpon>202003111249201_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
