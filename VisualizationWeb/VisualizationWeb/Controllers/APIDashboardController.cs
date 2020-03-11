@@ -16,15 +16,16 @@ using VisualizationWeb.Models;
 namespace VisualizationWeb.Controllers
 {
     [RoutePrefix("API/Dashboard")]
-    public class APIDashboard : ApiController
+    public class APIDashboardController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-       // GET: api/APISensors
-       [Route("")]
-       [HttpPost]
-        public string GetSensors()
+        // GET: API/Dashboard
+        [Route("GetCurrentGeneratorsData")]
+        [HttpPost]
+        public string GetCurrentGeneratorsData()
         {
+
             return "MyTest";
         }
     }
