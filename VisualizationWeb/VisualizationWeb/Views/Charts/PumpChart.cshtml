@@ -1,4 +1,4 @@
-﻿<canvas id="pieChart" width="400" height="400"></canvas>
+﻿<canvas id="PumpChart" width="400" height="400"></canvas>
 
 <br />
 <button id="randomizeData" class="btn btn-xs btn-primary">Randomize Data</button>
@@ -54,7 +54,7 @@
     };
 
     window.onload = function () {
-        var ctx = document.getElementById('pieChart').getContext('2d');
+        var ctx = document.getElementById('PumpChart').getContext('2d');
         window.myPie = new Chart(ctx, config);
     };
 
