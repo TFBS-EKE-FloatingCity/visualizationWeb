@@ -38,9 +38,10 @@ namespace VisualizationWeb.Controllers
         //}
 
         // GET: SimDatas/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.SimTypeID = new SelectList(db.SimTypes, "SimTypeID", "Title");
+            ViewBag.SimTypeID = new SelectList(db.SimTypes, "SimTypeID", "Title", id);
+            ViewData["ReturnTo"] = "../SimTypes/Details/" + id.ToString();
             return View();
         }
 
@@ -49,17 +50,17 @@ namespace VisualizationWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "SimDataID,SimTypeID,SimTime,Wind,Sun,Consumption")] SimData simData)
+        public async Task<ActionResult> Create([Bind(Include = "SimDataID,SimTypeID,SimTime,Wind,Sun,Consumption")] SimData simData, string ReturnTo)
         {
             if (ModelState.IsValid)
             {
                 db.SimDatas.Add(simData);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(ReturnTo);
             }
 
             ViewBag.SimTypeID = new SelectList(db.SimTypes, "SimTypeID", "Title", simData.SimTypeID);
-            return View(simData);
+            return View("../SimTypes/Details/", simData);
         }
 
         // GET: SimDatas/Edit/5
