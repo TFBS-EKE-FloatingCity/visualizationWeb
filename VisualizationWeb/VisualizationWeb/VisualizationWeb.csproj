@@ -178,7 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\APIDashboard.cs" />
+    <Compile Include="Controllers\APIDashboardController.cs" />
     <Compile Include="Controllers\APISensorsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -204,13 +204,9 @@
     <Compile Include="Migrations\202003050733457_update simtypes.Designer.cs">
       <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003050755051_update senores.cs" />
-    <Compile Include="Migrations\202003050755051_update senores.Designer.cs">
-      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003111249201_test.cs" />
-    <Compile Include="Migrations\202003111249201_test.Designer.cs">
-      <DependentUpon>202003111249201_test.cs</DependentUpon>
+    <Compile Include="Migrations\202003111424317_tst.cs" />
+    <Compile Include="Migrations\202003111424317_tst.Designer.cs">
+      <DependentUpon>202003111424317_tst.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -345,11 +341,8 @@
     <EmbeddedResource Include="Migrations\202003050733457_update simtypes.resx">
       <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003050755051_update senores.resx">
-      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003111249201_test.resx">
-      <DependentUpon>202003111249201_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003111424317_tst.resx">
+      <DependentUpon>202003111424317_tst.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
