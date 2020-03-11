@@ -27,13 +27,14 @@ namespace VisualizationWeb.Controllers
         {
             var json = Request.Content.ReadAsStringAsync().Result;
             var account = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
-
+            
             JsonSerializer jsonSerializer = new JsonSerializer();
 
-            using (StreamWriter sw = new StreamWriter(Path.GetTempPath()))
+            using (StreamWriter sw = new StreamWriter(Path.Combine(Path.GetTempPath(), "Test.json")))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
                 jsonSerializer.Serialize(writer, account);
+                
             }
 
             return "";
