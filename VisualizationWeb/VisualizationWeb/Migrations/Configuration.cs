@@ -20,6 +20,8 @@ namespace VisualizationWeb.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            
+
             context.Sensors.AddOrUpdate(
                 new Sensor
                 {
