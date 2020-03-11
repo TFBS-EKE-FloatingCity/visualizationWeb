@@ -193,9 +193,9 @@ namespace VisualizationWeb.Migrations
                     Title = "Sun",
                     SimFactor = 10,
                     Notes = "Testing Sun",
-                    StartTime = new TimeSpan(07, 00, 00),
+                    StartTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Interval = new TimeSpan(01, 00, 00),
-                    EndTime = new TimeSpan(12, 00, 00),
+                    EndTime = new DateTime(2020, 03, 05, 08, 0, 0),
                 },
                 new SimType
                 {
@@ -203,9 +203,9 @@ namespace VisualizationWeb.Migrations
                     Title = "Wind",
                     SimFactor = 10,
                     Notes = "Testing Wind",
-                    StartTime = new TimeSpan(09, 00, 00),
+                    StartTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Interval = new TimeSpan(00, 30, 00),
-                    EndTime = new TimeSpan(15, 00, 00),
+                    EndTime = new DateTime(2020, 03, 05, 08, 0, 0),
                 },
                 new SimType
                 {
@@ -213,9 +213,9 @@ namespace VisualizationWeb.Migrations
                     Title = "Sun",
                     SimFactor = 10,
                     Notes = "Testing Sun",
-                    StartTime = new TimeSpan(07, 00, 00),
+                    StartTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Interval = new TimeSpan(01, 00, 00),
-                    EndTime = new TimeSpan(18, 00, 00),
+                    EndTime = new DateTime(2020, 03, 05, 08, 0, 0),
                 },
                 new SimType
                 {
@@ -223,9 +223,9 @@ namespace VisualizationWeb.Migrations
                     Title = "Wind",
                     SimFactor = 10,
                     Notes = "Testing Wind",
-                    StartTime = new TimeSpan(08, 00, 00),
+                    StartTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Interval = new TimeSpan(01, 00, 00),
-                    EndTime = new TimeSpan(20, 00, 00),
+                    EndTime = new DateTime(2020, 03, 05, 08, 0, 0),
                 }
             );
 
@@ -234,7 +234,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 1,
-                    SimTime = new TimeSpan(07, 00, 00),
+                    SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 10,
                     Sun = 10,
                     Consumption = 70,
@@ -243,7 +243,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 2,
-                    SimTime = new TimeSpan(08, 00, 00),
+                    SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 20,
                     Sun = 25,
                     Consumption = 65,
@@ -252,7 +252,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 3,
-                    SimTime = new TimeSpan(09, 00, 00),
+                    SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 30,
                     Sun = 40,
                     Consumption = 50,
@@ -261,7 +261,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 4,
-                    SimTime = new TimeSpan(10, 00, 00),
+                    SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 30,
                     Sun = 45,
                     Consumption = 45,
@@ -270,7 +270,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 5,
-                    SimTime = new TimeSpan(11, 00, 00),
+                    SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 35,
                     Sun = 65,
                     Consumption = 60,
@@ -279,7 +279,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 6,
-                    SimTime = new TimeSpan(12, 00, 00),
+                    SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 30,
                     Sun = 70,
                     Consumption = 70,
