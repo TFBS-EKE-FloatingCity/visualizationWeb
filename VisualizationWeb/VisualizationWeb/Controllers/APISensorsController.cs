@@ -28,12 +28,40 @@ namespace VisualizationWeb.Controllers
             var json = Request.Content.ReadAsStringAsync().Result;
             var account = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
 
+            string StartTimeActual = DateTime.Now.ToString();
+
+            DateTime SimStartTime = new DateTime(2020, 03, 05, 07, 0, 0);
+
+            int Factor = 10;
+
+            var account2 = new List<SensorData>();
+            foreach (var item in account)
+            {
+                string Value = Convert.ToString(item.Value0 + item.Value1, 2);
+
+                int finalValue = Convert.ToInt32(Value, 2);
+
+                foreach (var dataApi in account2)
+                {
+                    dataApi.SensorID = item.Sensor;
+                    dataApi.RealTime = DateTime.Now;
+                    dataApi.SValue = finalValue;
+                    TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
+                    var result = TimeSpan.FromTicks(difference.Ticks * Factor);
+                    dataApi.SimulationTime = SimStartTime.Add(result);
+                }
+            }
+
+
             JsonSerializer jsonSerializer = new JsonSerializer();
 
-            using (StreamWriter sw = new StreamWriter(Path.GetTempPath()))
+
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(Path.GetTempFileName(), "test.json")))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                jsonSerializer.Serialize(writer, account);
+                jsonSerializer.Serialize(writer, account2);
+                //jsonSerializer.Serialize(writer, account);
             }
 
             return "";
