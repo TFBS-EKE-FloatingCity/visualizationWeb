@@ -9,7 +9,6 @@ namespace VisualizationWeb.Models
     public class Simulation
     {
         [Key]
-        public int SimulationTimeID { get; set; }
         public int SimTypeID { get; set; }
         [Display(Name ="Echte Start Zeit")]
         public DateTime RealStartTime { get; set; }
