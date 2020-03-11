@@ -19,3 +19,8 @@
     background-color: #d93025;
     border-color: #d93025;
 }
+
+.btn-dashed {
+    color: #2b2b2b;
+    border: 1px dashed #8a8a8a;
+}

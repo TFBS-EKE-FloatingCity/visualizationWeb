@@ -17,29 +17,46 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
+     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.SimTime)
+            <a href="#" class="btn btn-sm btn-dashed" data-toggle="modal" data-target="#basicModal">Add Simulation Data</a>
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Wind)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sun)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Consumption)
-        </td>
-        <td>
-            <div class="actions-bar">
-                @Html.ActionLink(" ", "Edit", new { id = item.SimDataID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" })
-                @Html.ActionLink(" ", "Details", new { id = item.SimDataID }, new { title = "Details", @class = "glyphicon glyphicon-eye-open btn btn-default btn-sm" })
-                @Html.ActionLink(" ", "Delete", new { id = item.SimDataID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })
-            </div>
-        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SimTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wind)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sun)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consumption)
+            </td>
+            <td>
+                <div class="actions-bar">
+                    @Html.ActionLink(" ", "Edit", "SimDatas", new { id = item.SimDataID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-xs" })
+                    @Html.ActionLink(" ", "Delete", "SimDatas", new { id = item.SimDataID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-xs" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="#" class="btn btn-sm btn-dashed" data-toggle="modal" data-target="#basicModal">Add Simulation Data</a>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    }
 
 </table>
