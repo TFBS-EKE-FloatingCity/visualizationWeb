@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace VisualizationWeb.Models
@@ -10,21 +12,34 @@ namespace VisualizationWeb.Models
     {
         [Key]
         public int SensorDataID { get; set; }
+
         [Display(Name = "Echtzeit")]
         public DateTime RealTime { get; set; }
+
         [Display(Name = "Simulationszeit")]
         public DateTime SimulationTime { get; set; }
+
         public int SensorID { get; set; }
+
         public double SValue { get; set; }
+
         public int SimulationID { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Sensor Sensor { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Simulation Simulation { get; set; }
     }
 
     public class SensorDataApi
     {
         public int Sensor { get; set; }
+
         public int Value0 { get; set; }
+
         public int Value1 { get; set; }
     }
    
