@@ -23,10 +23,9 @@ namespace VisualizationWeb.Controllers
         // GET: API/Dashboard
         [Route("GetCurrentGeneratorsData")]
         [HttpPost]
-        public string GetCurrentGeneratorsData()
+        public SensorData GetCurrentGeneratorsData()
         {
-
-            return "MyTest";
+            return db.SensorDatas.FirstOrDefault(); ;
         }
     }
 }
