@@ -1,10 +1,13 @@
-﻿<canvas id="GeneratorsChart" width="400" height="400"></canvas>
+﻿<h3>Current Generator efficiency (in W)</h3>
+<canvas id="GeneratorsChart" width="400" height="400"></canvas>
 
 <script>
     // Build Chart
     var GeneratorChartConfig = {
         type: 'bar',
-        data: [],
+        data: {
+            datasets: []
+        },
         options: {
             responsive: true
         }
@@ -22,9 +25,14 @@
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 var data = JSON.parse(data)
-                data.map(function (element) {
-                    GeneratorChartConfig.data.push(element.SValue);
+                data.map(function (element, i) {
+                    GeneratorChartConfig.data.datasets.push({
+                        backgroundColor: "rgb(75, 192, 192)",
+                        data: [element.SValue],
+                        label: "Generator " + (i + 1)
+                    });
                 })
+                console.log(GeneratorChartConfig);
                 window.generatorChart = new Chart(ctx, GeneratorChartConfig);
             },
             error: function (jqXhr, textStatus, errorThrown) {
