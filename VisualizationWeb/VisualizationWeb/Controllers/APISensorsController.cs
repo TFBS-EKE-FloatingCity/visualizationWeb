@@ -32,32 +32,45 @@ namespace VisualizationWeb.Controllers
 
             DateTime SimStartTime = new DateTime(2020, 03, 05, 07, 0, 0);
 
+            Random rnd = new Random();
+
             int Factor = 10;
 
             var account2 = new List<SensorData>();
+
+            Simulation simulation = new Simulation();
+            simulation.StartTime = SimStartTime;
+            simulation.RealStartTime = DateTime.Now;
+            simulation.SimTypeID = 1;
+            simulation.SimFactor = Factor;
+            db.Simulations.Add(simulation);
+            db.SaveChanges();
+
             foreach (var item in account)
             {
                 string Value = Convert.ToString(item.Value0 + item.Value1, 2);
 
                 int finalValue = Convert.ToInt32(Value, 2);
-
-                foreach (var dataApi in account2)
+                TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
+                var result = TimeSpan.FromTicks(difference.Ticks * Factor);
+                SensorData sensorData = new SensorData()
                 {
-                    dataApi.SensorID = item.Sensor;
-                    dataApi.RealTime = DateTime.Now;
-                    dataApi.SValue = finalValue;
-                    TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
-                    var result = TimeSpan.FromTicks(difference.Ticks * Factor);
-                    dataApi.SimulationTime = SimStartTime.Add(result);
-                }
+                    SensorID =  item.Sensor > 15 ? rnd.Next(1, 15) : item.Sensor,
+                    RealTime = DateTime.Now,
+                    SValue = finalValue,
+                    SimulationID = simulation.SimulationID,
+                    SimulationTime = SimStartTime.Add(result),
+                    
+                };
+                account2.Add(sensorData);
             }
-
-
+            db.SensorDatas.AddRange(account2);
+            db.SaveChanges();
             JsonSerializer jsonSerializer = new JsonSerializer();
 
+         
 
-
-            using (StreamWriter sw = new StreamWriter(Path.Combine(Path.GetTempFileName(), "test.json")))
+            using (StreamWriter sw = new StreamWriter(Path.GetTempFileName()))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
                 jsonSerializer.Serialize(writer, account2);

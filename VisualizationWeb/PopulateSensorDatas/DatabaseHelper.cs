@@ -135,6 +135,7 @@ namespace PopulateSensorDatas
                     var result = TimeSpan.FromTicks(difference.Ticks * Factor);
                     command.Parameters.AddWithValue("@SimulationTime", SimStartTime.Add(result));
                     command.Parameters.AddWithValue("@SValue", SValue);
+                    command.Parameters.AddWithValue("@1", 1);
                     if (con == null || con.State == ConnectionState.Closed)
                     {
                         con.Open();

@@ -23,9 +23,9 @@ namespace VisualizationWeb.Controllers
         // GET: API/Dashboard
         [Route("GetCurrentGeneratorsData")]
         [HttpPost]
-        public SensorData GetCurrentGeneratorsData()
+        public string GetCurrentGeneratorsData()
         {
-            return db.SensorDatas.FirstOrDefault(); ;
+            return JsonConvert.SerializeObject(db.SensorDatas.Where(s => (s.SensorID == 10) || (s.SensorID == 11) || (s.SensorID == 12)).Take(3).ToList());
         }
     }
 }
