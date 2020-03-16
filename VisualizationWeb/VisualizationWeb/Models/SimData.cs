@@ -12,6 +12,8 @@ namespace VisualizationWeb.Models
         public int SimDataID { get; set; }
         public int SimTypeID { get; set; }
         [Display(Name = "Simulationtime")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime SimTime { get; set; }
         [Range(0.0, 100.0)]
         [Display(Name = "Maximum Wind")]
