@@ -192,6 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SeedSimHelper.cs" />
+    <Compile Include="Helpers\SimulationHelper.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Migrations\202002261351087_create database.cs" />
     <Compile Include="Migrations\202002261351087_create database.Designer.cs">
@@ -213,6 +214,14 @@
     <Compile Include="Migrations\202003111531288_add simulationtable.Designer.cs">
       <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.cs" />
+    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.Designer.cs">
+      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261441534_RemoveSimulationModel.cs" />
+    <Compile Include="Migrations\202003261441534_RemoveSimulationModel.Designer.cs">
+      <DependentUpon>202003261441534_RemoveSimulationModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -222,7 +231,6 @@
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
-    <Compile Include="Models\Simulation.cs" />
     <Compile Include="Models\ViewModel\SettingVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -355,6 +363,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003111531288_add simulationtable.resx">
       <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261402267_fix Simdata und SensorData Model.resx">
+      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261441534_RemoveSimulationModel.resx">
+      <DependentUpon>202003261441534_RemoveSimulationModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

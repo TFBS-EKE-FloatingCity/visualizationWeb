@@ -21,17 +21,6 @@ namespace VisualizationWeb.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-            context.Simulations.AddOrUpdate(
-                new Simulation
-                {
-                    SimulationID = 1,
-                    SimTypeID = 1,
-                    RealStartTime = DateTime.Now,
-                    SimFactor = 10,
-                    StartTime = new DateTime(2020, 03, 05, 08, 0, 0)
-                }
-            );
-
             context.Sensors.AddOrUpdate(
                 new Sensor
                 {
@@ -228,11 +217,13 @@ namespace VisualizationWeb.Migrations
                 }
             );
 
+
             context.SimDatas.AddOrUpdate(
                 new SimData
                 {
                     SimTypeID = 1,
                     SimDataID = 1,
+                    RealTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 10,
                     Sun = 10,
@@ -242,6 +233,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 2,
+                    RealTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 20,
                     Sun = 25,
@@ -251,6 +243,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 3,
+                    RealTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 30,
                     Sun = 40,
@@ -260,6 +253,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 4,
+                    RealTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 30,
                     Sun = 45,
@@ -269,6 +263,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 5,
+                    RealTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 35,
                     Sun = 65,
@@ -278,6 +273,7 @@ namespace VisualizationWeb.Migrations
                 {
                     SimTypeID = 1,
                     SimDataID = 6,
+                    RealTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     SimTime = new DateTime(2020, 03, 05, 08, 0, 0),
                     Wind = 30,
                     Sun = 70,

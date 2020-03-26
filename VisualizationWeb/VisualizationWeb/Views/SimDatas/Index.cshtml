@@ -15,7 +15,10 @@
             @Html.DisplayNameFor(model => model.Consumption) in %
         </th>
         <th>
-            @Html.ActionLink(" ", "Create", "SimDatas", new { id = ViewBag.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+            @if (ViewBag.showDeleteButton)
+            {
+                @Html.ActionLink(" ", "Create", "SimDatas", new { id = ViewBag.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+            }
         </th>
     </tr>
     @foreach (var item in Model)
