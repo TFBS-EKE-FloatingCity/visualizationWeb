@@ -38,12 +38,6 @@ namespace VisualizationWeb.Controllers
 
             var account2 = new List<SensorData>();
 
-            Simulation simulation = new Simulation();
-            simulation.StartTime = SimStartTime;
-            simulation.RealStartTime = DateTime.Now;
-            simulation.SimTypeID = 1;
-            simulation.SimFactor = Factor;
-            db.Simulations.Add(simulation);
             db.SaveChanges();
 
             foreach (var item in account)

@@ -33,11 +33,6 @@ namespace VisualizationWeb.Models
         
         [Display(Name = "Echtzeit")]
         public DateTime RealTime { get; set; }
-        
-        public int SimulationID { get; set; }
-
-        [JsonIgnore]
-        public virtual Simulation Simulation { get; set; }
 
         [JsonIgnore]
         public virtual SimType SimType { get; set; }

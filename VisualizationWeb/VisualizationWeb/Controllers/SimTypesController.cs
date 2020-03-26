@@ -143,6 +143,7 @@ namespace VisualizationWeb.Controllers
                         Wind = random.Next(100),
                         Sun = random.Next(0, 100),
                         Consumption = random.Next(10, 80),
+                        RealTime = DateTime.Now,
                     });
 
                     simtime += simType.Interval;
