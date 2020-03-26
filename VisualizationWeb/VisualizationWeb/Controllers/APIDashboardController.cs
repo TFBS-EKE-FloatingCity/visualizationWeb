@@ -25,7 +25,7 @@ namespace VisualizationWeb.Controllers
         [HttpPost]
         public string GetCurrentGeneratorsData()
         {
-            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.RealTime).Where(s => (s.SensorID == 10) || (s.SensorID == 11) || (s.SensorID == 12)).Take(3).ToList());
+            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 10) || (s.SensorID == 11) || (s.SensorID == 12)).Take(3).ToList());
         }
         
         // GET: API/Dashboard
@@ -33,7 +33,7 @@ namespace VisualizationWeb.Controllers
         [HttpPost]
         public string GetCurrentPumpsData()
         {
-            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.RealTime).Where(s => (s.SensorID == 13) || (s.SensorID == 14) || (s.SensorID == 15)).Take(3).ToList());
+            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 13) || (s.SensorID == 14) || (s.SensorID == 15)).Take(3).ToList());
         }
     }
 }
