@@ -172,7 +172,6 @@ namespace VisualizationWeb.Migrations
                     Prefix = "",
                     Notes = ""
                 }
-
             );
 
             context.SimTypes.AddOrUpdate(
