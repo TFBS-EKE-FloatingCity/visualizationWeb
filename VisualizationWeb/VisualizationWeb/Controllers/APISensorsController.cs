@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
 
 namespace VisualizationWeb.Controllers
@@ -23,113 +24,31 @@ namespace VisualizationWeb.Controllers
         // GET: api/APISensors
         [Route("")]
         [HttpPost]
-        public string GetSensors()
+        public List<SimData> GetSensors()
         {
             var json = Request.Content.ReadAsStringAsync().Result;
-            var account = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
+            var sensorData = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
 
-            string StartTimeActual = DateTime.Now.ToString();
-
-            DateTime SimStartTime = new DateTime(2020, 03, 05, 07, 0, 0);
-
-            Random rnd = new Random();
-
-            int Factor = 10;
-
-            var account2 = new List<SensorData>();
-
-            db.SaveChanges();
-
-            foreach (var item in account)
+            // Process input data
+            foreach(var item in sensorData)
             {
                 string Value = Convert.ToString(item.Value0 + item.Value1, 2);
-
                 int finalValue = Convert.ToInt32(Value, 2);
-                TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
-                var result = TimeSpan.FromTicks(difference.Ticks * Factor);
-                /*
-                SensorData sensorData = new SensorData()
+                // TODO: add magic convertion here
+
+                var data = new SensorData
                 {
-                    SensorID =  item.Sensor > 15 ? rnd.Next(1, 15) : item.Sensor,
-                    RealTime = DateTime.Now,
-                    SValue = finalValue,
-                    SimulationID = simulation.SimulationID,
-                    SimulationTime = SimStartTime.Add(result),
-                    
+                    SensorID = item.Sensor,
+                    MeasureTime = new DateTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).Ticks + item.Timestamp * TimeSpan.TicksPerSecond),
+                    SValue = finalValue
                 };
-                account2.Add(sensorData);
-                */
-            }
-            db.SensorDatas.AddRange(account2);
-            db.SaveChanges();
-            JsonSerializer jsonSerializer = new JsonSerializer();
-
-         
-
-            using (StreamWriter sw = new StreamWriter(Path.GetTempFileName()))
-            using (JsonWriter writer = new JsonTextWriter(sw))
-            {
-                jsonSerializer.Serialize(writer, account2);
-                //jsonSerializer.Serialize(writer, account);
             }
 
-            return "";
-            //foreach (var item in account)
-            //{
-            //    switch (item.Sensor)
-            //    {
-            //        case 1:
-            //            //do some magic
-            //            break;
-            //        case 2:
-            //            //do some magic
-            //            break;
-            //        case 3:
-            //            //do some magic
-            //            break;
-            //        case 4:
-            //            //do some magic
-            //            break;
-            //        case 5:
-            //            //do some magic
-            //        case 6:
-            //            //do some magic
-            //            break;
-            //        case 7:
-            //            //do some magic
-            //            break;
-            //        case 8:
-            //            //do some magic
-            //            break;
-            //        case 9:
-            //            //do some magic
-            //            break;
-            //        case 10:
-            //            //do some magic
-            //            break;
-            //        case 11:
-            //            //do some magic
-            //            break;
-            //        case 12:
-            //            //do some magic
-            //            break;
-            //        case 13:
-            //            //do some magic
-            //            break;
-            //        case 14:
-            //            //do some magic
-            //            break;
-            //        case 15:
-            //            //do some magic
-            //            break;
-            //        default:
-            //            throw new NotImplementedException();
-            //    }
-            //}
-            //return "";
+            var simulationHelper = new SimulationHelper();
+            var result = simulationHelper.GetSimulationData();
+            simulationHelper.Dispose();
 
-
-
+            return result;
         }
 
         // GET: api/APISensors/5

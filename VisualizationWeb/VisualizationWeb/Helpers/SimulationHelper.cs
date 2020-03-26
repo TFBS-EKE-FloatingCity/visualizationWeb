@@ -10,9 +10,26 @@ namespace VisualizationWeb.Helpers
     public class SimulationHelper : IDisposable
     {
 
-        public async Task<List<SimData>> GetSimulationData()
+        public List<SimData> GetSimulationData()
         {
-            return null;
+            var result = new List<SimData>();
+
+            // TODO: Load the data from the database!!
+            var random = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                result.Add(new SimData()
+                {
+                    Consumption = random.Next(0, 100),
+                    Sun = random.Next(0, 100),
+                    Wind = random.Next(0, 100),
+                    RealTime = DateTime.Now,
+                    SimTime = DateTime.Now,
+                    SimTypeID = 1
+                });
+            }
+
+            return result;
         }
 
         public void Dispose()

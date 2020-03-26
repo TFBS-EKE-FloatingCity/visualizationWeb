@@ -31,6 +31,8 @@ namespace VisualizationWeb.Models
         public int Value0 { get; set; }
 
         public int Value1 { get; set; }
+
+        public int Timestamp { get; set; } 
     }
    
 }
