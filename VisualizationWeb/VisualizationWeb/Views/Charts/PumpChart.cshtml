@@ -1,95 +1,66 @@
-﻿<canvas id="PumpChart" width="400" height="400"></canvas>
-
-<br />
-<button id="randomizeData" class="btn btn-xs btn-primary">Randomize Data</button>
-<button id="addDataset" class="btn btn-xs btn-primary">Add Dataset</button>
-<button id="removeDataset" class="btn btn-xs btn-danger">Remove Dataset</button>
+﻿<h4>Pump efficiency (in W)</h4>
+<canvas id="PumpsChart" width="400" height="350"></canvas>
 
 <script>
-    window.chartColors = {
-        red: 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green: 'rgb(75, 192, 192)',
-        blue: 'rgb(54, 162, 235)',
-        purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(201, 203, 207)'
-    };
-
-    var randomScalingFactor = function () {
-        return Math.round(Math.random() * 100);
-    };
-
-    var config = {
-        type: 'pie',
+    // chart config
+    var pumpConfig = {
+        type: 'bar',
         data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.red,
-                    window.chartColors.orange,
-                    window.chartColors.yellow,
-                    window.chartColors.green,
-                    window.chartColors.blue,
-                ],
-                label: 'Dataset 1'
-            }],
             labels: [
-                'Red',
-                'Orange',
-                'Yellow',
-                'Green',
-                'Blue'
-            ]
+                "Pump 1", "Pump 2", "Pump 3"
+            ],
+            datasets: [{
+                label: "Pumps",
+                data: [],
+                backgroundColor: "rgb(54, 162, 235)",
+                borderWidth: 2
+            }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            legend: {
+                display: false
+            }
         }
     };
 
-    window.onload = function () {
-        var ctx = document.getElementById('PumpChart').getContext('2d');
-        window.myPie = new Chart(ctx, config);
-    };
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('PumpsChart').getContext('2d');
+        window.pumpConfig = new Chart(ctx, pumpConfig);
 
-    document.getElementById('randomizeData').addEventListener('click', function () {
-        config.data.datasets.forEach(function (dataset) {
-            dataset.data = dataset.data.map(function () {
-                return randomScalingFactor();
-            });
+        getPumpData()
+
+        setInterval(function () {
+            getPumpData()
+        }, 2000)
+    })
+
+    function getPumpData() {
+        $.ajax({
+            url: '/API/Dashboard/GetCurrentPumpsData',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                var chartData = []
+                data = JSON.parse(data)
+                data.forEach(function (value) {
+                    chartData.push(value.SValue)
+                })
+                setPumpData(chartData)
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
         });
+    }
 
-        window.myPie.update();
-    });
-
-    var colorNames = Object.keys(window.chartColors);
-    document.getElementById('addDataset').addEventListener('click', function () {
-        var newDataset = {
-            backgroundColor: [],
-            data: [],
-            label: 'New dataset ' + config.data.datasets.length,
-        };
-
-        for (var index = 0; index < config.data.labels.length; ++index) {
-            newDataset.data.push(randomScalingFactor());
-
-            var colorName = colorNames[index % colorNames.length];
-            var newColor = window.chartColors[colorName];
-            newDataset.backgroundColor.push(newColor);
-        }
-
-        config.data.datasets.push(newDataset);
-        window.myPie.update();
-    });
-
-    document.getElementById('removeDataset').addEventListener('click', function () {
-        config.data.datasets.splice(0, 1);
-        window.myPie.update();
-    });
+    function setPumpData(data) {
+        pumpConfig.data.datasets.forEach(function (dataset) {
+            dataset.data = data
+        });
+        window.pumpConfig.update()
+    }
 </script>

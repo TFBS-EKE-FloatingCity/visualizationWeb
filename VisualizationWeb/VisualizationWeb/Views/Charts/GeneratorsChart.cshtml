@@ -1,22 +1,42 @@
-﻿<h3>Current Generator efficiency (in W)</h3>
-<canvas id="GeneratorsChart" width="400" height="400"></canvas>
+﻿<h4>Generator efficiency (in W)</h4>
+<canvas id="GeneratorsChart" width="400" height="350"></canvas>
 
 <script>
-    // Build Chart
-    var GeneratorChartConfig = {
+    // chart config
+    var generatorConfig = {
         type: 'bar',
         data: {
-            datasets: []
+            labels: [
+                "Generator 1", "Generator 2", "Generator 3"
+            ],
+            datasets: [{
+                label: "Generatoren",
+                data: [],
+                backgroundColor: "rgb(75, 192, 192)",
+                borderWidth: 2
+            }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            legend: {
+                display: false
+            }
         }
     };
 
-    var ctx = document.getElementById('GeneratorsChart').getContext('2d');
-
-    // Get Generators Data
     $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('GeneratorsChart').getContext('2d');
+        window.generatorChart = new Chart(ctx, generatorConfig);
+
+        getGeneratorData()
+
+        setInterval(function () {
+            getGeneratorData()
+        }, 2000)
+    })
+
+    function getGeneratorData() {
         $.ajax({
             url: '/API/Dashboard/GetCurrentGeneratorsData',
             dataType: 'json',
@@ -24,20 +44,23 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                var data = JSON.parse(data)
-                data.map(function (element, i) {
-                    GeneratorChartConfig.data.datasets.push({
-                        backgroundColor: "rgb(75, 192, 192)",
-                        data: [element.SValue],
-                        label: "Generator " + (i + 1)
-                    });
+                var chartData = []
+                data = JSON.parse(data)
+                data.forEach(function (value) {
+                    chartData.push(value.SValue)
                 })
-                console.log(GeneratorChartConfig);
-                window.generatorChart = new Chart(ctx, GeneratorChartConfig);
+                setGeneratorData(chartData)
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
             }
         });
-    })
+    }
+
+    function setGeneratorData(data) {
+        generatorConfig.data.datasets.forEach(function (dataset) {
+            dataset.data = data
+        });
+        window.generatorChart.update()
+    }
 </script>

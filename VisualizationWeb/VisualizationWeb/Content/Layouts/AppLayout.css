@@ -54,3 +54,7 @@
 .app-headline .back-to-list:hover, .app-headline .back-to-list:hover {
     text-decoration: none;
 } 
+
+.panel h4 {
+    margin-bottom: 20px;
+}

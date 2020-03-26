@@ -43,38 +43,33 @@ namespace VisualizationWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "SimDataID,SimTypeID,SimTime,Wind,Sun,Consumption")] SimData simData, string ReturnTo, int? id)
+        public async Task<ActionResult> Create([Bind(Include = "SimDataID,SimTypeID,SimTime,Wind,Sun,Consumption, RealTime")] SimData simData, string ReturnTo, int? id)
         {
-            if (ModelState.IsValid)
+
+
+            SimType simtype = await db.SimTypes.FindAsync(simData.SimTypeID);
+            simData.RealTime = DateTime.Now;
+            if (simtype == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (simData.SimTime < simtype.StartTime)
+            {
+                ModelState.AddModelError("SimTime", "Hier noch ein Error");
+            }
+            else if (simData.SimTime >= simtype.EndTime)
             {
 
-                SimType simtype = await db.SimTypes.FindAsync(simData.SimTypeID);
-                if (simtype == null)
-                {
-                    throw new NullReferenceException();
-                }
-
-                if (simData.SimTime < simtype.StartTime)
-                {
-                    ModelState.AddModelError("SimTime", "Hier noch ein Error");
-                }
-                else if (simData.SimTime == simtype.StartTime)
-                {
-                    ModelState.AddModelError("SimTime", "The start time already exists!");
-                }
-                else if (simData.SimTime >= simtype.EndTime)
-                {
-
-                }
-                else
-                {
-                    db.SimDatas.Add(simData);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction(ReturnTo);
-                }
             }
-            ViewBag.SimTypeID =  simData.SimTypeID;
-            return View("../SimTypes/Details/", simData);
+            if (ModelState.IsValid)
+            {
+                db.SimDatas.Add(simData);
+                await db.SaveChangesAsync();
+                ViewBag.SimTypeID = simData.SimTypeID;
+                return RedirectToAction("Details", "SimTypes", new { id });
+            }
+            return View(simData);
         }
 
         // GET: SimDatas/Edit/5
