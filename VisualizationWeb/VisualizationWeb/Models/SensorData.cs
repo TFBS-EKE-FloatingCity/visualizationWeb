@@ -13,25 +13,15 @@ namespace VisualizationWeb.Models
         [Key]
         public int SensorDataID { get; set; }
 
-        [Display(Name = "Echtzeit")]
-        public DateTime RealTime { get; set; }
-
-        [Display(Name = "Simulationszeit")]
-        public DateTime SimulationTime { get; set; }
-
         public int SensorID { get; set; }
+
+        public DateTime MeasureTime { get; set; }
 
         public double SValue { get; set; }
 
-        public int SimulationID { get; set; }
-
         [JsonIgnore]
-        [IgnoreDataMember]
+        //[IgnoreDataMember]
         public virtual Sensor Sensor { get; set; }
-
-        [JsonIgnore]
-        [IgnoreDataMember]
-        public virtual Simulation Simulation { get; set; }
     }
 
     public class SensorDataApi

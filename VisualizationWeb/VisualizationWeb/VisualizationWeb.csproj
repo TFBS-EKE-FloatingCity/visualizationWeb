@@ -192,6 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SeedSimHelper.cs" />
+    <Compile Include="Helpers\SimulationHelper.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Migrations\202002261351087_create database.cs" />
     <Compile Include="Migrations\202002261351087_create database.Designer.cs">
@@ -212,6 +213,10 @@
     <Compile Include="Migrations\202003111531288_add simulationtable.cs" />
     <Compile Include="Migrations\202003111531288_add simulationtable.Designer.cs">
       <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.cs" />
+    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.Designer.cs">
+      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -354,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003111531288_add simulationtable.resx">
       <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261402267_fix Simdata und SensorData Model.resx">
+      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

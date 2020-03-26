@@ -53,6 +53,7 @@ namespace VisualizationWeb.Controllers
                 int finalValue = Convert.ToInt32(Value, 2);
                 TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
                 var result = TimeSpan.FromTicks(difference.Ticks * Factor);
+                /*
                 SensorData sensorData = new SensorData()
                 {
                     SensorID =  item.Sensor > 15 ? rnd.Next(1, 15) : item.Sensor,
@@ -63,6 +64,7 @@ namespace VisualizationWeb.Controllers
                     
                 };
                 account2.Add(sensorData);
+                */
             }
             db.SensorDatas.AddRange(account2);
             db.SaveChanges();
