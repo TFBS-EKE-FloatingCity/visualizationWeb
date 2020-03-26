@@ -25,15 +25,17 @@ namespace VisualizationWeb.Controllers
         // GET: SimDatas/Create
         public async Task<ActionResult> Create(int? id)
         {
-            SimType simtype = await db.SimTypes.FindAsync(id);
+            var simtype = await db.SimTypes.FindAsync(id);
 
-            //if (!db.SimDatas.Where(i => i.SimTypeID == id).Any())
-            //{
-            //}
+            var simdata = new SimData
+            {
+                SimTypeID = simtype.SimTypeID,
+                SimTime = simtype.StartTime
+            };
 
             ViewBag.SimTypeID = id;
             ViewData["ReturnTo"] = "../SimTypes/Details/" + id.ToString();
-            return View();
+            return View(simdata);
         }
 
         // POST: SimDatas/Create
