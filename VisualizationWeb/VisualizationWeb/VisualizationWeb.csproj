@@ -321,6 +321,7 @@
     <Content Include="Views\SimDatas\EditModal.cshtml" />
     <Content Include="Views\Charts\PumpChart.cshtml" />
     <Content Include="Views\Charts\CityRotationChart.cshtml" />
+    <Content Include="Views\Charts\PowerChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,14 +23,14 @@ namespace VisualizationWeb.Migrations
 
             context.Simulations.AddOrUpdate(
                 new Simulation
-
                 {
                     SimulationID = 1,
                     SimTypeID = 1,
                     RealStartTime = DateTime.Now,
                     SimFactor = 10,
                     StartTime = new DateTime(2020, 03, 05, 08, 0, 0)
-                });
+                }
+            );
 
             context.Sensors.AddOrUpdate(
                 new Sensor
@@ -183,7 +183,6 @@ namespace VisualizationWeb.Migrations
                     Prefix = "",
                     Notes = ""
                 }
-
             );
 
             context.SimTypes.AddOrUpdate(
