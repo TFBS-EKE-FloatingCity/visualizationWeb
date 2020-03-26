@@ -59,7 +59,7 @@
 </div>
 
 <div class="app-headline app-headline--no-line">
-    <h3>Simulation Types</h3>
+    <h3>Simulation Data</h3>
     <div class="app-headline-actions">
         @if (ViewBag.showGenerateButton)
         {
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-   @Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime));
+   @Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
 
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
