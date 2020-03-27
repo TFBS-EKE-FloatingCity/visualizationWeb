@@ -97,7 +97,7 @@ namespace VisualizationWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (simType.StartTime < simType.EndTime)
+                if (simType.StartTime <= simType.EndTime)
                 {
                     db.Entry(simType).State = EntityState.Modified;
                     await db.SaveChangesAsync();
@@ -105,7 +105,7 @@ namespace VisualizationWeb.Controllers
                 }
                 else
                 {
-                    // TODO
+                    ModelState.AddModelError("SimTime", "The starttime has to be smaller as the endtime!");
                 }
 
             }

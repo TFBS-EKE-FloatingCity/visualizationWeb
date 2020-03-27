@@ -49,18 +49,24 @@ namespace VisualizationWeb.Controllers
 
             SimType simtype = await db.SimTypes.FindAsync(simData.SimTypeID);
             simData.RealTime = DateTime.Now;
+
             if (simtype == null)
             {
                 throw new NullReferenceException();
             }
 
+            //if (db.SimDatas.Where(x => x.SimTime == simtype.StartTime).Any())
+            //{
+
+            //}
+
             if (simData.SimTime < simtype.StartTime)
             {
-                ModelState.AddModelError("SimTime", "Hier noch ein Error");
+                ModelState.AddModelError("SimTime", "The Time has to be greater then " +  simtype.StartTime.ToString() + "!");
             }
             else if (simData.SimTime >= simtype.EndTime)
             {
-
+                ModelState.AddModelError("SimTime", "The Time has to be smaller then " + simtype.StartTime.ToString() + "!");
             }
             if (ModelState.IsValid)
             {

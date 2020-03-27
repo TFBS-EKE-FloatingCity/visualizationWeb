@@ -40,8 +40,8 @@ namespace PopulateSensorDatas
 
         static SqlCommand command = new SqlCommand
         {
-            CommandText = "INSERT INTO [SensorDatas] ([RealTime], [SimulationTime], [SensorID], [SValue], [SimulationID]) " +
-                           "VALUES (@RealTime, @SimulationTime, @SensorID, @SValue, @1 )"
+            CommandText = "INSERT INTO [SensorDatas] ([MeasureTime], [SensorID], [SValue]) " +
+                           "VALUES (@MeasureTime, @SensorID, @SValue )"
         };
         #endregion  
 
@@ -129,13 +129,11 @@ namespace PopulateSensorDatas
                         default:
                             break;
                     }
-                    command.Parameters.AddWithValue("@RealTime", DateTime.Now);
+                    command.Parameters.AddWithValue("@MeasureTime", DateTime.Now);
                     command.Parameters.AddWithValue("@SensorID", item);
                     TimeSpan difference = DateTime.Now.Subtract(DateTime.Parse(StartTimeActual));
                     var result = TimeSpan.FromTicks(difference.Ticks * Factor);
-                    command.Parameters.AddWithValue("@SimulationTime", SimStartTime.Add(result));
                     command.Parameters.AddWithValue("@SValue", SValue);
-                    command.Parameters.AddWithValue("@1", 1);
                     if (con == null || con.State == ConnectionState.Closed)
                     {
                         con.Open();
