@@ -24,7 +24,7 @@ namespace VisualizationWeb.Controllers
         // GET: api/APISensors
         [Route("")]
         [HttpPost]
-        public List<SimData> GetSensors()
+        public SimData GetSensors()
         {
             var json = Request.Content.ReadAsStringAsync().Result;
             var sensorData = JsonConvert.DeserializeObject<List<SensorDataApi>>(json);
