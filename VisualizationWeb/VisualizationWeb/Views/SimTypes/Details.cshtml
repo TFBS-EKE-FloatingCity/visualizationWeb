@@ -9,7 +9,7 @@
     @Html.ActionLink(" ", "Index", new { }, new { @class = "glyphicon glyphicon-arrow-left back-to-list" })
     <h2>Simulation @Html.DisplayFor(model => model.Title)</h2>
     <div class="app-headline-actions">
-        @Html.ActionLink("Edit", "EditHead", new { id = Model.SimTypeID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-sm" })
+        <a href="#" class="glyphicon glyphicon-pencil btn btn-default btn-sm" data-toggle="modal" data-target="#basicModal">Edit</a>
     </div>
 </div>
 
@@ -72,21 +72,10 @@
     </div>
 </div>
 
-   @Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
+@Html.Partial("../SimDatas/Index", Model.SimDatas.OrderBy(s => s.SimTime))
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Edit Simulation Data</h4>
-            </div>
-            <div class="modal-body">
-                @Html.Partial("../SimDatas/EditModal", new VisualizationWeb.Models.SimData { SimTypeID = Model.SimTypeID })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+@{ 
+    ViewBag.Partial = "../SimTypes/Edit" + new { id = Model.SimTypeID };
+}
+
+@Html.Partial("ModalPartial", Model)
