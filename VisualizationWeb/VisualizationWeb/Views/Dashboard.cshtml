@@ -5,12 +5,24 @@
 }
 
 <h2>Dashboard</h2>
-
-<div class="alert alert-info">-
+@*Vortschritts blaken*@
+<div class="alert alert-info">
     Start the data generation script (Project: PopulateSensorDatas) to see the charts update. <br />
 </div>
 <div class="alert alert-warning">
     ⚠ INFO: Charts won't change as dramaticly with real data
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>
+                    Simulation progress
+                </h4>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -24,7 +36,7 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-body">
-
+                @Html.Partial("../Charts/CityRotationChart")
             </div>
         </div>
     </div>
@@ -48,7 +60,6 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-body">
-                @Html.Partial("../Charts/CityRotationChart")
             </div>
         </div>
     </div>
