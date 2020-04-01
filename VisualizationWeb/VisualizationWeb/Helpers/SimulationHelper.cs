@@ -9,31 +9,69 @@ namespace VisualizationWeb.Helpers
 {
     public class SimulationHelper : IDisposable
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        public List<SimData> GetSimulationData()
+        public SimData GetSimulationData()
         {
             var result = new List<SimData>();
 
-            // TODO: Load the data from the database!!
-            var random = new Random();
-            for (int i = 0; i < 10; i++)
+            var simulation = (from c in db.SimulationHistories
+                      where c.Canceled == false &&
+                            c.CancelTime == null
+                      select c).First();
+
+            var simType = db.SimTypes.Find(simulation.SimulationID);
+            var simDatas = db.SimDatas.Where(d => d.SimTypeID == simulation.SimulationID).ToList();
+
+            var timeDiff = DateTime.Now.Subtract(simulation.RealStartTime);
+
+            var firstEntry = simDatas.First();
+            var timeDiffSeconds = TimeSpan.FromSeconds(timeDiff.TotalSeconds * simType.SimFactor);
+            var currentTime = firstEntry.SimTime + timeDiffSeconds;
+
+            SimData prevData = firstEntry;
+            SimData nextData = null;
+
+            foreach (var data in simDatas)
             {
-                result.Add(new SimData()
+                if(data.SimTime <= currentTime && data.SimTime > prevData.SimTime )
                 {
-                    Consumption = random.Next(0, 100),
-                    Sun = random.Next(0, 100),
-                    Wind = random.Next(0, 100),
-                    SimTime = DateTime.Now,
-                    SimTypeID = 1
-                });
+                    prevData = data;
+                }
             }
 
-            return result;
+
+            foreach (var data in simDatas)
+            {
+                if (data.SimTime >= currentTime && (data.SimTime < nextData.SimTime || nextData == null))
+                {
+                    nextData = data;
+                }
+            }
+
+            if(nextData == null)
+            {
+                nextData = prevData;
+            }
+
+
+            var totalSeconds = (firstEntry.SimTime - nextData.SimTime).TotalSeconds;
+            var duration = (prevData.SimTime - nextData.SimTime).TotalSeconds;
+
+            var seconds = timeDiffSeconds.TotalSeconds - totalSeconds;
+            var progress = seconds / duration;
+
+            return new SimData()
+            {
+                Consumption = prevData.Consumption + (prevData.Consumption - nextData.Consumption) * progress,
+                Sun = prevData.Sun + (prevData.Sun - nextData.Sun) * progress,
+                Wind = prevData.Wind + (prevData.Wind - nextData.Wind) * progress,
+            };
         }
 
         public void Dispose()
         {
-         
+            db.Dispose();
         }
     }
 }
