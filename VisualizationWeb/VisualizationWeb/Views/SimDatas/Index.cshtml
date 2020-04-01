@@ -38,7 +38,7 @@
             </td>
             <td>
                 <div class="actions-bar">
-                    @Html.ActionLink(" ", "Create", "SimDatas", new { id = ViewBag.SimTypeID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+                    @Html.ActionLink(" ", "Create", "SimDatas", new { id = ViewBag.SimTypeID, dataID = item.SimDataID }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
                     @Html.ActionLink(" ", "Edit", "SimDatas", new { id = item.SimDataID }, new { title = "Edit", @class = "glyphicon glyphicon-pencil btn btn-default btn-xs" })
                     @Html.ActionLink(" ", "Delete", "SimDatas", new { id = item.SimDataID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-xs" })
                 </div>
