@@ -48,7 +48,6 @@ namespace VisualizationWeb.Controllers
 
 
             SimType simtype = await db.SimTypes.FindAsync(simData.SimTypeID);
-            simData.RealTime = DateTime.Now;
 
             if (simtype == null)
             {
@@ -64,9 +63,9 @@ namespace VisualizationWeb.Controllers
             {
                 ModelState.AddModelError("SimTime", "The Time has to be greater then " +  simtype.StartTime.ToString() + "!");
             }
-            else if (simData.SimTime >= simtype.EndTime)
+            else if (simData.SimTime > simtype.EndTime)
             {
-                ModelState.AddModelError("SimTime", "The Time has to be smaller then " + simtype.StartTime.ToString() + "!");
+                ModelState.AddModelError("SimTime", "The Time has to be smaller then " + simtype.EndTime.ToString() + "!");
             }
             if (ModelState.IsValid)
             {

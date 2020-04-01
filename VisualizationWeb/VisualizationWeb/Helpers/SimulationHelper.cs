@@ -23,7 +23,6 @@ namespace VisualizationWeb.Helpers
                     Consumption = random.Next(0, 100),
                     Sun = random.Next(0, 100),
                     Wind = random.Next(0, 100),
-                    RealTime = DateTime.Now,
                     SimTime = DateTime.Now,
                     SimTypeID = 1
                 });
