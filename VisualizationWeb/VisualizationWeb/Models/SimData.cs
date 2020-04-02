@@ -33,6 +33,14 @@ namespace VisualizationWeb.Models
 
         [JsonIgnore]
         public virtual SimType SimType { get; set; }
-       
+    }
+
+    public class SimDataView
+    {
+        public double Wind { get; set; }
+        
+        public double Sun { get; set; }
+        
+        public double Consumption { get; set; }
     }
 }

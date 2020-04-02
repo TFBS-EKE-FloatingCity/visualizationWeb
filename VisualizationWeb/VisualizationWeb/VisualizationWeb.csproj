@@ -226,6 +226,10 @@
     <Compile Include="Migrations\202004011343566_CreatetSimHistory.Designer.cs">
       <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.cs" />
+    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.Designer.cs">
+      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -379,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004011343566_CreatetSimHistory.resx">
       <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020906212_UpdateSimulationHistoryModel.resx">
+      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
