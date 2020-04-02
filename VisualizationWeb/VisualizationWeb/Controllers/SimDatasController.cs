@@ -22,16 +22,58 @@ namespace VisualizationWeb.Controllers
             return View(await simDatas.ToListAsync());
         }
 
+        //// GET: SimDatas/Create
+        //public async Task<ActionResult> Create(int? id)
+        //{
+        //    var simtype = await db.SimTypes.FindAsync(id);
+            
+        //    var simdata = new SimData
+        //    {
+        //        SimTypeID = simtype.SimTypeID,
+        //        SimTime = simtype.StartTime
+        //    };
+
+        //    ViewBag.SimTypeID = id;
+        //    ViewData["ReturnTo"] = "../SimTypes/Details/" + id.ToString();
+        //    return View(simdata);
+        //}
+
         // GET: SimDatas/Create
-        public async Task<ActionResult> Create(int? id)
+        public async Task<ActionResult> Create(int? id, int? dataID)
         {
             var simtype = await db.SimTypes.FindAsync(id);
-
-            var simdata = new SimData
+            SimData simdata;
+            DateTime newSimTime = simtype.StartTime;
+            if (dataID != null)
             {
-                SimTypeID = simtype.SimTypeID,
-                SimTime = simtype.StartTime
-            };
+                var simDataPrev = await db.SimDatas.FindAsync(dataID);
+                var s = 1;
+
+                do
+                {
+                    var res = new TimeSpan(simtype.Interval.Ticks / s);
+                    newSimTime = simDataPrev.SimTime + res;
+                    s *= 2;
+                }
+                while (db.SimDatas.Where(x => x.SimTime == newSimTime).Any());
+                simdata = new SimData
+                {
+                    SimTypeID = simtype.SimTypeID,
+                    SimTime = newSimTime,
+                    Consumption = simDataPrev.Consumption,
+                    Wind = simDataPrev.Wind,
+                    Sun = simDataPrev.Sun
+                };
+            }
+            else
+            {
+                simdata = new SimData
+                {
+                    SimTypeID = simtype.SimTypeID,
+                    SimTime = newSimTime
+                };
+            }
+            
 
             ViewBag.SimTypeID = id;
             ViewData["ReturnTo"] = "../SimTypes/Details/" + id.ToString();
@@ -48,7 +90,6 @@ namespace VisualizationWeb.Controllers
 
 
             SimType simtype = await db.SimTypes.FindAsync(simData.SimTypeID);
-            simData.RealTime = DateTime.Now;
 
             if (simtype == null)
             {
@@ -64,9 +105,9 @@ namespace VisualizationWeb.Controllers
             {
                 ModelState.AddModelError("SimTime", "The Time has to be greater then " +  simtype.StartTime.ToString() + "!");
             }
-            else if (simData.SimTime >= simtype.EndTime)
+            else if (simData.SimTime > simtype.EndTime)
             {
-                ModelState.AddModelError("SimTime", "The Time has to be smaller then " + simtype.StartTime.ToString() + "!");
+                ModelState.AddModelError("SimTime", "The Time has to be smaller then " + simtype.EndTime.ToString() + "!");
             }
             if (ModelState.IsValid)
             {

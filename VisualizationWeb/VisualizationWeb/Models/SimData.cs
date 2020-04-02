@@ -30,12 +30,17 @@ namespace VisualizationWeb.Models
         [Range(0.0, 100.0)]
         [Display(Name = "Consumption")]
         public double Consumption { get; set; }
-        
-        [Display(Name = "Echtzeit")]
-        public DateTime RealTime { get; set; }
 
         [JsonIgnore]
         public virtual SimType SimType { get; set; }
-       
+    }
+
+    public class SimDataView
+    {
+        public double Wind { get; set; }
+        
+        public double Sun { get; set; }
+        
+        public double Consumption { get; set; }
     }
 }
