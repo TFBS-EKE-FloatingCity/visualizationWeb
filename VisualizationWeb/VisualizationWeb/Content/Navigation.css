@@ -102,3 +102,14 @@
     color: black;
     font-weight: bold;
 }
+
+.sim-time {
+    padding: 5px 0;
+    margin: 0 7px;
+    text-align: center;
+}
+
+.sim-time h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
