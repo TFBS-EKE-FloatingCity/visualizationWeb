@@ -28,12 +28,20 @@ namespace VisualizationWeb.Controllers
         {
             SimulationTimesVM simulationTimesVM = new SimulationTimesVM
             {
+                RealStartTime = DateTime.Now,
                 StartTime = new DateTime(2020, 03, 05, 07, 0, 0),
-                EndTime = DateTime.Now,
+                EndTime = new DateTime(2020, 03, 05, 12, 0, 0),
                 SimFactor = 10
             };
 
             return JsonConvert.SerializeObject(simulationTimesVM);
+        }
+
+        // GET: api/Simulation
+        [Route("CheckSimulationStatus")]
+        public bool CheckSimulationStatus()
+        {
+            return true;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace VisualizationWeb.Models.ViewModel
     {
         public double SimFactor { get; set; }
 
+        public DateTime RealStartTime { get; set; }
+
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
