@@ -180,6 +180,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIDashboardController.cs" />
+    <Compile Include="Controllers\APISimulationController.cs" />
     <Compile Include="Controllers\APISensorsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -226,6 +227,10 @@
     <Compile Include="Migrations\202004011343566_CreatetSimHistory.Designer.cs">
       <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.cs" />
+    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.Designer.cs">
+      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -237,6 +242,7 @@
     <Compile Include="Models\SimType.cs" />
     <Compile Include="Models\SimulationHistory.cs" />
     <Compile Include="Models\ViewModel\SettingVM.cs" />
+    <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -260,6 +266,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
     <Content Include="Scripts\Charts\Chart.js" />
+    <Content Include="Scripts\clock.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -379,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004011343566_CreatetSimHistory.resx">
       <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020906212_UpdateSimulationHistoryModel.resx">
+      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

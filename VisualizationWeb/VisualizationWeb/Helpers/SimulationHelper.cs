@@ -11,21 +11,27 @@ namespace VisualizationWeb.Helpers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public SimData GetSimulationData()
+        public SimDataView GetSimulationData()
         {
-            var result = new List<SimData>();
-
             var simulation = (from c in db.SimulationHistories
-                      where c.Canceled == false &&
-                            c.CancelTime == null
+                      where c.Canceled == null
                       select c).First();
 
-            var simType = db.SimTypes.Find(simulation.SimulationID);
-            var simDatas = db.SimDatas.Where(d => d.SimTypeID == simulation.SimulationID).ToList();
+            var simType = db.SimTypes.Find(simulation.SimTypeID);
+            var simDatas = db.SimDatas.Where(d => d.SimTypeID == simulation.SimTypeID).ToList();
 
             var timeDiff = DateTime.Now.Subtract(simulation.RealStartTime);
 
             var firstEntry = simDatas.First();
+
+            foreach (var data in simDatas)
+            {
+                if (data.SimTime < firstEntry.SimTime)
+                {
+                    firstEntry = data;
+                }
+            }
+
             var timeDiffSeconds = TimeSpan.FromSeconds(timeDiff.TotalSeconds * simType.SimFactor);
             var currentTime = firstEntry.SimTime + timeDiffSeconds;
 
@@ -43,7 +49,7 @@ namespace VisualizationWeb.Helpers
 
             foreach (var data in simDatas)
             {
-                if (data.SimTime >= currentTime && (data.SimTime < nextData.SimTime || nextData == null))
+                if (data.SimTime >= currentTime && (nextData == null || data.SimTime < nextData.SimTime))
                 {
                     nextData = data;
                 }
@@ -61,7 +67,7 @@ namespace VisualizationWeb.Helpers
             var seconds = timeDiffSeconds.TotalSeconds - totalSeconds;
             var progress = seconds / duration;
 
-            return new SimData()
+            return new SimDataView()
             {
                 Consumption = prevData.Consumption + (prevData.Consumption - nextData.Consumption) * progress,
                 Sun = prevData.Sun + (prevData.Sun - nextData.Sun) * progress,
