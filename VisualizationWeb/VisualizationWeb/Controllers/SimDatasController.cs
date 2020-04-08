@@ -44,6 +44,7 @@ namespace VisualizationWeb.Controllers
             var simtype = await db.SimTypes.FindAsync(id);
             SimData simdata;
             DateTime newSimTime = simtype.StartTime;
+
             if (dataID != null)
             {
                 var simDataPrev = await db.SimDatas.FindAsync(dataID);
