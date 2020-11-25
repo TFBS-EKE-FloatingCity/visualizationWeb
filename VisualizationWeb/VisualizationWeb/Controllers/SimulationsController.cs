@@ -13,5 +13,40 @@ namespace VisualizationWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult Details()
+        {
+            return View();
+        }
+
+        public ActionResult CreateSimScenario()
+        {
+            return View();
+        }
+
+        public ActionResult CreateSimPosition()
+        {
+            return View();
+        }
+
+        public ActionResult EditSimScenario()
+        {
+            return View();
+        }
+
+        public ActionResult EditSimPosition()
+        {
+            return View();
+        }
+
+        public ActionResult DeleteSimScenario()
+        {
+            return View();
+        }
+
+        public ActionResult DeleteSimPosition()
+        {
+            return View();
+        }
     }
 }
