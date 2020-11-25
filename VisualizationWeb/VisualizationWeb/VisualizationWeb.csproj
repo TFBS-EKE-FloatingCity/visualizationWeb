@@ -189,6 +189,7 @@
     <Compile Include="Controllers\SimTypesController.cs" />
     <Compile Include="Controllers\SensorsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -348,6 +349,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\APISimData\" />
+    <Folder Include="Views\Simulations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
