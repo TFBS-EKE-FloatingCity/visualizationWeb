@@ -12,7 +12,7 @@
             datasets: [{
                 label: "Pumps",
                 data: [],
-                backgroundColor: "rgb(54, 162, 235)",
+                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)' ],
                 borderWidth: 2
             }]
         },
@@ -20,6 +20,15 @@
             responsive: true,
             legend: {
                 display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0
+                        //max
+                    }
+
+                }]
             }
         }
     };
@@ -36,18 +45,29 @@
         }, 2000)
     })
 
+    //Pumpen ID' s 7, 8, 9
     function getPumpData() {
         $.ajax({
             url: '/API/Dashboard/GetCurrentPumpsData',
             dataType: 'json',
-            type: 'post',
+            type: 'GET',
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 var chartData = []
                 data = JSON.parse(data)
                 data.forEach(function (value) {
-                    chartData.push(value.SValue)
+                    switch (value.SensorID) {
+                        case 7:
+                            chartData[0] = value.SValue;
+                            break;
+                        case 8:
+                            chartData[1] = value.SValue;
+                            break;
+                        case 9:
+                            chartData[2] = value.SValue;
+                            break;
+                    }
                 })
                 setPumpData(chartData)
             },

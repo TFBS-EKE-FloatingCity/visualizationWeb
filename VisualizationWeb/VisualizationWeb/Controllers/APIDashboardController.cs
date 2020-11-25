@@ -22,7 +22,7 @@ namespace VisualizationWeb.Controllers
 
         // GET: API/Dashboard
         [Route("GetCurrentGeneratorsData")]
-        [HttpPost]
+        [HttpGet]
         public string GetCurrentGeneratorsData()
         {
             return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 10) || (s.SensorID == 11) || (s.SensorID == 12)).Take(3).ToList());
@@ -30,10 +30,10 @@ namespace VisualizationWeb.Controllers
         
         // GET: API/Dashboard
         [Route("GetCurrentPumpsData")]
-        [HttpPost]
+        [HttpGet]
         public string GetCurrentPumpsData()
         {
-            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 13) || (s.SensorID == 14) || (s.SensorID == 15)).Take(3).ToList());
+            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 7) || (s.SensorID == 8) || (s.SensorID == 9)).Take(3).ToList());
         }
     }
 }
