@@ -12,16 +12,12 @@ namespace Simulation.Library.Models
         [Key]
         public int SimPositionID { get; set; }
 
-        [Required]
         public int SunValue { get; set; }
 
-        [Required]
         public int WindValue { get; set; }
 
-        [Required]
         public int EnergyBalanceValue { get; set; }
 
-        [Required]
         public DateTime DateRegistered { get; set; }
 
         public int SimScenarioID { get; set; }

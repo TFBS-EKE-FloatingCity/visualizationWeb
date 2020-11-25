@@ -16,6 +16,8 @@ namespace Simulation.Library.Models
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
+        public int TimeFactor { get; set; }
+
         public ICollection<SimPosition> SimPositions { get; set; }
     }
 }
