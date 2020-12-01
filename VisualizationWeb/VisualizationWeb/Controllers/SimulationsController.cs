@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VisualizationWeb.Models;
 
 namespace VisualizationWeb.Controllers
 {
     public class SimulationsController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         // GET: Simulations
         public ActionResult Index()
         {
-            return View();
+            return View(db.SimScenarios.ToList());
         }
 
         public ActionResult Details()
