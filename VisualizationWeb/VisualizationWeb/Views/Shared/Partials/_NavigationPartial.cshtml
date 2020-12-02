@@ -19,7 +19,7 @@
                             @Html.ActionLink("Dashboard", "Index", "Dashboard", new { area = "" }, new { @class = "glyphicon glyphicon-dashboard" })
                         </li>
                         <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "simulation" ? "active" : "")">
-                            @Html.ActionLink("Simulation", "Index", "SimTypes", new { area = "" }, new { @class = "glyphicon glyphicon-hourglass" })
+                            @Html.ActionLink("Simulation", "Index", "Simulations", new { area = "" }, new { @class = "glyphicon glyphicon-hourglass" })
                         </li>
                         <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "sensor" ? "active" : "")">
                             @Html.ActionLink("Sensors", "Index", "Sensors", new { area = "" }, new { @class = "glyphicon glyphicon-signal" })

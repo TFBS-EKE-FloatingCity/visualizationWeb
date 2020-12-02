@@ -18,6 +18,7 @@ namespace VisualizationWeb.Helpers
         //static to prevent same random number getting used twice
         static Random random = new Random();
 
+        // änderung
         //Methods are creating random double to simulate data for database
         public double SimulatedWind(float minimum, float maximum)
         {
