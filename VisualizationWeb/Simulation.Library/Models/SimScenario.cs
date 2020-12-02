@@ -18,6 +18,35 @@ namespace Simulation.Library.Models
 
         public int TimeFactor { get; set; }
 
+        [StringLength(500)]
+        public string Notes { get; set; }
+
+        public DateTime? StartDate
+        {
+            get
+            {
+                if (SimPositions?.Count == 0)
+                {
+                    return null;
+                }
+                return SimPositions.First().DateRegistered;
+            }
+            set{ StartDate = value; }
+        }
+
+        public DateTime? EndDate 
+        {
+            get
+            {
+                if (SimPositions?.Count == 0)
+                {
+                    return null;
+                }
+                return SimPositions.Last().DateRegistered;
+            }
+            set { EndDate = value; }
+        }
+
         public ICollection<SimPosition> SimPositions { get; set; }
     }
 }

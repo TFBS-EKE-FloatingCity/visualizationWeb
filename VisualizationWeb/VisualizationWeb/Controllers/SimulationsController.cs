@@ -22,12 +22,7 @@ namespace VisualizationWeb.Controllers
             return View();
         }
 
-        public ActionResult CreateSimScenario()
-        {
-            return View();
-        }
-
-        public ActionResult CreateSimPosition()
+        public ActionResult Create()
         {
             return View();
         }

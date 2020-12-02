@@ -1,7 +1,49 @@
-﻿
+﻿@model IEnumerable<Simulation.Library.Models.SimScenario>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Simulation";
 }
 
-<h2>Index</h2>
+<div class="app-headline app-headline--no-line">
+    <h2>Simulation Types</h2>
+    <div class="app-headline-actions">
+        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+    </div>
+</div>
 
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeFactor)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                 @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeFactor)
+            </td>
+        </tr>
+    }
+
+</table>

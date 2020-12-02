@@ -232,6 +232,10 @@
     <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.Designer.cs">
       <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012021243552_Test.cs" />
+    <Compile Include="Migrations\202012021243552_Test.Designer.cs">
+      <DependentUpon>202012021243552_Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -346,10 +350,10 @@
     <Content Include="Views\Charts\PowerChart.cshtml" />
     <Content Include="Views\SimTypes\ModalPartial.cshtml" />
     <Content Include="Views\Simulations\Index.cshtml" />
-    <Content Include="Views\Simulations\Create.cshtml" />
     <Content Include="Views\Simulations\Details.cshtml" />
     <Content Include="Views\Simulations\Delete.cshtml" />
     <Content Include="Views\Simulations\Edit.cshtml" />
+    <Content Include="Views\Simulations\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -395,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004020906212_UpdateSimulationHistoryModel.resx">
       <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012021243552_Test.resx">
+      <DependentUpon>202012021243552_Test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
