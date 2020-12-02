@@ -354,6 +354,7 @@
     <Content Include="Views\Simulations\Delete.cshtml" />
     <Content Include="Views\Simulations\Edit.cshtml" />
     <Content Include="Views\Simulations\Create.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

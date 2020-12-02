@@ -1,0 +1,233 @@
+﻿@model IEnumerable<Simulation.Library.Models.SimPosition>
+
+@{
+    ViewBag.Title = "Simulation Positions";
+}
+
+<div class="app-headline app-headline--no-line">
+    <h2>Simulation Types</h2>
+    <div class="app-headline-actions">
+        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary btn-sm glyphicon glyphicon-plus" })
+    </div>
+</div>
+
+<table id="tblSimPositions" class="table" cellpadding="0" cellspacing="0">
+    <tr>
+        <th style="width:100px">SimPositionID</th>
+        <th style="width:150px">SunValue</th>
+        <th style="width:150px">WindValue</th>
+        <th style="width:150px">EnergyBalanceValue</th>
+        <th style="width:150px">DateRegistered</th>
+        <th style="width:150px"></th>
+    </tr>
+    @foreach (Simulation.Library.Models.SimPosition position in Model)
+    {
+<tr>
+    <td class="SimPositionID">
+        <span>@position.SimPositionID</span>
+    </td>
+    <td class="SunValue">
+        <span>@position.SunValue</span>
+        <input type="number" value="@position.SunValue" style="display:none" />
+    </td>
+    <td class="WindValue">
+        <span>@position.WindValue</span>
+        <input type="number" value="@position.WindValue" style="display:none" />
+    </td>
+    <td class="EnergyBalanceValue">
+        <span>@position.EnergyBalanceValue</span>
+        <input type="number" value="@position.EnergyBalanceValue" style="display:none" />
+    </td>
+    <td class="DateRegistered">
+        <span>@position.DateRegistered</span>
+        <input type="datetime" value="@position.DateRegistered" style="display:none" />
+    </td>
+    <td>
+        <a class="Edit" href="javascript:;">Edit</a>
+        <a class="Update" href="javascript:;" style="display:none">Update</a>
+        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+        <a class="Delete" href="javascript:;">Delete</a>
+    </td>
+</tr>
+    }
+</table>
+<table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td style="width: 150px">
+            SunValue<br />
+            <input type="number" id="numberSunValue" style="width:140px" />
+        </td>
+        <td style="width: 150px">
+            WindValue:<br />
+            <input type="number" id="numberWindValue" style="width:140px" />
+        </td>
+        <td style="width: 150px">
+            EnergyBalanceValue<br />
+            <input type="number" id="numberEnergyBalanceValue" style="width:140px" />
+        </td>
+        <td style="width: 150px">
+            DateRegistered:<br />
+            <input type="number" id="datetimeDateRegistered" style="width:140px" />
+        </td>
+        <td style="width: 200px">
+            <br />
+            <input type="button" id="btnAdd" value="Add" />
+        </td>
+    </tr>
+</table>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript">
+        $(function () {
+            //Remove the dummy row if data present.
+            if ($("#tblSimPositions tr").length > 2) {
+                $("#tblSimPositions tr:eq(1)").remove();
+            } else {
+                var row = $("#tblSimPositions tr:last-child");
+                row.find(".Edit").hide();
+                row.find(".Delete").hide();
+                row.find("span").html('&nbsp;');
+            }
+        });
+
+    function AppendRow(row, simPositionID, sunValue, windValue, energyBalanceValue, dateRegistered) {
+            //Bind SimPositionID.
+            $(".SimPositionID", row).find("span").html(simPositionID);
+
+            //Bind SunValue.
+            $(".SunValue", row).find("span").html(sunValue);
+            $(".SunValue", row).find("input").val(sunValue);
+
+            //Bind WindValue.
+            (".WindValue", row).find("span").html(windValue);
+            $(".WindValue", row).find("input").val(windValue);
+
+            //Bind EnergyBalanceValue.
+            (".EnergyBalanceValue", row).find("span").html(energyBalanceValue);
+            $(".EnergyBalanceValue", row).find("input").val(energyBalanceValue);
+
+            //Bind DateRegistered.
+            (".DateRegistered", row).find("span").html(dateRegistered);
+            $(".DateRegistered", row).find("input").val(dateRegistered);
+
+            row.find(".Edit").show();
+            row.find(".Delete").show();
+            $("#tblSimPositions").append(row);
+        };
+
+        //Add event handler.
+        $("body").on("click", "#btnAdd", function () {
+            var numberSunValue = $("#numberSunValue");
+            var numberWindValue = $("#numberWindValue");
+            var numberEnergyBalanceValue = $("#numberEnergyBalanceValue");
+            var datetimeDateRegistered = $("#datetimeDateRegistered");
+            $.ajax({
+                type: "POST",
+                url: "/Home/InsertSimPosition",
+                data: '{SunValue: "' + numberSunValue.val() + '", WindValue: "' + numberWindValue.val() + 
+                    '", EnergyBalanceValue: "' + numberEnergyBalanceValue.val() + '", DateRegistered: "' + datetimeDateRegistered.val() + '" } ',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var row = $("#tblSimPositions tr:last-child");
+                    if ($("#tblSimPositions tr:last-child span").eq(0).html() != "&nbsp;") {
+                        row = row.clone();
+                    }
+                    AppendRow(row, r.simPositionID, r.numberSunValue, r.numberWindValue, r.numberEnergyBalanceValue, r.datetimeDateRegistered);
+                    numberSunValue.val("");
+                    numberWindValue.val("");
+                    numberEnergyBalanceValue.val("");
+                    datetimeDateRegistered.val("");
+                }
+            });
+        });
+
+        //Edit event handler.
+    $("body").on("click", "#tblSimPositions .Edit", function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find("input").length > 0) {
+                    $(this).find("input").show();
+                    $(this).find("span").hide();
+                }
+            });
+            row.find(".Update").show();
+            row.find(".Cancel").show();
+            row.find(".Delete").hide();
+            $(this).hide();
+        });
+
+        //Update event handler.
+    $("body").on("click", "#tblSimPositions .Update", function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find("input").length > 0) {
+                    var span = $(this).find("span");
+                    var input = $(this).find("input");
+                    span.html(input.val());
+                    span.show();
+                    input.hide();
+                }
+            });
+            row.find(".Edit").show();
+            row.find(".Delete").show();
+            row.find(".Cancel").hide();
+            $(this).hide();
+
+            var simPosition = {};
+            simPosition.simPositionID = row.find(".SimPositionID").find("span").html();
+            simPosition.numberSunValue = row.find(".SunValue").find("span").html();
+            simPosition.numberWindValue = row.find(".WindValue").find("span").html();
+            simPosition.numberEnergyBalanceValue = row.find(".EnergyBalanceValue").find("span").html();
+            simPosition.datetimeDateRegistered = row.find(".DateRegistered").find("span").html();
+            $.ajax({
+                type: "POST",
+                url: "/Home/UpdateSimPosition",
+                data: '{simPosition:' + JSON.stringify(simPosition) + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        });
+
+        //Cancel event handler.
+    $("body").on("click", "#tblSimPositions .Cancel", function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find("input").length > 0) {
+                    var span = $(this).find("span");
+                    var input = $(this).find("input");
+                    input.val(span.html());
+                    span.show();
+                    input.hide();
+                }
+            });
+            row.find(".Edit").show();
+            row.find(".Delete").show();
+            row.find(".Update").hide();
+            $(this).hide();
+        });
+
+        //Delete event handler.
+    $("body").on("click", "#tblSimPositions .Delete", function () {
+            if (confirm("Do you want to delete this row?")) {
+                var row = $(this).closest("tr");
+                var simpositionId = row.find("span").html();
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/DeleteSimPosition",
+                    data: '{SimPositionID: ' + simpositionId + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if ($("#tblSimPositions tr").length > 2) {
+                            row.remove();
+                        } else {
+                            row.find(".Edit").hide();
+                            row.find(".Delete").hide();
+                            row.find("span").html('&nbsp;');
+                        }
+                    }
+                });
+            }
+        });
+</script>
