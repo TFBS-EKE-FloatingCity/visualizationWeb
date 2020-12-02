@@ -40,9 +40,9 @@ namespace VisualizationWeb.Controllers
                     SunActive = true,
                     WindActive = true,
                     ConsumptionActive = true,
-                    SunMax = 00.00,
-                    WindMax = 00.00,
-                    ConsumptionMax = 00.00
+                    SunMax = 10.00,
+                    WindMax = 20.00,
+                    ConsumptionMax = 50.00
                 };
 
                 db.Settings.Add(setting);

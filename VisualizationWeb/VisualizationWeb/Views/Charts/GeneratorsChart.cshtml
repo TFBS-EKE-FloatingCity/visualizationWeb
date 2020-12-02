@@ -44,7 +44,7 @@
             getGeneratorData()
         }, 2000)
     })
-
+    //API Call with AJAX
     function getGeneratorData() {
         $.ajax({
             url: '/API/Dashboard/GetCurrentGeneratorsData',
@@ -56,7 +56,7 @@
                 var chartData = []
                 data = JSON.parse(data)
                 data.forEach(function (value) {
-
+                    //Generator ID's: 10, 11, 12
                     switch (value.SensorID) {
                             case 10:
                                 chartData[0] = value.SValue;
@@ -76,7 +76,7 @@
             }
         });
     }
-
+    //Update Chart
     function setGeneratorData(data) {
         generatorConfig.data.datasets.forEach(function (dataset) {
             dataset.data = data

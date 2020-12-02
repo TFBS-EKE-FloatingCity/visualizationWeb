@@ -1,78 +1,105 @@
 ﻿<canvas id="PowerChart" height="100" class="chartjs-render-monitor"></canvas>
 
 <script>
-		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		//var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         
-		var config = {
-			type: 'line',
-			data: {
-				labels: [1, 2, 3, 4, 5, 6, 7],
-				datasets: [{
-					label: 'My First dataset',
-					backgroundColor: "rgb(54, 162, 235)",
-					borderColor: "rgb(54, 162, 235)",
-					data: [
-						13,
-						18,
-						6,
-						35,
-						42,
-						12,
-						20
-					],
-					fill: false,
-				}, {
-					label: 'My Second dataset',
-					fill: false,
-					backgroundColor: "rgb(54, 162, 235)",
-					borderColor: "rgb(54, 162, 235)",
-					data: [
-						23,
-						43,
-						53,
-						22,
-						21,
-						30,
-						10
-					],
-				}]
+	var simdatasconfig = {
+		type: 'line',
+		data: {
+			labels: [],
+			datasets: [{
+				label: 'Wind',
+				backgroundColor: "rgb(54, 162, 235)",
+                borderColor: "rgba(185, 241, 244, 1)",
+				data: [],
+				fill: false,
+			}, {
+				label: 'Sun',
+				fill: false,
+				backgroundColor: "rgba(251, 217, 24, 1)",
+                borderColor: "rgba(251, 217, 24, 1)",
+				data: [],
+            }, {
+                label: 'Consumption',
+                fill: false,
+                backgroundColor: "rgb(54, 162, 235)",
+                borderColor: "rgba(231, 70, 70, 1)",
+                data: [],
+            }]
+		},
+		options: {
+			responsive: true,
+			title: {
+				display: true,
+				text: 'Simulation Data Overview'
 			},
-			options: {
-				responsive: true,
-				title: {
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			scales: {
+				xAxes: [{
 					display: true,
-					text: 'Chart.js Line Chart'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
+					scaleLabel: {
 						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Month'
-						}
-					}],
-					yAxes: [{
+						labelString: 'Datetime'
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
 						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Value'
-						}
-					}]
-				}
+						labelString: 'Power'
+					}
+				}]
 			}
-		};
+		}
+	};
 
-		window.onload = function() {
-			var ctx = document.getElementById('PowerChart').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-		};
+	//window.onload = function() {
+	//	var ctx = document.getElementById('PowerChart').getContext('2d');
+ //       window.myLine = new Chart(ctx, simdatasconfig);
+	//};
+
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('PowerChart').getContext('2d');
+        window.myLine = new Chart(ctx, simdatasconfig);
+
+        getSimDatas()
+
+        setInterval(function () {
+            getSimDatas()
+        }, 2000)
+    })
+    //API Call with AJAX
+    function getSimDatas() {
+        $.ajax({
+            url: '/API/Dashboard/GetCurrentSimDatas',
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json',
+            processData: false,
+			success: function (data, textStatus, jQxhr) {
+				data = JSON.parse(data);
+				setSimData(data[0].SimTime, data[0].Wind, data[0].Sun, data[0].Consumption)
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+    //Update Chart
+	function setSimData(currentdate, wind, sun, consumption) {
+        simdatasconfig.data.labels.push(currentdate);
+        simdatasconfig.data.datasets[0].data.push(wind);
+        simdatasconfig.data.datasets[1].data.push(sun);
+        simdatasconfig.data.datasets[2].data.push(consumption);		
+        window.myLine.update()
+    }
 
 </script>
