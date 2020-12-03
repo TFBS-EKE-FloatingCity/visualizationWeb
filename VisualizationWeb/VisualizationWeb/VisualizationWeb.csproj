@@ -120,6 +120,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.4.0, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharpFork.1.0.4.0\lib\net35\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -195,7 +198,9 @@
     </Compile>
     <Compile Include="Helpers\SeedSimHelper.cs" />
     <Compile Include="Helpers\SimulationHelper.cs" />
+    <Compile Include="Helpers\SingletonHolder.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
+    <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Migrations\202002261351087_create database.cs" />
     <Compile Include="Migrations\202002261351087_create database.Designer.cs">
       <DependentUpon>202002261351087_create database.cs</DependentUpon>
@@ -238,6 +243,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CityData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Sensor.cs" />
