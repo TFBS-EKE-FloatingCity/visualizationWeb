@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using VisualizationWeb.Helpers;
 
 [assembly: OwinStartupAttribute(typeof(VisualizationWeb.Startup))]
 namespace VisualizationWeb
@@ -9,6 +10,8 @@ namespace VisualizationWeb
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+
+            SingletonHolder holder = new SingletonHolder();
         }
     }
 }
