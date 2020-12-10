@@ -23,9 +23,15 @@ namespace VisualizationWeb.Controllers
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult CreateScenario()
         {
             return View(new SimScenario { SimPositions = new List<SimPosition>()});
+        }
+
+        [HttpPost]
+        public ActionResult CreatePosition()
+        {
+            return View();
         }
 
         public ActionResult EditSimScenario()
