@@ -9,9 +9,9 @@ namespace Simulation.Library.Calculations
     public static class CalcInterpolation
     {
         //Returns searched Value between 2 Function positions
-        public static int GetValue(int startY, decimal startX, int endX, decimal endY, decimal xGiven)
+        public static int GetValue(int startY, decimal startX, int endX, decimal endY, decimal givenX)
         {
-            return (int)Math.Round(startY + ((endX - startY) / (endY - startX)) * (xGiven - startX));
+            return (int)Math.Round(startY + ((endX - startY) / (endY - startX)) * (givenX - startX));
         }
     }
 }
