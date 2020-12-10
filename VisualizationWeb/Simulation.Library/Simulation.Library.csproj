@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculations\calcInterpolation.cs" />
+    <Compile Include="Calculations\CalcInterpolation.cs" />
     <Compile Include="Models\SimPosition.cs" />
     <Compile Include="Models\SimScenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
