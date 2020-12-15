@@ -48,7 +48,7 @@ namespace Simulation.Library.Models
         public DateTime EndDateTimeReal
         {
             get { return _endDateTimeReal; }
-            set { _endDateTimeReal = value; }
+            private set { _endDateTimeReal = value; }
         }
         public SimScenario Simulation { get; set; }
 
