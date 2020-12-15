@@ -356,6 +356,7 @@
     <Content Include="Views\Simulations\CreateScenario.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

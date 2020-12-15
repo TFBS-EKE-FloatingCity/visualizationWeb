@@ -4,54 +4,111 @@
     ViewBag.Title = "Simulation Positions";
 }
 
-@using (Html.BeginForm("CreatePosition", "Simulations", FormMethod.Post))
+@using (Html.BeginForm("AddPosition", "Simulations", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SimScenarioID, new { htmlAttributes = new { @class = "form-control" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SunValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.SunValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SunValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.WindValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.WindValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WindValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EnergyBalanceValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.EnergyBalanceValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EnergyBalanceValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateRegistered, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.DateRegistered, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateRegistered, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-8">
-                <input type="submit" value="Add Position" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SunValue, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.SunValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SunValue, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.WindValue, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.WindValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.WindValue, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EnergyBalanceValue, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.EnergyBalanceValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EnergyBalanceValue, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateRegistered, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.DateRegistered, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DateRegistered, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Position" />
+        </div>
+    </div>
+</div>
 }
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+@*@using (Html.BeginForm("CreatePosition", "Simulations", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SunValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.SunValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SunValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WindValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.WindValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.WindValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EnergyBalanceValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.EnergyBalanceValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EnergyBalanceValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateRegistered, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.DateRegistered, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DateRegistered, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+                    <input type="submit" value="Add Position" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
