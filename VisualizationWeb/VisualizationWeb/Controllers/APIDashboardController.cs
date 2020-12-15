@@ -20,15 +20,17 @@ namespace VisualizationWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: API/Dashboard
-        //Get Last 3 Generatorentries from the SensorData-Table
-        //Available Columns: SensorDataID, SensorID, SValue, MeasureTime
-        [Route("GetCurrentGeneratorsData")]
-        [HttpGet]
-        public string GetCurrentGeneratorsData()
-        {
-            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 10) || (s.SensorID == 11) || (s.SensorID == 12)).Take(3).ToList());
-        }
+        //// GET: API/Dashboard
+        ////Get Last 3 Generatorentries from the SensorData-Table
+        ////Available Columns: SensorDataID, SensorID, SValue, MeasureTime
+        //[Route("GetCurrentGeneratorsData")]
+        //[HttpGet]
+        //public string GetCurrentGeneratorsData()
+        //{
+        //    //return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID >= 7 && s.SensorID <= 12)).Take(6).ToList());
+        //    return JsonConvert.SerializeObject(db.CityDatas.OrderByDescending(d => d.CreatedAt).Take(1).ToList());
+
+        //}
 
         // GET: API/Dashboard
         //Get Last 3 Pumpentries of the SensorData-Table
@@ -37,7 +39,9 @@ namespace VisualizationWeb.Controllers
         [HttpGet]
         public string GetCurrentPumpsData()
         {
-            return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 7) || (s.SensorID == 8) || (s.SensorID == 9)).Take(3).ToList());
+            //return JsonConvert.SerializeObject(db.SensorDatas.OrderByDescending(d => d.MeasureTime).Where(s => (s.SensorID == 7) || (s.SensorID == 8) || (s.SensorID == 9)).Take(3).ToList());
+            return JsonConvert.SerializeObject(db.CityDatas.OrderByDescending(d => d.CreatedAt).Take(1).ToList());
+
         }
 
 

@@ -1,10 +1,10 @@
-﻿<h4>Pump efficiency (in W)</h4>
+﻿<h4>Pumps efficiency (in %)</h4>
 <canvas id="PumpsChart" height="200"></canvas>
 
 <script>
-    // chart config
-    var pumpConfig = {
-        type: 'bar',
+    // chart config  //node-server:  http://161.97.116.72:8080/ping
+    var pumpsConfig = {
+        type: 'horizontalBar',
         data: {
             labels: [
                 "Pump 1", "Pump 2", "Pump 3"
@@ -12,7 +12,7 @@
             datasets: [{
                 label: "Pumps",
                 data: [],
-                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)' ],
+                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)'],
                 borderWidth: 2
             }]
         },
@@ -22,10 +22,10 @@
                 display: false
             },
             scales: {
-                yAxes: [{
+                xAxes: [{
                     ticks: {
-                        min: 0
-                        //max
+                        min: -100,
+                        max: 100,
                     }
 
                 }]
@@ -36,7 +36,7 @@
     $(document).ready(function () {
         // chart
         var ctx = document.getElementById('PumpsChart').getContext('2d');
-        window.pumpConfig = new Chart(ctx, pumpConfig);
+        window.pumpChart = new Chart(ctx, pumpsConfig);
 
         getPumpData()
 
@@ -44,8 +44,7 @@
             getPumpData()
         }, 2000)
     })
-
-
+    //API Call with AJAX
     function getPumpData() {
         $.ajax({
             url: '/API/Dashboard/GetCurrentPumpsData',
@@ -54,22 +53,20 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
+                //var pumpData = [];
                 var chartData = []
+                var chartDataIndex = 0;
                 data = JSON.parse(data)
+
                 data.forEach(function (value) {
-                    //Pumpen ID' s 7, 8, 9
-                    switch (value.SensorID) {
-                        case 7:
-                            chartData[0] = value.SValue;
-                            break;
-                        case 8:
-                            chartData[1] = value.SValue;
-                            break;
-                        case 9:
-                            chartData[2] = value.SValue;
-                            break;
-                    }
+
+                    chartData[0] = value.Pump1;
+                    chartData[1] = value.Pump2;
+                    chartData[2] = value.Pump3;
+                        
+                    
                 })
+             
                 setPumpData(chartData)
             },
             error: function (jqXhr, textStatus, errorThrown) {
@@ -77,11 +74,11 @@
             }
         });
     }
-
+    //Update Chart
     function setPumpData(data) {
-        pumpConfig.data.datasets.forEach(function (dataset) {
-            dataset.data = data
+        pumpsConfig.data.datasets.forEach(function (dataset) {
+            dataset.data = data           
         });
-        window.pumpConfig.update()
+        window.pumpChart.update()
     }
 </script>

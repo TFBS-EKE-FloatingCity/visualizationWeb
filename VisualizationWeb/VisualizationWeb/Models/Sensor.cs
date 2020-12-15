@@ -22,7 +22,7 @@ namespace VisualizationWeb.Models
         public string Einheiten { get; set; }
         public int SCode { get; set; }
         [StringLength(50)]
-        public string Prefix { get; set; }
+        public string Prefix { get; set; }       
 
         public virtual ICollection<SensorData> SensorDatas { get; set; }
     }

@@ -1,0 +1,87 @@
+﻿@*<h4>Pump efficiency (in W)</h4>
+<canvas id="PumpsChart" height="200"></canvas>
+
+<script>
+    // chart config
+    var pumpConfig = {
+        type: 'bar',
+        data: {
+            labels: [
+                "Pump 1", "Pump 2", "Pump 3"
+            ],
+            datasets: [{
+                label: "Pumps",
+                data: [],
+                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)' ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0
+                        //max
+                    }
+
+                }]
+            }
+        }
+    };
+
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('PumpsChart').getContext('2d');
+        window.pumpConfig = new Chart(ctx, pumpConfig);
+
+        getPumpData()
+
+        setInterval(function () {
+            getPumpData()
+        }, 2000)
+    })
+
+
+    function getPumpData() {
+        $.ajax({
+            url: '/API/Dashboard/GetCurrentPumpsData',
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                var chartData = []
+                data = JSON.parse(data)
+                data.forEach(function (value) {
+                    //Pumpen ID' s 7, 8, 9
+                    switch (value.SensorID) {
+                        case 7:
+                            chartData[0] = value.SValue;
+                            break;
+                        case 8:
+                            chartData[1] = value.SValue;
+                            break;
+                        case 9:
+                            chartData[2] = value.SValue;
+                            break;
+                    }
+                })
+                setPumpData(chartData)
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function setPumpData(data) {
+        pumpConfig.data.datasets.forEach(function (dataset) {
+            dataset.data = data
+        });
+        window.pumpConfig.update()
+    }
+</script>*@
