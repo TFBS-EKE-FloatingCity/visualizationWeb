@@ -1,7 +1,77 @@
-﻿
+﻿@model IEnumerable<Simulation.Library.Models.SimScenario>
+
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
 
+<div>
+    <h4>Szenario Detail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeFactor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <tr>
+                <th>
+                    Szenario Positionen
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            @if (Model.SimPosition.Count > 0)
+            {
+                foreach (var cs in Model.SimPositions)
+                {
+                    <tr>
+                        <td>
+                            @Html.Label(cs.Title)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Remove", "RemoveSimPosition", new { SimScenarioID = Model.SimScenarioID, SimPositionID = cs.SimPositionID })
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <p class="text-info">
+                            Das Szenario enthält keine Positionen!
+                        </p>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
