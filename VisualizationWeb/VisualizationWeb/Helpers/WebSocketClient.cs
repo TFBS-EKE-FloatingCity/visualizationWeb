@@ -14,8 +14,14 @@ namespace VisualizationWeb.Helpers {
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        WebsocketServer websocketserver;
+
         Uri url = new Uri("ws://161.97.116.72:8080");
         public static SocketIoClient client = new SocketIoClient();
+
+        public WebSocketClient(WebsocketServer server) {
+            this.websocketserver = server;
+        }
 
         public void Connect() {
             client.ConnectAsync(url);
@@ -64,7 +70,7 @@ namespace VisualizationWeb.Helpers {
             db.CityDatas.Add(data);
             db.SaveChanges();
 
-
+            websocketserver.SendData(json);
         }
     }
 }

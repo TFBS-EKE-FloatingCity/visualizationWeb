@@ -16,7 +16,7 @@ namespace VisualizationWeb.Helpers {
         }
 
         protected override void OnMessage(MessageEventArgs e) {
-            Sessions.Broadcast(e.Data);
+            base.OnMessage(e);
         }
 
         protected override void OnError(ErrorEventArgs e) {
