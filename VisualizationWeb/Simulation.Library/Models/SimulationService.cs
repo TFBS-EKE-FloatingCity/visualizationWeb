@@ -7,41 +7,40 @@ using System.Threading.Tasks;
 
 namespace Simulation.Library.Models
 {
-    public class SimulationService
+    public class SimulationService : IDisposable, ISimulationService
     {
         #region Properties
-
         private TimeSpan _duration;
-        private DateTime _startDateTimeReal;
+        private DateTime? _startDateTimeReal;
         private DateTime _endDateTimeReal;
-
+        private bool _isRunning;
         public TimeSpan Duration
         {
-            get 
-            { 
-                return _duration; 
+            get
+            {
+                return _duration;
             }
-            set 
-            { 
+            set
+            {
                 _duration = value;
-                if(value != null && StartDateTimeReal != null)
+                if (value != null && StartDateTimeReal != null)
                 {
-                    EndDateTimeReal = StartDateTimeReal + value;
+                    EndDateTimeReal = StartDateTimeReal.Value + value;
                 }
             }
         }
-        public DateTime StartDateTimeReal
+        public DateTime? StartDateTimeReal
         {
-            get 
-            { 
-                return _startDateTimeReal; 
+            get
+            {
+                return _startDateTimeReal;
             }
-            set 
-            { 
+            set
+            {
                 _startDateTimeReal = value;
-                if(value != null && Duration != null)
+                if (value != null && Duration != null)
                 {
-                    EndDateTimeReal = value + Duration;
+                    EndDateTimeReal = value.Value + Duration;
                 }
             }
         }
@@ -65,16 +64,73 @@ namespace Simulation.Library.Models
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Calculates the current Time in the Simulation.
-        /// </summary>
-        private DateTime getSimulatedTimeStamp()
+        public void Run()
         {
-            decimal factor = CalculationHelper.InverseLerp(StartDateTimeReal.Ticks, EndDateTimeReal.Ticks, DateTime.Now.Ticks);      //Calculates the percentage of how far the simulation is in the real time
+            StartDateTimeReal = DateTime.Now;
+            _isRunning = true;
+        }
+
+        public void Stop()
+        {
+            _isRunning = false;
+            StartDateTimeReal = null;
+        }
+
+        public DateTime? GetSimulatedTimeStamp(DateTime timeStamp)
+        {
+            if (StartDateTimeReal == null)
+            {
+                return null;
+            }
+            decimal factor = CalculationHelper.InverseLerp(StartDateTimeReal.Value.Ticks, EndDateTimeReal.Ticks, timeStamp.Ticks);          //Calculates the percentage of how far the simulation is in the real time
             decimal simTimeTicksValue = CalculationHelper.Lerp(Simulation.StartDate.Value.Ticks, Simulation.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
             return new DateTime((long)simTimeTicksValue);
         }
 
+        public int GetWindValue(DateTime timeStamp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int? GetEnergyProductionWind(DateTime timeStamp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int? GetEnergyProductionSun(DateTime timeStamp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int? GetEnergyConsumption(DateTime timeStamp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetMaxEnergyProductionWind()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetMaxEnergyProductionSun()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetMaxEnergyConsumption()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsSimulationRunning()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
