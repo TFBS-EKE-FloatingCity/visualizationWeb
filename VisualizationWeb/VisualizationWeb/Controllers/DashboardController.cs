@@ -16,6 +16,7 @@ namespace VisualizationWeb.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
+            //ViewBag.PowerChartPartial = "../Charts/PowerChart";
             return View("../Dashboard");
         }
     }

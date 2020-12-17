@@ -1,0 +1,3 @@
+﻿$("#CityRotationChartPanel").click(function () {
+
+})
