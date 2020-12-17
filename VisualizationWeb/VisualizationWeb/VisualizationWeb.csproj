@@ -239,7 +239,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IRepo\ISimulationRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Repo\SimulationRepository.cs" />
     <Compile Include="Models\Sensor.cs" />
     <Compile Include="Models\SensorData.cs" />
     <Compile Include="Models\Setting.cs" />
