@@ -248,6 +248,8 @@
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
     <Compile Include="Models\SimulationHistory.cs" />
+    <Compile Include="Models\ViewModel\SettingVM.cs" />
+    <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
