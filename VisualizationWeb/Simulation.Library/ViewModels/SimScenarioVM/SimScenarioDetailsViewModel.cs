@@ -14,7 +14,6 @@ namespace Simulation.Library.Models.ViewModels.SimScenarioVM
         [Required]
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
-        
 
         public decimal TimeFactor { get; set; }
 
@@ -22,6 +21,7 @@ namespace Simulation.Library.Models.ViewModels.SimScenarioVM
 
         public DateTime? EndDate { get; set; }
 
-        
+        [StringLength(500)]
+        public string Notes { get; set; }
     }
 }
