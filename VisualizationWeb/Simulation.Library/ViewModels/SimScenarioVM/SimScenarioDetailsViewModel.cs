@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Simulation.Library.Models.ViewModels.SimScenarioVM
+namespace Simulation.Library.ViewModels.SimScenarioVM
 {
     public class SimScenarioDetailsViewModel
     {
@@ -25,6 +25,6 @@ namespace Simulation.Library.Models.ViewModels.SimScenarioVM
         [StringLength(500)]
         public string Notes { get; set; }
 
-        public IEnumerable<SimPositionBindingViewModel> SimPositions { get; set; }
+        public IEnumerable<SimPositionIndexViewModel> SimPositions { get; set; }
     }
 }

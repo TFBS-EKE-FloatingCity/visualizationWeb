@@ -1,7 +1,6 @@
 ﻿using Simulation.Library.Models;
-using Simulation.Library.Models.ViewModels.SimPositionVM;
-using Simulation.Library.Models.ViewModels.SimScenarioVM;
 using Simulation.Library.ViewModels.SimPositionVM;
+using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -50,10 +49,27 @@ namespace VisualizationWeb.Models.Repo
             }
         }
 
-        public async Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex()
+        public async Task<IEnumerable<SimPositionBindingViewModel>> GetSimPositionBindingList(int simScenarioID)
         {
             var pos = from c in _context.SimPositions
                       orderby c.DateRegistered
+                      where c.SimScenarioID == simScenarioID
+                      select new SimPositionBindingViewModel
+                      {
+                          SimPositionID = c.SimPositionID,
+                          SunValue = c.SunValue,
+                          WindValue = c.WindValue,
+                          EnergyBalanceValue = c.EnergyBalanceValue,
+                          DateRegistered = c.DateRegistered,
+                      };
+            return await pos.ToListAsync();
+        }
+
+        public async Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex(int simScenarioID)
+        {
+            var pos = from c in _context.SimPositions
+                      orderby c.DateRegistered
+                      where c.SimScenarioID == simScenarioID
                       select new SimPositionIndexViewModel
                       {
                           SimPositionID = c.SimPositionID,
@@ -63,6 +79,7 @@ namespace VisualizationWeb.Models.Repo
                           DateRegistered = c.DateRegistered,
                       };
             return await pos.ToListAsync();
+
         }
 
         public async Task<SimScenarioDetailsViewModel> GetSimScenarioDetails(int simScenarioID)
@@ -74,7 +91,7 @@ namespace VisualizationWeb.Models.Repo
                 SimScenarioID = simscenario.SimScenarioID,
                 Title = simscenario.Title,
                 Notes = simscenario.Notes,
-                SimPositions = simscenario.SimPositions.Select(sp => new SimPositionBindingViewModel
+                SimPositions = simscenario.SimPositions.Select(sp => new SimPositionIndexViewModel
                 {
                     SimPositionID = sp.SimPositionID,
                     SunValue = sp.SunValue,

@@ -1,5 +1,5 @@
 ﻿using Simulation.Library.Models;
-using Simulation.Library.Models.ViewModels.SimScenarioVM;
+using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,8 +50,7 @@ namespace VisualizationWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //return View(await SimulationRepository.GetSimPositionIndex())
-            return View();
+            return View(await SimulationRepository.GetSimPositionIndex(simScenarioId.Value));
         }
 
         public async Task<ActionResult> Details(int? simScenarioId)
@@ -61,7 +60,18 @@ namespace VisualizationWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails()
+            SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails(simScenarioId.Value);
+            scenario.SimPositions = await SimulationRepository.GetSimPositionIndex(simScenarioId.Value);
+            return View(scenario);
+        }
+
+        public async Task<ActionResult> Create()
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> PartialPositionCreate()
+        {
             return View();
         }
     }

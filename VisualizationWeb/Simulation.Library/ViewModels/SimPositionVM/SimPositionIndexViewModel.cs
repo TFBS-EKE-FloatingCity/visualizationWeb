@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Simulation.Library.Models.ViewModels.SimPositionVM
+namespace Simulation.Library.ViewModels.SimPositionVM
 {
     public class SimPositionIndexViewModel
     {
