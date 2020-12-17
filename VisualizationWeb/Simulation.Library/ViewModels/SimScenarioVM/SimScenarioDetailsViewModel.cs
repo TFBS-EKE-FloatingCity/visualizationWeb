@@ -20,5 +20,8 @@ namespace Simulation.Library.Models.ViewModels.SimScenarioVM
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        [StringLength(500)]
+        public string Notes { get; set; }
     }
 }
