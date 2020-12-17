@@ -8,6 +8,11 @@ namespace VisualizationWeb.Models.Repo
 {
     public class SimulationRepository : ISimulationRepository
     {
-        
+        private readonly ApplicationDbContext _context;
+
+        public SimulationRepository(ApplicationDbContext context)
+        {
+            this._context = context;
+        }
     }
 }

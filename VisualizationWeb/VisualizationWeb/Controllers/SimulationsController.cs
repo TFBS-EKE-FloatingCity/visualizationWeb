@@ -5,12 +5,34 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VisualizationWeb.Models;
+using VisualizationWeb.Models.IRepo;
+using VisualizationWeb.Models.Repo;
 
 namespace VisualizationWeb.Controllers
 {
     public class SimulationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private object lobject = new object();
+
+        private ISimulationRepository _priceListRepository;
+        public ISimulationRepository PriceListRepository
+        {
+            get
+            {
+                if (_priceListRepository == null)
+                {
+                    lock (lobject)
+                    {
+                        if (_priceListRepository == null)
+                        {
+                            _priceListRepository = new SimulationRepository(db);
+                        }
+                    }
+                }
+                return _priceListRepository;
+            }
+        }
 
         // GET: Simulations
         public ActionResult Index()
