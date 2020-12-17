@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\CalculationHelper.cs" />
+    <Compile Include="Models\ISimulationService.cs" />
     <Compile Include="Models\SimPosition.cs" />
     <Compile Include="Models\SimScenario.cs" />
     <Compile Include="Models\SimulationService.cs" />
