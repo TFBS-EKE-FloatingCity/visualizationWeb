@@ -15,7 +15,7 @@ namespace VisualizationWeb.Models.ViewModel.SimScenarioVM
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
-        public int TimeFactor { get; set; }
+        public decimal TimeFactor { get; set; }
 
         public DateTime? StartDate { get; set; }
 
