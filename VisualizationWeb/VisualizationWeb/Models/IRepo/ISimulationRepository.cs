@@ -15,7 +15,7 @@ namespace VisualizationWeb.Models.IRepo
     {
         Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex();
         Task<IEnumerable<SimScenarioIndexViewModel>> GetSimScenarioIndex();
-        Task<IEnumerable<SimScenarioDetailsViewModel>> GetSimScenarioDetails();
+        Task<IEnumerable<SimScenarioDetailsViewModel>> GetSimScenarioDetails(int simScenarioID);
         Task CreateScenario(SimScenarioCreateAndEditViewModel scenario);
         Task CreatePosition(SimPositionCreateAndEditViewModel position);
         Task RemoveScenario(int scenarioID);

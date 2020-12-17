@@ -1,4 +1,5 @@
-﻿using Simulation.Library.Models.ViewModels.SimPositionVM;
+﻿using Simulation.Library.Models;
+using Simulation.Library.Models.ViewModels.SimPositionVM;
 using Simulation.Library.Models.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
@@ -20,22 +21,53 @@ namespace VisualizationWeb.Models.Repo
 
         public async Task CreatePosition(SimPositionCreateAndEditViewModel position)
         {
-            throw new NotImplementedException();
+            if(position != null)
+            {
+                _context.SimPositions.Add(new SimPosition
+                {
+                    SunValue = position.SunValue,
+                    WindValue = position.WindValue,
+                    EnergyBalanceValue = position.EnergyBalanceValue,
+                    DateRegistered = position.DateRegistered,
+                    
+                });
+            }
         }
 
         public async Task CreateScenario(SimScenarioCreateAndEditViewModel scenario)
         {
-            throw new NotImplementedException();
+            if(scenario != null)
+            {
+                _context.SimScenarios.Add(new SimScenario
+                {
+                    Title = scenario.Title,
+                    TimeFactor = scenario.TimeFactor,
+                    Notes = scenario.Notes,
+                    //TODO startdate/enddate
+                });
+            }
         }
 
         public async Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex()
         {
-            throw new NotImplementedException();
+            var pos = _context.SimPositions
         }
 
-        public async Task<IEnumerable<SimScenarioDetailsViewModel>> GetSimScenarioDetails()
+        public async Task<IEnumerable<SimScenarioDetailsViewModel>> GetSimScenarioDetails(int simScenarioID)
         {
-            throw new NotImplementedException();
+            SimScenario simscenario = await _context.SimScenarios.FindAsync(simScenarioID);
+
+            return new SimScenarioDetailsViewModel
+            {
+                SimScenarioID = simscenario.SimScenarioID,
+                Title = simscenario.Title,
+                Notes = simscenario.Notes,
+                SimPositions = simscenario.SimPositions.Select(sp => new
+                {
+                    
+                })
+                
+            }
         }
 
         public async Task<IEnumerable<SimScenarioIndexViewModel>> GetSimScenarioIndex()
