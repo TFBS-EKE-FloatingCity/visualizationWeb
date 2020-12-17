@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simulation.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,6 +24,12 @@ namespace VisualizationWeb.Controllers
         }
 
         public ActionResult Create()
+        {
+            return View(new SimScenario { SimPositions = new List<SimPosition>()});
+        }
+
+        [HttpPost]
+        public ActionResult AddPosition()
         {
             return View();
         }
