@@ -249,7 +249,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IRepo\ISimulationRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Repo\SimulationRepository.cs" />
     <Compile Include="Models\Sensor.cs" />
     <Compile Include="Models\SensorData.cs" />
     <Compile Include="Models\Setting.cs" />
@@ -258,6 +260,11 @@
     <Compile Include="Models\SimulationHistory.cs" />
     <Compile Include="Models\ViewModel\ModalVM.cs" />
     <Compile Include="Models\ViewModel\SettingVM.cs" />
+    <Compile Include="Models\ViewModel\SimPositionVM\SimPositionCreateAndEditViewModel.cs" />
+    <Compile Include="Models\ViewModel\SimPositionVM\SimPositionIndexViewModel.cs" />
+    <Compile Include="Models\ViewModel\SimScenarioVM\SimScenarioCreateAndEditViewModel.cs" />
+    <Compile Include="Models\ViewModel\SimScenarioVM\SimScenarioDetailsViewModel.cs" />
+    <Compile Include="Models\ViewModel\SimScenarioVM\SimScenarioIndexViewModel.cs" />
     <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -365,8 +372,10 @@
     <Content Include="Views\Simulations\Details.cshtml" />
     <Content Include="Views\Simulations\Delete.cshtml" />
     <Content Include="Views\Simulations\Edit.cshtml" />
-    <Content Include="Views\Simulations\Create.cshtml" />
-    <Content Include="Views\Shared\Partials\_Modal.cshtml" />
+    <Content Include="Views\Simulations\CreateScenario.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

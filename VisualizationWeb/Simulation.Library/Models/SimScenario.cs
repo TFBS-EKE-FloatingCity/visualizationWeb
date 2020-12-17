@@ -16,7 +16,7 @@ namespace Simulation.Library.Models
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
-        public int TimeFactor { get; set; }
+        public decimal TimeFactor { get; set; }
 
         [StringLength(500)]
         public string Notes { get; set; }
@@ -48,5 +48,6 @@ namespace Simulation.Library.Models
         }
 
         public ICollection<SimPosition> SimPositions { get; set; }
+
     }
 }
