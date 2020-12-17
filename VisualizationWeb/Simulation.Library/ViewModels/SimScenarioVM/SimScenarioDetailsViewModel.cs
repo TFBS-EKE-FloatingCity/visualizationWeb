@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace VisualizationWeb.Models.ViewModel.SimScenarioVM
+namespace Simulation.Library.Models.ViewModels.SimScenarioVM
 {
-    public class SimScenarioIndexViewModel
+    public class SimScenarioDetailsViewModel
     {
         [Key]
         public int SimScenarioID { get; set; }

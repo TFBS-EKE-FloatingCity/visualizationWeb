@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace VisualizationWeb.Models.ViewModel.SimPositionVM
+namespace Simulation.Library.Models.ViewModels.SimPositionVM
 {
-    public class SimPositionCreateAndEditViewModel
+    public class SimPositionIndexViewModel
     {
         [Key]
         public int SimPositionID { get; set; }
@@ -18,7 +18,5 @@ namespace VisualizationWeb.Models.ViewModel.SimPositionVM
         public int EnergyBalanceValue { get; set; }
 
         public DateTime DateRegistered { get; set; }
-
-        public int SimScenarioID { get; set; }
     }
 }
