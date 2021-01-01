@@ -47,21 +47,20 @@ namespace VisualizationWeb.Helpers {
             CityData data = new CityData();
 
             foreach(DataRow row in dataTable.Rows) {
-
                 if (row["sector"].ToString() == "One") {
-                    data.USonicInner1 = Convert.ToInt32(row["sensorInside"]);
-                    data.USonicOuter1 = Convert.ToInt32(row["sensorOutside"]);
-                    data.Pump1 = Convert.ToInt32(row["pumpLevel"]);
+                    data.USonicInner1 = Convert.ToInt16(row["sensorInside"]);
+                    data.USonicOuter1 = Convert.ToInt16(row["sensorOutside"]);
+                    data.Pump1 = Convert.ToInt16(row["pumpLevel"]);
                 }
                 else if (row["sector"].ToString() == "Two") {
-                    data.USonicInner2 = Convert.ToInt32(row["sensorInside"]);
-                    data.USonicOuter2 = Convert.ToInt32(row["sensorOutside"]);
-                    data.Pump2 = Convert.ToInt32(row["pumpLevel"]);
+                    data.USonicInner2 = Convert.ToInt16(row["sensorInside"]);
+                    data.USonicOuter2 = Convert.ToInt16(row["sensorOutside"]);
+                    data.Pump2 = Convert.ToInt16(row["pumpLevel"]);
                 }
                 else if (row["sector"].ToString() == "Three") {
-                    data.USonicInner3 = Convert.ToInt32(row["sensorInside"]);
-                    data.USonicOuter3 = Convert.ToInt32(row["sensorOutside"]);
-                    data.Pump3 = Convert.ToInt32(row["pumpLevel"]);
+                    data.USonicInner3 = Convert.ToInt16(row["sensorInside"]);
+                    data.USonicOuter3 = Convert.ToInt16(row["sensorOutside"]);
+                    data.Pump3 = Convert.ToInt16(row["pumpLevel"]);
                 }
             }
 

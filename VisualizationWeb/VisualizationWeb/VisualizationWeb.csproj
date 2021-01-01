@@ -194,15 +194,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\APIDashboardController.cs" />
     <Compile Include="Controllers\APISimulationController.cs" />
-    <Compile Include="Controllers\APISensorsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SimDatasController.cs" />
     <Compile Include="Controllers\SimTypesController.cs" />
-    <Compile Include="Controllers\SensorsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -214,53 +211,15 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202002261351087_create database.cs" />
-    <Compile Include="Migrations\202002261351087_create database.Designer.cs">
-      <DependentUpon>202002261351087_create database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002261412486_Model Sensor edit.cs" />
-    <Compile Include="Migrations\202002261412486_Model Sensor edit.Designer.cs">
-      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003050733457_update simtypes.cs" />
-    <Compile Include="Migrations\202003050733457_update simtypes.Designer.cs">
-      <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003050755051_update senores.cs" />
-    <Compile Include="Migrations\202003050755051_update senores.Designer.cs">
-      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003111531288_add simulationtable.cs" />
-    <Compile Include="Migrations\202003111531288_add simulationtable.Designer.cs">
-      <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.cs" />
-    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.Designer.cs">
-      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003261441534_RemoveSimulationModel.cs" />
-    <Compile Include="Migrations\202003261441534_RemoveSimulationModel.Designer.cs">
-      <DependentUpon>202003261441534_RemoveSimulationModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004011343566_CreatetSimHistory.cs" />
-    <Compile Include="Migrations\202004011343566_CreatetSimHistory.Designer.cs">
-      <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.cs" />
-    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.Designer.cs">
-      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012101444545_CityData.cs" />
-    <Compile Include="Migrations\202012101444545_CityData.Designer.cs">
-      <DependentUpon>202012101444545_CityData.cs</DependentUpon>
+    <Compile Include="Migrations\202012171500147_Creation.cs" />
+    <Compile Include="Migrations\202012171500147_Creation.Designer.cs">
+      <DependentUpon>202012171500147_Creation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Sensor.cs" />
-    <Compile Include="Models\SensorData.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
@@ -345,10 +304,6 @@
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Sensors\Create.cshtml" />
-    <Content Include="Views\Sensors\Delete.cshtml" />
-    <Content Include="Views\Sensors\Edit.cshtml" />
-    <Content Include="Views\Sensors\Index.cshtml" />
     <Content Include="Views\Settings\Edit.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\SimDatas\Create.cshtml" />
@@ -387,35 +342,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002261351087_create database.resx">
-      <DependentUpon>202002261351087_create database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002261412486_Model Sensor edit.resx">
-      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003050733457_update simtypes.resx">
-      <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003050755051_update senores.resx">
-      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003111531288_add simulationtable.resx">
-      <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003261402267_fix Simdata und SensorData Model.resx">
-      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003261441534_RemoveSimulationModel.resx">
-      <DependentUpon>202003261441534_RemoveSimulationModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011343566_CreatetSimHistory.resx">
-      <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004020906212_UpdateSimulationHistoryModel.resx">
-      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012101444545_CityData.resx">
-      <DependentUpon>202012101444545_CityData.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012171500147_Creation.resx">
+      <DependentUpon>202012171500147_Creation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
