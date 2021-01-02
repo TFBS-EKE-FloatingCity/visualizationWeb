@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Simulation.Library.Models.ViewModels.SimScenarioVM.SimScenarioIndexViewModel>
+﻿@model IEnumerable<Simulation.Library.ViewModels.SimScenarioVM.SimScenarioIndexViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -42,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.TimeFactor)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.PriceListID })
+                @Html.ActionLink("Details", "Details", new { id = item.SimScenarioID })
             </td>
         </tr>
     }

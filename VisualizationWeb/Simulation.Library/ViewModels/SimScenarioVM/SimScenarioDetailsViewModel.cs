@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Simulation.Library.ViewModels.SimPositionVM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Simulation.Library.Models.ViewModels.SimScenarioVM
+namespace Simulation.Library.ViewModels.SimScenarioVM
 {
     public class SimScenarioDetailsViewModel
     {
@@ -23,5 +24,7 @@ namespace Simulation.Library.Models.ViewModels.SimScenarioVM
 
         [StringLength(500)]
         public string Notes { get; set; }
+
+        public IEnumerable<SimPositionIndexViewModel> SimPositions { get; set; }
     }
 }

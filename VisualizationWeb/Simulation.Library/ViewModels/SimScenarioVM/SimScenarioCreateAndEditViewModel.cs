@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Simulation.Library.Models.ViewModels.SimScenarioVM
+namespace Simulation.Library.ViewModels.SimScenarioVM
 {
     public class SimScenarioCreateAndEditViewModel
     {
