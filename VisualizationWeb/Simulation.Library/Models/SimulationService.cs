@@ -70,7 +70,7 @@ namespace Simulation.Library.Models
         #region Methods
         public void Run()
         {
-            if(Simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
+            if(Simulation.SimPositions != null && Simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
             {
                 StartDateTimeReal = DateTime.Now;
                 _prevPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).First();
@@ -219,6 +219,11 @@ namespace Simulation.Library.Models
         protected virtual void onSimulationEnded()
         {
             SimulationEnded?.Invoke(this, new EventArgs());
+        }
+
+        public DateTime? GetSimulationStartedTimeStamp()
+        {
+            return _startDateTimeReal;
         }
 
         #endregion
