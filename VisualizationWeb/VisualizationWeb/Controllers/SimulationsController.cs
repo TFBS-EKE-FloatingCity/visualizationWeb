@@ -70,6 +70,21 @@ namespace VisualizationWeb.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "SimScenarioID, Title, TimeFactor, Notes")] SimScenarioCreateAndEditViewModel vm)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                await SimulationRepository.CreateScenario(vm);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(vm);
+        }
+
         public async Task<ActionResult> PartialPositionCreate()
         {
             return View();
