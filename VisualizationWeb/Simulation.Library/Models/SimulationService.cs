@@ -14,6 +14,9 @@ namespace Simulation.Library.Models
         private DateTime? _startDateTimeReal;
         private DateTime _endDateTimeReal;
         private bool _isRunning;
+        private SimPosition _prevPosition;
+        private SimPosition _nextPosition;
+
         public TimeSpan Duration
         {
             get
@@ -51,7 +54,8 @@ namespace Simulation.Library.Models
         }
         public SimScenario Simulation { get; set; }
 
-
+        public event EventHandler SimulationStarted;
+        public event EventHandler SimulationEnded;
         #endregion
 
         #region Constructor
@@ -66,14 +70,21 @@ namespace Simulation.Library.Models
         #region Methods
         public void Run()
         {
-            StartDateTimeReal = DateTime.Now;
-            _isRunning = true;
+            if(Simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
+            {
+                StartDateTimeReal = DateTime.Now;
+                _prevPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).First();
+                _nextPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
+                _isRunning = true;
+                onSimulationStarted();
+            }
         }
 
         public void Stop()
         {
             _isRunning = false;
             StartDateTimeReal = null;
+            onSimulationEnded();
         }
 
         public DateTime? GetSimulatedTimeStamp(DateTime timeStamp)
@@ -94,22 +105,73 @@ namespace Simulation.Library.Models
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Stop();
         }
 
         public int? GetEnergyProductionWind(DateTime timeStamp)
         {
-            throw new NotImplementedException();
+            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
+            {
+                return null;
+            }
+
+            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
+            refreshPositions(timeStamp);
+
+            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
+            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
+                throw new Exception("At least one SimulationPosition was null.");
+            }
+
+            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks, 
+                _prevPosition.WindValue, 
+                _nextPosition.DateRegistered.Ticks, 
+                _nextPosition.WindValue, 
+                simTimeStamp.Ticks);
         }
 
         public int? GetEnergyProductionSun(DateTime timeStamp)
         {
-            throw new NotImplementedException();
+            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
+            {
+                return null;
+            }
+
+            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
+            refreshPositions(timeStamp);
+
+            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
+            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
+                throw new Exception("At least one SimulationPosition was null.");
+            }
+
+            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
+                _prevPosition.SunValue,
+                _nextPosition.DateRegistered.Ticks,
+                _nextPosition.SunValue,
+                simTimeStamp.Ticks);
         }
 
         public int? GetEnergyConsumption(DateTime timeStamp)
         {
-            throw new NotImplementedException();
+            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
+            {
+                return null;
+            }
+
+            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
+            refreshPositions(timeStamp);
+
+            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
+            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
+                throw new Exception("At least one SimulationPosition was null.");
+            }
+
+            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
+                _prevPosition.EnergyBalanceValue,
+                _nextPosition.DateRegistered.Ticks,
+                _nextPosition.EnergyBalanceValue,
+                simTimeStamp.Ticks);
         }
 
         public int GetMaxEnergyProductionWind()
@@ -129,8 +191,36 @@ namespace Simulation.Library.Models
 
         public bool IsSimulationRunning()
         {
-            throw new NotImplementedException();
+            return _isRunning;
         }
+
+        protected virtual bool isTimeStampValid(DateTime timeStamp)
+        {
+            DateTime? simTimeStamp = GetSimulatedTimeStamp(timeStamp);
+            return simTimeStamp >= Simulation.StartDate && simTimeStamp <= Simulation.EndDate;
+        }
+
+        protected void refreshPositions(DateTime simTimeStamp)
+        {
+            if(simTimeStamp >= _nextPosition.DateRegistered && simTimeStamp <= _prevPosition.DateRegistered)
+            {
+                return;
+            }
+
+            _prevPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered <= simTimeStamp).LastOrDefault();
+            _nextPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
+        }
+
+        protected virtual void onSimulationStarted()
+        {
+            SimulationStarted?.Invoke(this, new EventArgs());
+        }
+
+        protected virtual void onSimulationEnded()
+        {
+            SimulationEnded?.Invoke(this, new EventArgs());
+        }
+
         #endregion
     }
 }

@@ -4,6 +4,10 @@ namespace Simulation.Library.Models
 {
     public interface ISimulationService : IDisposable
     {
+
+        event EventHandler SimulationStarted;
+        event EventHandler SimulationEnded;
+
         /// <summary>
         /// Calculates the current Time in the Simulation for the given timeStamp.
         /// </summary>
