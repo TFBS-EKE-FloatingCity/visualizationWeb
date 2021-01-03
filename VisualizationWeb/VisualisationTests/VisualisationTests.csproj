@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SimulationTests.cs" />
     <Compile Include="UnitsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simulation.Library\Simulation.Library.csproj">
+      <Project>{814807af-9c7e-46ce-8f8b-3705813ea843}</Project>
+      <Name>Simulation.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualizationWeb\VisualizationWeb.csproj">
       <Project>{6eea1547-e2a6-4e1f-b15e-b15496564a09}</Project>
       <Name>VisualizationWeb</Name>

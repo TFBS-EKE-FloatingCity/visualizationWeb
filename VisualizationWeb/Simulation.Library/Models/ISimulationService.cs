@@ -55,5 +55,9 @@ namespace Simulation.Library.Models
         /// Stops the simulation.
         /// </summary>
         void Stop();
+        /// <summary>
+        /// Returns the actual StartedDateTime. Null if the Simulation is not running.
+        /// </summary>
+        DateTime? GetSimulationStartedTimeStamp();
     }
 }
