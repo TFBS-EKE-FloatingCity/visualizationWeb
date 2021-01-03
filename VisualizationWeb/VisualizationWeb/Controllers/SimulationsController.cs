@@ -98,5 +98,31 @@ namespace VisualizationWeb.Controllers
 
             return View();
         }
+
+        public async Task<ActionResult> RemoveSimPosition(int? simPositionId, int? simScenarioId)
+        {
+            if (!simPositionId.HasValue && !simScenarioId.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            await SimulationRepository.RemovePosition(simPositionId.Value);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction($"Details/{simScenarioId}");
+        }
+
+        public async Task<ActionResult> RemoveSimScenario(int? simScenarioId)
+        {
+            if ( !simScenarioId.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            await SimulationRepository.RemoveScenario(simScenarioId.Value);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
     }
 }
