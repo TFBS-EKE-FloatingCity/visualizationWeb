@@ -33,10 +33,12 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Convert.ToString(string.Format("{0:HH:mm}", item.StartDate))
+                @*@Html.DisplayFor(modelItem => item.StartDate)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Convert.ToString(string.Format("{0:HH:mm}", item.EndDate))
+                @*@Html.DisplayFor(modelItem => item.EndDate)*@
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeFactor)
