@@ -30,7 +30,7 @@ namespace VisualizationWeb.Models.Repo
                     WindValue = position.WindValue,
                     EnergyBalanceValue = position.EnergyBalanceValue,
                     DateRegistered = position.DateRegistered,
-
+                    SimScenarioID = position.SimScenarioID
                 });
             }
         }
@@ -44,7 +44,8 @@ namespace VisualizationWeb.Models.Repo
                     Title = scenario.Title,
                     TimeFactor = scenario.TimeFactor,
                     Notes = scenario.Notes,
-                    //TODO startdate/enddate
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now
                 });
             }
         }
@@ -91,7 +92,7 @@ namespace VisualizationWeb.Models.Repo
                 SimScenarioID = simscenario.SimScenarioID,
                 Title = simscenario.Title,
                 Notes = simscenario.Notes,
-                SimPositions = simscenario.SimPositions.Select(sp => new SimPositionIndexViewModel
+                SimPositions = simscenario.SimPositions?.Select(sp => new SimPositionIndexViewModel
                 {
                     SimPositionID = sp.SimPositionID,
                     SunValue = sp.SunValue,
