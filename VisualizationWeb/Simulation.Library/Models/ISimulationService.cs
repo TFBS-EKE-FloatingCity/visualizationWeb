@@ -4,7 +4,6 @@ namespace Simulation.Library.Models
 {
     public interface ISimulationService : IDisposable
     {
-
         event EventHandler SimulationStarted;
         event EventHandler SimulationEnded;
 

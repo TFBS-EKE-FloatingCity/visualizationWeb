@@ -68,6 +68,9 @@ namespace Simulation.Library.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Runs the simulation.
+        /// </summary>
         public void Run()
         {
             if(Simulation.SimPositions != null && Simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
@@ -80,6 +83,9 @@ namespace Simulation.Library.Models
             }
         }
 
+        /// <summary>
+        /// Stops the simulation.
+        /// </summary>
         public void Stop()
         {
             _isRunning = false;
@@ -87,6 +93,10 @@ namespace Simulation.Library.Models
             onSimulationEnded();
         }
 
+        /// <summary>
+        /// Calculates the current Time in the Simulation for the given timeStamp.
+        /// </summary>
+        /// <returns>Returns the current time in the simulation. Null if the simulation is not running.</returns>
         public DateTime? GetSimulatedTimeStamp(DateTime timeStamp)
         {
             if (StartDateTimeReal == null)
@@ -108,6 +118,11 @@ namespace Simulation.Library.Models
             Stop();
         }
 
+        /// <summary>
+        /// Calculates the percental simulated energyproduction for the given timeStamp for the wind turbines.
+        /// </summary>
+        /// <param name="timeStamp">The real TimeStamp</param>
+        /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         public int? GetEnergyProductionWind(DateTime timeStamp)
         {
             if (_isRunning == false || isTimeStampValid(timeStamp) == false)
@@ -130,6 +145,11 @@ namespace Simulation.Library.Models
                 simTimeStamp.Ticks);
         }
 
+        /// <summary>
+        /// Calculates the percental simulated energyproduction for the given timeStamp for the suncollectors.
+        /// </summary>
+        /// <param name="timeStamp">The real TimeStamp</param>
+        /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         public int? GetEnergyProductionSun(DateTime timeStamp)
         {
             if (_isRunning == false || isTimeStampValid(timeStamp) == false)
@@ -152,6 +172,11 @@ namespace Simulation.Library.Models
                 simTimeStamp.Ticks);
         }
 
+        /// <summary>
+        /// Calculates the percental simulated energyconsumption of the city for the given timeStamp.
+        /// </summary>
+        /// <param name="timeStamp">The real TimeStamp</param>
+        /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         public int? GetEnergyConsumption(DateTime timeStamp)
         {
             if (_isRunning == false || isTimeStampValid(timeStamp) == false)
@@ -174,21 +199,33 @@ namespace Simulation.Library.Models
                 simTimeStamp.Ticks);
         }
 
+        /// <summary>
+        /// Returns the definied maximum energyproduction of the windturbines.
+        /// </summary>
         public int GetMaxEnergyProductionWind()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns the definied maximum energyproduction of the suncollectors.
+        /// </summary>
         public int GetMaxEnergyProductionSun()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns the definied maximum energyconsumption of the city.
+        /// </summary>
         public int GetMaxEnergyConsumption()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns if the current is running.
+        /// </summary>
         public bool IsSimulationRunning()
         {
             return _isRunning;
@@ -211,16 +248,25 @@ namespace Simulation.Library.Models
             _nextPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Invokes the Event "SimulationStarted".
+        /// </summary>
         protected virtual void onSimulationStarted()
         {
             SimulationStarted?.Invoke(this, new EventArgs());
         }
 
+        /// <summary>
+        /// Invokes the Event "SimulationEnded".
+        /// </summary>
         protected virtual void onSimulationEnded()
         {
             SimulationEnded?.Invoke(this, new EventArgs());
         }
 
+        /// <summary>
+        /// Returns the actual StartedDateTime. Null if the Simulation is not running.
+        /// </summary>
         public DateTime? GetSimulationStartedTimeStamp()
         {
             return _startDateTimeReal;
