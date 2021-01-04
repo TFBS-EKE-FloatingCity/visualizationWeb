@@ -23,28 +23,14 @@ namespace Simulation.Library.Models
 
         public DateTime? StartDate
         {
-            get
-            {
-                if (SimPositions?.Count == 0)
-                {
-                    return null;
-                }
-                return SimPositions.First().DateRegistered;
-            }
-            set{ StartDate = value; }
+            get;
+            set;
         }
 
         public DateTime? EndDate 
         {
-            get
-            {
-                if (SimPositions?.Count == 0)
-                {
-                    return null;
-                }
-                return SimPositions.Last().DateRegistered;
-            }
-            set { EndDate = value; }
+            get;
+            set;
         }
 
         public ICollection<SimPosition> SimPositions { get; set; }

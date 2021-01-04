@@ -1,4 +1,5 @@
 ﻿using Simulation.Library.Models;
+using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
@@ -43,25 +44,25 @@ namespace VisualizationWeb.Controllers
             return View(await SimulationRepository.GetSimScenarioIndex());
         }
 
-        public async Task<ActionResult> PartialPositionIndex(int? simScenarioId)
+        public async Task<ActionResult> PartialPositionIndex(int? id)
         {
-            if (!simScenarioId.HasValue)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View(await SimulationRepository.GetSimPositionIndex(simScenarioId.Value));
+            return View(await SimulationRepository.GetSimPositionIndex(id.Value));
         }
 
-        public async Task<ActionResult> Details(int? simScenarioId)
+        public async Task<ActionResult> Details(int? id)
         {
-            if (!simScenarioId.HasValue)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails(simScenarioId.Value);
-            scenario.SimPositions = await SimulationRepository.GetSimPositionIndex(simScenarioId.Value);
+            SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails(id.Value);
+            scenario.SimPositions = await SimulationRepository.GetSimPositionIndex(id.Value);
             return View(scenario);
         }
 
@@ -85,9 +86,43 @@ namespace VisualizationWeb.Controllers
             return View(vm);
         }
 
-        public async Task<ActionResult> PartialPositionCreate()
+        [HttpPost]
+        public async Task<ActionResult> PartialPositionCreate([Bind(Include = "SimPositionID, SunValue, WindValue, EnergyBalanceValue, DateRegistered, SimScenarioID")] SimPositionCreateAndEditViewModel vm)
         {
+            if (ModelState.IsValid)
+            {
+                await SimulationRepository.CreatePosition(vm);
+                await db.SaveChangesAsync();
+                return RedirectToAction($"Details/{vm.SimScenarioID}");
+            }
+
             return View();
+        }
+
+        public async Task<ActionResult> RemoveSimPosition(int? simPositionId, int? simScenarioId)
+        {
+            if (!simPositionId.HasValue && !simScenarioId.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            await SimulationRepository.RemovePosition(simPositionId.Value);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction($"Details/{simScenarioId}");
+        }
+
+        public async Task<ActionResult> RemoveSimScenario(int? simScenarioId)
+        {
+            if ( !simScenarioId.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            await SimulationRepository.RemoveScenario(simScenarioId.Value);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }

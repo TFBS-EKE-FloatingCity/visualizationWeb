@@ -17,6 +17,7 @@ namespace Simulation.Library.ViewModels.SimPositionVM
 
         public int EnergyBalanceValue { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DateRegistered { get; set; }
 
         public int SimScenarioID { get; set; }

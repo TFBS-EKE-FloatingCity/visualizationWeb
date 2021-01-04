@@ -9,6 +9,11 @@ namespace Simulation.Library.ViewModels.SimScenarioVM
 {
     public class SimScenarioDetailsViewModel
     {
+        public SimScenarioDetailsViewModel()
+        {
+            SimPositions = new List<SimPositionIndexViewModel>();
+        }
+
         [Key]
         public int SimScenarioID { get; set; }
 

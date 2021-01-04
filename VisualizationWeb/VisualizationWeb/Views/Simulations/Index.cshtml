@@ -24,27 +24,33 @@
             @Html.DisplayNameFor(model => model.TimeFactor)
         </th>
         <th></th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeFactor)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.SimScenarioID })
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <th>
+        @Convert.ToString(string.Format("{0:HH:mm}", item.StartDate))
+        @*@Html.DisplayFor(modelItem => item.StartDate)*@
+    </th>
+    <th>
+        @Convert.ToString(string.Format("{0:HH:mm}", item.EndDate))
+        @*@Html.DisplayFor(modelItem => item.EndDate)*@
+    </th>
+    <td>
+        @Html.DisplayFor(modelItem => item.TimeFactor)
+    </td>
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.SimScenarioID })
+    </td>
+    <td>
+        @Html.ActionLink("Remove", "RemoveSimScenario", new { simScenarioId = item.SimScenarioID })
+    </td>
+</tr>
     }
 
 </table>

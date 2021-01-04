@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Simulation.Library.ViewModels.SimScenarioVM.SimScenarioDetailsViewModel>
+﻿@model Simulation.Library.ViewModels.SimScenarioVM.SimScenarioDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -13,7 +13,13 @@
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.StartDate)
         </dd>
@@ -21,7 +27,13 @@
         <dt>
             @Html.DisplayNameFor(model => model.EndDate)
         </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeFactor)
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.TimeFactor)
         </dd>
@@ -29,49 +41,98 @@
         <dt>
             @Html.DisplayNameFor(model => model.Notes)
         </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-
+<br />
 
 <div class="row">
-    <div class="col-md-6">
-        <table class="table">
+    <table class="table">
+        <tr>
+            <th>
+                Positions
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @if (Model.SimPositions.Count() > 0)
+        {
             <tr>
                 <th>
-                    Szenario Positionen
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().SunValue)
                 </th>
                 <th>
-
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().WindValue)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyBalanceValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().DateRegistered)
+                </th>
+                <th></th>
             </tr>
-            @if (Model.SimPosition.Count > 0)
-            {
-                foreach (var cs in Model.SimPositions)
-                {
-                    <tr>
-                        <td>
-                            @Html.Label(cs.Title)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Remove", "RemoveSimPosition", new { SimScenarioID = Model.SimScenarioID, SimPositionID = cs.SimPositionID })
-                        </td>
-                    </tr>
-                }
-            }
-            else
+            foreach (var cs in Model.SimPositions)
             {
                 <tr>
                     <td>
-                        <p class="text-info">
-                            Das Szenario enthält keine Positionen!
-                        </p>
+                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().SunValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().WindValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().EnergyBalanceValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().DateRegistered)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove", "RemoveSimPosition", new { simPositionId = cs.SimPositionID, simScenarioId = Model.SimScenarioID })
                     </td>
                 </tr>
             }
-        </table>
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <p class="text-info">
+                        Das Szenario enthält keine Positionen!
+                    </p>
+                </td>
+            </tr>
+        }
+    </table>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Position</button>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Position</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Partial("PartialViews/PartialPositionCreate", new Simulation.Library.ViewModels.SimPositionVM.SimPositionCreateAndEditViewModel { SimScenarioID = Model.SimScenarioID })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
