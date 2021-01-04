@@ -3,7 +3,7 @@ namespace VisualizationWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Creation : DbMigration
+    public partial class DBCreation : DbMigration
     {
         public override void Up()
         {
@@ -22,13 +22,14 @@ namespace VisualizationWeb.Migrations
                         USonicOuter3 = c.Short(nullable: false),
                         Pump3 = c.Short(nullable: false),
                         CreatedAt = c.DateTime(nullable: false),
+                        MesurementTime = c.DateTime(nullable: false),
                         SimulationID = c.Int(),
                         WindMax = c.Int(),
-                        WindCurrent = c.Byte(),
+                        WindCurrent = c.Short(),
                         SunMax = c.Int(),
-                        SunCurrent = c.Byte(),
+                        SunCurrent = c.Short(),
                         ConsumptionMax = c.Int(),
-                        ConsumptionCurrent = c.Byte(),
+                        ConsumptionCurrent = c.Short(),
                         SimulationActive = c.Boolean(nullable: false),
                         Simulationtime = c.DateTime(),
                         TimeFactor = c.Decimal(precision: 18, scale: 2),

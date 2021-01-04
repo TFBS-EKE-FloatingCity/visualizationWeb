@@ -24,17 +24,18 @@ namespace VisualizationWeb.Models {
         public short USonicOuter3 { get; set; }
         public short Pump3 { get; set; }
 
-
         public DateTime CreatedAt { get; set; }
+
+        public DateTime MesurementTime { get; set; }
 
         public int? SimulationID { get; set; }
 
         public int? WindMax { get; set; }
-        public byte? WindCurrent { get; set; }
+        public short? WindCurrent { get; set; }
         public int? SunMax { get; set; }
-        public byte? SunCurrent { get; set; }
+        public short? SunCurrent { get; set; }
         public int? ConsumptionMax { get; set; }
-        public byte? ConsumptionCurrent { get; set; }
+        public short? ConsumptionCurrent { get; set; }
         public bool SimulationActive { get; set; }
         public DateTime? Simulationtime { get; set; }
         public decimal? TimeFactor { get; set; }

@@ -207,13 +207,15 @@
     <Compile Include="Helpers\SeedSimHelper.cs" />
     <Compile Include="Helpers\SimulationHelper.cs" />
     <Compile Include="Helpers\SingletonHolder.cs" />
+    <Compile Include="Helpers\Temporary\ISimulationService.cs" />
+    <Compile Include="Helpers\Temporary\SimulationService.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202012171500147_Creation.cs" />
-    <Compile Include="Migrations\202012171500147_Creation.Designer.cs">
-      <DependentUpon>202012171500147_Creation.cs</DependentUpon>
+    <Compile Include="Migrations\202101041337231_DBCreation.cs" />
+    <Compile Include="Migrations\202101041337231_DBCreation.Designer.cs">
+      <DependentUpon>202101041337231_DBCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -224,6 +226,8 @@
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
     <Compile Include="Models\SimulationHistory.cs" />
+    <Compile Include="Models\ViewModel\JsonDataVM.cs" />
+    <Compile Include="Models\ViewModel\JsonResponseVM.cs" />
     <Compile Include="Models\ViewModel\SettingVM.cs" />
     <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -342,8 +346,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012171500147_Creation.resx">
-      <DependentUpon>202012171500147_Creation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101041337231_DBCreation.resx">
+      <DependentUpon>202101041337231_DBCreation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
