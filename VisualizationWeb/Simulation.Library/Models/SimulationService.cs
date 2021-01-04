@@ -16,6 +16,11 @@ namespace Simulation.Library.Models
         private bool _isRunning;
         private SimPosition _prevPosition;
         private SimPosition _nextPosition;
+        private int _maxEnergyProductionWind;
+        private int _maxEnergyProductionSun;
+        private int _maxEnergyConsumption;
+        private SimScenario _simulation;
+        private decimal _timeFactor;
 
         public TimeSpan Duration
         {
@@ -52,7 +57,30 @@ namespace Simulation.Library.Models
             get { return _endDateTimeReal; }
             private set { _endDateTimeReal = value; }
         }
-        public SimScenario Simulation { get; set; }
+        public int MaxEnergyProductionWind
+        {
+            get => _maxEnergyProductionWind;
+        } 
+        public int MaxEnergyProductionSun
+        {
+            get => _maxEnergyProductionSun;
+        }
+        public int MaxEnergyConsumption
+        {
+            get => _maxEnergyConsumption;
+        }
+        public bool IsSimulationRunning
+        {
+            get => _isRunning;
+        }
+        public decimal TimeFactor
+        {
+            get => _timeFactor;
+        }
+        public int SimulationScenarioId
+        {
+            get => _simulation.SimScenarioID;
+        }
 
         public event EventHandler SimulationStarted;
         public event EventHandler SimulationEnded;
@@ -61,7 +89,7 @@ namespace Simulation.Library.Models
         #region Constructor
         public SimulationService(SimScenario simulation, TimeSpan duration)
         {
-            Simulation = simulation;
+            _simulation = simulation;
             Duration = duration;
         }
 
@@ -73,11 +101,11 @@ namespace Simulation.Library.Models
         /// </summary>
         public void Run()
         {
-            if(Simulation.SimPositions != null && Simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
+            if(_simulation.SimPositions != null && _simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
             {
                 StartDateTimeReal = DateTime.Now;
-                _prevPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).First();
-                _nextPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
+                _prevPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).First();
+                _nextPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
                 _isRunning = true;
                 onSimulationStarted();
             }
@@ -104,13 +132,8 @@ namespace Simulation.Library.Models
                 return null;
             }
             decimal factor = CalculationHelper.InverseLerp(StartDateTimeReal.Value.Ticks, EndDateTimeReal.Ticks, timeStamp.Ticks);          //Calculates the percentage of how far the simulation is in the real time
-            decimal simTimeTicksValue = CalculationHelper.Lerp(Simulation.StartDate.Value.Ticks, Simulation.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
+            decimal simTimeTicksValue = CalculationHelper.Lerp(_simulation.StartDate.Value.Ticks, _simulation.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
             return new DateTime((long)simTimeTicksValue);
-        }
-
-        public int GetWindValue(DateTime timeStamp)
-        {
-            throw new NotImplementedException();
         }
 
         public void Dispose()
@@ -199,42 +222,10 @@ namespace Simulation.Library.Models
                 simTimeStamp.Ticks);
         }
 
-        /// <summary>
-        /// Returns the definied maximum energyproduction of the windturbines.
-        /// </summary>
-        public int GetMaxEnergyProductionWind()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns the definied maximum energyproduction of the suncollectors.
-        /// </summary>
-        public int GetMaxEnergyProductionSun()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns the definied maximum energyconsumption of the city.
-        /// </summary>
-        public int GetMaxEnergyConsumption()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns if the current is running.
-        /// </summary>
-        public bool IsSimulationRunning()
-        {
-            return _isRunning;
-        }
-
         protected virtual bool isTimeStampValid(DateTime timeStamp)
         {
             DateTime? simTimeStamp = GetSimulatedTimeStamp(timeStamp);
-            return simTimeStamp >= Simulation.StartDate && simTimeStamp <= Simulation.EndDate;
+            return simTimeStamp >= _simulation.StartDate && simTimeStamp <= _simulation.EndDate;
         }
 
         protected void refreshPositions(DateTime simTimeStamp)
@@ -244,8 +235,8 @@ namespace Simulation.Library.Models
                 return;
             }
 
-            _prevPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered <= simTimeStamp).LastOrDefault();
-            _nextPosition = Simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
+            _prevPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered <= simTimeStamp).LastOrDefault();
+            _nextPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
         }
 
         /// <summary>
@@ -270,6 +261,16 @@ namespace Simulation.Library.Models
         public DateTime? GetSimulationStartedTimeStamp()
         {
             return _startDateTimeReal;
+        }
+
+        public int? GetEnergyBalance(DateTime timeStamp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetSimulationScenario(SimScenario scenario)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

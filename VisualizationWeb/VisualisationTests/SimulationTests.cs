@@ -35,7 +35,7 @@ namespace VisualisationTests
 
             service.Run();
             Assert.AreEqual(service, eventSender);
-            Assert.IsTrue(service.IsSimulationRunning());
+            Assert.IsTrue(service.IsSimulationRunning);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace VisualisationTests
 
             service.Run();
             Assert.IsTrue(eventSender is null);
-            Assert.IsTrue(service.IsSimulationRunning() is false);
+            Assert.IsTrue(service.IsSimulationRunning is false);
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace VisualisationTests
             service.Run();
             service.Stop();
             Assert.AreEqual(service, eventSender);
-            Assert.IsTrue(service.IsSimulationRunning() is false);
+            Assert.IsTrue(service.IsSimulationRunning is false);
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace VisualisationTests
             ISimulationService service = new SimulationService(scenario, new TimeSpan(1, 0, 0));
 
             service.Run();
-            DateTime testRealTime = service.GetSimulationStartedTimeStamp().Value + new TimeSpan(0, minutesPassed, 0);
+            DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
             
             Assert.AreEqual(new DateTime(2021, 01, 01, expectedSimulationHour, 0, 0), service.GetSimulatedTimeStamp(testRealTime));
         }
