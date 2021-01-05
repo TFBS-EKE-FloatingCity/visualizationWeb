@@ -9,9 +9,9 @@ namespace Simulation.Library.Calculations
     public static class CalculationHelper
     {
         //Returns searched Value between 2 Function positions
-        public static int GetValue(long startX, long startY, long endX, decimal endY, decimal givenX)
+        public static int GetValue(long x1, long y1, long x2, decimal y2, decimal givenX)
         {
-            return (int)Math.Round(startY + ((endX - startY) / (endY - startX)) * (givenX - startX));
+            return (int)Math.Round(y1 + ((y2 - y1) / (x2 - x1)) * (givenX - x1));
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
-﻿using Simulation.Library.Calculations;
+﻿using Newtonsoft.Json.Linq;
+using Simulation.Library.Calculations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +21,7 @@ namespace Simulation.Library.Models
         private int _maxEnergyProductionWind;
         private int _maxEnergyProductionSun;
         private int _maxEnergyConsumption;
-        private SimScenario _simulation;
+        private SimScenario _simScenario;
         private decimal _timeFactor;
 
         public TimeSpan Duration
@@ -35,6 +37,7 @@ namespace Simulation.Library.Models
                 {
                     EndDateTimeReal = StartDateTimeReal.Value + value;
                 }
+                calculateTimeFactor();
             }
         }
         public DateTime? StartDateTimeReal
@@ -43,7 +46,7 @@ namespace Simulation.Library.Models
             {
                 return _startDateTimeReal;
             }
-            set
+            private set
             {
                 _startDateTimeReal = value;
                 if (value != null && Duration != null)
@@ -79,7 +82,7 @@ namespace Simulation.Library.Models
         }
         public int SimulationScenarioId
         {
-            get => _simulation.SimScenarioID;
+            get => _simScenario.SimScenarioID;
         }
 
         public event EventHandler SimulationStarted;
@@ -89,7 +92,9 @@ namespace Simulation.Library.Models
         #region Constructor
         public SimulationService(SimScenario simulation, TimeSpan duration)
         {
-            _simulation = simulation;
+            readConfig();
+
+            _simScenario = simulation;
             Duration = duration;
         }
 
@@ -97,15 +102,29 @@ namespace Simulation.Library.Models
 
         #region Methods
         /// <summary>
+        /// Reads the maximum values from the SimulationServiceConfig.json and writes it to the fields.
+        /// </summary>
+        private void readConfig()
+        {
+            using (StreamReader reader = new StreamReader(@"SimulationServiceConfig.json"))
+            {
+                JObject jdata = JObject.Parse(reader.ReadToEnd());
+                _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
+                _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
+                _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
+            }
+        }
+
+        /// <summary>
         /// Runs the simulation.
         /// </summary>
         public void Run()
         {
-            if(_simulation.SimPositions != null && _simulation.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
+            if(_simScenario.SimPositions != null && _simScenario.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
             {
                 StartDateTimeReal = DateTime.Now;
-                _prevPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).First();
-                _nextPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
+                _prevPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).First();
+                _nextPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
                 _isRunning = true;
                 onSimulationStarted();
             }
@@ -131,8 +150,8 @@ namespace Simulation.Library.Models
             {
                 return null;
             }
-            decimal factor = CalculationHelper.InverseLerp(StartDateTimeReal.Value.Ticks, EndDateTimeReal.Ticks, timeStamp.Ticks);          //Calculates the percentage of how far the simulation is in the real time
-            decimal simTimeTicksValue = CalculationHelper.Lerp(_simulation.StartDate.Value.Ticks, _simulation.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
+            decimal factor = CalculationHelper.InverseLerp(0, Duration.Ticks, timeStamp.Ticks - StartDateTimeReal.Value.Ticks);          //Calculates the percentage of how far the simulation is in the real time
+            decimal simTimeTicksValue = CalculationHelper.Lerp(_simScenario.StartDate.Value.Ticks, _simScenario.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
             return new DateTime((long)simTimeTicksValue);
         }
 
@@ -222,12 +241,19 @@ namespace Simulation.Library.Models
                 simTimeStamp.Ticks);
         }
 
+        /// <summary>
+        /// Checks if a given TimeStamp is valid.
+        /// </summary>
         protected virtual bool isTimeStampValid(DateTime timeStamp)
         {
             DateTime? simTimeStamp = GetSimulatedTimeStamp(timeStamp);
-            return simTimeStamp >= _simulation.StartDate && simTimeStamp <= _simulation.EndDate;
+            return simTimeStamp >= _simScenario.StartDate && simTimeStamp <= _simScenario.EndDate;
         }
 
+
+        /// <summary>
+        /// Recalculates the fields _nextPosition and _prevPosition.
+        /// </summary>
         protected void refreshPositions(DateTime simTimeStamp)
         {
             if(simTimeStamp >= _nextPosition.DateRegistered && simTimeStamp <= _prevPosition.DateRegistered)
@@ -235,8 +261,8 @@ namespace Simulation.Library.Models
                 return;
             }
 
-            _prevPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered <= simTimeStamp).LastOrDefault();
-            _nextPosition = _simulation.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
+            _prevPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered <= simTimeStamp).LastOrDefault();
+            _nextPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
         }
 
         /// <summary>
@@ -263,14 +289,53 @@ namespace Simulation.Library.Models
             return _startDateTimeReal;
         }
 
+        /// <summary>
+        /// Calculates the energy balance for the given timeStamp. Negativ if the Consumption is higher than the production of Sun and Wind.
+        /// </summary>
+        /// <param name="timeStamp"></param>
+        /// <returns>The simulated energy balance. Null if the simulation is not running</returns>
         public int? GetEnergyBalance(DateTime timeStamp)
         {
-            throw new NotImplementedException();
+            if(_isRunning == false && isTimeStampValid(timeStamp) == false) 
+            {
+                return null;
+            }
+
+            int? windValue = GetEnergyProductionWind(timeStamp);
+            int? sunValue = GetEnergyProductionSun(timeStamp);
+            int? consumptionValue = GetEnergyConsumption(timeStamp);
+
+            int? balanceValue = windValue + sunValue - consumptionValue;
+            if (balanceValue >= 0)
+            {
+                return (int)CalculationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value);
+            }
+            else
+            {
+                return (int)CalculationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value);
+            }
         }
 
+        /// <summary>
+        /// Sets the SimulationScenario. Stops the Scenario if there currently is another Scenario running.
+        /// </summary>
         public void SetSimulationScenario(SimScenario scenario)
         {
-            throw new NotImplementedException();
+            if (_isRunning)
+            {
+                Stop();
+            }
+
+            _simScenario = scenario;
+            calculateTimeFactor();
+        }
+
+        /// <summary>
+        /// Calculates the TimeFactor.
+        /// </summary>
+        private void calculateTimeFactor()
+        {
+            _timeFactor = CalculationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
         }
 
         #endregion

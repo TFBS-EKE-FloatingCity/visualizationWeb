@@ -34,6 +34,16 @@ namespace Simulation.Library.Models
         }
 
         public ICollection<SimPosition> SimPositions { get; set; }
+        
+        public TimeSpan GetDuration()
+        {
+            if(SimPositions != null && SimPositions.Count >= 2)
+            {
+                List<SimPosition> positions = SimPositions.OrderBy(p => p.DateRegistered).ToList();
+                return positions.Last().DateRegistered - positions.First().DateRegistered;
+            }
+            return new TimeSpan(0);
+        }
 
     }
 }
