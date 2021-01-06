@@ -23,8 +23,11 @@ namespace VisualizationWeb.Helpers {
         Uri url = new Uri("ws://161.97.116.72:8080");
         public static SocketIoClient client = new SocketIoClient();
 
-        public WebSocketClient(WebsocketServer server) {
+        SimulationService simService;
+
+        public WebSocketClient(WebsocketServer server, SimulationService simService) {
             this.websocketserver = server;
+            this.simService = simService;
         }
 
         public void Connect() {
@@ -48,7 +51,6 @@ namespace VisualizationWeb.Helpers {
             JsonDataVM jsonData = JsonConvert.DeserializeObject<JsonDataVM>(json);
 
             CityData data = new CityData();
-            SimulationService simService = new SimulationService();
 
             foreach (var module in jsonData.payload.modules) {
                 if (module.sector == "One") {
@@ -71,18 +73,16 @@ namespace VisualizationWeb.Helpers {
             data.MesurementTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddMilliseconds(Convert.ToDouble(jsonData.payload.timestamp));
             data.CreatedAt = DateTime.Now;
 
-            data.WindMax = simService.GetMaxEnergyProductionWind();
+            data.WindMax = simService.MaxEnergyProductionWind ;
             data.WindCurrent = Convert.ToInt16(simService.GetEnergyProductionWind(data.CreatedAt));
-            data.SunMax = simService.GetMaxEnergyProductionSun();
+            data.SunMax = simService.MaxEnergyProductionSun;
             data.SunCurrent = Convert.ToInt16(simService.GetEnergyProductionSun(data.CreatedAt));
-            data.ConsumptionMax = simService.GetMaxEnergyConsumption();
+            data.ConsumptionMax = simService.MaxEnergyConsumption;
             data.ConsumptionCurrent = Convert.ToInt16(simService.GetEnergyConsumption(data.CreatedAt));
-            data.SimulationActive = simService.IsSimulationRunning();
+            data.SimulationActive = simService.IsSimulationRunning;
             data.Simulationtime = simService.GetSimulatedTimeStamp(data.CreatedAt);
-
-            //TODO: SimulationID fehlt im SimulationService
-            //TODO: Timefaktor fehlt im SimulationService
-            //TODO: Energiebilanz fehlt im SimulationService
+            data.SimulationID = simService.SimulationScenarioId;
+            data.TimeFactor = simService.TimeFactor;
 
             JsonResponseVM response = new JsonResponseVM();
             
@@ -96,8 +96,7 @@ namespace VisualizationWeb.Helpers {
             }
 
             response.uuid = jsonData.uuid;
-            //TODO: Mit Max abklären ob hier der richtige Wert zurückkommt.
-            response.energyBalance = simService.GetEnergyConsumption(data.CreatedAt);
+            response.energyBalance = simService.GetEnergyBalance(data.CreatedAt);
             response.sun = simService.GetEnergyProductionSun(data.CreatedAt);
             response.wind = simService.GetEnergyProductionWind(data.CreatedAt);
             

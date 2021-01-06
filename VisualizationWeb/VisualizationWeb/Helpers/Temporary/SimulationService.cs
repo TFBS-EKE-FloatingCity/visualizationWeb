@@ -6,8 +6,29 @@ using System.Web;
 
 namespace VisualizationWeb.Helpers.Temporary {
     public class SimulationService : ISimulationService {
+        public int SimulationScenarioId { get; set; }
+
+        public int MaxEnergyProductionWind { get; set; }
+
+        public int MaxEnergyProductionSun { get; set; }
+
+        public int MaxEnergyConsumption { get; set; }
+
+        public bool IsSimulationRunning { get; set; }
+
+        public DateTime? StartDateTimeReal { get; set; }
+
+        public decimal TimeFactor { get; set; }
+
+        public event EventHandler SimulationStarted;
+        public event EventHandler SimulationEnded;
+
         public void Dispose() {
             throw new NotImplementedException();
+        }
+
+        public int? GetEnergyBalance(DateTime timeStamp) {
+            return null;
         }
 
         public int? GetEnergyConsumption(DateTime timeStamp) {
@@ -22,29 +43,17 @@ namespace VisualizationWeb.Helpers.Temporary {
             return null;
         }
 
-        public int GetMaxEnergyConsumption() {
-            return 0;
-        }
-
-        public int GetMaxEnergyProductionSun() {
-            return 0;
-        }
-
-        public int GetMaxEnergyProductionWind() {
-            return 0;
-        }
-
         public DateTime? GetSimulatedTimeStamp(DateTime timeStamp) {
             return null;
-        }
-
-        public bool IsSimulationRunning() {
-            return false;
         }
 
         public void Run() {
             throw new NotImplementedException();
         }
+
+        //public void SetSimulationScenario(SimScenario scenario) {
+        //    throw new NotImplementedException();
+        //}
 
         public void Stop() {
             throw new NotImplementedException();

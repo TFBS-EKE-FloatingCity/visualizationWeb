@@ -1,9 +1,42 @@
 ﻿using System;
 
-namespace Simulation.Library.Models
-{
-    public interface ISimulationService : IDisposable
-    {
+namespace Simulation.Library.Models {
+    public interface ISimulationService : IDisposable {
+        #region Properties
+        /// <summary>
+        /// The Id of the SimulationScenario.
+        /// </summary>
+        int SimulationScenarioId { get; }
+        /// <summary>
+        /// Tells the definied maximum energyproduction of the windturbines.
+        /// </summary>
+        int MaxEnergyProductionWind { get; }
+        /// <summary>
+        /// Tells the definied maximum energyproduction of the suncollectors.
+        /// </summary>
+        int MaxEnergyProductionSun { get; }
+        /// <summary>
+        /// Tells the definied maximum energyconsumption of the city.
+        /// </summary>
+        int MaxEnergyConsumption { get; }
+        /// <summary>
+        /// Tells if the current is running.
+        /// </summary>
+        bool IsSimulationRunning { get; }
+        /// <summary>
+        /// Returns the actual StartedDateTime. Null if the Simulation is not running.
+        /// </summary>
+        DateTime? StartDateTimeReal { get; }
+        /// <summary>
+        /// The Factor at which the Simulation runs compared with the real time.
+        /// </summary>
+        decimal TimeFactor { get; }
+
+        event EventHandler SimulationStarted;
+        event EventHandler SimulationEnded;
+        #endregion
+
+        #region Methods
         /// <summary>
         /// Calculates the current Time in the Simulation for the given timeStamp.
         /// </summary>
@@ -28,21 +61,15 @@ namespace Simulation.Library.Models
         /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         int? GetEnergyConsumption(DateTime timeStamp);
         /// <summary>
-        /// Returns the definied maximum energyproduction of the windturbines.
+        /// Calculates the energy balance for the given timeStamp. Negativ if the Consumption is higher than the production of Sun and Wind.
         /// </summary>
-        int GetMaxEnergyProductionWind();
+        /// <param name="timeStamp"></param>
+        /// <returns>The simulated energy balance. Null if the simulation is not running</returns>
+        int? GetEnergyBalance(DateTime timeStamp);
         /// <summary>
-        /// Returns the definied maximum energyproduction of the suncollectors.
+        /// Sets the SimulationScenario. Stops the Scenario if there currently is another Scenario running.
         /// </summary>
-        int GetMaxEnergyProductionSun();
-        /// <summary>
-        /// Returns the definied maximum energyconsumption of the city.
-        /// </summary>
-        int GetMaxEnergyConsumption();
-        /// <summary>
-        /// Returns if the current is running.
-        /// </summary>
-        bool IsSimulationRunning();
+        //void SetSimulationScenario(SimScenario scenario);
         /// <summary>
         /// Runs the simulation.
         /// </summary>
@@ -51,5 +78,6 @@ namespace Simulation.Library.Models
         /// Stops the simulation.
         /// </summary>
         void Stop();
+        #endregion
     }
 }
