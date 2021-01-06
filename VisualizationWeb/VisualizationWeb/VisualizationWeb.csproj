@@ -232,13 +232,9 @@
     <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.Designer.cs">
       <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012021243552_Test.cs" />
-    <Compile Include="Migrations\202012021243552_Test.Designer.cs">
-      <DependentUpon>202012021243552_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012171507066_Test1.cs" />
-    <Compile Include="Migrations\202012171507066_Test1.Designer.cs">
-      <DependentUpon>202012171507066_Test1.cs</DependentUpon>
+    <Compile Include="Migrations\202101061959095_SimPos Model changes.cs" />
+    <Compile Include="Migrations\202101061959095_SimPos Model changes.Designer.cs">
+      <DependentUpon>202101061959095_SimPos Model changes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -409,11 +405,8 @@
     <EmbeddedResource Include="Migrations\202004020906212_UpdateSimulationHistoryModel.resx">
       <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012021243552_Test.resx">
-      <DependentUpon>202012021243552_Test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012171507066_Test1.resx">
-      <DependentUpon>202012171507066_Test1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101061959095_SimPos Model changes.resx">
+      <DependentUpon>202101061959095_SimPos Model changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

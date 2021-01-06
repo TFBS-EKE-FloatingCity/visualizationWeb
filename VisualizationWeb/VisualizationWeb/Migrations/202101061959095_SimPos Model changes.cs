@@ -3,7 +3,7 @@ namespace VisualizationWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Test : DbMigration
+    public partial class SimPosModelchanges : DbMigration
     {
         public override void Up()
         {
@@ -14,8 +14,8 @@ namespace VisualizationWeb.Migrations
                         SimPositionID = c.Int(nullable: false, identity: true),
                         SunValue = c.Int(nullable: false),
                         WindValue = c.Int(nullable: false),
-                        EnergyBalanceValue = c.Int(nullable: false),
-                        DateRegistered = c.DateTime(nullable: false),
+                        EnergyConsumptionValue = c.Int(nullable: false),
+                        TimeRegistered = c.DateTime(nullable: false),
                         SimScenarioID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.SimPositionID)
@@ -28,10 +28,8 @@ namespace VisualizationWeb.Migrations
                     {
                         SimScenarioID = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false, maxLength: 100),
-                        TimeFactor = c.Int(nullable: false),
                         Notes = c.String(maxLength: 500),
-                        StartDate = c.DateTime(),
-                        EndDate = c.DateTime(),
+                        IsSimulationRunning = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.SimScenarioID);
             

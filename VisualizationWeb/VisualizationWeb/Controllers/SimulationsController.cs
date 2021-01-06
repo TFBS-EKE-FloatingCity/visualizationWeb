@@ -87,7 +87,7 @@ namespace VisualizationWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PartialPositionCreate([Bind(Include = "SimPositionID, SunValue, WindValue, EnergyBalanceValue, DateRegistered, SimScenarioID")] SimPositionCreateAndEditViewModel vm)
+        public async Task<ActionResult> PartialPositionCreate([Bind(Include = "SimPositionID, SunValue, WindValue, EnergyConsumptionValue, TimeRegistered, SimScenarioID")] SimPositionCreateAndEditViewModel vm)
         {
             if (ModelState.IsValid)
             {

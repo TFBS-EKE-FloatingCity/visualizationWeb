@@ -18,6 +18,7 @@ namespace Simulation.Library.Models
 
         public int EnergyConsumptionValue { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime TimeRegistered { get; set; }
 
         public int SimScenarioID { get; set; }
