@@ -9,9 +9,13 @@ namespace Simulation.Library.Calculations
     public static class CalculationHelper
     {
         //Returns searched Value between 2 Function positions
-        public static int GetValue(long x1, long y1, long x2, decimal y2, decimal givenX)
+        public static int GetValue(long x1, long y1, long x2, long y2, decimal givenX)
         {
-            return (int)Math.Round(y1 + ((y2 - y1) / (x2 - x1)) * (givenX - x1));
+            if (x1 == x2 && givenX == x1 && y1 == y2)
+            {
+                return (int)y1;
+            }
+            return (int)Math.Round(y1 + ((y2 - (decimal)y1) / (x2 - x1)) * (givenX - x1));
         }
 
         /// <summary>

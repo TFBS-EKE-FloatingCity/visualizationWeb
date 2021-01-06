@@ -14,7 +14,7 @@ namespace Simulation.Library.Models
         #region Properties
         private TimeSpan _duration;
         private DateTime? _startDateTimeReal;
-        private DateTime _endDateTimeReal;
+        private DateTime? _endDateTimeReal;
         private bool _isRunning;
         private SimPosition _prevPosition;
         private SimPosition _nextPosition;
@@ -30,15 +30,6 @@ namespace Simulation.Library.Models
             {
                 return _duration;
             }
-            set
-            {
-                _duration = value;
-                if (value != null && StartDateTimeReal != null)
-                {
-                    EndDateTimeReal = StartDateTimeReal.Value + value;
-                }
-                calculateTimeFactor();
-            }
         }
         public DateTime? StartDateTimeReal
         {
@@ -53,9 +44,13 @@ namespace Simulation.Library.Models
                 {
                     EndDateTimeReal = value.Value + Duration;
                 }
+                else
+                {
+                    EndDateTimeReal = null;
+                }
             }
         }
-        public DateTime EndDateTimeReal
+        public DateTime? EndDateTimeReal
         {
             get { return _endDateTimeReal; }
             private set { _endDateTimeReal = value; }
@@ -63,7 +58,7 @@ namespace Simulation.Library.Models
         public int MaxEnergyProductionWind
         {
             get => _maxEnergyProductionWind;
-        } 
+        }
         public int MaxEnergyProductionSun
         {
             get => _maxEnergyProductionSun;
@@ -82,7 +77,7 @@ namespace Simulation.Library.Models
         }
         public int SimulationScenarioId
         {
-            get => _simScenario.SimScenarioID;
+            get => _simScenario == null ? -1 : _simScenario.SimScenarioID;
         }
 
         public event EventHandler SimulationStarted;
@@ -90,23 +85,19 @@ namespace Simulation.Library.Models
         #endregion
 
         #region Constructor
-        public SimulationService(SimScenario simulation, TimeSpan duration)
+        public SimulationService()
         {
-            readConfig();
-
-            _simScenario = simulation;
-            Duration = duration;
+            readConfig(@"SimulationServiceConfig.json");
         }
-
         #endregion
 
         #region Methods
         /// <summary>
         /// Reads the maximum values from the SimulationServiceConfig.json and writes it to the fields.
         /// </summary>
-        private void readConfig()
+        private void readConfig(string configPath)
         {
-            using (StreamReader reader = new StreamReader(@"SimulationServiceConfig.json"))
+            using (StreamReader reader = new StreamReader(configPath))
             {
                 JObject jdata = JObject.Parse(reader.ReadToEnd());
                 _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
@@ -118,15 +109,20 @@ namespace Simulation.Library.Models
         /// <summary>
         /// Runs the simulation.
         /// </summary>
-        public void Run()
+        public void Run(SimScenario scenario, TimeSpan duration)
         {
-            if(_simScenario.SimPositions != null && _simScenario.SimPositions.Count >= 2)  //Only runs the Simulation if the Simulation is valid. The Simulation is valid when there are at least two Positions.
+            if (setupForRunning(scenario, duration)) 
             {
                 StartDateTimeReal = DateTime.Now;
                 _prevPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).First();
                 _nextPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
                 _isRunning = true;
                 onSimulationStarted();
+            }
+            else
+            {
+                throw new Exception($"Couldn't run the Simulation. Please check if the parameters were valid. " +
+                    $"The parameters are valid when the scenario contains at least two positions and the duration is longer than 0");
             }
         }
 
@@ -137,7 +133,46 @@ namespace Simulation.Library.Models
         {
             _isRunning = false;
             StartDateTimeReal = null;
+            _timeFactor = 0;
+            _simScenario = null;
             onSimulationEnded();
+        }
+
+        /// <summary>
+        /// Stops the Simulation on Dispose.
+        /// </summary>
+        public void Dispose()
+        {
+            Stop();
+        }
+
+        /// <summary>
+        /// Updates to the given timeStamp and returns the simulatedTimeStamp. Returns Null if the requested timeStamp is outside the simulated time.
+        /// </summary>
+        private DateTime? update(DateTime timeStamp)
+        {
+            if (_isRunning == false)
+            {
+                return null;
+            }
+            if (isTimeStampValid(timeStamp) == false)
+            {
+                if(timeStamp > EndDateTimeReal)     //This means we reached the end of the simulation. So the Service is getting stopped.
+                {
+                    Stop();
+                }
+                return null;
+            }
+
+            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
+            refreshPositions(simTimeStamp);
+
+            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
+            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
+                throw new Exception("At least one SimulationPosition was null.");
+            }
+
+            return simTimeStamp;
         }
 
         /// <summary>
@@ -155,10 +190,6 @@ namespace Simulation.Library.Models
             return new DateTime((long)simTimeTicksValue);
         }
 
-        public void Dispose()
-        {
-            Stop();
-        }
 
         /// <summary>
         /// Calculates the percental simulated energyproduction for the given timeStamp for the wind turbines.
@@ -167,24 +198,17 @@ namespace Simulation.Library.Models
         /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         public int? GetEnergyProductionWind(DateTime timeStamp)
         {
-            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
+            DateTime? simTimeStamp = update(timeStamp);
+            if (simTimeStamp == null)
             {
                 return null;
             }
 
-            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
-            refreshPositions(timeStamp);
-
-            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
-            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
-                throw new Exception("At least one SimulationPosition was null.");
-            }
-
-            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks, 
-                _prevPosition.WindValue, 
-                _nextPosition.DateRegistered.Ticks, 
-                _nextPosition.WindValue, 
-                simTimeStamp.Ticks);
+            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
+                _prevPosition.WindValue,
+                _nextPosition.DateRegistered.Ticks,
+                _nextPosition.WindValue,
+                simTimeStamp.Value.Ticks);
         }
 
         /// <summary>
@@ -194,24 +218,17 @@ namespace Simulation.Library.Models
         /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         public int? GetEnergyProductionSun(DateTime timeStamp)
         {
-            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
+            DateTime? simTimeStamp = update(timeStamp);
+            if (simTimeStamp == null)
             {
                 return null;
-            }
-
-            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
-            refreshPositions(timeStamp);
-
-            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
-            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
-                throw new Exception("At least one SimulationPosition was null.");
             }
 
             return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
                 _prevPosition.SunValue,
                 _nextPosition.DateRegistered.Ticks,
                 _nextPosition.SunValue,
-                simTimeStamp.Ticks);
+                simTimeStamp.Value.Ticks);
         }
 
         /// <summary>
@@ -221,42 +238,40 @@ namespace Simulation.Library.Models
         /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
         public int? GetEnergyConsumption(DateTime timeStamp)
         {
-            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
+            DateTime? simTimeStamp = update(timeStamp);
+            if (simTimeStamp == null)
             {
                 return null;
-            }
-
-            DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
-            refreshPositions(timeStamp);
-
-            if (_prevPosition is null || _nextPosition is null)                             //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
-            {                                                                               //This shouldn't occur since we check if the given timeStamp is valid.
-                throw new Exception("At least one SimulationPosition was null.");
             }
 
             return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
                 _prevPosition.EnergyBalanceValue,
                 _nextPosition.DateRegistered.Ticks,
                 _nextPosition.EnergyBalanceValue,
-                simTimeStamp.Ticks);
+                simTimeStamp.Value.Ticks);
         }
 
         /// <summary>
         /// Checks if a given TimeStamp is valid.
         /// </summary>
+        /// <param name="timeStamp"></param>
+        /// <returns>True if the simulation is running and the simulated time is between the first and the last position of the Scenario.</returns>
         protected virtual bool isTimeStampValid(DateTime timeStamp)
         {
+            if(_isRunning == false)
+            {
+                return false;
+            }
             DateTime? simTimeStamp = GetSimulatedTimeStamp(timeStamp);
             return simTimeStamp >= _simScenario.StartDate && simTimeStamp <= _simScenario.EndDate;
         }
-
 
         /// <summary>
         /// Recalculates the fields _nextPosition and _prevPosition.
         /// </summary>
         protected void refreshPositions(DateTime simTimeStamp)
         {
-            if(simTimeStamp >= _nextPosition.DateRegistered && simTimeStamp <= _prevPosition.DateRegistered)
+            if (simTimeStamp >= _nextPosition.DateRegistered && simTimeStamp <= _prevPosition.DateRegistered)
             {
                 return;
             }
@@ -296,7 +311,7 @@ namespace Simulation.Library.Models
         /// <returns>The simulated energy balance. Null if the simulation is not running</returns>
         public int? GetEnergyBalance(DateTime timeStamp)
         {
-            if(_isRunning == false && isTimeStampValid(timeStamp) == false) 
+            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
             {
                 return null;
             }
@@ -317,27 +332,42 @@ namespace Simulation.Library.Models
         }
 
         /// <summary>
-        /// Sets the SimulationScenario. Stops the Scenario if there currently is another Scenario running.
+        /// Validates the Scenario and Duration and sets the Properties which are required for the simulation to run.
         /// </summary>
-        public void SetSimulationScenario(SimScenario scenario)
+        /// <returns>True if setup successfull</returns>
+        private bool setupForRunning(SimScenario scenario, TimeSpan duration)
         {
+            if(!isValidScenario(scenario) || !isValidDuration(duration))
+            {
+                return false;
+            }
+
             if (_isRunning)
             {
                 Stop();
             }
 
             _simScenario = scenario;
-            calculateTimeFactor();
+            _duration = duration;
+            _timeFactor = CalculationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
+            return true;
         }
 
         /// <summary>
-        /// Calculates the TimeFactor.
+        /// Validates the Scenario.
         /// </summary>
-        private void calculateTimeFactor()
+        private bool isValidScenario(SimScenario scenario)
         {
-            _timeFactor = CalculationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
+            return scenario != null && scenario.SimPositions != null && scenario.SimPositions.Count >= 2;
         }
 
+        /// <summary>
+        /// Validates the duration.
+        /// </summary>
+        private bool isValidDuration(TimeSpan duration)
+        {
+            return duration.Ticks > 0;
+        }
         #endregion
     }
 }

@@ -26,9 +26,17 @@ namespace Simulation.Library.Models
         /// </summary>
         bool IsSimulationRunning { get; }
         /// <summary>
+        /// The Duration the Simulation actually should take.
+        /// </summary>
+        TimeSpan Duration { get; }
+        /// <summary>
         /// Returns the actual StartedDateTime. Null if the Simulation is not running.
         /// </summary>
         DateTime? StartDateTimeReal { get; }
+        /// <summary>
+        /// Returns the actual EndDateTime. Null if the Simulation is not running.
+        /// </summary>
+        DateTime? EndDateTimeReal { get; }
         /// <summary>
         /// The Factor at which the Simulation runs compared with the real time.
         /// </summary>
@@ -69,13 +77,9 @@ namespace Simulation.Library.Models
         /// <returns>The simulated energy balance. Null if the simulation is not running</returns>
         int? GetEnergyBalance(DateTime timeStamp);
         /// <summary>
-        /// Sets the SimulationScenario. Stops the Scenario if there currently is another Scenario running.
-        /// </summary>
-        void SetSimulationScenario(SimScenario scenario);
-        /// <summary>
         /// Runs the simulation.
         /// </summary>
-        void Run();
+        void Run(SimScenario scenario, TimeSpan duration);
         /// <summary>
         /// Stops the simulation.
         /// </summary>
