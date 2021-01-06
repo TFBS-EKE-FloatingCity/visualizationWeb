@@ -77,7 +77,7 @@ namespace Simulation.Library.Models
         /// <returns>The simulated energy balance. Null if the simulation is not running</returns>
         int? GetEnergyBalance(DateTime timeStamp);
         /// <summary>
-        /// Runs the simulation.
+        /// Runs the simulation. If there is a Scenario running when this Method is called, the other Scenario will be stopped.
         /// </summary>
         void Run(SimScenario scenario, TimeSpan duration);
         /// <summary>
