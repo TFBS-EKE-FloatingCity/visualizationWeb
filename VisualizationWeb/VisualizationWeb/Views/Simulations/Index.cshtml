@@ -20,9 +20,6 @@
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeFactor)
-        </th>
         <th></th>
         <th></th>
     </tr>
@@ -41,9 +38,6 @@
         @Convert.ToString(string.Format("{0:HH:mm}", item.EndDate))
         @*@Html.DisplayFor(modelItem => item.EndDate)*@
     </th>
-    <td>
-        @Html.DisplayFor(modelItem => item.TimeFactor)
-    </td>
     <td>
         @Html.ActionLink("Details", "Details", new { id = item.SimScenarioID })
     </td>

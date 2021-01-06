@@ -30,18 +30,18 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.EnergyBalanceValue, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.EnergyConsumptionValue, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-8">
-            @Html.EditorFor(model => model.EnergyBalanceValue, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EnergyBalanceValue, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.EnergyConsumptionValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EnergyConsumptionValue, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DateRegistered, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.TimeRegistered, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-8">
-            @Html.EditorFor(model => model.DateRegistered, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DateRegistered, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.TimeRegistered, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TimeRegistered, "", new { @class = "text-danger" })
         </div>
     </div>
 

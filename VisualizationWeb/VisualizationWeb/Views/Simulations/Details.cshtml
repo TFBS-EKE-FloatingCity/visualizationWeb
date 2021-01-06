@@ -32,13 +32,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TimeFactor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TimeFactor)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Notes)
         </dt>
         <dd>
@@ -73,10 +66,10 @@
                     @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().WindValue)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyBalanceValue)
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyConsumptionValue)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().DateRegistered)
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().TimeRegistered)
                 </th>
                 <th></th>
             </tr>
@@ -90,10 +83,10 @@
                         @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().WindValue)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().EnergyBalanceValue)
+                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().EnergyConsumptionValue)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().DateRegistered)
+                        @Html.DisplayFor(model => model.SimPositions.FirstOrDefault().TimeRegistered)
                     </td>
                     <td>
                         @Html.ActionLink("Remove", "RemoveSimPosition", new { simPositionId = cs.SimPositionID, simScenarioId = Model.SimScenarioID })

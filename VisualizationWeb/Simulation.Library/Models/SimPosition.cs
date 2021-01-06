@@ -16,9 +16,9 @@ namespace Simulation.Library.Models
 
         public int WindValue { get; set; }
 
-        public int EnergyBalanceValue { get; set; }
+        public int EnergyConsumptionValue { get; set; }
 
-        public DateTime DateRegistered { get; set; }
+        public DateTime TimeRegistered { get; set; }
 
         public int SimScenarioID { get; set; }
 

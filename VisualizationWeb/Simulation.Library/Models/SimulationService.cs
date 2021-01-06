@@ -114,8 +114,8 @@ namespace Simulation.Library.Models
             if (setupForRunning(scenario, duration)) 
             {
                 StartDateTimeReal = DateTime.Now;
-                _prevPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).First();
-                _nextPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Skip(1).First();
+                _prevPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).First();
+                _nextPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).Skip(1).First();
                 _isRunning = true;
                 onSimulationStarted();
             }
@@ -204,9 +204,9 @@ namespace Simulation.Library.Models
                 return null;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
+            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.WindValue,
-                _nextPosition.DateRegistered.Ticks,
+                _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.WindValue,
                 simTimeStamp.Value.Ticks);
         }
@@ -224,9 +224,9 @@ namespace Simulation.Library.Models
                 return null;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
+            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.SunValue,
-                _nextPosition.DateRegistered.Ticks,
+                _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.SunValue,
                 simTimeStamp.Value.Ticks);
         }
@@ -244,10 +244,10 @@ namespace Simulation.Library.Models
                 return null;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.DateRegistered.Ticks,
-                _prevPosition.EnergyBalanceValue,
-                _nextPosition.DateRegistered.Ticks,
-                _nextPosition.EnergyBalanceValue,
+            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+                _prevPosition.EnergyConsumptionValue,
+                _nextPosition.TimeRegistered.Ticks,
+                _nextPosition.EnergyConsumptionValue,
                 simTimeStamp.Value.Ticks);
         }
 
@@ -271,13 +271,13 @@ namespace Simulation.Library.Models
         /// </summary>
         protected void refreshPositions(DateTime simTimeStamp)
         {
-            if (simTimeStamp >= _nextPosition.DateRegistered && simTimeStamp <= _prevPosition.DateRegistered)
+            if (simTimeStamp >= _nextPosition.TimeRegistered && simTimeStamp <= _prevPosition.TimeRegistered)
             {
                 return;
             }
 
-            _prevPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered <= simTimeStamp).LastOrDefault();
-            _nextPosition = _simScenario.SimPositions.OrderBy(p => p.DateRegistered).Where(p => p.DateRegistered >= simTimeStamp).FirstOrDefault();
+            _prevPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).Where(p => p.TimeRegistered <= simTimeStamp).LastOrDefault();
+            _nextPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).Where(p => p.TimeRegistered >= simTimeStamp).FirstOrDefault();
         }
 
         /// <summary>

@@ -28,8 +28,8 @@ namespace VisualizationWeb.Models.Repo
                 {
                     SunValue = position.SunValue,
                     WindValue = position.WindValue,
-                    EnergyBalanceValue = position.EnergyBalanceValue,
-                    DateRegistered = position.DateRegistered,
+                    EnergyConsumptionValue = position.EnergyConsumptionValue,
+                    TimeRegistered = position.TimeRegistered,
                     SimScenarioID = position.SimScenarioID
                 });
             }
@@ -42,10 +42,7 @@ namespace VisualizationWeb.Models.Repo
                 _context.SimScenarios.Add(new SimScenario
                 {
                     Title = scenario.Title,
-                    TimeFactor = scenario.TimeFactor,
-                    Notes = scenario.Notes,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now
+                    Notes = scenario.Notes
                 });
             }
         }
@@ -53,15 +50,15 @@ namespace VisualizationWeb.Models.Repo
         public async Task<IEnumerable<SimPositionBindingViewModel>> GetSimPositionBindingList(int simScenarioID)
         {
             var pos = from c in _context.SimPositions
-                      orderby c.DateRegistered
+                      orderby c.TimeRegistered
                       where c.SimScenarioID == simScenarioID
                       select new SimPositionBindingViewModel
                       {
                           SimPositionID = c.SimPositionID,
                           SunValue = c.SunValue,
                           WindValue = c.WindValue,
-                          EnergyBalanceValue = c.EnergyBalanceValue,
-                          DateRegistered = c.DateRegistered,
+                          EnergyConsumptionValue = c.EnergyConsumptionValue,
+                          TimeRegistered = c.TimeRegistered,
                       };
             return await pos.ToListAsync();
         }
@@ -69,15 +66,15 @@ namespace VisualizationWeb.Models.Repo
         public async Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex(int simScenarioID)
         {
             var pos = from c in _context.SimPositions
-                      orderby c.DateRegistered
+                      orderby c.TimeRegistered
                       where c.SimScenarioID == simScenarioID
                       select new SimPositionIndexViewModel
                       {
                           SimPositionID = c.SimPositionID,
                           SunValue = c.SunValue,
                           WindValue = c.WindValue,
-                          EnergyBalanceValue = c.EnergyBalanceValue,
-                          DateRegistered = c.DateRegistered,
+                          EnergyConsumptionValue = c.EnergyConsumptionValue,
+                          TimeRegistered = c.TimeRegistered,
                       };
             return await pos.ToListAsync();
 
@@ -97,8 +94,8 @@ namespace VisualizationWeb.Models.Repo
                     SimPositionID = sp.SimPositionID,
                     SunValue = sp.SunValue,
                     WindValue = sp.WindValue,
-                    EnergyBalanceValue = sp.EnergyBalanceValue,
-                    DateRegistered = sp.DateRegistered,
+                    EnergyConsumptionValue = sp.EnergyConsumptionValue,
+                    TimeRegistered = sp.TimeRegistered,
                 })
             };
         }
@@ -110,10 +107,7 @@ namespace VisualizationWeb.Models.Repo
                        select new SimScenarioIndexViewModel
                        {
                            SimScenarioID = c.SimScenarioID,
-                           Title = c.Title,
-                           TimeFactor = c.TimeFactor,
-                           StartDate = c.StartDate,
-                           EndDate = c.EndDate,
+                           Title = c.Title
                        };
             return await scen.ToListAsync();
         }

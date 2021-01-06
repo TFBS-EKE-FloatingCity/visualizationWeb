@@ -15,10 +15,10 @@ namespace Simulation.Library.ViewModels.SimPositionVM
 
         public int WindValue { get; set; }
 
-        public int EnergyBalanceValue { get; set; }
+        public int EnergyConsumptionValue { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
-        public DateTime DateRegistered { get; set; }
+        public DateTime TimeRegistered { get; set; }
 
         public int SimScenarioID { get; set; }
     }
