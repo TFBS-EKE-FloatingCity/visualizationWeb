@@ -8,7 +8,7 @@ using System.Web;
 namespace VisualizationWeb.Models {
     public class CityData {
         [Key]
-        public int CityDataID { get; set; }
+        public string UUID { get; set; }
 
         public short USonicInner1 { get; set; }
         public short USonicOuter1 { get; set; }

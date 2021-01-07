@@ -17,18 +17,9 @@ namespace VisualizationWeb.Helpers {
             webServer.Start();
         }
 
-        public void CloseConnection() 
-        {
-            webServer.Stop();
-        }
-
         public void SendData(string json) 
         {
-            webServer.WebSocketServices.BroadcastAsync(json, Callback);
-        }
-
-        private void Callback() {
-
+            webServer.WebSocketServices.BroadcastAsync(json, null);
         }
     }
 }

@@ -213,9 +213,9 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202101041337231_DBCreation.cs" />
-    <Compile Include="Migrations\202101041337231_DBCreation.Designer.cs">
-      <DependentUpon>202101041337231_DBCreation.cs</DependentUpon>
+    <Compile Include="Migrations\202101071415358_DBCreation.cs" />
+    <Compile Include="Migrations\202101071415358_DBCreation.Designer.cs">
+      <DependentUpon>202101071415358_DBCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -346,8 +346,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101041337231_DBCreation.resx">
-      <DependentUpon>202101041337231_DBCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101071415358_DBCreation.resx">
+      <DependentUpon>202101071415358_DBCreation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

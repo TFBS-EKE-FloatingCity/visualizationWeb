@@ -13,7 +13,7 @@ namespace VisualizationWeb.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202101041337231_DBCreation"; }
+            get { return "202101071415358_DBCreation"; }
         }
         
         string IMigrationMetadata.Source

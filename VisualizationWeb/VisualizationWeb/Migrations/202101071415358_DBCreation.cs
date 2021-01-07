@@ -11,7 +11,7 @@ namespace VisualizationWeb.Migrations
                 "dbo.CityDatas",
                 c => new
                     {
-                        CityDataID = c.Int(nullable: false, identity: true),
+                        UUID = c.String(nullable: false, maxLength: 128),
                         USonicInner1 = c.Short(nullable: false),
                         USonicOuter1 = c.Short(nullable: false),
                         Pump1 = c.Short(nullable: false),
@@ -34,7 +34,7 @@ namespace VisualizationWeb.Migrations
                         Simulationtime = c.DateTime(),
                         TimeFactor = c.Decimal(precision: 18, scale: 2),
                     })
-                .PrimaryKey(t => t.CityDataID);
+                .PrimaryKey(t => t.UUID);
             
             CreateTable(
                 "dbo.AspNetRoles",

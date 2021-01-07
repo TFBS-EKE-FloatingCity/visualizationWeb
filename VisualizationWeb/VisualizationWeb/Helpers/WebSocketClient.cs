@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using Simulation.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,7 @@ namespace VisualizationWeb.Helpers {
 
         WebsocketServer websocketserver;
 
-        Uri url = new Uri("ws://161.97.116.72:8080");
+        Uri url = new Uri(ConfigurationManager.AppSettings["RaspberryWebsocketConnectionString"]);
         public static SocketIoClient client = new SocketIoClient();
 
         SimulationService simService;
@@ -48,61 +49,67 @@ namespace VisualizationWeb.Helpers {
 
         private void MessageHandler(string json) {
 
+            DateTime recieved = DateTime.Now;
+
             JsonDataVM jsonData = JsonConvert.DeserializeObject<JsonDataVM>(json);
-
-            CityData data = new CityData();
-
-            foreach (var module in jsonData.payload.modules) {
-                if (module.sector == "One") {
-                    data.USonicInner1 = Convert.ToInt16(module.sensorInside);
-                    data.USonicOuter1 = Convert.ToInt16(module.sensorOutside);
-                    data.Pump1 = Convert.ToInt16(module.pumpLevel);
-                }
-                else if (module.sector == "Two") {
-                    data.USonicInner2 = Convert.ToInt16(module.sensorInside);
-                    data.USonicOuter2 = Convert.ToInt16(module.sensorOutside);
-                    data.Pump2 = Convert.ToInt16(module.pumpLevel);
-                }
-                else if (module.sector == "Three") {
-                    data.USonicInner3 = Convert.ToInt16(module.sensorInside);
-                    data.USonicOuter3 = Convert.ToInt16(module.sensorOutside);
-                    data.Pump3 = Convert.ToInt16(module.pumpLevel);
-                }
-            }
-
-            data.MesurementTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddMilliseconds(Convert.ToDouble(jsonData.payload.timestamp));
-            data.CreatedAt = DateTime.Now;
-
-            data.WindMax = simService.MaxEnergyProductionWind ;
-            data.WindCurrent = Convert.ToInt16(simService.GetEnergyProductionWind(data.CreatedAt));
-            data.SunMax = simService.MaxEnergyProductionSun;
-            data.SunCurrent = Convert.ToInt16(simService.GetEnergyProductionSun(data.CreatedAt));
-            data.ConsumptionMax = simService.MaxEnergyConsumption;
-            data.ConsumptionCurrent = Convert.ToInt16(simService.GetEnergyConsumption(data.CreatedAt));
-            data.SimulationActive = simService.IsSimulationRunning;
-            data.Simulationtime = simService.GetSimulatedTimeStamp(data.CreatedAt);
-            data.SimulationID = simService.SimulationScenarioId;
-            data.TimeFactor = simService.TimeFactor;
-
             JsonResponseVM response = new JsonResponseVM();
-            
-            try {
-                db.CityDatas.Add(data);
-                db.SaveChanges();
-                response.status = "ack";
-            }
-            catch (Exception) {
-                response.status = "error";
+
+            if (db.CityDatas.Find(jsonData.uuid) == null) {
+
+                CityData data = new CityData();
+
+                data.UUID = jsonData.uuid;
+
+                foreach (var module in jsonData.payload.modules) {
+                    if (module.sector == "One") {
+                        data.USonicInner1 = Convert.ToInt16(module.sensorInside);
+                        data.USonicOuter1 = Convert.ToInt16(module.sensorOutside);
+                        data.Pump1 = Convert.ToInt16(module.pumpLevel);
+                    }
+                    else if (module.sector == "Two") {
+                        data.USonicInner2 = Convert.ToInt16(module.sensorInside);
+                        data.USonicOuter2 = Convert.ToInt16(module.sensorOutside);
+                        data.Pump2 = Convert.ToInt16(module.pumpLevel);
+                    }
+                    else if (module.sector == "Three") {
+                        data.USonicInner3 = Convert.ToInt16(module.sensorInside);
+                        data.USonicOuter3 = Convert.ToInt16(module.sensorOutside);
+                        data.Pump3 = Convert.ToInt16(module.pumpLevel);
+                    }
+                }
+
+                data.MesurementTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddMilliseconds(Convert.ToDouble(jsonData.payload.timestamp));
+                data.CreatedAt = recieved;
+
+                data.WindMax = simService.MaxEnergyProductionWind;
+                data.WindCurrent = Convert.ToInt16(simService.GetEnergyProductionWind(recieved));
+                data.SunMax = simService.MaxEnergyProductionSun;
+                data.SunCurrent = Convert.ToInt16(simService.GetEnergyProductionSun(recieved));
+                data.ConsumptionMax = simService.MaxEnergyConsumption;
+                data.ConsumptionCurrent = Convert.ToInt16(simService.GetEnergyConsumption(recieved));
+                data.SimulationActive = simService.IsSimulationRunning;
+                data.Simulationtime = simService.GetSimulatedTimeStamp(recieved);
+                data.SimulationID = simService.SimulationScenarioId;
+                data.TimeFactor = simService.TimeFactor;
+
+                try {
+                    db.CityDatas.Add(data);
+                    db.SaveChanges();
+                    websocketserver.SendData(JsonConvert.SerializeObject(data));
+                    response.status = "ack";
+                }
+                catch (Exception) {
+                    response.status = "error";
+                }
+
             }
 
             response.uuid = jsonData.uuid;
-            response.energyBalance = simService.GetEnergyBalance(data.CreatedAt);
-            response.sun = simService.GetEnergyProductionSun(data.CreatedAt);
-            response.wind = simService.GetEnergyProductionWind(data.CreatedAt);
+            response.energyBalance = simService.GetEnergyBalance(recieved);
+            response.sun = simService.GetEnergyProductionSun(recieved);
+            response.wind = simService.GetEnergyProductionWind(recieved);
             
             client.Emit("sensorDataResponse", response);
-
-            websocketserver.SendData(JsonConvert.SerializeObject(data));
         }
     }
 }
