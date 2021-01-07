@@ -1,9 +1,10 @@
-﻿<h4>Pumps efficiency (in %)</h4>
-<canvas id="PumpsChart" height="200"></canvas>
+﻿
+<canvas id="PumpsChart" height="300" class="chartjs-render-monitor"></canvas>
 
 <script>
     // chart config  //node-server:  http://161.97.116.72:8080/ping
     var pumpsConfig = {
+        responsive: true,
         type: 'horizontalBar',
         data: {
             labels: [
@@ -12,12 +13,25 @@
             datasets: [{
                 label: "Pumps",
                 data: [],
-                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)'],
+                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)'], 
                 borderWidth: 2
             }]
         },
         options: {
-            responsive: true,
+            //onResize: function (chart, size) {
+            //    if (size.width < 300) {
+            //        document.getElementById("PumpsChart").style.width = null;
+            //        chart.aspectRatio = 1;
+            //    } else {
+            //        document.getElementById("PumpsChart").style.width = '300';
+            //    }
+
+            //    chart.update();
+            //},
+            title: {
+                display: true,
+                text: "Pumps efficiency (in %)"
+            },
             legend: {
                 display: false
             },
@@ -38,60 +52,20 @@
         var ctx = document.getElementById('PumpsChart').getContext('2d');
         window.pumpChart = new Chart(ctx, pumpsConfig);
 
-        connect();
-
+        //Get Pumpdata from Websocket
         setInterval(function () {
-            getPumpData()
-        }, 2000)
+            if (typeof wsData !== 'undefined') {
+                var chartData = [];
+
+                chartData[0] = wsData.Pump1;
+                chartData[1] = wsData.Pump2;
+                chartData[2] = wsData.Pump3;
+
+                setPumpData(chartData);
+            }
+        }, updateRate);
     })
-    //API Call with AJAX
-    function getPumpData() {
-        //$.ajax({
-        //    url: '/API/Dashboard/GetCurrentPumpsData',
-        //    dataType: 'json',
-        //    type: 'GET',
-        //    contentType: 'application/json',
-        //    processData: false,
-        //    success: function (data, textStatus, jQxhr) {
-        //        //var pumpData = [];
-        //        var chartData = []
-        //        var chartDataIndex = 0;
-        //        data = JSON.parse(data)
-
-        //        data.forEach(function (value) {
-
-        //            chartData[0] = value.Pump1;
-        //            chartData[1] = value.Pump2;
-        //            chartData[2] = value.Pump3;
-                        
-                    
-        //        })
-             
-        //        setPumpData(chartData)
-        //    },
-        //    error: function (jqXhr, textStatus, errorThrown) {
-        //        console.log(errorThrown);
-        //    }
-        //});
-    }
-    function connect() {
-        var host = 'ws://localhost:8109/Connection';
-
-        var socket = new WebSocket(host);
-
-
-        socket.onmessage = function (e) {
-            console.log(e.data);
-        };
-
-        socket.onclose = function (e) {
-            setTimeout(function () {
-                connect();
-            }, 2000);
-        };
-    }
-
-    connect();
+   
     //Update Chart
     function setPumpData(data) {
         pumpsConfig.data.datasets.forEach(function (dataset) {

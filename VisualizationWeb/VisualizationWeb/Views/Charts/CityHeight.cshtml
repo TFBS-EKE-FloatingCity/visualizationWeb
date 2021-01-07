@@ -1,45 +1,24 @@
-﻿<canvas id="PowerChart" class="chartjs-render-monitor"></canvas>
+﻿
+<canvas id="HeightChart" height="300" class="chartjs-render-monitor"></canvas>
 
 <script>
-    var simdatasconfig = {
+    var heightDataConfig = {
         responsive: true,
         type: 'line',
-        aspectRatio: 2,
         data: {
             labels: [],
             datasets: [{
-                label: 'Wind',
+                label: 'Height',
                 backgroundColor: "rgb(54, 162, 235)",
                 borderColor: "rgba(185, 241, 244, 1)",
                 data: [],
-                fill: false,
-            }, {
-                label: 'Sun',
-                fill: false,
-                backgroundColor: "rgba(251, 217, 24, 1)",
-                borderColor: "rgba(251, 217, 24, 1)",
-                data: [],
-            }, {
-                label: 'Consumption',
-                fill: false,
-                backgroundColor: "rgb(54, 162, 235)",
-                borderColor: "rgba(231, 70, 70, 1)",
-                data: [],
+                fill: true,
             }]
         },
         options: {
-            onResize: function (chart, size) {
-                if (size.width < 400) {
-                    chart.aspectRatio = 1;
-                } else {
-                    chart.aspectRatio = 2;
-                }
-
-                chart.update();
-            },
             title: {
                 display: true,
-                text: 'Simulation Data Overview'
+                text: 'Height (in cm) above sea level' 
             },
             tooltips: {
                 mode: 'index',
@@ -69,29 +48,29 @@
                             second: 'HH:mm:ss'
                         }
                     }
+
                 }],
                 yAxes: [{
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Power'
+                        labelString: 'Height'
                     },
                     ticks: {
-                        min: 0,
-                        max: 60
+                        min: 0
                     }
                 }]
             },
-            pan: {
-                enabled: true,
-                mode: 'x',
-                rangeMax: {
-                    x: 4000
-                },
-                rangeMin: {
-                    x: 0
-                }
-            },
+            //pan: {
+            //    enabled: true,
+            //    mode: 'x',
+            //    rangeMax: {
+            //        x: 4000
+            //    },
+            //    rangeMin: {
+            //        x: 0
+            //    }
+            //},
             zoom: {
                 enabled: true,
                 mode: 'x',
@@ -99,27 +78,18 @@
                     x: 20000
                 },
                 rangeMin: {
-                    x: 1000
+                    x: 10
                 }
             }
         }
-    }
+    };
 
     $(document).ready(function () {
         // chart
-        var ctx = document.getElementById('PowerChart').getContext('2d');
-        window.powerChart = new Chart(ctx, simdatasconfig);
+        var ctx = document.getElementById('HeightChart').getContext('2d');
+        window.cityHeight = new Chart(ctx, heightDataConfig);
 
-        document.getElementById('PowerChart').addEventListener('mouseover', function () {
-            simdatasconfig.options.scales.xAxes[0].realtime.pause = true;
-            window.powerChart.update({ duration: 0 });
-        });
-
-        document.getElementById('PowerChart').addEventListener('mouseout', function () {
-            simdatasconfig.options.scales.xAxes[0].realtime.pause = false;
-            window.powerChart.update({ duration: 0 });
-        });	
-
+       
 
         // fill chart with history from DB
 
@@ -146,9 +116,9 @@
         setInterval(function () {
             if (typeof wsData !== 'undefined') {
                 if (!wsData.SimulationActive) {
-                    setSimData(Date.now(), wsData.WindCurrent, wsData.SunCurrent, wsData.ConsumptionCurrent)
+                    setCityHeight(Date.now(), heightHY)
                 } else {
-                    setSimData(wsData.Simulationtime, wsData.WindCurrent, wsData.SunCurrent, wsData.ConsumptionCurrent)
+                    setCityHeight(wsData.Simulationtime, heightHY)
                 }
 
             }
@@ -156,27 +126,12 @@
     })
 
     //Update Chart
-    function setSimData(currentdate, wind, sun, consumption) {
-        simdatasconfig.data.datasets[0].data.push({
+    function setCityHeight(currentdate, currentHeight) {
+        heightDataConfig.data.datasets[0].data.push({
             x: currentdate,
-            y: wind
+            y: currentHeight
         })
 
-        simdatasconfig.data.datasets[1].data.push({
-            x: currentdate,
-            y: sun
-        })
-
-        simdatasconfig.data.datasets[2].data.push({
-            x: currentdate,
-            y: consumption
-        })
-
-
-        //simdatasconfig.data.labels.push(currentdate);
-        //simdatasconfig.data.datasets[0].data.push(wind);
-        //simdatasconfig.data.datasets[1].data.push(sun);
-        //simdatasconfig.data.datasets[2].data.push(consumption);
-        window.powerChart.update()
+        window.cityHeight.update()
     }
 </script>

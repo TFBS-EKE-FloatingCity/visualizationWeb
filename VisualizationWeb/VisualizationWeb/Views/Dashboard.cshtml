@@ -1,4 +1,14 @@
-﻿@Scripts.Render("~/Scripts/Charts/Chart.js")
+﻿<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
+
+
+@*@Scripts.Render("~/Scripts/Charts/Chart.js")
+    @Scripts.Render("~/Scripts/Charts/hammerjs.js")
+    @Scripts.Render("~/Scripts/Charts/chartjs-plugin-zoom.js")*@
+@Scripts.Render("~/Scripts/visualisation.js")
 
 @{
     ViewBag.Title = "Dashboard";
@@ -29,14 +39,13 @@
     <div class="col-md-8">
         <div class="panel panel-default">
             <div class="panel-body" id="PowerChartPanel">
-                @*@Html.Partial("../Shared/Partials/_Modal", new ViewDataDictionary { { "name", "../Charts/PowerChart" } });*@
-                @Html.Partial("../Charts/PowerChart");
+                @Html.Partial("../Charts/PowerChart")
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-body"  id="CityRotationChartPanel">
+            <div class="panel-body" id="CityRotationChartPanel">
                 @Html.Partial("../Charts/CityRotationChart")
             </div>
         </div>
@@ -53,16 +62,17 @@
     </div>
     <div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-body"  id="WindChartPanel">
+            <div class="panel-body" id="HeightPanel">
+                @Html.Partial("../Charts/CityHeight")
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body" id="WindChartPanel">
                 @Html.Partial("../Charts/WindChart")
             </div>
         </div>
     </div>
-    @*<div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                @Html.Partial("../Charts/Start")
-            </div>
-        </div>
-    </div>*@
 </div>
+
