@@ -2,10 +2,3 @@
     width: 100%;
     height: 350px;
 }
-#CityRotationChartPanel, #PowerChartPanel {
-    height: 500px !important;
-}
-
-#PumpsChartPanel, #HeightPanel, #WindChartPanel {
-    height: 400px;
-}

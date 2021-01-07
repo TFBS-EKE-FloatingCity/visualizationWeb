@@ -1,10 +1,9 @@
 ﻿
-<canvas id="PumpsChart" height="300" class="chartjs-render-monitor"></canvas>
+<canvas id="PumpsChart" class="chartjs-render-monitor"></canvas>
 
 <script>
     // chart config  //node-server:  http://161.97.116.72:8080/ping
     var pumpsConfig = {
-        responsive: true,
         type: 'horizontalBar',
         data: {
             labels: [
@@ -18,16 +17,16 @@
             }]
         },
         options: {
-            //onResize: function (chart, size) {
-            //    if (size.width < 300) {
-            //        document.getElementById("PumpsChart").style.width = null;
-            //        chart.aspectRatio = 1;
-            //    } else {
-            //        document.getElementById("PumpsChart").style.width = '300';
-            //    }
+            aspectRatio: 2,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 1;
+                } else {
+                    chart.aspectRatio = 2;
+                }
 
-            //    chart.update();
-            //},
+                chart.update();
+            },
             title: {
                 display: true,
                 text: "Pumps efficiency (in %)"

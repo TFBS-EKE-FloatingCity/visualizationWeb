@@ -1,24 +1,30 @@
-﻿
-<canvas id="HeightChart" height="300" class="chartjs-render-monitor"></canvas>
+﻿<canvas id="HeightChart" class="chartjs-render-monitor"></canvas>
 
 <script>
     var heightDataConfig = {
-        responsive: true,
         type: 'line',
         data: {
             labels: [],
             datasets: [{
-                label: 'Height',
-                backgroundColor: "rgb(54, 162, 235)",
-                borderColor: "rgba(185, 241, 244, 1)",
-                data: [],
-                fill: true,
+                label: 'Height',               
+                borderColor: "rgba(48, 80, 81, 1)",
+                data: []
             }]
         },
         options: {
+            aspectRatio: 2,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 1;
+                } else {
+                    chart.aspectRatio = 2;
+                }
+
+                chart.update();
+            },
             title: {
                 display: true,
-                text: 'Height (in cm) above sea level' 
+                text: 'Height (in mm) above sea level' 
             },
             tooltips: {
                 mode: 'index',
@@ -33,22 +39,14 @@
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Datetime'
+                        labelString: 'Time'
                     },
-                    type: 'realtime',
-                    distribution: 'series',
-                    realtime: {
-                        ttl: 60000,
-                        duration: 20000,
-                        refresh: 1000,
-                        delay: 2000
-                    },
+                    type: 'time',
                     time: {
                         displayFormats: {
                             second: 'HH:mm:ss'
                         }
                     }
-
                 }],
                 yAxes: [{
                     display: true,
@@ -58,28 +56,12 @@
                     },
                     ticks: {
                         min: 0
-                    }
+                    },
+                    gridLines: {
+                        zeroLineColor: "#03b6fc",
+                        zeroLineWidth: 3
+                    },
                 }]
-            },
-            //pan: {
-            //    enabled: true,
-            //    mode: 'x',
-            //    rangeMax: {
-            //        x: 4000
-            //    },
-            //    rangeMin: {
-            //        x: 0
-            //    }
-            //},
-            zoom: {
-                enabled: true,
-                mode: 'x',
-                rangeMax: {
-                    x: 20000
-                },
-                rangeMin: {
-                    x: 10
-                }
             }
         }
     };

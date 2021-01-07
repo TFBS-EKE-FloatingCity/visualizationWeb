@@ -2,9 +2,7 @@
 
 <script>
     var simdatasconfig = {
-        responsive: true,
         type: 'line',
-        aspectRatio: 2,
         data: {
             labels: [],
             datasets: [{
@@ -28,8 +26,9 @@
             }]
         },
         options: {
+            aspectRatio: 2,
             onResize: function (chart, size) {
-                if (size.width < 400) {
+                if (size.width < 685) {
                     chart.aspectRatio = 1;
                 } else {
                     chart.aspectRatio = 2;
@@ -54,16 +53,9 @@
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Datetime'
+                        labelString: 'Time'
                     },
-                    type: 'realtime',
-                    distribution: 'series',
-                    realtime: {
-                        ttl: 60000,
-                        duration: 20000,
-                        refresh: 1000,
-                        delay: 2000
-                    },
+                    type: 'time',
                     time: {
                         displayFormats: {
                             second: 'HH:mm:ss'
@@ -81,26 +73,6 @@
                         max: 60
                     }
                 }]
-            },
-            pan: {
-                enabled: true,
-                mode: 'x',
-                rangeMax: {
-                    x: 4000
-                },
-                rangeMin: {
-                    x: 0
-                }
-            },
-            zoom: {
-                enabled: true,
-                mode: 'x',
-                rangeMax: {
-                    x: 20000
-                },
-                rangeMin: {
-                    x: 1000
-                }
             }
         }
     }
@@ -109,17 +81,6 @@
         // chart
         var ctx = document.getElementById('PowerChart').getContext('2d');
         window.powerChart = new Chart(ctx, simdatasconfig);
-
-        document.getElementById('PowerChart').addEventListener('mouseover', function () {
-            simdatasconfig.options.scales.xAxes[0].realtime.pause = true;
-            window.powerChart.update({ duration: 0 });
-        });
-
-        document.getElementById('PowerChart').addEventListener('mouseout', function () {
-            simdatasconfig.options.scales.xAxes[0].realtime.pause = false;
-            window.powerChart.update({ duration: 0 });
-        });	
-
 
         // fill chart with history from DB
 
@@ -150,7 +111,6 @@
                 } else {
                     setSimData(wsData.Simulationtime, wsData.WindCurrent, wsData.SunCurrent, wsData.ConsumptionCurrent)
                 }
-
             }
         }, updateRate);
     })
@@ -171,12 +131,6 @@
             x: currentdate,
             y: consumption
         })
-
-
-        //simdatasconfig.data.labels.push(currentdate);
-        //simdatasconfig.data.datasets[0].data.push(wind);
-        //simdatasconfig.data.datasets[1].data.push(sun);
-        //simdatasconfig.data.datasets[2].data.push(consumption);
         window.powerChart.update()
     }
 </script>

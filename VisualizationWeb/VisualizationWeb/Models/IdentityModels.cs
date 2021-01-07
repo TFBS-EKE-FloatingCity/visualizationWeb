@@ -25,8 +25,7 @@ namespace VisualizationWeb.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        public virtual DbSet<Sensor> Sensors { get; set; }
-        public virtual DbSet<SensorData> SensorDatas { get; set; }
+
         public virtual DbSet<SimData> SimDatas { get; set; }
         public virtual DbSet<SimType> SimTypes { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }

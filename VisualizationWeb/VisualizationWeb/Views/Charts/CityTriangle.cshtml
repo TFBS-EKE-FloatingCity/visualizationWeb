@@ -1,0 +1,43 @@
+﻿
+    <style>
+        .triangle-up {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #555;
+            margin-left: 8px;
+        }
+
+        #triangle-container {
+            width: 120px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        #val1 {
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            setInterval(function () {
+                if (typeof wsData !== 'undefined') {
+                    
+                    $('#val1').text(Math.round((heightA + Number.EPSILON) * 100) / 100);
+                    $('#val2').text(Math.round((heightB + Number.EPSILON) * 100) / 100);
+                    $('#val3').text(Math.round((heightC + Number.EPSILON) * 100) / 100);
+
+                }
+            }, updateRate);
+        })
+    </script>
+
+    <h4>Heights of City (in mm)</h4>
+    <div id="triangle-container">
+        <div id="val1">sfsdf</div>
+        <div class="triangle-up"></div>
+        <span id="val2">12323</span>
+        <span id="val3" style="float:right">165464</span>
+    </div>
+

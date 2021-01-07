@@ -1,13 +1,6 @@
-﻿<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
-
-
-@*@Scripts.Render("~/Scripts/Charts/Chart.js")
-    @Scripts.Render("~/Scripts/Charts/hammerjs.js")
-    @Scripts.Render("~/Scripts/Charts/chartjs-plugin-zoom.js")*@
+﻿
+@Scripts.Render("~/Scripts/Charts/moment.min.js")
+@Scripts.Render("~/Scripts/Charts/Chart.js")
 @Scripts.Render("~/Scripts/visualisation.js")
 
 @{
@@ -53,24 +46,34 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body" id="PumpsChartPanel">
                 @Html.Partial("../Charts/PumpsChart")
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body" id="HeightPanel">
                 @Html.Partial("../Charts/CityHeight")
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+</div>
+
+<div class="row">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body" id="WindChartPanel">
                 @Html.Partial("../Charts/WindChart")
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body" id="PumpsChartPanel">
+                @Html.Partial("../Charts/CityTriangle")
             </div>
         </div>
     </div>
