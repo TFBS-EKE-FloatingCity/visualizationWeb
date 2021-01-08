@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Simulation.Library.Models
 {
@@ -15,7 +16,7 @@ namespace Simulation.Library.Models
         private TimeSpan _duration;
         private DateTime? _startDateTimeReal;
         private DateTime? _endDateTimeReal;
-        private bool _isRunning;
+        private bool _isScenarioRunning;
         private SimPosition _prevPosition;
         private SimPosition _nextPosition;
         private int _maxEnergyProductionWind;
@@ -26,6 +27,7 @@ namespace Simulation.Library.Models
         private int _idleEnergyProductionWind;
         private int _idleEnergyProductionSun;
         private int _idleEnergyConsumption;
+        private Timer _timer;
 
         public TimeSpan Duration
         {
@@ -72,7 +74,7 @@ namespace Simulation.Library.Models
         }
         public bool IsSimulationRunning
         {
-            get => _isRunning;
+            get => _isScenarioRunning;
         }
         public decimal TimeFactor
         {
@@ -92,6 +94,8 @@ namespace Simulation.Library.Models
         {
             SetIdleValues(0, 0, 0);
             readConfig(@"SimulationServiceConfig.json");
+            _timer = new Timer();
+            _timeFactor = 1;
         }
         #endregion
 
@@ -118,9 +122,10 @@ namespace Simulation.Library.Models
             if (setupForRunning(scenario, duration)) 
             {
                 StartDateTimeReal = DateTime.Now;
+                _timer.Start();
                 _prevPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).First();
                 _nextPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).Skip(1).First();
-                _isRunning = true;
+                _isScenarioRunning = true;
                 onSimulationStarted();
             }
             else
@@ -135,10 +140,14 @@ namespace Simulation.Library.Models
         /// </summary>
         public void Stop()
         {
-            _isRunning = false;
+            _isScenarioRunning = false;
             StartDateTimeReal = null;
-            _timeFactor = 0;
+            _timeFactor = 1;
             _simScenario = null;
+            _prevPosition = null;
+            _nextPosition = null;
+            _timer.Stop();
+            _timer.Elapsed -= onSimDurationElapsed;
             onSimulationEnded();
         }
 
@@ -155,16 +164,8 @@ namespace Simulation.Library.Models
         /// </summary>
         private DateTime? update(DateTime timeStamp)
         {
-            if (_isRunning == false)
+            if (_isScenarioRunning == false || isTimeStampValid(timeStamp) == false)
             {
-                return null;
-            }
-            if (isTimeStampValid(timeStamp) == false)
-            {
-                if(timeStamp > EndDateTimeReal)     //This means we reached the end of the simulation. So the Service is getting stopped.
-                {
-                    Stop();
-                }
                 return null;
             }
 
@@ -262,7 +263,7 @@ namespace Simulation.Library.Models
         /// <returns>True if the simulation is running and the simulated time is between the first and the last position of the Scenario.</returns>
         protected virtual bool isTimeStampValid(DateTime timeStamp)
         {
-            if(_isRunning == false)
+            if(_isScenarioRunning == false)
             {
                 return false;
             }
@@ -341,21 +342,23 @@ namespace Simulation.Library.Models
                 return false;
             }
 
-            if (_isRunning)
+            if (_isScenarioRunning)
             {
-                Stop();
+                Stop();     // Stops the previous Scenario if there is one running.
             }
 
             _simScenario = scenario;
             _duration = duration;
             _timeFactor = CalculationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
+            _timer.Interval = duration.TotalMilliseconds;
+            _timer.Elapsed += onSimDurationElapsed;
             return true;
         }
 
         /// <summary>
         /// Validates the Scenario.
         /// </summary>
-        private bool isValidScenario(SimScenario scenario)
+        protected bool isValidScenario(SimScenario scenario)
         {
             return scenario != null && scenario.SimPositions != null && scenario.SimPositions.Count >= 2;
         }
@@ -363,7 +366,7 @@ namespace Simulation.Library.Models
         /// <summary>
         /// Validates the duration.
         /// </summary>
-        private bool isValidDuration(TimeSpan duration)
+        protected bool isValidDuration(TimeSpan duration)
         {
             return duration.Ticks > 0;
         }
@@ -379,6 +382,14 @@ namespace Simulation.Library.Models
             _idleEnergyConsumption = energyConsumption >= 0 && energyConsumption <= 100 ? energyConsumption : _idleEnergyConsumption;
             _idleEnergyProductionSun = energyProductionSun >= 0 && energyProductionSun <= 100 ? energyProductionSun : _idleEnergyProductionSun;
             _idleEnergyProductionWind = energyProductionWind >= 0 && energyProductionWind <= 100 ? energyProductionWind : _idleEnergyProductionWind;
+        }
+
+        /// <summary>
+        /// Method which stops the running SimScenario after a set TimeInterval.
+        /// </summary>
+        protected void onSimDurationElapsed(object sender, ElapsedEventArgs e)
+        {
+            Stop();
         }
         #endregion
     }

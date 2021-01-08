@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace VisualisationTests
@@ -97,7 +98,7 @@ namespace VisualisationTests
             Assert.AreEqual(null, service.StartDateTimeReal);
             Assert.AreEqual(null, service.EndDateTimeReal);
             Assert.AreEqual(false, service.IsSimulationRunning);
-            Assert.AreEqual(0m, service.TimeFactor);
+            Assert.AreEqual(1m, service.TimeFactor);
             Assert.AreEqual(0, service.GetEnergyBalance(DateTime.Now));
             Assert.AreEqual(0, service.GetEnergyConsumption(DateTime.Now));
             Assert.AreEqual(0, service.GetEnergyProductionSun(DateTime.Now));
@@ -179,10 +180,10 @@ namespace VisualisationTests
         }
 
         [TestMethod]
-        public void SimulationService_StopOnTimeStampAfterDuration()
+        public void SimulationService_StopAfterDuration()
         {
             SimScenario scenario = getValidTestScenario();
-            TimeSpan duration = new TimeSpan(1, 0, 0);
+            TimeSpan duration = new TimeSpan(0, 0, 1);
             ISimulationService service = new SimulationService();
 
             ISimulationService eventSender = null;
@@ -192,7 +193,7 @@ namespace VisualisationTests
             };
 
             service.Run(scenario, duration);
-            service.GetEnergyConsumption(service.EndDateTimeReal.Value + new TimeSpan(0, 0, 1));
+            Thread.Sleep(2000);
             Assert.AreEqual(service, eventSender);
             simulationService_AssertNotRunning(service);
         }
