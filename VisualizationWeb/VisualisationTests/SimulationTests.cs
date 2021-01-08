@@ -98,10 +98,10 @@ namespace VisualisationTests
             Assert.AreEqual(null, service.EndDateTimeReal);
             Assert.AreEqual(false, service.IsSimulationRunning);
             Assert.AreEqual(0m, service.TimeFactor);
-            Assert.AreEqual(null, service.GetEnergyBalance(DateTime.Now));
-            Assert.AreEqual(null, service.GetEnergyConsumption(DateTime.Now));
-            Assert.AreEqual(null, service.GetEnergyProductionSun(DateTime.Now));
-            Assert.AreEqual(null, service.GetEnergyProductionWind(DateTime.Now));
+            Assert.AreEqual(0, service.GetEnergyBalance(DateTime.Now));
+            Assert.AreEqual(0, service.GetEnergyConsumption(DateTime.Now));
+            Assert.AreEqual(0, service.GetEnergyProductionSun(DateTime.Now));
+            Assert.AreEqual(0, service.GetEnergyProductionWind(DateTime.Now));
             Assert.AreEqual(null, service.GetSimulatedTimeStamp(DateTime.Now));
         }
 
@@ -246,13 +246,13 @@ namespace VisualisationTests
         }
 
         [TestMethod]
-        [DataRow(-1, null)]
+        [DataRow(-1, 0)]
         [DataRow(0, 40)]
         [DataRow(5, 30)]
         [DataRow(10, 20)]
         [DataRow(35, 35)]
         [DataRow(60, 50)]
-        [DataRow(61, null)]
+        [DataRow(61, 0)]
         public void SimulationService_GetEnergyConmption(int minutesPassed, int? expectedValue)
         {
             SimScenario scenario = getValidTestScenario();
@@ -266,12 +266,12 @@ namespace VisualisationTests
         }
 
         [TestMethod]
-        [DataRow(-1, null)]
+        [DataRow(-1, 0)]
         [DataRow(0, 5)]
         [DataRow(6, 8)]
         [DataRow(10, 10)]
         [DataRow(60, 20)]
-        [DataRow(61, null)]
+        [DataRow(61, 0)]
         public void SimulationService_GetEnergyProductionWind(int minutesPassed, int? expectedValue)
         {
             SimScenario scenario = getValidTestScenario();
@@ -285,12 +285,12 @@ namespace VisualisationTests
         }
 
         [TestMethod]
-        [DataRow(-1, null)]
+        [DataRow(-1, 0)]
         [DataRow(0, 20)]
         [DataRow(10, 100)]
         [DataRow(35, 70)]
         [DataRow(60, 40)]
-        [DataRow(61, null)]
+        [DataRow(61, 0)]
         public void SimulationService_GetEnergyProductionSun(int minutesPassed, int? expectedValue)
         {
             SimScenario scenario = getValidTestScenario();
@@ -356,6 +356,23 @@ namespace VisualisationTests
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
 
             Assert.AreEqual(new DateTime(2021, 01, 01, expectedSimulationHour, 0, 0), service.GetSimulatedTimeStamp(testRealTime));
+        }
+
+        [TestMethod]
+        [DataRow(0,0,0,0,0,0)]
+        [DataRow(30,40,50,30,40,50)]
+        [DataRow(100,100,100,100,100,100)]
+        [DataRow(-1,-1,-1,0,0,0)]
+        [DataRow(101,101,101,0,0,0)]
+        public void SimulationService_SetIdleValues(int energyConsumption, int energyProductionSun, int energyProductionWind, int expectedEnergyConsumption, int expectedEnergyProductionSun, int expectedEnergyProductionWind)
+        {
+            ISimulationService service = new SimulationService();
+
+            service.SetIdleValues(energyConsumption, energyProductionSun, energyProductionWind);
+
+            Assert.AreEqual(expectedEnergyConsumption, service.GetEnergyConsumption(DateTime.Now));
+            Assert.AreEqual(expectedEnergyProductionSun, service.GetEnergyProductionSun(DateTime.Now));
+            Assert.AreEqual(expectedEnergyProductionWind, service.GetEnergyProductionWind(DateTime.Now));
         }
 
         #endregion

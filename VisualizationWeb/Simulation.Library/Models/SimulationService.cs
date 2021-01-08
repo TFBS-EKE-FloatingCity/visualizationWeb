@@ -23,6 +23,9 @@ namespace Simulation.Library.Models
         private int _maxEnergyConsumption;
         private SimScenario _simScenario;
         private decimal _timeFactor;
+        private int _idleEnergyProductionWind;
+        private int _idleEnergyProductionSun;
+        private int _idleEnergyConsumption;
 
         public TimeSpan Duration
         {
@@ -87,6 +90,7 @@ namespace Simulation.Library.Models
         #region Constructor
         public SimulationService()
         {
+            SetIdleValues(0, 0, 0);
             readConfig(@"SimulationServiceConfig.json");
         }
         #endregion
@@ -195,13 +199,13 @@ namespace Simulation.Library.Models
         /// Calculates the percental simulated energyproduction for the given timeStamp for the wind turbines.
         /// </summary>
         /// <param name="timeStamp">The real TimeStamp</param>
-        /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
-        public int? GetEnergyProductionWind(DateTime timeStamp)
+        /// <returns>The percental simulated energyproduction. Returns idle values if no Simulation is running.</returns>
+        public int GetEnergyProductionWind(DateTime timeStamp)
         {
             DateTime? simTimeStamp = update(timeStamp);
             if (simTimeStamp == null)
             {
-                return null;
+                return _idleEnergyProductionWind;
             }
 
             return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
@@ -215,13 +219,13 @@ namespace Simulation.Library.Models
         /// Calculates the percental simulated energyproduction for the given timeStamp for the suncollectors.
         /// </summary>
         /// <param name="timeStamp">The real TimeStamp</param>
-        /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
-        public int? GetEnergyProductionSun(DateTime timeStamp)
+        /// <returns>The percental simulated energyproduction. Returns idle values if no Simulation is running.</returns>
+        public int GetEnergyProductionSun(DateTime timeStamp)
         {
             DateTime? simTimeStamp = update(timeStamp);
             if (simTimeStamp == null)
             {
-                return null;
+                return _idleEnergyProductionSun;
             }
 
             return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
@@ -235,13 +239,13 @@ namespace Simulation.Library.Models
         /// Calculates the percental simulated energyconsumption of the city for the given timeStamp.
         /// </summary>
         /// <param name="timeStamp">The real TimeStamp</param>
-        /// <returns>The percental simulated energyproduction. Null if the simulation is not running.</returns>
-        public int? GetEnergyConsumption(DateTime timeStamp)
+        /// <returns>The percental simulated energyproduction. Returns idle values if no Simulation is running.</returns>
+        public int GetEnergyConsumption(DateTime timeStamp)
         {
             DateTime? simTimeStamp = update(timeStamp);
             if (simTimeStamp == null)
             {
-                return null;
+                return _idleEnergyConsumption;
             }
 
             return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
@@ -308,17 +312,12 @@ namespace Simulation.Library.Models
         /// Calculates the energy balance for the given timeStamp. Negativ if the Consumption is higher than the production of Sun and Wind.
         /// </summary>
         /// <param name="timeStamp"></param>
-        /// <returns>The simulated energy balance. Null if the simulation is not running</returns>
-        public int? GetEnergyBalance(DateTime timeStamp)
+        /// <returns>The simulated energy balance. Returns idle values if no Simulation is running.</returns>
+        public int GetEnergyBalance(DateTime timeStamp)
         {
-            if (_isRunning == false || isTimeStampValid(timeStamp) == false)
-            {
-                return null;
-            }
-
-            int? windValue = GetEnergyProductionWind(timeStamp);
-            int? sunValue = GetEnergyProductionSun(timeStamp);
-            int? consumptionValue = GetEnergyConsumption(timeStamp);
+            int windValue = GetEnergyProductionWind(timeStamp);
+            int sunValue = GetEnergyProductionSun(timeStamp);
+            int consumptionValue = GetEnergyConsumption(timeStamp);
 
             int? balanceValue = windValue + sunValue - consumptionValue;
             if (balanceValue >= 0)
@@ -367,6 +366,19 @@ namespace Simulation.Library.Models
         private bool isValidDuration(TimeSpan duration)
         {
             return duration.Ticks > 0;
+        }
+
+        /// <summary>
+        /// Sets the Idle Values which are sent while no Scenario is running.
+        /// </summary>
+        /// <param name="energyConsumption">The energy consumption of the city in percent. Must be a value between 0 and 100 percent.</param>
+        /// <param name="energyProductionSun">The energy production of the suncollectors in percent. Must be a value between 0 and 100 percent.</param>
+        /// <param name="energyProductionWind">The energy production of the wind turbines in percent. Must be a value between 0 and 100 percent.</param>
+        public void SetIdleValues(int energyConsumption, int energyProductionSun, int energyProductionWind)
+        {
+            _idleEnergyConsumption = energyConsumption >= 0 && energyConsumption <= 100 ? energyConsumption : _idleEnergyConsumption;
+            _idleEnergyProductionSun = energyProductionSun >= 0 && energyProductionSun <= 100 ? energyProductionSun : _idleEnergyProductionSun;
+            _idleEnergyProductionWind = energyProductionWind >= 0 && energyProductionWind <= 100 ? energyProductionWind : _idleEnergyProductionWind;
         }
         #endregion
     }
