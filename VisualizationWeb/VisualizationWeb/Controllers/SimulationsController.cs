@@ -15,7 +15,8 @@ namespace VisualizationWeb.Controllers
         // GET: Simulations
         public ActionResult Index()
         {
-            return View(db.SimScenarios.ToList());
+            //return View(db.SimScenarios.ToList());
+            return View();
         }
 
         public ActionResult Details()

@@ -6,14 +6,14 @@ namespace VisualizationWeb.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class DBCreation : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class updatedatabase2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DBCreation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updatedatabase2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101071415358_DBCreation"; }
+            get { return "202101121406244_update-database2"; }
         }
         
         string IMigrationMetadata.Source

@@ -38,19 +38,52 @@ namespace VisualizationWeb.Migrations
                 context.Roles.Remove(context.Roles.Find("1"));
             }
 
-            context.Roles.AddOrUpdate(
-                r => r.Id,
-                new IdentityRole
-                {
-                    Id = "1",
-                    Name = "Admin",
-                },
-                new IdentityRole
-                {
-                    Id = "2",
-                    Name = "Simulant",
-                }
-            );
+            var roleAdmin = (from role in context.Roles
+                             where role.Name == "Admin"
+                             select role).FirstOrDefault();
+
+            var roleSimulant = (from role in context.Roles
+                                where role.Name == "Simulant"
+                                select role).FirstOrDefault();
+
+            if (roleAdmin == null && roleSimulant == null)
+            {
+                context.Roles.AddOrUpdate(
+                    r => r.Id,
+                    new IdentityRole
+                    {
+                        Id = "1",
+                        Name = "Admin",
+                    },
+                     new IdentityRole
+                     {
+                         Id = "2",
+                         Name = "Simulant",
+                     }
+                );
+            }
+            else if (roleAdmin == null)
+            {
+                context.Roles.AddOrUpdate(
+                    r => r.Id,
+                    new IdentityRole
+                    {
+                        Id = "1",
+                        Name = "Admin",
+                    }
+                 );
+            }
+            else if (roleSimulant == null)
+            {
+                context.Roles.AddOrUpdate(
+                    r => r.Id,
+                    new IdentityRole
+                    {
+                        Id = "2",
+                        Name = "Simulant",
+                    }
+                );
+            }
 
             #endregion
 

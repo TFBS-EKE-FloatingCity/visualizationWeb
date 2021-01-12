@@ -1,6 +1,14 @@
-﻿var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY;
+﻿var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor;
 
-updateRate = 1000;
+//var heightData = {
+//    heightA,
+//    heightB,
+//    heightC,
+//    heightHY
+//}
+
+updateRate = 10000;
+heightFactor = 1;
 
 function connect() {
     var host = 'ws://localhost:8109/Connection';
@@ -9,7 +17,13 @@ function connect() {
     socket.onmessage = function (e) {
         console.log(e.data);
         wsData = JSON.parse(e.data);    // has to be parsed?!
-        updateModelRotation();
+
+        heightData = updateModelRotation(wsData.USonicOuter1, wsData.USonicOuter2, wsData.USonicOuter3, heightFactor);
+
+        heightA = heightData.heightA;
+        heightB = heightData.heightB;
+        heightC = heightData.heightC;
+        heightHY = heightData.heightHY;
     };
 
     socket.onclose = function (e) {
@@ -23,7 +37,7 @@ function connect() {
 // TESTDATA
 testData = 
 {
-	"CityDataID": 3,
+	"UUID": 3,
 	"USonicInner1": 399,
 	"USonicOuter1": 334,
 	"Pump1": -39,
@@ -33,9 +47,9 @@ testData =
 	"USonicInner3": 214,
 	"USonicOuter3": 170,
 	"Pump3": -61,
-	"CreatedAt": "2021-01-04T14:38:15.6189975+01:00",
-	"MesurementTime": "2021-01-04T13:38:15.589Z",
-	"SimulationID": null,
+	"CreatedAt": "2021-01-04T14:38:15.618",
+	"MesurementTime": "2021-01-04T13:38:15.589",
+	"SimulationID": 2,
 	"WindMax": 0,
 	"WindCurrent": 0,
 	"SunMax": 0,
@@ -60,7 +74,13 @@ setInterval(function () {
     wsData.USonicOuter2 = randomNumber(150, 400);
     wsData.USonicOuter3 = randomNumber(150, 400);
 
-    updateModelRotation();
+    heightData = updateModelRotation(wsData.USonicOuter1, wsData.USonicOuter2, wsData.USonicOuter3);
+
+    heightA = heightData.heightA;
+    heightB = heightData.heightB;
+    heightC = heightData.heightC;
+    heightHY = heightData.heightHY;
+
 }, updateRate);
 
 function randomNumber(min, max) {
@@ -78,7 +98,13 @@ function randomNumber(min, max) {
 }
 // END TEST
 
-function updateModelRotation() {
+function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
+    if (heightFactorValue > 0) {
+        USonicOuter1 *= heightFactorValue;
+        USonicOuter2 *= heightFactorValue;
+        USonicOuter3 *= heightFactorValue;
+    }
+
     var radiant;
 
     var cubeLengths = {
@@ -87,45 +113,48 @@ function updateModelRotation() {
         depth: 2,
     };
 
-    if (wsData.USonicOuter1 === wsData.USonicOuter2) {
+    if (USonicOuter1 === USonicOuter2) {
         // wsData a and b are even
         cubeRotationZ = +0.0;
     }
 
-    if (wsData.USonicOuter1 === wsData.USonicOuter3) {
+    if (USonicOuter1 === USonicOuter3) {
         // wsData a and c are even
         cubeRotationX = +0.0;
     }
 
-    if (wsData.USonicOuter2 > wsData.USonicOuter1) {
+    if (USonicOuter2 > USonicOuter1) {
         // B > A
-        radiant = (-1) * Math.atan((wsData.USonicOuter2 - wsData.USonicOuter1) / cubeLengths.width);
+        radiant = (-1) * Math.atan((USonicOuter2 - USonicOuter1) / cubeLengths.width);
         cubeRotationZ = radiant;
     }
 
-    if (wsData.USonicOuter1 > wsData.USonicOuter2) {
+    if (USonicOuter1 > USonicOuter2) {
         // A > B
-        radiant = Math.atan((wsData.USonicOuter1 - wsData.USonicOuter2) / cubeLengths.width);
+        radiant = Math.atan((USonicOuter1 - USonicOuter2) / cubeLengths.width);
         cubeRotationZ = radiant;
     }
 
-    if (wsData.USonicOuter1 > wsData.USonicOuter3) {
+    if (USonicOuter1 > USonicOuter3) {
         // A > C
-        radiant = (-1) * Math.atan((wsData.USonicOuter1 - wsData.USonicOuter3) / cubeLengths.width);
+        radiant = (-1) * Math.atan((USonicOuter1 - USonicOuter3) / cubeLengths.width);
         cubeRotationX = radiant;
     }
 
-    if (wsData.USonicOuter3 > wsData.USonicOuter1) {
+    if (USonicOuter3 > USonicOuter1) {
         // C > A
-        radiant = Math.atan((wsData.USonicOuter3 - wsData.USonicOuter1) / cubeLengths.width);
+        radiant = Math.atan((USonicOuter3 - USonicOuter1) / cubeLengths.width);
         cubeRotationX = radiant;
     }
 
-    heightA = wsData.USonicOuter1 * Math.cos(Math.abs(cubeRotationZ));
-    heightB = wsData.USonicOuter2 * Math.cos(Math.abs(cubeRotationZ));
-    heightC = wsData.USonicOuter3 * Math.cos(Math.abs(cubeRotationX));
+    heightData = {
+        heightA: USonicOuter1 * Math.cos(Math.abs(cubeRotationZ)),
+        heightB: USonicOuter2 * Math.cos(Math.abs(cubeRotationZ)),
+        heightC: USonicOuter3 * Math.cos(Math.abs(cubeRotationX)),
+        heightHY: 0
+    };
 
-    heightHY = Math.round((((heightA + heightB + heightC) / 3) + Number.EPSILON) * 100) / 100 ;
+    heightData.heightHY = Math.round((((heightData.heightA + heightData.heightB + heightData.heightC) / 3) + Number.EPSILON) * 100) / 100;
+
+    return heightData;
 }
-
-
