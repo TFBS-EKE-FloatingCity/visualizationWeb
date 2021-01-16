@@ -93,7 +93,8 @@ namespace Simulation.Library.Models
         public SimulationService()
         {
             SetIdleValues(0, 0, 0);
-            readConfig(@"SimulationServiceConfig.json");
+            readConfig();
+            //readConfig(@"SimulationServiceConfig.json");
             _timer = new Timer();
             _timeFactor = 1;
         }
@@ -103,15 +104,20 @@ namespace Simulation.Library.Models
         /// <summary>
         /// Reads the maximum values from the SimulationServiceConfig.json and writes it to the fields.
         /// </summary>
-        private void readConfig(string configPath)
+        private void readConfig(string configPath = "")
         {
-            using (StreamReader reader = new StreamReader(configPath))
-            {
-                JObject jdata = JObject.Parse(reader.ReadToEnd());
-                _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
-                _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
-                _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
-            }
+
+            JObject jdata = JObject.Parse(SimulationServiceConfig.Config);
+            _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
+            _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
+            _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
+
+            //using (StreamReader reader = new StreamReader(configPath)) {
+            //    JObject jdata = JObject.Parse(reader.ReadToEnd());
+            //    _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
+            //    _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
+            //    _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
+            //}
         }
 
         /// <summary>

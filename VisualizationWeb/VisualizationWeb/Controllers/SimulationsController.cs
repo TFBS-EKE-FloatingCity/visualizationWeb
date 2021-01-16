@@ -66,9 +66,9 @@ namespace VisualizationWeb.Controllers
             return View(scenario);
         }
 
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
-            return View();
+            return View(new SimScenarioCreateAndEditViewModel());
         }
 
         [HttpPost]

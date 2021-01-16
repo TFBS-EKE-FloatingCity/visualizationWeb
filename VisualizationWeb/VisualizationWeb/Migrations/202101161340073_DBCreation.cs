@@ -8,10 +8,23 @@ namespace VisualizationWeb.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.CityDataHeads",
+                c => new
+                    {
+                        CityDataHeadID = c.Int(nullable: false, identity: true),
+                        State = c.String(),
+                        SimulationID = c.Int(nullable: false),
+                        StartTime = c.DateTime(nullable: false),
+                        EndTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.CityDataHeadID);
+            
+            CreateTable(
                 "dbo.CityDatas",
                 c => new
                     {
                         UUID = c.String(nullable: false, maxLength: 128),
+                        CityDataHeadID = c.Int(),
                         USonicInner1 = c.Short(nullable: false),
                         USonicOuter1 = c.Short(nullable: false),
                         Pump1 = c.Short(nullable: false),
@@ -34,7 +47,9 @@ namespace VisualizationWeb.Migrations
                         Simulationtime = c.DateTime(),
                         TimeFactor = c.Decimal(precision: 18, scale: 2),
                     })
-                .PrimaryKey(t => t.UUID);
+                .PrimaryKey(t => t.UUID)
+                .ForeignKey("dbo.CityDataHeads", t => t.CityDataHeadID)
+                .Index(t => t.CityDataHeadID);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -103,6 +118,32 @@ namespace VisualizationWeb.Migrations
                 .PrimaryKey(t => t.SimTypeID);
             
             CreateTable(
+                "dbo.SimPositions",
+                c => new
+                    {
+                        SimPositionID = c.Int(nullable: false, identity: true),
+                        SunValue = c.Int(nullable: false),
+                        WindValue = c.Int(nullable: false),
+                        EnergyConsumptionValue = c.Int(nullable: false),
+                        TimeRegistered = c.DateTime(nullable: false),
+                        SimScenarioID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.SimPositionID)
+                .ForeignKey("dbo.SimScenarios", t => t.SimScenarioID, cascadeDelete: true)
+                .Index(t => t.SimScenarioID);
+            
+            CreateTable(
+                "dbo.SimScenarios",
+                c => new
+                    {
+                        SimScenarioID = c.Int(nullable: false, identity: true),
+                        Title = c.String(nullable: false, maxLength: 100),
+                        Notes = c.String(maxLength: 500),
+                        IsSimulationRunning = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.SimScenarioID);
+            
+            CreateTable(
                 "dbo.SimulationHistories",
                 c => new
                     {
@@ -168,26 +209,33 @@ namespace VisualizationWeb.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.SimulationHistories", "SimTypeID", "dbo.SimTypes");
+            DropForeignKey("dbo.SimPositions", "SimScenarioID", "dbo.SimScenarios");
             DropForeignKey("dbo.SimDatas", "SimTypeID", "dbo.SimTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.CityDatas", "CityDataHeadID", "dbo.CityDataHeads");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.SimulationHistories", new[] { "SimTypeID" });
+            DropIndex("dbo.SimPositions", new[] { "SimScenarioID" });
             DropIndex("dbo.SimDatas", new[] { "SimTypeID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.CityDatas", new[] { "CityDataHeadID" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.SimulationHistories");
+            DropTable("dbo.SimScenarios");
+            DropTable("dbo.SimPositions");
             DropTable("dbo.SimTypes");
             DropTable("dbo.SimDatas");
             DropTable("dbo.Settings");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.CityDatas");
+            DropTable("dbo.CityDataHeads");
         }
     }
 }

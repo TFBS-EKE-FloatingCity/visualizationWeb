@@ -9,7 +9,6 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
-using VisualizationWeb.Helpers.Temporary;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.ViewModel;
 using WebSocketSharp;
@@ -63,8 +62,6 @@ namespace VisualizationWeb.Helpers {
 
                 CityData data = new CityData();
 
-                data.CityDataHeadID = 4;
-
                 data.UUID = jsonData.uuid;
 
                 foreach (var module in jsonData.payload.modules) {
@@ -106,7 +103,7 @@ namespace VisualizationWeb.Helpers {
 
                     response.status = "ack";
                 }
-                catch (Exception) {
+                catch (Exception e) {
                     response.status = "error";
                 }
 

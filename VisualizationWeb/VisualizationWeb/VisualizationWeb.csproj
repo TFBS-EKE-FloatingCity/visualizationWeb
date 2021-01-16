@@ -208,23 +208,13 @@
     <Compile Include="Helpers\SeedSimHelper.cs" />
     <Compile Include="Helpers\SimulationHelper.cs" />
     <Compile Include="Helpers\SingletonHolder.cs" />
-    <Compile Include="Helpers\Temporary\ISimulationService.cs" />
-    <Compile Include="Helpers\Temporary\SimulationService.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202101071415358_DBCreation.cs" />
-    <Compile Include="Migrations\202101071415358_DBCreation.Designer.cs">
-      <DependentUpon>202101071415358_DBCreation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101141223297_CityDataHead.cs" />
-    <Compile Include="Migrations\202101141223297_CityDataHead.Designer.cs">
-      <DependentUpon>202101141223297_CityDataHead.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101141344260_CityDataHead_Modification.cs" />
-    <Compile Include="Migrations\202101141344260_CityDataHead_Modification.Designer.cs">
-      <DependentUpon>202101141344260_CityDataHead_Modification.cs</DependentUpon>
+    <Compile Include="Migrations\202101161340073_DBCreation.cs" />
+    <Compile Include="Migrations\202101161340073_DBCreation.Designer.cs">
+      <DependentUpon>202101161340073_DBCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -234,8 +224,6 @@
     <Compile Include="Models\IRepo\ISimulationRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Repo\SimulationRepository.cs" />
-    <Compile Include="Models\Sensor.cs" />
-    <Compile Include="Models\SensorData.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
@@ -368,21 +356,15 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101071415358_DBCreation.resx">
-      <DependentUpon>202101071415358_DBCreation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101141223297_CityDataHead.resx">
-      <DependentUpon>202101141223297_CityDataHead.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101141344260_CityDataHead_Modification.resx">
-      <DependentUpon>202101141344260_CityDataHead_Modification.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Simulation.Library\Simulation.Library.csproj">
       <Project>{814807af-9c7e-46ce-8f8b-3705813ea843}</Project>
       <Name>Simulation.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101161340073_DBCreation.resx">
+      <DependentUpon>202101161340073_DBCreation.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

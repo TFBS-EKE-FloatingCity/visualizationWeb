@@ -21,9 +21,6 @@
                         <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "simulation" ? "active" : "")">
                             @Html.ActionLink("Simulation", "Index", "Simulations", new { area = "" }, new { @class = "glyphicon glyphicon-hourglass" })
                         </li>
-                        <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "sensor" ? "active" : "")">
-                            @Html.ActionLink("Sensors", "Index", "Sensors", new { area = "" }, new { @class = "glyphicon glyphicon-signal" })
-                        </li>
                         <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "settings" ? "active" : "")">
                             @Html.ActionLink("Settings", "Index", "Settings", new { area = "" }, new { @class = "glyphicon glyphicon-cog" })
                         </li>
