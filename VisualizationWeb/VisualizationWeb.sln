@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1022
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualizationWeb", "VisualizationWeb\VisualizationWeb.csproj", "{6EEA1547-E2A6-4E1F-B15E-B15496564A09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulateSensorDatas", "PopulateSensorDatas\PopulateSensorDatas.csproj", "{408090CD-A556-4F5E-9178-9AA57A0CE50C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualisationTests", "VisualisationTests\VisualisationTests.csproj", "{5004BD9D-3367-4AA3-8D52-511F8C36361C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation.Library", "Simulation.Library\Simulation.Library.csproj", "{814807AF-9C7E-46CE-8F8B-3705813EA843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5004BD9D-3367-4AA3-8D52-511F8C36361C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{814807AF-9C7E-46CE-8F8B-3705813EA843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{814807AF-9C7E-46CE-8F8B-3705813EA843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814807AF-9C7E-46CE-8F8B-3705813EA843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{814807AF-9C7E-46CE-8F8B-3705813EA843}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

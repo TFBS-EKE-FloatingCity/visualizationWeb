@@ -201,6 +201,7 @@
     <Compile Include="Controllers\SimDatasController.cs" />
     <Compile Include="Controllers\SimTypesController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -230,7 +231,11 @@
     <Compile Include="Models\CityData.cs" />
     <Compile Include="Models\CityDataHead.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IRepo\ISimulationRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Repo\SimulationRepository.cs" />
+    <Compile Include="Models\Sensor.cs" />
+    <Compile Include="Models\SensorData.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
@@ -336,6 +341,14 @@
     <Content Include="Views\Charts\CityRotationChart.cshtml" />
     <Content Include="Views\Charts\PowerChart.cshtml" />
     <Content Include="Views\SimTypes\ModalPartial.cshtml" />
+    <Content Include="Views\Simulations\Index.cshtml" />
+    <Content Include="Views\Simulations\Details.cshtml" />
+    <Content Include="Views\Simulations\Delete.cshtml" />
+    <Content Include="Views\Simulations\Edit.cshtml" />
+    <Content Include="Views\Simulations\Create.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,6 +377,12 @@
     <EmbeddedResource Include="Migrations\202101141344260_CityDataHead_Modification.resx">
       <DependentUpon>202101141344260_CityDataHead_Modification.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simulation.Library\Simulation.Library.csproj">
+      <Project>{814807af-9c7e-46ce-8f8b-3705813ea843}</Project>
+      <Name>Simulation.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
