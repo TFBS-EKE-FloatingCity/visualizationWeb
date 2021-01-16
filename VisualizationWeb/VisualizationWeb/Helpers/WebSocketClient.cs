@@ -20,11 +20,10 @@ namespace VisualizationWeb.Helpers {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         WebsocketServer websocketserver;
+        SimulationService simService;
 
         Uri url = new Uri(ConfigurationManager.AppSettings["RaspberryWebsocketConnectionString"]);
         public static SocketIoClient client = new SocketIoClient();
-
-        SimulationService simService;
 
         public WebSocketClient(WebsocketServer server, SimulationService simService) {
             this.websocketserver = server;
@@ -33,6 +32,12 @@ namespace VisualizationWeb.Helpers {
 
         public void Connect() {
             client.ConnectAsync(url);
+
+            CityDataHead json = new CityDataHead();
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/json.txt")) {
+                file.WriteLine(JsonConvert.SerializeObject(json));
+            }
         }
 
         public void RegisterEvents() {
@@ -57,6 +62,8 @@ namespace VisualizationWeb.Helpers {
             if (db.CityDatas.Find(jsonData.uuid) == null) {
 
                 CityData data = new CityData();
+
+                data.CityDataHeadID = 4;
 
                 data.UUID = jsonData.uuid;
 
@@ -96,6 +103,7 @@ namespace VisualizationWeb.Helpers {
                     db.CityDatas.Add(data);
                     db.SaveChanges();
                     websocketserver.SendData(JsonConvert.SerializeObject(data));
+
                     response.status = "ack";
                 }
                 catch (Exception) {

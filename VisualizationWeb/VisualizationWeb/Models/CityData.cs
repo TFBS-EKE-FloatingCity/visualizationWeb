@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,10 @@ namespace VisualizationWeb.Models {
     public class CityData {
         [Key]
         public string UUID { get; set; }
+
+        public int? CityDataHeadID { get; set; }
+        [JsonIgnore]
+        public virtual CityDataHead CityDataHead { get; set; }
 
         public short USonicInner1 { get; set; }
         public short USonicOuter1 { get; set; }

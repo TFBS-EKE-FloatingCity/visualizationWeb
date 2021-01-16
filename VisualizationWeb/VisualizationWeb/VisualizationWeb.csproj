@@ -217,9 +217,18 @@
     <Compile Include="Migrations\202101071415358_DBCreation.Designer.cs">
       <DependentUpon>202101071415358_DBCreation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101141223297_CityDataHead.cs" />
+    <Compile Include="Migrations\202101141223297_CityDataHead.Designer.cs">
+      <DependentUpon>202101141223297_CityDataHead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101141344260_CityDataHead_Modification.cs" />
+    <Compile Include="Migrations\202101141344260_CityDataHead_Modification.Designer.cs">
+      <DependentUpon>202101141344260_CityDataHead_Modification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityData.cs" />
+    <Compile Include="Models\CityDataHead.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Setting.cs" />
@@ -348,6 +357,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101071415358_DBCreation.resx">
       <DependentUpon>202101071415358_DBCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101141223297_CityDataHead.resx">
+      <DependentUpon>202101141223297_CityDataHead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101141344260_CityDataHead_Modification.resx">
+      <DependentUpon>202101141344260_CityDataHead_Modification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
