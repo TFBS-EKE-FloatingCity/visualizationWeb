@@ -34,5 +34,20 @@ namespace VisualizationWeb.Helpers {
                 return client;
             }
         }
+
+        public static void StartSimulation(SimScenario simScenario, TimeSpan duration)
+        {
+            simService.Run(simScenario, duration);
+        }
+
+        public static void StopSimulation()
+        {
+            simService.Stop();
+        }
+
+        public static void SetIdleValues(int energyConsumption, int energyProductionSun, int energyProductionWind)
+        {
+            simService.SetIdleValues(energyConsumption, energyProductionSun, energyProductionWind);
+        }
     }
 }
