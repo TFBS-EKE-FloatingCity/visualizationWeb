@@ -124,5 +124,19 @@ namespace VisualizationWeb.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> StartSimulation(SimScenario simScenario, TimeSpan duration)
+        {
+            Helpers.SingletonHolder.StartSimulation(simScenario, duration);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> PartialSimulationStart()
+        {
+            ViewBag.Scenarios = await SimulationRepository.GetSimScenarioIndex();
+            return View();
+            //return RedirectToAction("Index");
+        }
     }
 }
