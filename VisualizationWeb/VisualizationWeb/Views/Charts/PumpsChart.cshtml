@@ -2,7 +2,7 @@
 <canvas id="PumpsChart" class="chartjs-render-monitor"></canvas>
 
 <script>
-    // chart config  //node-server:  http://161.97.116.72:8080/ping
+    //Pump Chart Config
     var pumpsConfig = {
         type: 'horizontalBar',
         data: {
@@ -40,32 +40,32 @@
                         min: -100,
                         max: 100,
                     }
-
                 }]
             }
         }
     };
+    //end Config
 
+    //Create and Fill PumpChart
     $(document).ready(function () {
-        // chart
         var ctx = document.getElementById('PumpsChart').getContext('2d');
         window.pumpChart = new Chart(ctx, pumpsConfig);
 
-        //Get Pumpdata from Websocket
+        //Get current Pumpdata from Websocket
         setInterval(function () {
-            if (typeof wsData !== 'undefined') {
+            if (globals.wsData != {}) {
                 var chartData = [];
 
-                chartData[0] = wsData.Pump1;
-                chartData[1] = wsData.Pump2;
-                chartData[2] = wsData.Pump3;
+                chartData[0] = globals.wsData.Pump1;
+                chartData[1] = globals.wsData.Pump2;
+                chartData[2] = globals.wsData.Pump3;
 
                 setPumpData(chartData);
             }
-        }, updateRate);
+        }, settings.updateRate);
     })
    
-    //Update Chart
+    //Update
     function setPumpData(data) {
         pumpsConfig.data.datasets.forEach(function (dataset) {
             dataset.data = data           

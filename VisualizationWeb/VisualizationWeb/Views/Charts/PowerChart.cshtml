@@ -1,6 +1,8 @@
 ﻿<canvas id="PowerChart" class="chartjs-render-monitor"></canvas>
 
 <script>
+
+    //Power Chart Config
     var simdatasconfig = {
         type: 'line',
         data: {
@@ -43,6 +45,11 @@
             tooltips: {
                 mode: 'index',
                 intersect: false,
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return 'Time: ' + new Date(tooltipItem[0].label).toLocaleTimeString();
+                    }
+                }
             },
             hover: {
                 mode: 'nearest',
@@ -61,6 +68,7 @@
                         displayFormats: {
                             second: 'HH:mm:ss',
                             minute: 'HH:mm:ss',
+                            hour: 'HH:mm:ss',
                             dateTime: 'D.MMM.YYYY HH:mm:ss'
                         }
                     }
@@ -72,34 +80,34 @@
                         labelString: 'Power'
                     },
                     ticks: {
-                        min: 0,
-                        max: 60
+                        min: 0
+                        
                     }
                 }]
             }
         }
     }
+    //end Config
 
+    //Create and fill PowerChart
     $(document).ready(function () {
         // chart
         var ctx = document.getElementById('PowerChart').getContext('2d');
         window.powerChart = new Chart(ctx, simdatasconfig);
 
         //fill chart with history from DB
-        if (typeof (wsData !== 'undefined') || wsData.SimulationID != null) {
+        if (globals.cityDataHeadID != null) {
             $.ajax({
-                url: '/API/Dashboard/GetSimulationHistory/' + wsData.SimulationID,
+                url: '/API/Dashboard/GetSimulationHistory/' + globals.cityDataHeadID,
                 dataType: 'json',
                 type: 'GET',
                 contentType: 'application/json',
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
-                    //var chartData = []
                     data = JSON.parse(data)
                     data.forEach(function (value) {
                         setSimData(new Date(value.Simulationtime).getTime(), value.WindCurrent, value.SunCurrent, value.ConsumptionCurrent)
                     })
-                    //setSimData(chartData)
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -110,14 +118,14 @@
 
         //get Wind, Sun and Consumption Data from Websocket
         setInterval(function () {
-            if (typeof wsData !== 'undefined') {
-                if (!wsData.SimulationActive) {
-                    setSimData(new Date().getTime(), wsData.WindCurrent, wsData.SunCurrent, wsData.ConsumptionCurrent)
+            if (globals.wsData != {}) {
+                if (!globals.wsData.SimulationActive) {
+                    setSimData(new Date().getTime(), globals.wsData.WindCurrent, globals.wsData.SunCurrent, globals.wsData.ConsumptionCurrent)
                 } else {
-                    setSimData(new Date(wsData.Simulationtime).getTime(), wsData.WindCurrent, wsData.SunCurrent, wsData.ConsumptionCurrent)
+                    setSimData(new Date(globals.wsData.Simulationtime).getTime(), globals.wsData.WindCurrent, globals.wsData.SunCurrent, globals.wsData.ConsumptionCurrent)
                 }
             }
-        }, updateRate);
+        }, settings.updateRate);
 
     })
 

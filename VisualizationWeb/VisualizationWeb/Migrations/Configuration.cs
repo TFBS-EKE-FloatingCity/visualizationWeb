@@ -22,7 +22,7 @@ namespace VisualizationWeb.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-            #region Adding User Roles
+            #region Adding User Roles & Administrator
             if (context.Roles.Find("3") != null)
             {
                 context.Roles.Remove(context.Roles.Find("3"));
@@ -85,24 +85,29 @@ namespace VisualizationWeb.Migrations
                 );
             }
 
-            #endregion
 
-            //context.Users.AddOrUpdate(
-            ////    new ApplicationUser
-            ////    {
-            ////        Id = "1",
-            ////        UserName = "Admin",
-            ////        PasswordHash = "AOPYVSJfQbP9b64NySmU2NJyapRr8G8dmLrnsXkjumfMAr5UdyHmOCF5MaGa8x0hTg=="
+            var admin = (from user in context.Users
+                            where user.UserName == "administrator@admin.at"
+                         select user).FirstOrDefault();
 
-            ////    },
-            //    new ApplicationUser
-            //    {
-            //        Id = "2",
-            //        UserName = "Benutzer",
-            //        PasswordHash = ""
+            if (admin == null)
+            {
 
-            //    }
-            //);        
+                var adminUser = new ApplicationUser
+                {
+                    UserName = "administrator@admin.at",
+                    PasswordHash = "AIDBmmlD/Z17xlTYM59IPARX8HtdL/8kWnakl7DoYDEWzzwfnC6sPesKeD5aTTjnfQ==",
+                    Email = "administrator@admin.at",
+                    SecurityStamp = "8c1a36bb-7cc8-4924-8b1a-4f76215f3ccb"
+                };
+                context.Users.AddOrUpdate(adminUser);
+                context.SaveChanges();
+                //Ad to User Role
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                userManager.AddToRole(adminUser.Id, "Admin");
+
+            }
+            #endregion   
 
             context.SaveChanges();
         }

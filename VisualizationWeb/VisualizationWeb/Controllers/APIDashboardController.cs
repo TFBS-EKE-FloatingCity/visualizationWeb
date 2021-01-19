@@ -25,9 +25,16 @@ namespace VisualizationWeb.Controllers
         [HttpGet]
         public string GetSimulationHistory(int id)
         {
-            return JsonConvert.SerializeObject(db.CityDatas.OrderBy(d => d.Simulationtime).Where(d => d.SimulationID == id).ToList());
-        }    
+            return JsonConvert.SerializeObject(db.CityDatas.OrderBy(d => d.Simulationtime).Where(d => d.CityDataHeadID == id).ToList());
+        }
 
+        //GET: API/Dashboard
+        [Route("GetRecentlyGeneratedEnergy/{id}")]
+        [HttpGet]
+        public string GetRecentlyGeneratedEnergy(int id)
+        {
+            return JsonConvert.SerializeObject(db.CityDatas.OrderBy(d => d.Simulationtime).Where(d => d.CityDataHeadID == id).Select(d => new { d.Pump1, d.Pump2, d.Pump3, d.WindCurrent, d.SunCurrent, d.ConsumptionCurrent}).ToList());
+        }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿<canvas id="HeightChart" class="chartjs-render-monitor"></canvas>
 
 <script>
+    //CityHeight Chart Config
     var heightDataConfig = {
         type: 'line',
         data: {
@@ -29,6 +30,11 @@
             tooltips: {
                 mode: 'index',
                 intersect: false,
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return 'Time: ' + new Date(tooltipItem[0].label).toLocaleTimeString();
+                    }
+                }
             },
             hover: {
                 mode: 'nearest',
@@ -47,6 +53,7 @@
                         displayFormats: {
                             second: 'HH:mm:ss',
                             minute: 'HH:mm:ss',
+                            hour: 'HH:mm:ss',
                             dateTime: 'D.MMM.YYYY HH:mm:ss'
                         }
                     }
@@ -69,45 +76,46 @@
         }
     };
 
+    //end Config
+
+    //Create and Fill CityHeight Chart
     $(document).ready(function () {
-        // chart
         var ctx = document.getElementById('HeightChart').getContext('2d');
         window.cityHeight = new Chart(ctx, heightDataConfig);
-
-       
-
-        // fill chart with history from DB
-        $.ajax({
-            url: '/API/Dashboard/GetSimulationHistory/' + wsData.SimulationID,
-            dataType: 'json',
-            type: 'GET',
-            contentType: 'application/json',
-            processData: false,
-            success: function (data, textStatus, jQxhr) {
-                var chartData = []
-                data = JSON.parse(data)
-                data.forEach(function (value) {
-                    heightData = updateModelRotation(value.USonicOuter1, value.USonicOuter2, value.USonicOuter3, heightFactor);
-                    setCityHeight(new Date(value.Simulationtime).getTime(), heightData.heightHY)
-                })
-                //setSimData(chartData)
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
+        if (globals.cityDataHeadID != null) {
+            // fill chart with history from DB
+            $.ajax({
+                url: '/API/Dashboard/GetSimulationHistory/' + globals.cityDataHeadID,
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    var chartData = []
+                    data = JSON.parse(data)
+                    data.forEach(function (value) {
+                        heightData = updateModelRotation(value.USonicOuter1, value.USonicOuter2, value.USonicOuter3, settings.heightFactor);
+                        setCityHeight(new Date(value.Simulationtime).getTime(), heightData.heightHY)
+                    })
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         }
-        });
+        
 
-        //get Wind, Sun and Consumption Data from Websocket
+        //get Simulation Time and height Data from Websocket
         setInterval(function () {
-            if (typeof wsData !== 'undefined') {
-                if (!wsData.SimulationActive) {
-                    setCityHeight(new Date().getTime(), heightHY)
+            if (globals.wsData != {}) {
+                if (!globals.wsData.SimulationActive) {
+                    setCityHeight(new Date().getTime(), globals.heightHY)
                 } else {
-                    setCityHeight(new Date(wsData.Simulationtime).getTime(), heightHY)
+                    setCityHeight(new Date(globals.wsData.Simulationtime).getTime(), globals.heightHY)
                 }
 
             }
-        }, updateRate);
+        }, settings.updateRate);
     })
 
     //Update Chart

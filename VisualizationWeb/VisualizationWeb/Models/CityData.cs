@@ -11,7 +11,7 @@ namespace VisualizationWeb.Models
     {
         [Key]
         public string UUID { get; set; }
-
+        public int?  CityDataHeadID { get; set; }
         public short USonicInner1 { get; set; }
         public short USonicOuter1 { get; set; }
         public short Pump1 { get; set; }

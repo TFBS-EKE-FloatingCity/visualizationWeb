@@ -1,14 +1,26 @@
-﻿var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor;
+﻿//-------------Declare global Vars----------------------
+//var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor, cityDataHeadID, simulationID, simulationStartTime, simulationEndTime;
+//-------------------end-------------------------------
+var globals = {
+    wsData: {},
+    cubeRotationZ: 0.00,
+    cubeRotationX: 0.00,
+    heightA: 0.00,
+    heightB: 0.00,
+    heightC: 0.00,
+    heightHY: 0.00,
+    cityDataHeadID: 1,
+    simulationID: 0,
+    simulationStartTime: "0001-01-01T00:00:00",
+    simulationEndTime: "0001-01-01T00:00:00",
+    EnergyConsumptionComparisonVal: 0
+};
 
-//var heightData = {
-//    heightA,
-//    heightB,
-//    heightC,
-//    heightHY
-//}
+const settings = {
+    updateRate: 10000,
+    heightFactor: 1
+}
 
-updateRate = 10000;
-heightFactor = 1;
 
 function connect() {
     var host = 'ws://localhost:8109/Connection';
@@ -16,89 +28,100 @@ function connect() {
 
     socket.onmessage = function (e) {
         console.log(e.data);
-        wsData = JSON.parse(e.data);    // has to be parsed?!
+        globals.wsData = JSON.parse(e.data);    // has to be parsed?!
+        if (typeof globals.wsData.State == 'undefined') {
+            //Citydata.json
+            heightData = updateModelRotation(globals.wsData.USonicOuter1, globals.wsData.USonicOuter2, globals.wsData.USonicOuter3, settings.heightFactor);
+            globals.heightA = heightData.heightA;
+            globals.heightB = heightData.heightB;
+            globals.heightC = heightData.heightC;
+            globals.heightHY = heightData.heightHY;
 
-        heightData = updateModelRotation(wsData.USonicOuter1, wsData.USonicOuter2, wsData.USonicOuter3, heightFactor);
-
-        heightA = heightData.heightA;
-        heightB = heightData.heightB;
-        heightC = heightData.heightC;
-        heightHY = heightData.heightHY;
+        } else {
+            //CityDataHead.json
+            globals.cityDataHeadID = globals.wsData.CityDataHeadID;
+            globals.simulationID = globals.wsData.SimulationID;
+            globals.simulationStartTime = globals.wsData.StartTime; 
+            globals.simulationEndTime = globals.wsData.EndTime;
+        }     
     };
 
     socket.onclose = function (e) {
         setTimeout(function () {
             connect();
-        }, updateRate);
+        }, settings.updateRate);
     };
 }
 //connect();
 
-// TESTDATA
-testData = 
-{
-	"UUID": 3,
-	"USonicInner1": 399,
-	"USonicOuter1": 334,
-	"Pump1": -39,
-	"USonicInner2": 163,
-	"USonicOuter2": 309,
-	"Pump2": -81,
-	"USonicInner3": 214,
-	"USonicOuter3": 170,
-	"Pump3": -61,
-	"CreatedAt": "2021-01-04T14:38:15.618",
-	"MesurementTime": "2021-01-04T13:38:15.589",
-	"SimulationID": 2,
-	"WindMax": 0,
-	"WindCurrent": 0,
-	"SunMax": 0,
-	"SunCurrent": 0,
-	"ConsumptionMax": 0,
-	"ConsumptionCurrent": 0,
-	"SimulationActive": false,
-	"Simulationtime": null,
-	"TimeFactor": null
-};
+//// TESTDATA
+//testData = 
+//{
+//    "UUID": 3,
+//    "CityDataHeadID": 1,
+//	"USonicInner1": 399,
+//	"USonicOuter1": 334,
+//	"Pump1": -39,
+//	"USonicInner2": 163,
+//	"USonicOuter2": 309,
+//	"Pump2": -81,
+//	"USonicInner3": 214,
+//	"USonicOuter3": 170,
+//	"Pump3": -61,
+//	"CreatedAt": "2021-01-04T14:38:15.618",
+//	"MesurementTime": "2021-01-04T13:38:15.589",
+//	"SimulationID": 2,
+//	"WindMax": 0,
+//	"WindCurrent": 0,
+//	"SunMax": 0,
+//	"SunCurrent": 0,
+//	"ConsumptionMax": 0,
+//	"ConsumptionCurrent": 0,
+//	"SimulationActive": false,
+//	"Simulationtime": null,
+//	"TimeFactor": null
+//};
 
-wsData = testData;
+//globals.wsData = testData;
 
-setInterval(function () {
-    wsData.Pump1 = randomNumber(-100, 100);
-    wsData.Pump2 = randomNumber(-100, 100);
-    wsData.Pump3 = randomNumber(-100, 100);
-    wsData.WindCurrent = randomNumber(0, 50);
-    wsData.SunCurrent = randomNumber(0, 50);
-    wsData.ConsumptionCurrent = randomNumber(0, 50);
-    wsData.USonicOuter1 = randomNumber(150, 400);
-    wsData.USonicOuter2 = randomNumber(150, 400);
-    wsData.USonicOuter3 = randomNumber(150, 400);
+//setInterval(function () {
+//    globals.wsData.Pump1 = randomNumber(-100, 100);
+//    globals.wsData.Pump2 = randomNumber(-100, 100);
+//    globals.wsData.Pump3 = randomNumber(-100, 100);
+//    globals.wsData.WindCurrent = randomNumber(0, 50);
+//    globals.wsData.SunCurrent = randomNumber(0, 50);
+//    globals.wsData.ConsumptionCurrent = randomNumber(0, 50);
+//    globals.wsData.USonicOuter1 = randomNumber(150, 400);
+//    globals.wsData.USonicOuter2 = randomNumber(150, 400);
+//    globals.wsData.USonicOuter3 = randomNumber(150, 400);
 
-    heightData = updateModelRotation(wsData.USonicOuter1, wsData.USonicOuter2, wsData.USonicOuter3);
+//    heightData = updateModelRotation(globals.wsData.USonicOuter1, globals.wsData.USonicOuter2, globals.wsData.USonicOuter3);
 
-    heightA = heightData.heightA;
-    heightB = heightData.heightB;
-    heightC = heightData.heightC;
-    heightHY = heightData.heightHY;
+//    globals.heightA = heightData.heightA;
+//    globals.heightB = heightData.heightB;
+//    globals.heightC = heightData.heightC;
+//    globals.heightHY = heightData.heightHY;
 
-}, updateRate);
 
-function randomNumber(min, max) {
-    if (min > max) {
-        let temp = max;
-        max = min;
-        min = temp;
-    }
+//}, settings.updateRate);
 
-    if (min <= 0) {
-        return Math.floor(Math.random() * (max + Math.abs(min) + 1)) + min;
-    } else {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-}
-// END TEST
+//function randomNumber(min, max) {
+//    if (min > max) {
+//        let temp = max;
+//        max = min;
+//        min = temp;
+//    }
+
+//    if (min <= 0) {
+//        return Math.floor(Math.random() * (max + Math.abs(min) + 1)) + min;
+//    } else {
+//        return Math.floor(Math.random() * (max - min + 1)) + min;
+//    }
+//}
+//// END TEST
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
+    //Convert Sensordata from mm in m
     if (heightFactorValue > 0) {
         USonicOuter1 *= heightFactorValue;
         USonicOuter2 *= heightFactorValue;
@@ -114,12 +137,12 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     };
 
     if (USonicOuter1 === USonicOuter2) {
-        // wsData a and b are even
+        // height a and b are even
         cubeRotationZ = +0.0;
     }
 
     if (USonicOuter1 === USonicOuter3) {
-        // wsData a and c are even
+        // height a and c are even
         cubeRotationX = +0.0;
     }
 

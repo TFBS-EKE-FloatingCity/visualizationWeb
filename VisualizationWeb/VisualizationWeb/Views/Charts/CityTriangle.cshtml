@@ -15,29 +15,29 @@
             margin-left: auto;
         }
 
-        #val1 {
+        #TriangleHeightA {
             text-align: center;
         }
     </style>
     <script>
         $(document).ready(function () {
             setInterval(function () {
-                if (typeof wsData !== 'undefined') {
+                if (globals.wsData != {}) {
                     
-                    $('#val1').text(Math.round((heightA + Number.EPSILON) * 100) / 100);
-                    $('#val2').text(Math.round((heightB + Number.EPSILON) * 100) / 100);
-                    $('#val3').text(Math.round((heightC + Number.EPSILON) * 100) / 100);
+                    $('#TriangleHeightA').text(Math.round((globals.heightA + Number.EPSILON) * 100) / 100);
+                    $('#TriangleHeightB').text(Math.round((globals.heightB + Number.EPSILON) * 100) / 100);
+                    $('#TriangleHeightC').text(Math.round((globals.heightC + Number.EPSILON) * 100) / 100);
 
                 }
-            }, updateRate);
+            }, settings.updateRate);
         })
     </script>
 
     <h4>Heights of City (in m)</h4>
     <div id="triangle-container">
-        <div id="val1"></div>
+        <div id="TriangleHeightA"></div>
         <div class="triangle-up"></div>
-        <span id="val2"></span>
-        <span id="val3" style="float:right"></span>
+        <span id="TriangleHeightB"></span>
+        <span id="TriangleHeightC" style="float:right"></span>
     </div>
 
