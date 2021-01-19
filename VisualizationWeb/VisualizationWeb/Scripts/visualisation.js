@@ -52,7 +52,7 @@ function connect() {
         }, settings.updateRate);
     };
 }
-//connect();
+connect();
 
 //// TESTDATA
 //testData = 
@@ -179,7 +179,7 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
 
     heightData.heightHY = Math.round((((heightData.heightA + heightData.heightB + heightData.heightC) / 3) + Number.EPSILON) * 100) / 100;
 
-    oldHeight = newHeight;
+    //oldHeight = newHeight;
 
     return heightData;
 }

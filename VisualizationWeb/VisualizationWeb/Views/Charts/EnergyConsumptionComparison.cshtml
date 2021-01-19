@@ -107,7 +107,7 @@
                             energy += value.SunCurrent;
                             consumption += value.ConsumptionCurrent;
                         })
-                        globals.EnergyConsumptionComparisonVal = energy - (consumption + 100)
+                        globals.EnergyConsumptionComparisonVal = energy - consumption;
                         chartData[0] = energy;
                         chartData[1] = consumption; 
                         setEnergyConsumptionData(chartData);

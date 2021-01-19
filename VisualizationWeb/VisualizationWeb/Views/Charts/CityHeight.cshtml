@@ -120,11 +120,15 @@
 
     //Update Chart
     function setCityHeight(currentdate, currentHeight) {
-        heightDataConfig.data.datasets[0].data.push({
-            x: currentdate,
-            y: currentHeight
-        })
 
-        window.cityHeight.update()
+        if (typeof (currentHeight) != 0) {
+            heightDataConfig.data.datasets[0].data.push({
+                x: currentdate,
+                y: currentHeight
+            })
+
+            window.cityHeight.update()
+        }
+
     }
 </script>

@@ -117,10 +117,10 @@ function render() {
     requestAnimationFrame(render);
     renderer.render(scene, camera);
 
-    if (cubeRotationZ
-        && cubeRotationX) {
-        cube.rotation.z = cubeRotationZ;
-        cube.rotation.x = cubeRotationX;
+    if (globals.cubeRotationZ
+        && globals.cubeRotationX) {
+        cube.rotation.z = globals.cubeRotationZ;
+        cube.rotation.x = globals.cubeRotationX;
         // cube.translateY(newHeight - oldHeight); TODO: fix height values
     }
 
@@ -133,57 +133,57 @@ render();
 
 // updateModelRotation(sensors);
 
-function updateModelRotation2(sensors) {
-    var radiant;
+//function updateModelRotation2(sensors) {
+//    var radiant;
 
-    if (sensors.a === sensors.b) {
-        // sensors a and b are even
-        cube.rotation.z = +0.0;
-    }
+//    if (sensors.a === sensors.b) {
+//        // sensors a and b are even
+//        cube.rotation.z = +0.0;
+//    }
 
-    if (sensors.a === sensors.c) {
-        // sensors a and c are even
-        cube.rotation.x = +0.0;
-    }
+//    if (sensors.a === sensors.c) {
+//        // sensors a and c are even
+//        cube.rotation.x = +0.0;
+//    }
 
-    if (sensors.b > sensors.a) {
-        // B > A
-        radiant = (-1) * Math.atan((sensors.b - sensors.a) / cubeLengths.width);
-        cube.rotation.z = radiant;
-    }
+//    if (sensors.b > sensors.a) {
+//        // B > A
+//        radiant = (-1) * Math.atan((sensors.b - sensors.a) / cubeLengths.width);
+//        cube.rotation.z = radiant;
+//    }
 
-    if (sensors.a > sensors.b) {
-        // A > B
-        radiant = Math.atan((sensors.a - sensors.b) / cubeLengths.width);
-        cube.rotation.z = radiant;
-    }
+//    if (sensors.a > sensors.b) {
+//        // A > B
+//        radiant = Math.atan((sensors.a - sensors.b) / cubeLengths.width);
+//        cube.rotation.z = radiant;
+//    }
 
-    if (sensors.a > sensors.c) {
-        // A > C
-        radiant = (-1) * Math.atan((sensors.a - sensors.c) / cubeLengths.width);
-        cube.rotation.x = radiant;
-    }
+//    if (sensors.a > sensors.c) {
+//        // A > C
+//        radiant = (-1) * Math.atan((sensors.a - sensors.c) / cubeLengths.width);
+//        cube.rotation.x = radiant;
+//    }
 
-    if (sensors.c > sensors.a) {
-        // C > A
-        radiant = Math.atan((sensors.c - sensors.a) / cubeLengths.width);
-        cube.rotation.x = radiant;
-    }
+//    if (sensors.c > sensors.a) {
+//        // C > A
+//        radiant = Math.atan((sensors.c - sensors.a) / cubeLengths.width);
+//        cube.rotation.x = radiant;
+//    }
 
-    // set height
-    var heights = {
-        a: sensors.a * Math.cos(Math.abs(cube.rotation.z)),
-        b: sensors.b * Math.cos(Math.abs(cube.rotation.z)),
-        c: sensors.c * Math.cos(Math.abs(cube.rotation.x)),
-    };
+//    // set height
+//    var heights = {
+//        a: sensors.a * Math.cos(Math.abs(cube.rotation.z)),
+//        b: sensors.b * Math.cos(Math.abs(cube.rotation.z)),
+//        c: sensors.c * Math.cos(Math.abs(cube.rotation.x)),
+//    };
 
-    var newHeight = (heights.a + heights.b + heights.c) / 3 + cubeLengths.height;
+//    var newHeight = (heights.a + heights.b + heights.c) / 3 + cubeLengths.height;
 
-    cube.translateY(newHeight - translateYValue);
-    translateYValue = newHeight;
+//    cube.translateY(newHeight - translateYValue);
+//    translateYValue = newHeight;
 
-    updateForms();
-}
+//    updateForms();
+//}
 
 function getRadiantFromDegree(degree) {
     return degree * Math.PI / 180;

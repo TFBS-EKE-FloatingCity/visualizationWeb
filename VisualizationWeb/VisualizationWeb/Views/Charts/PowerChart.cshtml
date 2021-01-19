@@ -131,20 +131,37 @@
 
     //Update Chart
     function setSimData(currentdate, wind, sun, consumption) {
-        simdatasconfig.data.datasets[0].data.push({
-            x: currentdate,
-            y: wind
-        })
+        var update = false;
 
-        simdatasconfig.data.datasets[1].data.push({
-            x: currentdate,
-            y: sun
-        })
+        if (typeof (wind) !== 'undefined') {
+            update = true;
 
-        simdatasconfig.data.datasets[2].data.push({
-            x: currentdate,
-            y: consumption
-        })
-        window.powerChart.update()
+            simdatasconfig.data.datasets[0].data.push({
+                x: currentdate,
+                y: wind
+            })
+        }
+
+        if (typeof (sun) !== 'undefined') {
+            update = true;
+
+            simdatasconfig.data.datasets[1].data.push({
+                x: currentdate,
+                y: sun
+            })
+        }
+
+        if (typeof (consumption) !== 'undefined') {
+            update = true;
+
+            simdatasconfig.data.datasets[2].data.push({
+                x: currentdate,
+                y: consumption
+            })
+        }
+
+        if (update) {
+            window.powerChart.update()
+        }
     }
 </script>
