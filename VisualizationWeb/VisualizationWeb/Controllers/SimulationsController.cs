@@ -114,7 +114,7 @@ namespace VisualizationWeb.Controllers
 
         public async Task<ActionResult> RemoveSimScenario(int? simScenarioId)
         {
-            if ( !simScenarioId.HasValue)
+            if (!simScenarioId.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -125,16 +125,9 @@ namespace VisualizationWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> StartSimulation(SimStartViewModel vm)
+        public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
         {
-            var indexScenario = vm.Scenarios.FirstOrDefault(x => x.isChecked);
-
-            if (indexScenario != null)
-            {
-
-            }
-
-            Helpers.SingletonHolder.StartSimulation(, vm.Duration);
+            Helpers.SingletonHolder.StartSimulation(await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID), vm.Duration);
 
             return RedirectToAction("Index");
         }
@@ -142,11 +135,9 @@ namespace VisualizationWeb.Controllers
         public async Task<ActionResult> PartialSimulationStart()
         {
             SimStartViewModel vm = new SimStartViewModel();
-            //vm.Scenarios = new List<SimScenarioIndexViewModel>();
-            vm.Scenarios = await SimulationRepository.GetSimScenarioIndex();
-            ViewBag.StartSimVM = vm;
+            ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
+
             return PartialView("PartialViews/PartialSimulationStart", vm);
-            //return RedirectToAction("Index");
         }
     }
 }

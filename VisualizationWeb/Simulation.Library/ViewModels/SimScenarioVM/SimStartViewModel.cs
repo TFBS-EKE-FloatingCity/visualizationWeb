@@ -8,12 +8,8 @@ namespace Simulation.Library.ViewModels.SimScenarioVM
 {
     public class SimStartViewModel
     {
-        public SimStartViewModel()
-        {
-            Scenarios = new List<SimScenarioIndexViewModel>();
-        }
         public TimeSpan Duration { get; set; }
 
-        public IEnumerable<SimScenarioIndexViewModel> Scenarios { get; set; }
+        public int SimScenarioID { get; set; }
     }
 }

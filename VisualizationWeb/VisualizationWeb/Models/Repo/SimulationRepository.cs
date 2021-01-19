@@ -1,4 +1,5 @@
 ﻿using Simulation.Library.Models;
+using Simulation.Library.ViewModels;
 using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
@@ -80,6 +81,11 @@ namespace VisualizationWeb.Models.Repo
 
         }
 
+        public async Task<SimScenario> GetSimScenarioByID(int simScenarioID)
+        {
+            return await _context.SimScenarios.FindAsync(simScenarioID);
+        }
+
         public async Task<SimScenarioDetailsViewModel> GetSimScenarioDetails(int simScenarioID)
         {
             SimScenario simscenario = await _context.SimScenarios.FindAsync(simScenarioID);
@@ -122,6 +128,18 @@ namespace VisualizationWeb.Models.Repo
         public async Task RemoveScenario(int scenarioID)
         {
             _context.SimScenarios.Remove(await _context.SimScenarios.FindAsync(scenarioID));
+        }
+
+        public async Task<IList<vmSelectListItem>> SimScenarioSelect()
+        {
+            var select = from c in _context.SimScenarios
+                         orderby c.Title
+                         select new vmSelectListItem
+                         {
+                             ValueMember = c.SimScenarioID,
+                             DisplayMember = c.Title
+                         };
+            return await select.ToListAsync();
         }
     }
 }
