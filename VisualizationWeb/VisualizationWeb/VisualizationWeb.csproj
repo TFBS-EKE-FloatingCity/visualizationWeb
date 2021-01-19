@@ -306,6 +306,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\3d-model.js" />
     <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\Charts\Chart - 30x.js" />
     <Content Include="Scripts\Charts\moment.min.js" />
@@ -313,7 +314,6 @@
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Objects\PortMultiplier.obj" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -326,8 +326,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\orbitControls.js" />
     <Content Include="Scripts\three.js" />
     <Content Include="Scripts\visualisation.js" />
+    <Content Include="StaticFiles\3d-model\textures\._World_ap_baseColor.jpeg" />
+    <Content Include="StaticFiles\3d-model\textures\World_ap_baseColor.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -394,6 +397,13 @@
     <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
     <Content Include="Views\Charts\CityHeight.cshtml" />
     <Content Include="Views\Charts\CityTriangle.cshtml" />
+    <Content Include="StaticFiles\3d-model\._.DS_Store" />
+    <Content Include="StaticFiles\3d-model\._scene.bin" />
+    <Content Include="StaticFiles\3d-model\._scene.gltf" />
+    <Content Include="StaticFiles\3d-model\._textures" />
+    <Content Include="StaticFiles\3d-model\.DS_Store" />
+    <Content Include="StaticFiles\3d-model\scene.bin" />
+    <Content Include="StaticFiles\3d-model\scene.gltf" />
     <Content Include="Views\Charts\EnergyConsumptionComparison.cshtml" />
     <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
   </ItemGroup>
