@@ -1,4 +1,4 @@
-﻿var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor;
+﻿var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor, newHeight, oldHeight;
 
 //var heightData = {
 //    heightA,
@@ -75,6 +75,8 @@ setInterval(function () {
     wsData.USonicOuter3 = randomNumber(150, 400);
 
     heightData = updateModelRotation(wsData.USonicOuter1, wsData.USonicOuter2, wsData.USonicOuter3);
+
+    console.log(heightData);
 
     heightA = heightData.heightA;
     heightB = heightData.heightB;
@@ -155,6 +157,8 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     };
 
     heightData.heightHY = Math.round((((heightData.heightA + heightData.heightB + heightData.heightC) / 3) + Number.EPSILON) * 100) / 100;
+
+    oldHeight = newHeight;
 
     return heightData;
 }
