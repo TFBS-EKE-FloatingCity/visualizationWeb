@@ -125,17 +125,27 @@ namespace VisualizationWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> StartSimulation(SimScenario simScenario, TimeSpan duration)
+        public async Task<ActionResult> StartSimulation(SimStartViewModel vm)
         {
-            Helpers.SingletonHolder.StartSimulation(simScenario, duration);
+            var indexScenario = vm.Scenarios.FirstOrDefault(x => x.isChecked);
+
+            if (indexScenario != null)
+            {
+
+            }
+
+            Helpers.SingletonHolder.StartSimulation(, vm.Duration);
 
             return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> PartialSimulationStart()
         {
-            ViewBag.Scenarios = await SimulationRepository.GetSimScenarioIndex();
-            return View();
+            SimStartViewModel vm = new SimStartViewModel();
+            //vm.Scenarios = new List<SimScenarioIndexViewModel>();
+            vm.Scenarios = await SimulationRepository.GetSimScenarioIndex();
+            ViewBag.StartSimVM = vm;
+            return PartialView("PartialViews/PartialSimulationStart", vm);
             //return RedirectToAction("Index");
         }
     }

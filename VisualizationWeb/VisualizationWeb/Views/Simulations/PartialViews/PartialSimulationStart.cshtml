@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Simulation.Library.ViewModels.SimScenarioVM.SimScenarioIndexViewModel>
+﻿@model Simulation.Library.ViewModels.SimScenarioVM.SimStartViewModel
 
 @{
     ViewBag.Title = "Simulation";
@@ -6,42 +6,60 @@
 
 <h2>Scenarios</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
+@using (Html.BeginForm("StartSimulation", "Simulations"))
+{
+    <div class="form-horizontal">
+        <hr />
 
-    @foreach (var item in Model)
-    {
-        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-        <tr>
-            <td>
-                @Html.HiddenFor(modelItem => item.SimScenarioID)
-                @Html.CheckBoxFor(modelItem => item.isChecked)
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <th>
-                @Convert.ToString(string.Format("{0:HH:mm}", item.StartDate))
-                @*@Html.DisplayFor(modelItem => item.StartDate)*@
-            </th>
-            <th>
-                @Convert.ToString(string.Format("{0:HH:mm}", item.EndDate))
-                @*@Html.DisplayFor(modelItem => item.EndDate)*@
-            </th>
-        </tr>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Scenarios.FirstOrDefault().Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Scenarios.FirstOrDefault().StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Scenarios.FirstOrDefault().EndDate)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
 
-    }
+            @foreach (var item in Model.Scenarios)
+            {
 
-</table>
 
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.SimScenarioID)
+                        @Html.CheckBoxFor(modelItem => item.isChecked)
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <th>
+                        @Convert.ToString(string.Format("{0:HH:mm}", item.StartDate))
+                    </th>
+                    <th>
+                        @Convert.ToString(string.Format("{0:HH:mm}", item.EndDate))
+                    </th>
+                </tr>
+
+            }
+
+        </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Start" />
+            </div>
+        </div>
+    </div>
+}

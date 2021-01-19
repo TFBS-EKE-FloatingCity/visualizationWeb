@@ -58,6 +58,7 @@
     <Compile Include="ViewModels\SimScenarioVM\SimScenarioCreateAndEditViewModel.cs" />
     <Compile Include="ViewModels\SimScenarioVM\SimScenarioDetailsViewModel.cs" />
     <Compile Include="ViewModels\SimScenarioVM\SimScenarioIndexViewModel.cs" />
+    <Compile Include="ViewModels\SimScenarioVM\SimStartViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
