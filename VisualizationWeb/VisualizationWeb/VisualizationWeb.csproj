@@ -183,13 +183,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APISimulationController.cs" />
-    <Compile Include="Controllers\APISensorsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SimDatasController.cs" />
     <Compile Include="Controllers\SimTypesController.cs" />
-    <Compile Include="Controllers\SensorsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -255,7 +253,6 @@
     <Compile Include="Models\IRepo\ISimulationRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Repo\SimulationRepository.cs" />
-    <Compile Include="Models\SensorData.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SimData.cs" />
     <Compile Include="Models\SimType.cs" />
@@ -290,6 +287,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\3d-model.js" />
     <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\Charts\Chart - 30x.js" />
     <Content Include="Scripts\Charts\moment.min.js" />
@@ -297,7 +295,6 @@
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Objects\PortMultiplier.obj" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -310,8 +307,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\orbitControls.js" />
     <Content Include="Scripts\three.js" />
     <Content Include="Scripts\visualisation.js" />
+    <Content Include="StaticFiles\3d-model\textures\._World_ap_baseColor.jpeg" />
+    <Content Include="StaticFiles\3d-model\textures\World_ap_baseColor.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -382,9 +382,17 @@
     <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
     <Content Include="Views\Charts\CityHeight.cshtml" />
     <Content Include="Views\Charts\CityTriangle.cshtml" />
+    <Content Include="StaticFiles\3d-model\._.DS_Store" />
+    <Content Include="StaticFiles\3d-model\._scene.bin" />
+    <Content Include="StaticFiles\3d-model\._scene.gltf" />
+    <Content Include="StaticFiles\3d-model\._textures" />
+    <Content Include="StaticFiles\3d-model\.DS_Store" />
+    <Content Include="StaticFiles\3d-model\scene.bin" />
+    <Content Include="StaticFiles\3d-model\scene.gltf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Objects\" />
     <Folder Include="Views\APISimData\" />
   </ItemGroup>
   <ItemGroup>
