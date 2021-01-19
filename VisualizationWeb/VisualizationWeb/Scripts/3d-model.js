@@ -74,6 +74,7 @@ const loader = new THREE.GLTFLoader();
 // Load a glTF resource
 loader.load(
     // resource URL
+    // https://sketchfab.com/3d-models/cartoon-lowpoly-small-city-free-pack-edd1c604e1e045a0a2a552ddd9a293e6
     '/StaticFiles/3d-model/scene.gltf',
     // called when the resource is loaded
     function (gltf) {
