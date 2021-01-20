@@ -157,6 +157,16 @@ namespace VisualizationWeb.Migrations
                 .Index(t => t.SimTypeID);
             
             CreateTable(
+                "dbo.SimulationServiceSettings",
+                c => new
+                    {
+                        OptionName = c.String(nullable: false, maxLength: 128),
+                        OptionValue = c.Int(nullable: false),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => t.OptionName);
+            
+            CreateTable(
                 "dbo.AspNetUsers",
                 c => new
                     {
@@ -226,6 +236,7 @@ namespace VisualizationWeb.Migrations
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.SimulationServiceSettings");
             DropTable("dbo.SimulationHistories");
             DropTable("dbo.SimScenarios");
             DropTable("dbo.SimPositions");
