@@ -15,6 +15,7 @@ namespace VisualizationWeb.Helpers {
             webServer.AddWebSocketService<WebsocketServerConfiguration>("/Connection");
 
             webServer.Start();
+
         }
 
         public void SendData(string json) 

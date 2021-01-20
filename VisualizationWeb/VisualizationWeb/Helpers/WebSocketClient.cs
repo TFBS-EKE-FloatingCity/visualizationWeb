@@ -31,12 +31,6 @@ namespace VisualizationWeb.Helpers {
 
         public void Connect() {
             client.ConnectAsync(url);
-
-            CityDataHead json = new CityDataHead();
-
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/json.txt")) {
-                file.WriteLine(JsonConvert.SerializeObject(json));
-            }
         }
 
         public void RegisterEvents() {
