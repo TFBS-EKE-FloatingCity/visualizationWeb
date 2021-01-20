@@ -50,14 +50,17 @@
     <Compile Include="Models\SimPosition.cs" />
     <Compile Include="Models\SimScenario.cs" />
     <Compile Include="Models\SimulationService.cs" />
+    <Compile Include="Models\SimulationServiceSetting.cs" />
     <Compile Include="Models\SimulationServiceConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SelectListVM.cs" />
     <Compile Include="ViewModels\SimPositionVM\SimPositionBindingViewModel.cs" />
     <Compile Include="ViewModels\SimPositionVM\SimPositionCreateAndEditViewModel.cs" />
     <Compile Include="ViewModels\SimPositionVM\SimPositionIndexViewModel.cs" />
     <Compile Include="ViewModels\SimScenarioVM\SimScenarioCreateAndEditViewModel.cs" />
     <Compile Include="ViewModels\SimScenarioVM\SimScenarioDetailsViewModel.cs" />
     <Compile Include="ViewModels\SimScenarioVM\SimScenarioIndexViewModel.cs" />
+    <Compile Include="ViewModels\SimScenarioVM\SimStartViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
