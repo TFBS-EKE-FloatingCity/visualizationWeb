@@ -1,12 +1,15 @@
-﻿<h4>City rotation</h4>
+﻿@Scripts.Render("~/Scripts/three.js")
+@Scripts.Render("~/Scripts/orbitControls.js")
+@Scripts.Render("~/Scripts/GLTFLoader.js")
+
+
+<h4>City rotation</h4>
 
 <canvas id="3d-model"></canvas>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="~/Scripts/three.js"></script>
-<script src="~/Scripts/orbitControls.js"></script>
-<script src="https://unpkg.com/three/examples/js/loaders/GLTFLoader.js"></script>
-<script src="~/Scripts/3d-model.js"></script>
+@Scripts.Render("~/Scripts/3d-model.js")
+
+
 
 
 

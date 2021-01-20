@@ -121,7 +121,7 @@
     //Update Chart
     function setCityHeight(currentdate, currentHeight) {
 
-        if (typeof (currentHeight) != 0) {
+        if (currentHeight != 0) {
             heightDataConfig.data.datasets[0].data.push({
                 x: currentdate,
                 y: currentHeight

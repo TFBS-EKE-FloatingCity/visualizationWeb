@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
+        <div class="panel panel-default" onclick="window.open('@Url.Action("Open3DModell", "Dashboard", new { target="_blank" })')">
             <div class="panel-body" id="CityRotationChartPanel">
                 @Html.Partial("../Charts/CityRotationChart")
             </div>
@@ -81,4 +81,6 @@
         </div>
     </div>   
 </div>
+
+
 

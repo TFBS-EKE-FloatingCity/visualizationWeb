@@ -18,5 +18,10 @@ namespace VisualizationWeb.Controllers
         {
             return View("../Dashboard");
         }
+
+        public ActionResult Open3DModell()
+        {
+            return View("../Charts/ViewCityRotationChart");
+        }
     }
 }
