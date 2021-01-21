@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Simulation.Library.Models.SimPosition>
+﻿@model IEnumerable<Simulation.Library.ViewModels.SimPositionVM.SimPositionIndexViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -19,10 +19,10 @@
             @Html.DisplayNameFor(model => model.WindValue)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EnergyBalanceValue)
+            @Html.DisplayNameFor(model => model.EnergyConsumptionValue)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateRegistered)
+            @Html.DisplayNameFor(model => model.TimeRegistered)
         </th>
         <th>
 
@@ -42,10 +42,10 @@
                 @Html.DisplayFor(modelItem => item.WindValue)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EnergyBalanceValue)
+                @Html.DisplayFor(modelItem => item.EnergyConsumptionValue)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateRegistered)
+                @Html.DisplayFor(modelItem => item.TimeRegistered)
             </td>           
             <td>
                 @Html.ActionLink("Edit", "") |

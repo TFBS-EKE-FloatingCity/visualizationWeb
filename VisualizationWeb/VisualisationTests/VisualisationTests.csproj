@@ -45,10 +45,14 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SimulationTests.cs" />
     <Compile Include="UnitsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +61,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simulation.Library\Simulation.Library.csproj">
+      <Project>{814807af-9c7e-46ce-8f8b-3705813ea843}</Project>
+      <Name>Simulation.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualizationWeb\VisualizationWeb.csproj">
       <Project>{6eea1547-e2a6-4e1f-b15e-b15496564a09}</Project>
       <Name>VisualizationWeb</Name>

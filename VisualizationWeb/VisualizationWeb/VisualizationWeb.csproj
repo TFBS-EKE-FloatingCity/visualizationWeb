@@ -45,13 +45,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="H.Engine.IO, Version=1.1.1.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
+      <HintPath>..\packages\H.Engine.IO.1.1.1\lib\net46\H.Engine.IO.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="H.Socket.IO, Version=1.1.1.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
+      <HintPath>..\packages\H.Socket.IO.1.1.1\lib\net46\H.Socket.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="H.WebSockets, Version=1.1.1.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
+      <HintPath>..\packages\H.WebSockets.1.1.1\lib\net46\H.WebSockets.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -59,6 +65,9 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -114,9 +123,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -182,7 +188,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\APIDashboardController.cs" />
     <Compile Include="Controllers\APISimulationController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -203,69 +208,14 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202002261351087_create database.cs" />
-    <Compile Include="Migrations\202002261351087_create database.Designer.cs">
-      <DependentUpon>202002261351087_create database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002261412486_Model Sensor edit.cs" />
-    <Compile Include="Migrations\202002261412486_Model Sensor edit.Designer.cs">
-      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003050733457_update simtypes.cs" />
-    <Compile Include="Migrations\202003050733457_update simtypes.Designer.cs">
-      <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003050755051_update senores.cs" />
-    <Compile Include="Migrations\202003050755051_update senores.Designer.cs">
-      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003111531288_add simulationtable.cs" />
-    <Compile Include="Migrations\202003111531288_add simulationtable.Designer.cs">
-      <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.cs" />
-    <Compile Include="Migrations\202003261402267_fix Simdata und SensorData Model.Designer.cs">
-      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003261441534_RemoveSimulationModel.cs" />
-    <Compile Include="Migrations\202003261441534_RemoveSimulationModel.Designer.cs">
-      <DependentUpon>202003261441534_RemoveSimulationModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004011343566_CreatetSimHistory.cs" />
-    <Compile Include="Migrations\202004011343566_CreatetSimHistory.Designer.cs">
-      <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.cs" />
-    <Compile Include="Migrations\202004020906212_UpdateSimulationHistoryModel.Designer.cs">
-      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012021243552_Test.cs" />
-    <Compile Include="Migrations\202012021243552_Test.Designer.cs">
-      <DependentUpon>202012021243552_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012101414499_add CityDatas Table.cs" />
-    <Compile Include="Migrations\202012101414499_add CityDatas Table.Designer.cs">
-      <DependentUpon>202012101414499_add CityDatas Table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012281557448_update simdatas and create new UserRoles.cs" />
-    <Compile Include="Migrations\202012281557448_update simdatas and create new UserRoles.Designer.cs">
-      <DependentUpon>202012281557448_update simdatas and create new UserRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101121351219_update-tables.cs" />
-    <Compile Include="Migrations\202101121351219_update-tables.Designer.cs">
-      <DependentUpon>202101121351219_update-tables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101121406244_update-database2.cs" />
-    <Compile Include="Migrations\202101121406244_update-database2.Designer.cs">
-      <DependentUpon>202101121406244_update-database2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101141541299_add column CityDataHeadID to CityDatas.cs" />
-    <Compile Include="Migrations\202101141541299_add column CityDataHeadID to CityDatas.Designer.cs">
-      <DependentUpon>202101141541299_add column CityDataHeadID to CityDatas.cs</DependentUpon>
+    <Compile Include="Migrations\202101201003087_DBCreation.cs" />
+    <Compile Include="Migrations\202101201003087_DBCreation.Designer.cs">
+      <DependentUpon>202101201003087_DBCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityData.cs" />
+    <Compile Include="Models\CityDataHead.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IRepo\ISimulationRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -276,13 +226,7 @@
     <Compile Include="Models\SimulationHistory.cs" />
     <Compile Include="Models\ViewModel\JsonDataVM.cs" />
     <Compile Include="Models\ViewModel\JsonResponseVM.cs" />
-    <Compile Include="Models\ViewModel\ModalVM.cs" />
     <Compile Include="Models\ViewModel\SettingVM.cs" />
-    <Compile Include="Models\ViewModel\SimPositionVM\SimPositionCreateAndEditViewModel.cs" />
-    <Compile Include="Models\ViewModel\SimPositionVM\SimPositionIndexViewModel.cs" />
-    <Compile Include="Models\ViewModel\SimScenarioVM\SimScenarioCreateAndEditViewModel.cs" />
-    <Compile Include="Models\ViewModel\SimScenarioVM\SimScenarioDetailsViewModel.cs" />
-    <Compile Include="Models\ViewModel\SimScenarioVM\SimScenarioIndexViewModel.cs" />
     <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -311,6 +255,7 @@
     <Content Include="Scripts\Charts\Chart - 30x.js" />
     <Content Include="Scripts\Charts\moment.min.js" />
     <Content Include="Scripts\clock.js" />
+    <Content Include="Scripts\GLTFLoader.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -391,6 +336,15 @@
     <Content Include="Views\Simulations\Details.cshtml" />
     <Content Include="Views\Simulations\Delete.cshtml" />
     <Content Include="Views\Simulations\Edit.cshtml" />
+    <Content Include="Views\Simulations\Create.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialSimulationStart.cshtml" />
+    <Content Include="Views\Simulations\Index.cshtml" />
+    <Content Include="Views\Simulations\Details.cshtml" />
+    <Content Include="Views\Simulations\Delete.cshtml" />
+    <Content Include="Views\Simulations\Edit.cshtml" />
     <Content Include="Views\Simulations\CreateScenario.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
@@ -406,6 +360,7 @@
     <Content Include="StaticFiles\3d-model\scene.gltf" />
     <Content Include="Views\Charts\EnergyConsumptionComparison.cshtml" />
     <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
+    <Content Include="Views\Charts\ViewCityRotationChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -425,57 +380,15 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002261351087_create database.resx">
-      <DependentUpon>202002261351087_create database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002261412486_Model Sensor edit.resx">
-      <DependentUpon>202002261412486_Model Sensor edit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003050733457_update simtypes.resx">
-      <DependentUpon>202003050733457_update simtypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003050755051_update senores.resx">
-      <DependentUpon>202003050755051_update senores.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003111531288_add simulationtable.resx">
-      <DependentUpon>202003111531288_add simulationtable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003261402267_fix Simdata und SensorData Model.resx">
-      <DependentUpon>202003261402267_fix Simdata und SensorData Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003261441534_RemoveSimulationModel.resx">
-      <DependentUpon>202003261441534_RemoveSimulationModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011343566_CreatetSimHistory.resx">
-      <DependentUpon>202004011343566_CreatetSimHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004020906212_UpdateSimulationHistoryModel.resx">
-      <DependentUpon>202004020906212_UpdateSimulationHistoryModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012021243552_Test.resx">
-      <DependentUpon>202012021243552_Test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012101414499_add CityDatas Table.resx">
-      <DependentUpon>202012101414499_add CityDatas Table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012281557448_update simdatas and create new UserRoles.resx">
-      <DependentUpon>202012281557448_update simdatas and create new UserRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101121351219_update-tables.resx">
-      <DependentUpon>202101121351219_update-tables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101121406244_update-database2.resx">
-      <DependentUpon>202101121406244_update-database2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101141541299_add column CityDataHeadID to CityDatas.resx">
-      <DependentUpon>202101141541299_add column CityDataHeadID to CityDatas.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Simulation.Library\Simulation.Library.csproj">
       <Project>{814807af-9c7e-46ce-8f8b-3705813ea843}</Project>
       <Name>Simulation.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101201003087_DBCreation.resx">
+      <DependentUpon>202101201003087_DBCreation.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace VisualizationWeb.Models.ViewModel.SimScenarioVM
+namespace Simulation.Library.ViewModels.SimScenarioVM
 {
-    public class SimScenarioDetailsViewModel
+    public class SimScenarioIndexViewModel
     {
         [Key]
         public int SimScenarioID { get; set; }
@@ -15,10 +15,10 @@ namespace VisualizationWeb.Models.ViewModel.SimScenarioVM
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
-        public decimal TimeFactor { get; set; }
-
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        public bool isChecked { get; set; }
     }
 }

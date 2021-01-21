@@ -58,7 +58,7 @@ namespace VisualizationWeb.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(new LoginViewModel());
         }
 
         //
@@ -139,8 +139,7 @@ namespace VisualizationWeb.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
-                      
-            return View();
+            return View(new RegisterViewModel());
         }
 
         //

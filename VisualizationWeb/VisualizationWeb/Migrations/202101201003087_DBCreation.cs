@@ -3,10 +3,54 @@ namespace VisualizationWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class createdatabase : DbMigration
+    public partial class DBCreation : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.CityDataHeads",
+                c => new
+                    {
+                        CityDataHeadID = c.Int(nullable: false, identity: true),
+                        State = c.String(),
+                        SimulationID = c.Int(nullable: false),
+                        StartTime = c.DateTime(nullable: false),
+                        EndTime = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.CityDataHeadID);
+            
+            CreateTable(
+                "dbo.CityDatas",
+                c => new
+                    {
+                        UUID = c.String(nullable: false, maxLength: 128),
+                        CityDataHeadID = c.Int(),
+                        USonicInner1 = c.Short(nullable: false),
+                        USonicOuter1 = c.Short(nullable: false),
+                        Pump1 = c.Short(nullable: false),
+                        USonicInner2 = c.Short(nullable: false),
+                        USonicOuter2 = c.Short(nullable: false),
+                        Pump2 = c.Short(nullable: false),
+                        USonicInner3 = c.Short(nullable: false),
+                        USonicOuter3 = c.Short(nullable: false),
+                        Pump3 = c.Short(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false),
+                        MesurementTime = c.DateTime(nullable: false),
+                        SimulationID = c.Int(),
+                        WindMax = c.Int(),
+                        WindCurrent = c.Short(),
+                        SunMax = c.Int(),
+                        SunCurrent = c.Short(),
+                        ConsumptionMax = c.Int(),
+                        ConsumptionCurrent = c.Short(),
+                        SimulationActive = c.Boolean(nullable: false),
+                        Simulationtime = c.DateTime(),
+                        TimeFactor = c.Decimal(precision: 18, scale: 2),
+                    })
+                .PrimaryKey(t => t.UUID)
+                .ForeignKey("dbo.CityDataHeads", t => t.CityDataHeadID)
+                .Index(t => t.CityDataHeadID);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -31,34 +75,6 @@ namespace VisualizationWeb.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.SensorDatas",
-                c => new
-                    {
-                        SensorDataID = c.Int(nullable: false, identity: true),
-                        RealTime = c.DateTime(nullable: false),
-                        SimulationTime = c.DateTime(nullable: false),
-                        SensorID = c.Int(nullable: false),
-                        SValue = c.Double(nullable: false),
-                    })
-                .PrimaryKey(t => t.SensorDataID)
-                .ForeignKey("dbo.Sensors", t => t.SensorID, cascadeDelete: true)
-                .Index(t => t.SensorID);
-            
-            CreateTable(
-                "dbo.Sensors",
-                c => new
-                    {
-                        SensorID = c.Int(nullable: false, identity: true),
-                        Title = c.String(maxLength: 50),
-                        Notes = c.String(maxLength: 200),
-                        Factor = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Einheiten = c.String(maxLength: 10),
-                        SCode = c.String(maxLength: 3),
-                        Prefix = c.String(maxLength: 50),
-                    })
-                .PrimaryKey(t => t.SensorID);
-            
-            CreateTable(
                 "dbo.Settings",
                 c => new
                     {
@@ -78,7 +94,7 @@ namespace VisualizationWeb.Migrations
                     {
                         SimDataID = c.Int(nullable: false, identity: true),
                         SimTypeID = c.Int(nullable: false),
-                        SimTime = c.Time(nullable: false, precision: 7),
+                        SimTime = c.DateTime(nullable: false),
                         Wind = c.Double(nullable: false),
                         Sun = c.Double(nullable: false),
                         Consumption = c.Double(nullable: false),
@@ -95,8 +111,60 @@ namespace VisualizationWeb.Migrations
                         Title = c.String(maxLength: 50),
                         SimFactor = c.Double(nullable: false),
                         Notes = c.String(maxLength: 200),
+                        StartTime = c.DateTime(nullable: false),
+                        Interval = c.Time(nullable: false, precision: 7),
+                        EndTime = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.SimTypeID);
+            
+            CreateTable(
+                "dbo.SimPositions",
+                c => new
+                    {
+                        SimPositionID = c.Int(nullable: false, identity: true),
+                        SunValue = c.Int(nullable: false),
+                        WindValue = c.Int(nullable: false),
+                        EnergyConsumptionValue = c.Int(nullable: false),
+                        TimeRegistered = c.DateTime(nullable: false),
+                        SimScenarioID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.SimPositionID)
+                .ForeignKey("dbo.SimScenarios", t => t.SimScenarioID, cascadeDelete: true)
+                .Index(t => t.SimScenarioID);
+            
+            CreateTable(
+                "dbo.SimScenarios",
+                c => new
+                    {
+                        SimScenarioID = c.Int(nullable: false, identity: true),
+                        Title = c.String(nullable: false, maxLength: 100),
+                        Notes = c.String(maxLength: 500),
+                        IsSimulationRunning = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.SimScenarioID);
+            
+            CreateTable(
+                "dbo.SimulationHistories",
+                c => new
+                    {
+                        HistoryID = c.Int(nullable: false, identity: true),
+                        RealStartTime = c.DateTime(nullable: false),
+                        SimTypeID = c.Int(nullable: false),
+                        Canceled = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.HistoryID)
+                .ForeignKey("dbo.SimTypes", t => t.SimTypeID, cascadeDelete: true)
+                .Index(t => t.SimTypeID);
+            
+            CreateTable(
+                "dbo.SimulationServiceSettings",
+                c => new
+                    {
+                        OptionName = c.String(nullable: false, maxLength: 128),
+                        OptionValue = c.Int(nullable: false),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => t.OptionName);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -150,27 +218,35 @@ namespace VisualizationWeb.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.SimulationHistories", "SimTypeID", "dbo.SimTypes");
+            DropForeignKey("dbo.SimPositions", "SimScenarioID", "dbo.SimScenarios");
             DropForeignKey("dbo.SimDatas", "SimTypeID", "dbo.SimTypes");
-            DropForeignKey("dbo.SensorDatas", "SensorID", "dbo.Sensors");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.CityDatas", "CityDataHeadID", "dbo.CityDataHeads");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.SimulationHistories", new[] { "SimTypeID" });
+            DropIndex("dbo.SimPositions", new[] { "SimScenarioID" });
             DropIndex("dbo.SimDatas", new[] { "SimTypeID" });
-            DropIndex("dbo.SensorDatas", new[] { "SensorID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.CityDatas", new[] { "CityDataHeadID" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.SimulationServiceSettings");
+            DropTable("dbo.SimulationHistories");
+            DropTable("dbo.SimScenarios");
+            DropTable("dbo.SimPositions");
             DropTable("dbo.SimTypes");
             DropTable("dbo.SimDatas");
             DropTable("dbo.Settings");
-            DropTable("dbo.Sensors");
-            DropTable("dbo.SensorDatas");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.CityDatas");
+            DropTable("dbo.CityDataHeads");
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿@model Simulation.Library.Models.SimScenario
+﻿@model Simulation.Library.ViewModels.SimScenarioVM.SimScenarioCreateAndEditViewModel
 
 @{
-    ViewBag.Title = "Create Simulation";
+    ViewBag.Title = "Create";
 }
 
 <div class="app-headline">
@@ -10,26 +10,18 @@
 </div>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Simulations", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.SimScenarioID, new { htmlAttributes = new { @class = "form-control" } })
+
     <div class="form-group">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-8">
             @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.TimeFactor, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.TimeFactor, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TimeFactor, "", new { @class = "text-danger" })
         </div>
     </div>
 

@@ -9,6 +9,7 @@ namespace VisualizationWeb.Helpers {
     public class WebsocketServerConfiguration : WebSocketBehavior {
         protected override void OnOpen() {
             base.OnOpen();
+            SingletonHolder.SendCityDataHead();
         }
 
         protected override void OnClose(CloseEventArgs e) {

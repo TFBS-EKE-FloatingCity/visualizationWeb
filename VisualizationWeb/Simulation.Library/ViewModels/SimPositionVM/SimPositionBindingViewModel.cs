@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace VisualizationWeb.Models.ViewModel.SimPositionVM
+namespace Simulation.Library.ViewModels.SimPositionVM
 {
-    public class SimPositionIndexViewModel
+    public class SimPositionBindingViewModel
     {
         [Key]
         public int SimPositionID { get; set; }
@@ -15,8 +16,8 @@ namespace VisualizationWeb.Models.ViewModel.SimPositionVM
 
         public int WindValue { get; set; }
 
-        public int EnergyBalanceValue { get; set; }
+        public int EnergyConsumptionValue { get; set; }
 
-        public DateTime DateRegistered { get; set; }
+        public DateTime TimeRegistered { get; set; }
     }
 }

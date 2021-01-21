@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Simulation.Library.Models
+namespace Simulation.Library.ViewModels.SimPositionVM
 {
-    public class SimPosition
+    public class SimPositionCreateAndEditViewModel
     {
         [Key]
         public int SimPositionID { get; set; }
@@ -22,7 +21,5 @@ namespace Simulation.Library.Models
         public DateTime TimeRegistered { get; set; }
 
         public int SimScenarioID { get; set; }
-
-        public SimScenario SimScenario { get; set; }
     }
 }

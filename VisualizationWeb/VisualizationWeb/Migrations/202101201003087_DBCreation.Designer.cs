@@ -7,13 +7,13 @@ namespace VisualizationWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class updatesimtypes : IMigrationMetadata
+    public sealed partial class DBCreation : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updatesimtypes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DBCreation));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003050733457_update simtypes"; }
+            get { return "202101201003087_DBCreation"; }
         }
         
         string IMigrationMetadata.Source
