@@ -24,6 +24,16 @@
 <div class="row">
     <div class="col-md-8">
         <div class="panel panel-default">
+            <div class="panel-body" id="ProgressBarDiv">
+                @Html.Partial("../Charts/SimulationTimeProgressBar")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
             <div class="panel-body" id="PowerChartPanel">
                 @Html.Partial("../Charts/PowerChart")
             </div>
