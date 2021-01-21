@@ -267,6 +267,7 @@
     <Content Include="Content\Layouts\AppLayout.css" />
     <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\clock.js" />
+    <Content Include="Scripts\GLTFLoader.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -344,6 +345,26 @@
     <Content Include="Views\Charts\CityRotationChart.cshtml" />
     <Content Include="Views\Charts\PowerChart.cshtml" />
     <Content Include="Views\SimTypes\ModalPartial.cshtml" />
+    <Content Include="Views\Simulations\Index.cshtml" />
+    <Content Include="Views\Simulations\Details.cshtml" />
+    <Content Include="Views\Simulations\Delete.cshtml" />
+    <Content Include="Views\Simulations\Edit.cshtml" />
+    <Content Include="Views\Simulations\CreateScenario.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
+    <Content Include="Views\Charts\CityHeight.cshtml" />
+    <Content Include="Views\Charts\CityTriangle.cshtml" />
+    <Content Include="StaticFiles\3d-model\._.DS_Store" />
+    <Content Include="StaticFiles\3d-model\._scene.bin" />
+    <Content Include="StaticFiles\3d-model\._scene.gltf" />
+    <Content Include="StaticFiles\3d-model\._textures" />
+    <Content Include="StaticFiles\3d-model\.DS_Store" />
+    <Content Include="StaticFiles\3d-model\scene.bin" />
+    <Content Include="StaticFiles\3d-model\scene.gltf" />
+    <Content Include="Views\Charts\EnergyConsumptionComparison.cshtml" />
+    <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
+    <Content Include="Views\Charts\ViewCityRotationChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
