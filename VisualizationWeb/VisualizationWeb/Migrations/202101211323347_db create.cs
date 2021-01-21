@@ -1,9 +1,9 @@
-namespace VisualizationWeb.Migrations
+﻿namespace VisualizationWeb.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class DBCreation : DbMigration
+    public partial class dbcreate : DbMigration
     {
         public override void Up()
         {
