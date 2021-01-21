@@ -181,6 +181,15 @@ namespace VisualizationWeb.Controllers
         }
 
         //TODO
+        //Get:
+        [HttpGet, ActionName("Start")]
+        //[ValidateAntiForgeryToken]
+
+        public ActionResult Start(int? id)
+        {
+            return View();
+
+        }
 
         // GET: SimTypes/Delete/5
         public async Task<ActionResult> DeletePos(int? id)

@@ -1,78 +1,167 @@
-﻿<canvas id="PowerChart" height="100" class="chartjs-render-monitor"></canvas>
+﻿<canvas id="PowerChart" class="chartjs-render-monitor"></canvas>
 
 <script>
-		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        
-		var config = {
-			type: 'line',
-			data: {
-				labels: [1, 2, 3, 4, 5, 6, 7],
-				datasets: [{
-					label: 'My First dataset',
-					backgroundColor: "rgb(54, 162, 235)",
-					borderColor: "rgb(54, 162, 235)",
-					data: [
-						13,
-						18,
-						6,
-						35,
-						42,
-						12,
-						20
-					],
-					fill: false,
-				}, {
-					label: 'My Second dataset',
-					fill: false,
-					backgroundColor: "rgb(54, 162, 235)",
-					borderColor: "rgb(54, 162, 235)",
-					data: [
-						23,
-						43,
-						53,
-						22,
-						21,
-						30,
-						10
-					],
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: 'Chart.js Line Chart'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Month'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Value'
-						}
-					}]
-				}
-			}
-		};
 
-		window.onload = function() {
-			var ctx = document.getElementById('PowerChart').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-		};
+    //Power Chart Config
+    var simdatasconfig = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Wind',
+                backgroundColor: "rgb(54, 162, 235)",
+                borderColor: "rgba(185, 241, 244, 1)",
+                data: [],
+                fill: false,
+            }, {
+                label: 'Sun',
+                fill: false,
+                backgroundColor: "rgba(251, 217, 24, 1)",
+                borderColor: "rgba(251, 217, 24, 1)",
+                data: [],
+            }, {
+                label: 'Consumption',
+                fill: false,
+                backgroundColor: "rgb(54, 162, 235)",
+                borderColor: "rgba(231, 70, 70, 1)",
+                data: [],
+            }]
+        },
+        options: {
+            aspectRatio: 2,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 1;
+                } else {
+                    chart.aspectRatio = 2;
+                }
 
+                chart.update();
+            },
+            title: {
+                display: true,
+                text: 'Simulation Data Overview'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return 'Time: ' + new Date(tooltipItem[0].label).toLocaleTimeString();
+                    }
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    },
+                    type: 'time',
+                    distribution: 'series',
+                    time: {
+                        displayFormats: {
+                            second: 'HH:mm:ss',
+                            minute: 'HH:mm:ss',
+                            hour: 'HH:mm:ss',
+                            dateTime: 'D.MMM.YYYY HH:mm:ss'
+                        }
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Power'
+                    },
+                    ticks: {
+                        min: 0
+                        
+                    }
+                }]
+            }
+        }
+    }
+    //end Config
+
+    //Create and fill PowerChart
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('PowerChart').getContext('2d');
+        window.powerChart = new Chart(ctx, simdatasconfig);
+
+        //fill chart with history from DB
+        if (globals.cityDataHeadID != null) {
+            $.ajax({
+                url: '/API/Dashboard/GetSimulationHistory/' + globals.cityDataHeadID,
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    data = JSON.parse(data)
+                    data.forEach(function (value) {
+                        setSimData(new Date(value.Simulationtime).getTime(), value.WindCurrent, value.SunCurrent, value.ConsumptionCurrent)
+                    })
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+           
+
+        //get Wind, Sun and Consumption Data from Websocket
+        setInterval(function () {
+            if (globals.wsData != {}) {
+                if (!globals.wsData.SimulationActive) {
+                    setSimData(new Date().getTime(), globals.wsData.WindCurrent, globals.wsData.SunCurrent, globals.wsData.ConsumptionCurrent)
+                } else {
+                    setSimData(new Date(globals.wsData.Simulationtime).getTime(), globals.wsData.WindCurrent, globals.wsData.SunCurrent, globals.wsData.ConsumptionCurrent)
+                }
+            }
+        }, settings.updateRate);
+
+    })
+
+    //Update Chart
+    function setSimData(currentdate, wind, sun, consumption) {
+        var update = false;
+
+        if (typeof (wind) !== 'undefined') {
+            update = true;
+
+            simdatasconfig.data.datasets[0].data.push({
+                x: currentdate,
+                y: wind
+            })
+        }
+
+        if (typeof (sun) !== 'undefined') {
+            update = true;
+
+            simdatasconfig.data.datasets[1].data.push({
+                x: currentdate,
+                y: sun
+            })
+        }
+
+        if (typeof (consumption) !== 'undefined') {
+            update = true;
+
+            simdatasconfig.data.datasets[2].data.push({
+                x: currentdate,
+                y: consumption
+            })
+        }
+
+        if (update) {
+            window.powerChart.update()
+        }
+    }
 </script>

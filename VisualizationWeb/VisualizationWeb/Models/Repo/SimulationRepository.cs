@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using VisualizationWeb.Models;
 using VisualizationWeb.Models.IRepo;
 
 namespace VisualizationWeb.Models.Repo

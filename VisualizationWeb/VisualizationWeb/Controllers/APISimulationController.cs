@@ -43,5 +43,12 @@ namespace VisualizationWeb.Controllers
         {
             return true;
         }
+
+        [Route("StartSimulation/{id}")]
+        public string StartSimulation(int id)
+        {
+            return JsonConvert.SerializeObject(db.SimDatas.Where(s => s.SimDataID == id).ToList());
+        }
+
     }
 }

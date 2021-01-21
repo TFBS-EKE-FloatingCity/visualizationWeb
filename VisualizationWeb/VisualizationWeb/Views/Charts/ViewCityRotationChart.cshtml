@@ -1,0 +1,39 @@
+﻿@Scripts.Render("~/Scripts/Charts/moment.min.js")
+@Scripts.Render("~/Scripts/Charts/Chart.js")
+@Scripts.Render("~/Scripts/visualisation.js")
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#CityRotationChartPanel').height($('.main').height());
+        $('#3d-model').height($('.main').height());
+        $('#CityRotationChartPanel').width($('.main').width());
+    })
+
+</script>
+
+@Scripts.Render("~/Scripts/three.js")
+@Scripts.Render("~/Scripts/orbitControls.js")
+@Scripts.Render("~/Scripts/GLTFLoader.js")
+
+
+@{
+    ViewBag.Title = "CityRotationChart";
+}
+<style>
+    h4 {
+        display: none;
+    }
+
+    .main {
+        overflow: unset;
+    }
+</style>
+<div id="CityRotationChartPanel">
+
+
+    @Html.Partial("~/Views/Charts/CityRotationChart.cshtml")
+
+</div>
+
