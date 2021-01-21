@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Simulation.Library.ViewModels.SimScenarioVM.SimScenarioIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index Szenarios</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <th>
+        @Convert.ToString(string.Format("{0:HH:mm}", item.StartDate))
+        @*@Html.DisplayFor(modelItem => item.StartDate)*@
+    </th>
+    <th>
+        @Convert.ToString(string.Format("{0:HH:mm}", item.EndDate))
+        @*@Html.DisplayFor(modelItem => item.EndDate)*@
+    </th>
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.SimScenarioID })
+    </td>
+    <td>
+        @Html.ActionLink("Remove", "RemoveSimScenario", new { simScenarioId = item.SimScenarioID })
+    </td>
+</tr>
+    }
+
+</table>
+<button id="BtnStartSim" type="button" onclick="btnStartSim_Click()" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Start Simulation</button>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body" id="StartSimModalBody">
+                @*@Html.Partial("PartialViews/PartialSimulationStart", (Simulation.Library.ViewModels.SimScenarioVM.SimStartViewModel)ViewBag.StartSimVM);*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function btnStartSim_Click()
+    {
+        $.ajax(
+        {
+                type: "Get",
+                url: "/Simulations/PartialSimulationStart",
+                success: function (data)
+                {
+                    $("#StartSimModalBody").html(data);
+                }
+        })
+    }
+</script>

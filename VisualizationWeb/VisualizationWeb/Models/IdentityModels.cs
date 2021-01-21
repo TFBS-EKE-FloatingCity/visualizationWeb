@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Simulation.Library.Models;
 
 namespace VisualizationWeb.Models
 {
@@ -24,12 +25,16 @@ namespace VisualizationWeb.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        public virtual DbSet<Sensor> Sensors { get; set; }
-        public virtual DbSet<SensorData> SensorDatas { get; set; }
+
         public virtual DbSet<SimData> SimDatas { get; set; }
         public virtual DbSet<SimType> SimTypes { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<SimulationHistory> SimulationHistories { get; set; }
+        public virtual DbSet<SimScenario> SimScenarios { get; set; }
+        public virtual DbSet<SimPosition> SimPositions { get; set; }
+        public virtual DbSet<CityData> CityDatas { get; set; }
+        public virtual DbSet<CityDataHead> CityDataHeads { get; set; }
+        public virtual DbSet<SimulationServiceSetting> SimulationServiceSettings { get; set; }
 
         public static ApplicationDbContext Create()
         {

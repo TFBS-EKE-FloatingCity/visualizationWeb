@@ -7,7 +7,7 @@ using System.Web;
 namespace VisualizationWeb.Models.ViewModel
 {
     public class SettingVM
-    { 
+    {
         public int SettingID { get; set; }
 
         [Display(Name = "Maximum Wind")]
@@ -27,5 +27,5 @@ namespace VisualizationWeb.Models.ViewModel
         [Display(Name = "Consumption Active")]
 
         public bool ConsumptionActive { get; set; }
-    } 
-} 
+    }
+}
