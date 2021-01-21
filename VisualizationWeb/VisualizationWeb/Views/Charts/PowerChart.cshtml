@@ -133,7 +133,7 @@
     function setSimData(currentdate, wind, sun, consumption) {
         var update = false;
 
-        if (typeof (wind) !== 'undefined') {
+        if (typeof (wind) !== 'undefined' && wind != 0) {
             update = true;
 
             simdatasconfig.data.datasets[0].data.push({
@@ -142,7 +142,7 @@
             })
         }
 
-        if (typeof (sun) !== 'undefined') {
+        if (typeof (sun) !== 'undefined' && sun != 0) {
             update = true;
 
             simdatasconfig.data.datasets[1].data.push({
@@ -151,7 +151,7 @@
             })
         }
 
-        if (typeof (consumption) !== 'undefined') {
+        if (typeof (consumption) !== 'undefined' && consumption != 0) {
             update = true;
 
             simdatasconfig.data.datasets[2].data.push({

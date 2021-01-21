@@ -371,7 +371,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\APISimData\" />
-    <Folder Include="Views\APIVDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
