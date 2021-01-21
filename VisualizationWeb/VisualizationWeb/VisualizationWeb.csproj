@@ -196,6 +196,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APISimulationController.cs" />
+    <Compile Include="Controllers\APIVDashboardController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -370,6 +371,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\APISimData\" />
+    <Folder Include="Views\APIVDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
