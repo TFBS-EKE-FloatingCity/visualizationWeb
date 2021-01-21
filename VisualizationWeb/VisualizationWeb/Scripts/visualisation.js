@@ -54,6 +54,28 @@ function connect() {
 }
 connect();
 
+$(function () {
+    var currentProgress = 0;
+    var interval = setInterval(function () {
+        var now = new Date();
+        var endTime = new Date(globals.simulationEndTime);
+        var startTime = new Date(globals.simulationStartTime);
+
+        var diff = endTime.getTime() - startTime.getTime();
+        var diffNow = endTime.getTime() - now.getTime();
+
+        var actualTime = Math.round((100.00 - ((diffNow / diff) * 100))).toFixed(2);
+        currentProgress = actualTime;
+
+        $("#simulationTimeProgressBar")
+            .css("width", actualTime + "%")
+            .attr("aria-valuenow", currentProgress)
+            .text(currentProgress + "% Complete");
+        if (currentProgress >= 100)
+            clearInterval(interval);
+    }, 1000);
+});
+
 //// TESTDATA
 //testData = 
 //{
