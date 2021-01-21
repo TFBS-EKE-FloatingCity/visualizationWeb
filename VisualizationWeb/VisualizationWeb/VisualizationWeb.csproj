@@ -367,7 +367,7 @@
     <Content Include="Views\Charts\EnergyConsumptionComparison.cshtml" />
     <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
     <Content Include="Views\Charts\ViewCityRotationChart.cshtml" />
-    <Content Include="Views\Shared\Partials\SimulationTimeProgressBar.cshtml" />
+    <Content Include="Views\Charts\SimulationTimeProgressBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
