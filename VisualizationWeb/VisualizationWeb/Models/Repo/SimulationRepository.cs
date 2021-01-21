@@ -108,14 +108,20 @@ namespace VisualizationWeb.Models.Repo
 
         public async Task<IEnumerable<SimScenarioIndexViewModel>> GetSimScenarioIndex()
         {
-            var scen = from c in _context.SimScenarios
-                       orderby c.Title
-                       select new SimScenarioIndexViewModel
-                       {
-                           SimScenarioID = c.SimScenarioID,
-                           Title = c.Title
-                       };
-            return await scen.ToListAsync();
+            return await _context.SimScenarios.Include(x => x.SimPositions)
+                .Select(sc => new SimScenarioIndexViewModel
+                {
+                    SimScenarioID = sc.SimScenarioID,
+                    Title = sc.Title,
+                    SimPositions = sc.SimPositions.Select(sp => new SimPositionIndexViewModel
+                    {
+                        SimPositionID = sp.SimPositionID,
+                        SunValue = sp.SunValue,
+                        WindValue = sp.WindValue,
+                        EnergyConsumptionValue = sp.EnergyConsumptionValue,
+                        TimeRegistered = sp.TimeRegistered,
+                    })
+                }).ToListAsync();
         }
 
 

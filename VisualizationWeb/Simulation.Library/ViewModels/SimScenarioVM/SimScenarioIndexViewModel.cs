@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simulation.Library.ViewModels.SimPositionVM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,10 +16,24 @@ namespace Simulation.Library.ViewModels.SimScenarioVM
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartDate 
+        {
+            get
+            {
+                return SimPositions?.OrderBy(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+            }
+        }
 
-        public DateTime? EndDate { get; set; }
+        public DateTime? EndDate 
+        {
+            get
+            {
+                return SimPositions?.OrderByDescending(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+            }
+        }
 
         public bool isChecked { get; set; }
+
+        public IEnumerable<SimPositionIndexViewModel> SimPositions { get; set; }
     }
 }

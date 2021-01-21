@@ -21,9 +21,21 @@ namespace Simulation.Library.ViewModels.SimScenarioVM
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartDate 
+        {
+            get
+            {
+                return SimPositions?.OrderBy(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+            }
+        }
 
-        public DateTime? EndDate { get; set; }
+        public DateTime? EndDate 
+        {
+            get
+            {
+                return SimPositions?.OrderByDescending(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+            }
+        }
 
         [StringLength(500)]
         public string Notes { get; set; }
