@@ -13,7 +13,7 @@ using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
-    [Authorize(Roles = "Benutzer,Admin")]
+    [Authorize(Roles = "Simulant, Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
