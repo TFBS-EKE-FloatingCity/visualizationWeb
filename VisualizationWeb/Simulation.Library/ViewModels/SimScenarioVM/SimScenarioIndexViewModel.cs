@@ -16,19 +16,21 @@ namespace Simulation.Library.ViewModels.SimScenarioVM
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
+        [Display(Name = "Start Time")]
         public DateTime? StartDate 
         {
             get
             {
-                return SimPositions?.OrderBy(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+                return SimPositions?.OrderBy(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
             }
         }
 
+        [Display(Name = "End Time")]
         public DateTime? EndDate 
         {
             get
             {
-                return SimPositions?.OrderByDescending(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+                return SimPositions?.OrderByDescending(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
             }
         }
 

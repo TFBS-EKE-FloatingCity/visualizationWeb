@@ -347,14 +347,6 @@
     <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialSimulationStart.cshtml" />
-    <Content Include="Views\Simulations\Index.cshtml" />
-    <Content Include="Views\Simulations\Details.cshtml" />
-    <Content Include="Views\Simulations\Delete.cshtml" />
-    <Content Include="Views\Simulations\Edit.cshtml" />
-    <Content Include="Views\Simulations\CreateScenario.cshtml" />
-    <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
-    <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
-    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
     <Content Include="Views\Charts\CityHeight.cshtml" />
     <Content Include="Views\Charts\CityTriangle.cshtml" />
     <Content Include="StaticFiles\3d-model\._.DS_Store" />

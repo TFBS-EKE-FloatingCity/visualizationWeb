@@ -22,7 +22,7 @@ namespace Simulation.Library.Models
         { 
             get 
             {
-                return SimPositions?.OrderBy(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+                return SimPositions?.OrderBy(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
             } 
         }
 
@@ -31,7 +31,7 @@ namespace Simulation.Library.Models
         {
             get
             {
-                return SimPositions?.OrderByDescending(x => x.TimeRegistered).FirstOrDefault()?.TimeRegistered;
+                return SimPositions?.OrderByDescending(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
             }
         }
 

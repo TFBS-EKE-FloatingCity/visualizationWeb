@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index Szenarios</h2>
+<h2>Scenarios</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -40,36 +40,36 @@
         @*@Html.DisplayFor(modelItem => item.EndDate)*@
     </th>
     <td>
-        @Html.ActionLink("Details", "Details", new { id = item.SimScenarioID })
+        @Html.ActionLink("Scenario Overview", "Details", new { id = item.SimScenarioID })
     </td>
     <td>
-        @Html.ActionLink("Remove", "RemoveSimScenario", new { simScenarioId = item.SimScenarioID })
+        @Html.ActionLink("Delete", "RemoveSimScenario", new { simScenarioId = item.SimScenarioID })
     </td>
 </tr>
     }
 
 </table>
-<button id="BtnStartSim" type="button" onclick="btnStartSim_Click()" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Start Simulation</button>
+<!--<button id="BtnStartSim" type="button" onclick="btnStartSim_Click()" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Start Simulation</button>
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog">-->
 
         <!-- Modal content-->
-        <div class="modal-content">
+        <!--<div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modal Header</h4>
             </div>
-            <div class="modal-body" id="StartSimModalBody">
+            <div class="modal-body" id="StartSimModalBody">-->
                 @*@Html.Partial("PartialViews/PartialSimulationStart", (Simulation.Library.ViewModels.SimScenarioVM.SimStartViewModel)ViewBag.StartSimVM);*@
-            </div>
+            @*</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
-<script>
+@*<script>
     function btnStartSim_Click()
     {
         $.ajax(
@@ -82,4 +82,4 @@
                 }
         })
     }
-</script>
+</script>*@
