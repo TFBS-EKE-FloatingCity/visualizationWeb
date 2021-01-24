@@ -7,13 +7,13 @@ namespace VisualizationWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class DBCreation : IMigrationMetadata
+    public sealed partial class addcolumntoSensors : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DBCreation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addcolumntoSensors));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101201003087_DBCreation"; }
+            get { return "202012030904297_add column to Sensors"; }
         }
         
         string IMigrationMetadata.Source

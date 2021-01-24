@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="H.Engine.IO, Version=1.1.1.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
       <HintPath>..\packages\H.Engine.IO.1.1.1\lib\net46\H.Engine.IO.dll</HintPath>
     </Reference>
@@ -53,6 +60,12 @@
     </Reference>
     <Reference Include="H.WebSockets, Version=1.1.1.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
       <HintPath>..\packages\H.WebSockets.1.1.1\lib\net46\H.WebSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -137,20 +150,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -195,6 +196,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APISimulationController.cs" />
+    <Compile Include="Controllers\APIVDashboardController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -212,9 +214,9 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202101201003087_DBCreation.cs" />
-    <Compile Include="Migrations\202101201003087_DBCreation.Designer.cs">
-      <DependentUpon>202101201003087_DBCreation.cs</DependentUpon>
+    <Compile Include="Migrations\202101211323347_db create.cs" />
+    <Compile Include="Migrations\202101211323347_db create.designer.cs">
+      <DependentUpon>202101211323347_db create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -254,12 +256,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Layouts\AppLayout.css" />
+    <Content Include="Scripts\3d-model.js" />
     <Content Include="Scripts\Charts\Chart.js" />
+    <Content Include="Scripts\Charts\Chart - 30x.js" />
+    <Content Include="Scripts\Charts\moment.min.js" />
     <Content Include="Scripts\clock.js" />
+    <Content Include="Scripts\GLTFLoader.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Objects\PortMultiplier.obj" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -272,7 +277,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\orbitControls.js" />
     <Content Include="Scripts\three.js" />
+    <Content Include="Scripts\visualisation.js" />
+    <Content Include="StaticFiles\3d-model\textures\._World_ap_baseColor.jpeg" />
+    <Content Include="StaticFiles\3d-model\textures\World_ap_baseColor.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -323,9 +332,9 @@
     <Content Include="Views\SimTypes\Edit.cshtml" />
     <Content Include="Views\SimTypes\Index.cshtml" />
     <Content Include="Views\Dashboard.cshtml" />
-    <Content Include="Views\Charts\GeneratorsChart.cshtml" />
+    <Content Include="Views\Charts\PumpsChart.cshtml" />
     <Content Include="Views\SimDatas\EditModal.cshtml" />
-    <Content Include="Views\Charts\PumpChart.cshtml" />
+    <Content Include="Views\Charts\WindChart.cshtml" />
     <Content Include="Views\Charts\CityRotationChart.cshtml" />
     <Content Include="Views\Charts\PowerChart.cshtml" />
     <Content Include="Views\SimTypes\ModalPartial.cshtml" />
@@ -338,6 +347,27 @@
     <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialSimulationStart.cshtml" />
+    <Content Include="Views\Simulations\Index.cshtml" />
+    <Content Include="Views\Simulations\Details.cshtml" />
+    <Content Include="Views\Simulations\Delete.cshtml" />
+    <Content Include="Views\Simulations\Edit.cshtml" />
+    <Content Include="Views\Simulations\CreateScenario.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
+    <Content Include="Views\Simulations\PartialViews\PartialPositionEdit.cshtml" />
+    <Content Include="Views\Charts\CityHeight.cshtml" />
+    <Content Include="Views\Charts\CityTriangle.cshtml" />
+    <Content Include="StaticFiles\3d-model\._.DS_Store" />
+    <Content Include="StaticFiles\3d-model\._scene.bin" />
+    <Content Include="StaticFiles\3d-model\._scene.gltf" />
+    <Content Include="StaticFiles\3d-model\._textures" />
+    <Content Include="StaticFiles\3d-model\.DS_Store" />
+    <Content Include="StaticFiles\3d-model\scene.bin" />
+    <Content Include="StaticFiles\3d-model\scene.gltf" />
+    <Content Include="Views\Charts\EnergyConsumptionComparison.cshtml" />
+    <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
+    <Content Include="Views\Charts\ViewCityRotationChart.cshtml" />
+    <Content Include="Views\Charts\SimulationTimeProgressBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -363,8 +393,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101201003087_DBCreation.resx">
-      <DependentUpon>202101201003087_DBCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101211323347_db create.resx">
+      <DependentUpon>202101211323347_db create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -400,7 +430,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

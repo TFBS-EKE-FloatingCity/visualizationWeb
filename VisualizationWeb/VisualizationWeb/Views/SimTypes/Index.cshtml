@@ -40,7 +40,8 @@
             <div class="actions-bar">
                 @Html.ActionLink(" ", "Details", new { id = item.SimTypeID }, new { title = "Details", @class = "glyphicon glyphicon-eye-open btn btn-default btn-sm" })
                 @Html.ActionLink(" ", "Delete", new { id = item.SimTypeID }, new { title = "Delete", @class = "glyphicon glyphicon-trash btn btn-danger btn-sm" })
-                <h3>Hier könnte der Startbutton sein!!!</h3>
+              
+                <input type="submit" value="Start" onclick="startSimulation( @item.SimTypeID)" class="btn btn-default" />
             </div>
         </td>
     </tr>

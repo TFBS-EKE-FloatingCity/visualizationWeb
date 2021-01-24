@@ -1,0 +1,44 @@
+﻿
+    <style>
+        .triangle-up {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #555;
+            margin-left: 8px;
+        }
+
+        #triangle-container {
+            width: 120px;
+            height: 150px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        #TriangleHeightA {
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            setInterval(function () {
+                if (globals.wsData != {}) {
+                    
+                    $('#TriangleHeightA').text(Math.round((globals.heightA + Number.EPSILON) * 100) / 100);
+                    $('#TriangleHeightB').text(Math.round((globals.heightB + Number.EPSILON) * 100) / 100);
+                    $('#TriangleHeightC').text(Math.round((globals.heightC + Number.EPSILON) * 100) / 100);
+
+                }
+            }, settings.updateRate);
+        })
+    </script>
+
+    <h4>Heights of City (in m)</h4>
+    <div id="triangle-container">
+        <div id="TriangleHeightA"></div>
+        <div class="triangle-up"></div>
+        <span id="TriangleHeightB"></span>
+        <span id="TriangleHeightC" style="float:right"></span>
+    </div>
+
