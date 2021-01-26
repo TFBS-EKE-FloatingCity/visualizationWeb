@@ -27,5 +27,7 @@ namespace VisualizationWeb.Models.IRepo
         Task<Setting> GetSimulationSetting();
         Task SaveSetting(Setting setting);
 
+        Task<IEnumerable<SimPosition>> GetSimPositionsByID(int id);
+
     }
 }
