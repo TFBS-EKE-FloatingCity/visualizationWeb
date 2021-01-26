@@ -75,7 +75,7 @@ namespace VisualisationTests
             SimPosition pos2 = new SimPosition { SimPositionID = 1, SunValue = 100, WindValue = 10, EnergyConsumptionValue = 20, TimeRegistered = new DateTime(2021, 01, 01, 10, 0, 0) };
             SimPosition pos3 = new SimPosition { SimPositionID = 1, SunValue = 40, WindValue = 20, EnergyConsumptionValue = 50, TimeRegistered = new DateTime(2021, 01, 01, 20, 0, 0) };
 
-            return new SimScenario { SimScenarioID = 1, Title = "TestScenario", SimPositions = new List<SimPosition> { pos1, pos2, pos3 }, StartDate = pos1.TimeRegistered, EndDate = pos3.TimeRegistered };
+            return new SimScenario { SimScenarioID = 1, Title = "TestScenario", SimPositions = new List<SimPosition> { pos1, pos2, pos3 } };
         }
 
         private void simulationService_AssertRunning(ISimulationService service)
