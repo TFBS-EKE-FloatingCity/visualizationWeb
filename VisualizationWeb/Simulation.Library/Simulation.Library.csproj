@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculations\CalculationHelper.cs" />
+    <Compile Include="Calculations\InterpolationHelper.cs" />
     <Compile Include="Models\Interfaces\ISimulationService.cs" />
     <Compile Include="Models\Interfaces\ISimulationServiceSetting.cs" />
     <Compile Include="Models\SimPosition.cs" />

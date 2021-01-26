@@ -102,25 +102,6 @@ namespace Simulation.Library.Models
 
         #region Methods
         /// <summary>
-        /// Reads the maximum values from the SimulationServiceConfig.json and writes it to the fields.
-        /// </summary>
-        private void readConfig(string configPath = "")
-        {
-
-            JObject jdata = JObject.Parse(SimulationServiceConfig.Config);
-            _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
-            _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
-            _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
-
-            //using (StreamReader reader = new StreamReader(configPath)) {
-            //    JObject jdata = JObject.Parse(reader.ReadToEnd());
-            //    _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
-            //    _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
-            //    _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
-            //}
-        }
-
-        /// <summary>
         /// Sets the maximum values for the Service.
         /// </summary>
         /// <param name="settings">The containing settings.</param>
@@ -216,9 +197,12 @@ namespace Simulation.Library.Models
             {
                 return null;
             }
-            decimal factor = CalculationHelper.InverseLerp(0, Duration.Ticks, timeStamp.Ticks - StartDateTimeReal.Value.Ticks);          //Calculates the percentage of how far the simulation is in the real time
-            decimal simTimeTicksValue = CalculationHelper.Lerp(_simScenario.StartDate.Value.Ticks, _simScenario.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
-            return new DateTime((long)simTimeTicksValue);
+
+            return new DateTime((long)InterpolationHelper.GetValue(StartDateTimeReal.Value.Ticks, 
+                _simScenario.StartDate.Value.Ticks, 
+                EndDateTimeReal.Value.Ticks, 
+                _simScenario.EndDate.Value.Ticks, 
+                timeStamp.Ticks));
         }
 
 
@@ -235,7 +219,7 @@ namespace Simulation.Library.Models
                 return _idleEnergyProductionWind;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+            return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.WindValue,
                 _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.WindValue,
@@ -255,7 +239,7 @@ namespace Simulation.Library.Models
                 return _idleEnergyProductionSun;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+            return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.SunValue,
                 _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.SunValue,
@@ -275,7 +259,7 @@ namespace Simulation.Library.Models
                 return _idleEnergyConsumption;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+            return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.EnergyConsumptionValue,
                 _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.EnergyConsumptionValue,
@@ -341,11 +325,11 @@ namespace Simulation.Library.Models
             int? balanceValue = windValue + sunValue - consumptionValue;
             if (balanceValue >= 0)
             {
-                return (int)CalculationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value);
+                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value);
             }
             else
             {
-                return (int)CalculationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value);
+                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value);
             }
         }
 
@@ -367,7 +351,7 @@ namespace Simulation.Library.Models
 
             _simScenario = scenario;
             _duration = duration;
-            _timeFactor = CalculationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
+            _timeFactor = InterpolationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
             _timer.Interval = duration.TotalMilliseconds;
             _timer.Elapsed += onSimDurationElapsed;
             return true;

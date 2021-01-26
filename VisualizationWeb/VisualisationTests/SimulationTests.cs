@@ -30,7 +30,7 @@ namespace VisualisationTests
             decimal dValue = Convert.ToDecimal(value);
             decimal dExpected = Convert.ToDecimal(expected);
 
-            decimal result = CalculationHelper.Lerp(dMin, dMax, dValue);
+            decimal result = InterpolationHelper.Lerp(dMin, dMax, dValue);
             Assert.AreEqual(dExpected, result);
         }
 
@@ -45,18 +45,18 @@ namespace VisualisationTests
             decimal dValue = Convert.ToDecimal(value);
             decimal dExpected = Convert.ToDecimal(expected);
 
-            decimal result = CalculationHelper.InverseLerp(dMin, dMax, dValue);
+            decimal result = InterpolationHelper.InverseLerp(dMin, dMax, dValue);
             Assert.AreEqual(dExpected, result);
         }
 
         [TestMethod]
         public void GetValueTest()
         {
-            int result1 = CalculationHelper.GetValue(0, 0, 10, 100, 5);
-            int result2 = CalculationHelper.GetValue(-10, 0, 10, 100, -5);
-            int result3 = CalculationHelper.GetValue(-10, -100, 10, 100, -5);
-            int result4 = CalculationHelper.GetValue(10, 100, 0, 0, 5);
-            int result5 = CalculationHelper.GetValue(0, 0, 0, 0, 0);
+            int result1 = (int)InterpolationHelper.GetValue(0, 0, 10, 100, 5);
+            int result2 = (int)InterpolationHelper.GetValue(-10, 0, 10, 100, -5);
+            int result3 = (int)InterpolationHelper.GetValue(-10, -100, 10, 100, -5);
+            int result4 = (int)InterpolationHelper.GetValue(10, 100, 0, 0, 5);
+            int result5 = (int)InterpolationHelper.GetValue(0, 0, 0, 0, 0);
 
             Assert.AreEqual(50, result1);
             Assert.AreEqual(25, result2);
@@ -64,7 +64,7 @@ namespace VisualisationTests
             Assert.AreEqual(50, result4);
             Assert.AreEqual(0, result5);
 
-            Assert.ThrowsException<DivideByZeroException>(() => CalculationHelper.GetValue(0, 0, 0, 10, 0));
+            Assert.ThrowsException<DivideByZeroException>(() => InterpolationHelper.GetValue(0, 0, 0, 10, 0));
         }
         #endregion
 
@@ -340,11 +340,11 @@ namespace VisualisationTests
             }
             else if (balanceValue >= 0)
             {
-                result = (int)CalculationHelper.InverseLerp(0, service.MaxEnergyProductionWind + service.MaxEnergyProductionSun, balanceValue.Value);
+                result = (int)InterpolationHelper.InverseLerp(0, service.MaxEnergyProductionWind + service.MaxEnergyProductionSun, balanceValue.Value);
             }
             else
             {
-                result = (int)CalculationHelper.InverseLerp(0, service.MaxEnergyConsumption, balanceValue.Value);
+                result = (int)InterpolationHelper.InverseLerp(0, service.MaxEnergyConsumption, balanceValue.Value);
             }
 
             Assert.AreEqual(result, service.GetEnergyBalance(testRealTime));

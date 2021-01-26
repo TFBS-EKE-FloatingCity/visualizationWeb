@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Simulation.Library.Calculations
 {
-    public static class CalculationHelper
+    public static class InterpolationHelper
     {
         //Returns searched Value between 2 Function positions
-        public static int GetValue(long x1, long y1, long x2, long y2, decimal givenX)
+        public static decimal GetValue(long x1, long y1, long x2, long y2, decimal givenX)
         {
             if (x1 == x2 && givenX == x1 && y1 == y2)
             {
                 return (int)y1;
             }
-            return (int)Math.Round(y1 + ((y2 - (decimal)y1) / (x2 - x1)) * (givenX - x1));
+            return Math.Round(y1 + ((y2 - (decimal)y1) / (x2 - x1)) * (givenX - x1));
         }
 
         /// <summary>
