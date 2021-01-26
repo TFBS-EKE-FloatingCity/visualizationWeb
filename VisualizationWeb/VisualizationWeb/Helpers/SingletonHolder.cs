@@ -71,6 +71,7 @@ namespace VisualizationWeb.Helpers {
             db.SaveChanges();
 
             CurrentCityDataHead = null;
+            currentCityDataHeadID = null;
 
             server.SendData(JsonConvert.SerializeObject(head));
         }
