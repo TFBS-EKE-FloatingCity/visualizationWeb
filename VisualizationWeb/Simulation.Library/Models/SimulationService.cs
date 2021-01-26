@@ -328,14 +328,6 @@ namespace Simulation.Library.Models
         }
 
         /// <summary>
-        /// Returns the actual StartedDateTime. Null if the Simulation is not running.
-        /// </summary>
-        public DateTime? GetSimulationStartedTimeStamp()
-        {
-            return _startDateTimeReal;
-        }
-
-        /// <summary>
         /// Calculates the energy balance for the given timeStamp. Negativ if the Consumption is higher than the production of Sun and Wind.
         /// </summary>
         /// <param name="timeStamp"></param>
