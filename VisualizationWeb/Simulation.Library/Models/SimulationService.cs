@@ -318,18 +318,18 @@ namespace Simulation.Library.Models
         /// <returns>The simulated energy balance. Returns idle values if no Simulation is running.</returns>
         public int GetEnergyBalance(DateTime timeStamp)
         {
-            int windValue = GetEnergyProductionWind(timeStamp);
-            int sunValue = GetEnergyProductionSun(timeStamp);
-            int consumptionValue = GetEnergyConsumption(timeStamp);
+            int windValue = GetEnergyProductionWind(timeStamp) * MaxEnergyProductionWind / 100;
+            int sunValue = GetEnergyProductionSun(timeStamp) * MaxEnergyProductionSun / 100;
+            int consumptionValue = GetEnergyConsumption(timeStamp) * MaxEnergyConsumption / 100;
 
             int? balanceValue = windValue + sunValue - consumptionValue;
             if (balanceValue >= 0)
             {
-                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value);
+                return (int)(InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value)*100);
             }
             else
             {
-                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value);
+                return (int)(InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value)*100);
             }
         }
 
