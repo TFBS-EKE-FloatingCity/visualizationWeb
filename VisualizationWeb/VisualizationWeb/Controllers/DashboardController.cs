@@ -1,4 +1,5 @@
-﻿using Simulation.Library.ViewModels.SimScenarioVM;
+﻿using Simulation.Library.Models;
+using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,7 @@ namespace VisualizationWeb.Controllers
         public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
         {
             var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
+            simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
             Helpers.SingletonHolder.StartSimulation(simScenarioID, vm.Duration);
 
             return RedirectToAction("../Dashboard");
