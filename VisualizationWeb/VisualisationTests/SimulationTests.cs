@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Simulation.Library.Calculations;
 using Simulation.Library.Models;
+using Simulation.Library.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using VisualizationWeb.Models;
 
 namespace VisualisationTests
 {
@@ -78,6 +80,16 @@ namespace VisualisationTests
             return new SimScenario { SimScenarioID = 1, Title = "TestScenario", SimPositions = new List<SimPosition> { pos1, pos2, pos3 } };
         }
 
+        private Setting getConfig()
+        {
+            return new Setting
+            {
+                ConsumptionMax = 10000,
+                SunMax = 10000,
+                WindMax = 10000,
+            };
+        }
+
         private void simulationService_AssertRunning(ISimulationService service)
         {
             Assert.AreNotEqual(-1, service.SimulationScenarioId);
@@ -114,14 +126,11 @@ namespace VisualisationTests
             {
                 jdata = JObject.Parse(reader.ReadToEnd());
             }
-            int consumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
-            int productionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
-            int productionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
-
-            ISimulationService service = new SimulationService();
-            Assert.AreEqual(consumption, service.MaxEnergyConsumption);
-            Assert.AreEqual(productionSun, service.MaxEnergyProductionSun);
-            Assert.AreEqual(productionWind, service.MaxEnergyProductionWind);
+            ISimulationServiceSettings settings = getConfig();
+            ISimulationService service = new SimulationService(settings);
+            Assert.AreEqual(settings.ConsumptionMax, service.MaxEnergyConsumption);
+            Assert.AreEqual(settings.SunMax, service.MaxEnergyProductionSun);
+            Assert.AreEqual(settings.WindMax, service.MaxEnergyProductionWind);
             simulationService_AssertNotRunning(service);
         }
 
@@ -130,7 +139,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             ISimulationService eventSender = null;
             service.SimulationStarted += delegate (object sender, EventArgs e)
@@ -146,7 +155,7 @@ namespace VisualisationTests
         [TestMethod]
         public void SimulationServiceRun_InvalidParameters()
         {
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             ISimulationService eventSender = null;
             service.SimulationStarted += delegate (object sender, EventArgs e)
@@ -165,7 +174,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             ISimulationService eventSender = null;
             service.SimulationEnded += delegate (object sender, EventArgs e)
@@ -184,7 +193,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(0, 0, 1);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             ISimulationService eventSender = null;
             service.SimulationEnded += delegate (object sender, EventArgs e)
@@ -205,7 +214,7 @@ namespace VisualisationTests
             SimScenario scenario2 = getValidTestScenario();
             scenario2.SimScenarioID = 2;
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             ISimulationService eventSender = null;
             service.SimulationEnded += delegate (object sender, EventArgs e)
@@ -224,7 +233,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             Assert.AreEqual(service.StartDateTimeReal.Value + duration, service.EndDateTimeReal);
@@ -240,7 +249,7 @@ namespace VisualisationTests
             decimal expected = Convert.ToDecimal(expectedFactor);
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(durationHours, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             Assert.AreEqual(service.TimeFactor, expected);
@@ -258,7 +267,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
@@ -277,7 +286,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
@@ -296,7 +305,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
@@ -314,7 +323,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
@@ -351,7 +360,7 @@ namespace VisualisationTests
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
@@ -367,7 +376,7 @@ namespace VisualisationTests
         [DataRow(101,101,101,0,0,0)]
         public void SimulationService_SetIdleValues(int energyConsumption, int energyProductionSun, int energyProductionWind, int expectedEnergyConsumption, int expectedEnergyProductionSun, int expectedEnergyProductionWind)
         {
-            ISimulationService service = new SimulationService();
+            ISimulationService service = new SimulationService(getConfig());
 
             service.SetIdleValues(energyConsumption, energyProductionSun, energyProductionWind);
 

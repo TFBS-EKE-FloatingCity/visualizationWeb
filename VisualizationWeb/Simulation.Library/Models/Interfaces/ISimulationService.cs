@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simulation.Library.Models
+namespace Simulation.Library.Models.Interfaces
 {
     public interface ISimulationService : IDisposable
     {
@@ -47,6 +47,11 @@ namespace Simulation.Library.Models
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Sets the maximum values for the Service.
+        /// </summary>
+        /// <param name="settings">The containing settings.</param>
+        void SetSettings(ISimulationServiceSettings settings);
         /// <summary>
         /// Calculates the current Time in the Simulation for the given timeStamp.
         /// </summary>

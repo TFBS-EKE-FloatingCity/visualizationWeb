@@ -46,11 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\CalculationHelper.cs" />
-    <Compile Include="Models\ISimulationService.cs" />
+    <Compile Include="Models\Interfaces\ISimulationService.cs" />
+    <Compile Include="Models\Interfaces\ISimulationServiceSetting.cs" />
     <Compile Include="Models\SimPosition.cs" />
     <Compile Include="Models\SimScenario.cs" />
     <Compile Include="Models\SimulationService.cs" />
-    <Compile Include="Models\SimulationServiceSetting.cs" />
     <Compile Include="Models\SimulationServiceConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SelectListVM.cs" />

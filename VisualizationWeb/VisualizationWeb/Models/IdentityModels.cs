@@ -34,7 +34,6 @@ namespace VisualizationWeb.Models
         public virtual DbSet<SimPosition> SimPositions { get; set; }
         public virtual DbSet<CityData> CityDatas { get; set; }
         public virtual DbSet<CityDataHead> CityDataHeads { get; set; }
-        public virtual DbSet<SimulationServiceSetting> SimulationServiceSettings { get; set; }
 
         public static ApplicationDbContext Create()
         {

@@ -8,6 +8,7 @@ using Simulation.Library.Models;
 using Simulation.Library.ViewModels;
 using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
+using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Models.IRepo
 {
@@ -23,6 +24,8 @@ namespace VisualizationWeb.Models.IRepo
         Task RemovePosition(int positionID);
         Task<SimScenario> GetSimScenarioByID(int simScenarioID);
         Task<IList<vmSelectListItem>> SimScenarioSelect();
+        Task<Setting> GetSimulationSetting();
+        Task SaveSetting(Setting setting);
 
     }
 }

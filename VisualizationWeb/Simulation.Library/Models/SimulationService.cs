@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Simulation.Library.Calculations;
+using Simulation.Library.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,11 +91,10 @@ namespace Simulation.Library.Models
         #endregion
 
         #region Constructor
-        public SimulationService()
+        public SimulationService(ISimulationServiceSettings settings)
         {
             SetIdleValues(0, 0, 0);
-            readConfig();
-            //readConfig(@"SimulationServiceConfig.json");
+            SetSettings(settings);
             _timer = new Timer();
             _timeFactor = 1;
         }
@@ -118,6 +118,26 @@ namespace Simulation.Library.Models
             //    _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
             //    _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
             //}
+        }
+
+        /// <summary>
+        /// Sets the maximum values for the Service.
+        /// </summary>
+        /// <param name="settings">The containing settings.</param>
+        public void SetSettings(ISimulationServiceSettings settings)
+        {
+            if(settings == null)
+            {
+                _maxEnergyConsumption = 0;
+                _maxEnergyProductionSun = 0;
+                _maxEnergyProductionWind = 0;
+            }
+            else
+            {
+                _maxEnergyConsumption = settings.ConsumptionMax;
+                _maxEnergyProductionSun = settings.SunMax;
+                _maxEnergyProductionWind = settings.WindMax;
+            }
         }
 
         /// <summary>

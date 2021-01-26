@@ -5,11 +5,13 @@ using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.IRepo;
+using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Models.Repo
 {
@@ -147,6 +149,28 @@ namespace VisualizationWeb.Models.Repo
                              DisplayMember = c.Title
                          };
             return await select.ToListAsync();
+        }
+
+        public async Task<Setting> GetSimulationSetting()
+        {
+            Setting setting = _context.Settings.FirstOrDefault();
+            if(setting != null)
+            {
+                return setting;
+            }
+            return new Setting
+            {
+                SettingID = 1,
+                WindMax = 0,
+                SunMax = 0,
+                ConsumptionMax = 0
+            };
+        }
+
+        public async Task SaveSetting(Setting setting)
+        {
+            _context.Settings.AddOrUpdate(setting);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -198,7 +198,6 @@
     <Compile Include="Controllers\APISimulationController.cs" />
     <Compile Include="Controllers\APIVDashboardController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SimDatasController.cs" />
     <Compile Include="Controllers\SimTypesController.cs" />
@@ -207,8 +206,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\SeedSimHelper.cs" />
-    <Compile Include="Helpers\SimulationHelper.cs" />
     <Compile Include="Helpers\SingletonHolder.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Helpers\WebSocketClient.cs" />
@@ -217,6 +214,10 @@
     <Compile Include="Migrations\202101211323347_db create.cs" />
     <Compile Include="Migrations\202101211323347_db create.designer.cs">
       <DependentUpon>202101211323347_db create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101261411541_SettingsRework.cs" />
+    <Compile Include="Migrations\202101261411541_SettingsRework.designer.cs">
+      <DependentUpon>202101261411541_SettingsRework.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -232,7 +233,6 @@
     <Compile Include="Models\SimulationHistory.cs" />
     <Compile Include="Models\ViewModel\JsonDataVM.cs" />
     <Compile Include="Models\ViewModel\JsonResponseVM.cs" />
-    <Compile Include="Models\ViewModel\SettingVM.cs" />
     <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -293,9 +293,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Layouts\_AppLayout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -319,7 +316,6 @@
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Settings\Edit.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\SimDatas\Create.cshtml" />
     <Content Include="Views\SimDatas\Delete.cshtml" />
@@ -387,6 +383,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101211323347_db create.resx">
       <DependentUpon>202101211323347_db create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101261411541_SettingsRework.resx">
+      <DependentUpon>202101261411541_SettingsRework.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

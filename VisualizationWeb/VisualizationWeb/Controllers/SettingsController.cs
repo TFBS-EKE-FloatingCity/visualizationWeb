@@ -9,14 +9,36 @@ using System.Web;
 using System.Web.Mvc;
 using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
+using VisualizationWeb.Models.IRepo;
+using VisualizationWeb.Models.Repo;
 using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
-    [Authorize(Roles = "Benutzer,Admin")]
+    //[Authorize(Roles = "Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private object lobject = new object();
+
+        private ISimulationRepository _simulationRepository;
+        public ISimulationRepository SimulationRepository
+        {
+            get
+            {
+                if (_simulationRepository == null)
+                {
+                    lock (lobject)
+                    {
+                        if (_simulationRepository == null)
+                        {
+                            _simulationRepository = new SimulationRepository(db);
+                        }
+                    }
+                }
+                return _simulationRepository;
+            }
+        }
 
         public SettingsController()
         {
@@ -24,98 +46,25 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: Settings
-        public ActionResult Index()
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Index()
         {
-            if(User.IsInRole("Admin"))
-            {
-                return RedirectToAction("Edit");
-            }
-
-            Setting setting = db.Settings.FirstOrDefault();
-
-            if (setting == null)
-            {
-                setting = new Setting
-                {
-                    SunActive = true,
-                    WindActive = true,
-                    ConsumptionActive = true,
-                    SunMax = 10.00,
-                    WindMax = 20.00,
-                    ConsumptionMax = 50.00
-                };
-
-                db.Settings.Add(setting);
-                db.SaveChanges();
-            }
-
-            SettingVM settingVM = new SettingVM
-            {
-                SettingID = setting.SettingID,
-                WindMax = UnitCalc.NumberToPrefix(setting.WindMax),
-                SunMax = UnitCalc.NumberToPrefix(setting.SunMax),
-                ConsumptionMax = UnitCalc.NumberToPrefix(setting.ConsumptionMax),
-                SunActive = setting.SunActive,
-                WindActive = setting.WindActive,
-                ConsumptionActive = setting.ConsumptionActive,
-            };
-
-            return View(settingVM);
+            return View(await SimulationRepository.GetSimulationSetting());
         }
 
-        // GET: Settings/Edit/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Edit(int? id)
-        {
-            Setting setting = new Setting();
-            if (id == null)
-            {
-                setting = db.Settings.FirstOrDefault();
-            }
-            else
-            {
-                setting = db.Settings.Find(id);
-            }
-            if (setting == null)
-            {
-                return HttpNotFound();
-            }
-
-            SettingVM settingVM = new SettingVM {
-                SettingID = setting.SettingID,
-                WindActive = setting.WindActive,
-                SunActive = setting.SunActive,
-                ConsumptionActive = setting.ConsumptionActive,
-                SunMax = UnitCalc.NumberToPrefix(setting.SunMax),
-                WindMax = UnitCalc.NumberToPrefix(setting.WindMax),
-                ConsumptionMax = UnitCalc.NumberToPrefix(setting.ConsumptionMax)
-            };
-
-            return View(settingVM);
-        }
-
-        // POST: Settings/Edit/5
+        // POST: Settings/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Edit([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive")] SettingVM settingVM)
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive")] Setting setting)
         {
             if (ModelState.IsValid)
             {
-                Setting setting = db.Settings.Find(settingVM.SettingID);
-                setting.WindMax = UnitCalc.PrefixToNumber(settingVM.WindMax);
-                setting.SunMax = UnitCalc.PrefixToNumber(settingVM.SunMax);
-                setting.ConsumptionMax = UnitCalc.PrefixToNumber(settingVM.ConsumptionMax);
-                setting.SunActive = settingVM.SunActive;
-                setting.WindActive = settingVM.WindActive;
-                setting.ConsumptionActive = settingVM.ConsumptionActive;
-
-                db.Entry(setting).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                await SimulationRepository.SaveSetting(setting);
+                return RedirectToAction("../Dashboard");
             }
 
-            return View(settingVM);
+            return View(setting);
         }
 
         protected override void Dispose(bool disposing)

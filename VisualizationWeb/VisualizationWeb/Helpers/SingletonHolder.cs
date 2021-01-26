@@ -11,7 +11,7 @@ namespace VisualizationWeb.Helpers {
 
         private static ApplicationDbContext db = new ApplicationDbContext();
 
-        private static readonly SimulationService simService = new SimulationService();
+        private static readonly SimulationService simService = new SimulationService(null);
         private static readonly WebsocketServer server = new WebsocketServer();
         private static readonly WebSocketClient client = new WebSocketClient(server, simService);
 
