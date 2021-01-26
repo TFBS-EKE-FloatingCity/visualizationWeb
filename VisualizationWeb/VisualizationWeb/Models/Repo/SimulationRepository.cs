@@ -142,5 +142,13 @@ namespace VisualizationWeb.Models.Repo
                          };
             return await select.ToListAsync();
         }
+
+        public string GetSimulationTitle(int simScenarionID)
+        {
+            return (from c in _context.SimScenarios
+                    orderby c.Title
+                    where c.SimScenarioID == simScenarionID
+                    select c.Title).Single();
+        }
     }
 }

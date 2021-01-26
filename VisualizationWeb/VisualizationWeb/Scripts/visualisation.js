@@ -9,7 +9,7 @@ var globals = {
     heightB: 0.00,
     heightC: 0.00,
     heightHY: 0.00,
-    cityDataHeadID: 0,
+    cityDataHeadID: 1,
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
@@ -41,9 +41,9 @@ function connect() {
             //CityDataHead.json
             globals.cityDataHeadID = globals.wsData.CityDataHeadID;
             globals.simulationID = globals.wsData.SimulationID;
-            globals.simulationStartTime = globals.wsData.StartTime; 
+            globals.simulationStartTime = globals.wsData.StartTime;
             globals.simulationEndTime = globals.wsData.EndTime;
-        }     
+        }
     };
 
     socket.onclose = function (e) {
@@ -75,6 +75,22 @@ $(function () {
             clearInterval(interval);
     }, 1000);
 });
+
+
+$(function () {
+    $.ajax({
+        url: '/Simulations/GetSimulationTitle',
+        type: 'GET',
+        success: function (data) {
+            if (data === "") {
+                return;
+            }
+            var header = document.getElementById('SimulationNameH2');
+            header.innerHTML = data;
+        }
+    });
+})
+
 
 //// TESTDATA
 //testData = 
