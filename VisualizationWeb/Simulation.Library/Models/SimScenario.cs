@@ -18,10 +18,22 @@ namespace Simulation.Library.Models
         public string Title { get; set; }
 
         [NotMapped]
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartDate 
+        { 
+            get 
+            {
+                return SimPositions?.OrderBy(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
+            } 
+        }
 
         [NotMapped]
-        public DateTime? EndDate { get; set; }
+        public DateTime? EndDate 
+        {
+            get
+            {
+                return SimPositions?.OrderByDescending(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
+            }
+        }
 
         [StringLength(500)]
         public string Notes { get; set; }

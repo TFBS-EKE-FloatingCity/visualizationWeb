@@ -63,7 +63,8 @@ namespace VisualizationWeb.Controllers
             }
 
             SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails(id.Value);
-            scenario.SimPositions = await SimulationRepository.GetSimPositionIndex(id.Value);
+            var test = await SimulationRepository.GetSimPositionIndex(id.Value);
+            scenario.SimPositions = test.OrderBy(x => x.TimeRegistered.TimeOfDay);
             return View(scenario);
         }
 

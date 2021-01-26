@@ -23,9 +23,17 @@ namespace VisualizationWeb.Models.Repo
         }
 
         public async Task CreatePosition(SimPositionCreateAndEditViewModel position)
-        {
+        {  
             if (position != null)
             {
+                var positions = await GetSimPositionsByID(position.SimScenarioID);
+                if (positions?.FirstOrDefault() != null)
+                {
+                    var date = positions.First().TimeRegistered.Date;
+                    var time = position.TimeRegistered.TimeOfDay;
+                    position.TimeRegistered = date + time;
+                }
+
                 _context.SimPositions.Add(new SimPosition
                 {
                     SunValue = position.SunValue,
@@ -82,6 +90,11 @@ namespace VisualizationWeb.Models.Repo
 
         }
 
+        public async Task<IEnumerable<SimPosition>> GetSimPositionsByID(int id)
+        {
+            return await _context.SimPositions.Where(x => x.SimScenarioID == id).ToListAsync();
+        }
+
         public async Task<SimScenario> GetSimScenarioByID(int simScenarioID)
         {
             return await _context.SimScenarios.FindAsync(simScenarioID);
@@ -109,14 +122,20 @@ namespace VisualizationWeb.Models.Repo
 
         public async Task<IEnumerable<SimScenarioIndexViewModel>> GetSimScenarioIndex()
         {
-            var scen = from c in _context.SimScenarios
-                       orderby c.Title
-                       select new SimScenarioIndexViewModel
-                       {
-                           SimScenarioID = c.SimScenarioID,
-                           Title = c.Title
-                       };
-            return await scen.ToListAsync();
+            return await _context.SimScenarios.Include(x => x.SimPositions)
+                .Select(sc => new SimScenarioIndexViewModel
+                {
+                    SimScenarioID = sc.SimScenarioID,
+                    Title = sc.Title,
+                    SimPositions = sc.SimPositions.Select(sp => new SimPositionIndexViewModel
+                    {
+                        SimPositionID = sp.SimPositionID,
+                        SunValue = sp.SunValue,
+                        WindValue = sp.WindValue,
+                        EnergyConsumptionValue = sp.EnergyConsumptionValue,
+                        TimeRegistered = sp.TimeRegistered,
+                    })
+                }).ToListAsync();
         }
 
 
