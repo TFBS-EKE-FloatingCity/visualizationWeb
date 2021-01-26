@@ -48,7 +48,10 @@
                 callbacks: {
                     title: function (tooltipItem) {
                         return 'Time: ' + new Date(tooltipItem[0].label).toLocaleTimeString();
-                    }
+                    },
+                    //label: function (tooltipItems, data) {
+                    //    return tooltipItems.va + ' : ' + (globals.wsData.WindCurrent / 10) * globals.wsData.WindMax  + " kw/h";
+                    //}
                 }
             },
             hover: {
@@ -80,7 +83,9 @@
                         labelString: 'Power'
                     },
                     ticks: {
-                        min: 0
+                        min: 0,
+                        suggestedMin: 0,
+                        suggestedMax: 100
                         
                     }
                 }]

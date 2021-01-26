@@ -9,18 +9,17 @@
     <li>
         @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "glyphicon glyphicon-user" })
     </li>
-    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "glyphicon glyphicon-user" })</li>
 
-    @*@{ //TODO: This Partial won't be load again....
-           if(Page.User != null)
+    @{
+           if(User != null)
            {
-                if (Page.User.IsInRole("Admin"))
+                if (User.IsInRole("Admin"))
                 {
 
                     <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "glyphicon glyphicon-user" })</li>
                 }
            }
-        }*@
+        }
 
     <li><a href="javascript:document.getElementById('logoutForm').submit()" class="glyphicon glyphicon-log-out">Logout</a></li>
 </ul>
@@ -28,7 +27,9 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-login">        
-        <li>@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "glyphicon glyphicon-log-in" })</li>
-    </ul>
+<ul class="nav navbar-nav navbar-login">
+    
+    <li>@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "glyphicon glyphicon-log-in" })</li>
+</ul>
+
 }
