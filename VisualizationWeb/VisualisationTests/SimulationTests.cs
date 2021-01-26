@@ -328,19 +328,19 @@ namespace VisualisationTests
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
 
-            int windValue = service.GetEnergyProductionWind(testRealTime) * service.MaxEnergyProductionWind / 100;
-            int sunValue = service.GetEnergyProductionSun(testRealTime) * service.MaxEnergyProductionSun / 100;
-            int consumptionValue = service.GetEnergyConsumption(testRealTime) * service.MaxEnergyConsumption / 100;
+            int windValue = service.GetEnergyProductionWind(testRealTime) * service.MaxEnergyProductionWind;
+            int sunValue = service.GetEnergyProductionSun(testRealTime) * service.MaxEnergyProductionSun;
+            int consumptionValue = service.GetEnergyConsumption(testRealTime) * service.MaxEnergyConsumption;
 
             int balanceValue = windValue + sunValue - consumptionValue;
             int result;
             if (balanceValue >= 0)
             {
-                result = (int)(InterpolationHelper.InverseLerp(0, service.MaxEnergyProductionWind + service.MaxEnergyProductionSun, balanceValue)*100);
+                result = (int)InterpolationHelper.InverseLerp(0, service.MaxEnergyProductionWind + service.MaxEnergyProductionSun, balanceValue);
             }
             else
             {
-                result = (int)(InterpolationHelper.InverseLerp(0, service.MaxEnergyConsumption, balanceValue) * 100);
+                result = (int)InterpolationHelper.InverseLerp(0, service.MaxEnergyConsumption, balanceValue);
             }
 
             Assert.AreEqual(result, service.GetEnergyBalance(testRealTime));
