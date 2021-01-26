@@ -24,5 +24,7 @@ namespace VisualizationWeb.Models.IRepo
         Task<SimScenario> GetSimScenarioByID(int simScenarioID);
         Task<IList<vmSelectListItem>> SimScenarioSelect();
 
+        Task<IEnumerable<SimPosition>> GetSimPositionsByID(int id);
+
     }
 }

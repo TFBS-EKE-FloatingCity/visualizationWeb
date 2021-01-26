@@ -23,9 +23,17 @@ namespace VisualizationWeb.Models.Repo
         }
 
         public async Task CreatePosition(SimPositionCreateAndEditViewModel position)
-        {
+        {  
             if (position != null)
             {
+                var positions = await GetSimPositionsByID(position.SimScenarioID);
+                if (positions?.FirstOrDefault() != null)
+                {
+                    var date = positions.First().TimeRegistered.Date;
+                    var time = position.TimeRegistered.TimeOfDay;
+                    position.TimeRegistered = date + time;
+                }
+
                 _context.SimPositions.Add(new SimPosition
                 {
                     SunValue = position.SunValue,
@@ -80,6 +88,11 @@ namespace VisualizationWeb.Models.Repo
                       };
             return await pos.ToListAsync();
 
+        }
+
+        public async Task<IEnumerable<SimPosition>> GetSimPositionsByID(int id)
+        {
+            return await _context.SimPositions.Where(x => x.SimScenarioID == id).ToListAsync();
         }
 
         public async Task<SimScenario> GetSimScenarioByID(int simScenarioID)
