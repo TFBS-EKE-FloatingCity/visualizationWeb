@@ -24,6 +24,7 @@ namespace VisualizationWeb.Migrations
 
             #region Adding User Roles & Administrator
            
+            //Check if Roles already exists in the DB
             var roleAdmin = (from role in context.Roles
                              where role.Name == "Admin"
                              select role).FirstOrDefault();
@@ -32,6 +33,7 @@ namespace VisualizationWeb.Migrations
                                 where role.Name == "Simulant"
                                 select role).FirstOrDefault();
 
+            //if both or only one not exists then the roles will be generated
             if (roleAdmin == null && roleSimulant == null)
             {
                 context.Roles.AddOrUpdate(
@@ -71,11 +73,12 @@ namespace VisualizationWeb.Migrations
                 );
             }
 
-
+            //Check if the Administrator - User exists
             var admin = (from user in context.Users
                             where user.UserName == "administrator@admin.at"
                          select user).FirstOrDefault();
-
+            
+            //If not the User will be added to the DB 
             if (admin == null)
             {
 
@@ -88,7 +91,7 @@ namespace VisualizationWeb.Migrations
                 };
                 context.Users.AddOrUpdate(adminUser);
                 context.SaveChanges();
-                //Ad to User Role
+                //Add the new generated User to the 'Admin' Role
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 userManager.AddToRole(adminUser.Id, "Admin");
 

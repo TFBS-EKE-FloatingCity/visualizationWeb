@@ -17,6 +17,8 @@ namespace VisualizationWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private object lobject = new object();
+        //For the ProgressBar
+        private SimStartViewModel _currentScenario;
 
         private ISimulationRepository _simulationRepository;
         public ISimulationRepository SimulationRepository
@@ -56,6 +58,7 @@ namespace VisualizationWeb.Controllers
         public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
         {
             var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
+            _currentScenario = vm;
             simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
             Helpers.SingletonHolder.StartSimulation(simScenarioID, vm.Duration);
 
@@ -69,6 +72,15 @@ namespace VisualizationWeb.Controllers
             ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
 
             return PartialView("../Charts/Partials/_StartSimulationPartial", vm);
+        }
+
+        public string GetSimulationTitle()
+        {
+            if (_currentScenario is null)
+            {
+                return "No Simulation started";
+            }
+            return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
         }
     }
 }

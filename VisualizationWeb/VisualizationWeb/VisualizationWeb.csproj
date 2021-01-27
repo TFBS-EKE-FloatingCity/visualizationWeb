@@ -213,9 +213,9 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202101211323347_db create.cs" />
-    <Compile Include="Migrations\202101211323347_db create.designer.cs">
-      <DependentUpon>202101211323347_db create.cs</DependentUpon>
+    <Compile Include="Migrations\202101271107269_create db.cs" />
+    <Compile Include="Migrations\202101271107269_create db.Designer.cs">
+      <DependentUpon>202101271107269_create db.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -359,6 +359,8 @@
     <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
     <Content Include="Views\Charts\ViewCityRotationChart.cshtml" />
     <Content Include="Views\Charts\SimulationTimeProgressBar.cshtml" />
+    <Content Include="Views\Charts\Partials\_StartSimulationModalPartial.cshtml" />
+    <Content Include="Views\Charts\Partials\_StartSimulationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -384,8 +386,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101211323347_db create.resx">
-      <DependentUpon>202101211323347_db create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101271107269_create db.resx">
+      <DependentUpon>202101271107269_create db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,4 @@
 ﻿//-------------Declare global Vars----------------------
-//var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor, cityDataHeadID, simulationID, simulationStartTime, simulationEndTime;
-//-------------------end-------------------------------
 var globals = {
     wsData: {},
     cubeRotationZ: 0.00,
@@ -9,7 +7,7 @@ var globals = {
     heightB: 0.00,
     heightC: 0.00,
     heightHY: 0.00,
-    cityDataHeadID: 1,
+    cityDataHeadID: 0,
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
@@ -20,7 +18,7 @@ const settings = {
     updateRate: 10000,
     heightFactor: 1
 }
-
+//-------------------end-------------------------------
 
 function connect() {
     var host = 'ws://localhost:8109/Connection';
@@ -76,17 +74,20 @@ $(function () {
     }, 1000);
 });
 
-
+//For the SimulationProgressBar
 $(function () {
     $.ajax({
-        url: '/Simulations/GetSimulationTitle',
+        url: '/Dashboard/GetSimulationTitle',
         type: 'GET',
         success: function (data) {
             if (data === "") {
                 return;
             }
+            //Bug Fix
             var header = document.getElementById('SimulationNameH2');
-            header.innerHTML = data;
+            if (header != null) {
+                header.innerHTML = data;
+            }                     
         }
     });
 })
