@@ -314,12 +314,12 @@ namespace VisualisationTests
         }
 
         [TestMethod]
-        [DataRow(-1)]
-        [DataRow(0)]
-        [DataRow(21)]
-        [DataRow(60)]
-        [DataRow(61)]
-        public void SimulationService_GetEnergyBalance(int minutesPassed)
+        [DataRow(-1, 0)]
+        [DataRow(0, -15)]
+        [DataRow(21, 36)]
+        [DataRow(60, 5)]
+        [DataRow(61, 0)]
+        public void SimulationService_GetEnergyBalance(int minutesPassed, int expectedValue)
         {
             SimScenario scenario = getValidTestScenario();
             TimeSpan duration = new TimeSpan(1, 0, 0);
@@ -328,22 +328,7 @@ namespace VisualisationTests
             service.Run(scenario, duration);
             DateTime testRealTime = service.StartDateTimeReal.Value + new TimeSpan(0, minutesPassed, 0);
 
-            int windValue = service.GetEnergyProductionWind(testRealTime) * service.MaxEnergyProductionWind;
-            int sunValue = service.GetEnergyProductionSun(testRealTime) * service.MaxEnergyProductionSun;
-            int consumptionValue = service.GetEnergyConsumption(testRealTime) * service.MaxEnergyConsumption;
-
-            int balanceValue = windValue + sunValue - consumptionValue;
-            int result;
-            if (balanceValue >= 0)
-            {
-                result = (int)InterpolationHelper.InverseLerp(0, service.MaxEnergyProductionWind + service.MaxEnergyProductionSun, balanceValue);
-            }
-            else
-            {
-                result = (int)InterpolationHelper.InverseLerp(0, service.MaxEnergyConsumption, balanceValue);
-            }
-
-            Assert.AreEqual(result, service.GetEnergyBalance(testRealTime));
+            Assert.AreEqual(expectedValue, service.GetEnergyBalance(testRealTime));
         }
 
         [TestMethod]
