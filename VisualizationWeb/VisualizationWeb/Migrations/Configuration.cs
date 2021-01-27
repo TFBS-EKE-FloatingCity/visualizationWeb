@@ -23,21 +23,7 @@ namespace VisualizationWeb.Migrations
             //  to avoid creating duplicate seed data.
 
             #region Adding User Roles & Administrator
-            if (context.Roles.Find("3") != null)
-            {
-                context.Roles.Remove(context.Roles.Find("3"));
-            }
-
-            if (context.Roles.Find("2") != null)
-            {
-                context.Roles.Remove(context.Roles.Find("2"));
-            }
-
-            if (context.Roles.Find("1") != null)
-            {
-                context.Roles.Remove(context.Roles.Find("1"));
-            }
-
+           
             var roleAdmin = (from role in context.Roles
                              where role.Name == "Admin"
                              select role).FirstOrDefault();
