@@ -26,10 +26,7 @@ namespace VisualizationWeb.Models
         {
         }
 
-        public virtual DbSet<SimData> SimDatas { get; set; }
-        public virtual DbSet<SimType> SimTypes { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
-        public virtual DbSet<SimulationHistory> SimulationHistories { get; set; }
         public virtual DbSet<SimScenario> SimScenarios { get; set; }
         public virtual DbSet<SimPosition> SimPositions { get; set; }
         public virtual DbSet<CityData> CityDatas { get; set; }

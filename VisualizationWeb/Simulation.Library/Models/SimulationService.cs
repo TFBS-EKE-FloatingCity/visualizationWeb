@@ -322,14 +322,14 @@ namespace Simulation.Library.Models
             int sunValue = GetEnergyProductionSun(timeStamp) * MaxEnergyProductionSun;
             int consumptionValue = GetEnergyConsumption(timeStamp) * MaxEnergyConsumption;
 
-            int? balanceValue = windValue + sunValue - consumptionValue;
+            int balanceValue = windValue + sunValue - consumptionValue;
             if (balanceValue >= 0)
             {
-                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value);
+                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue);
             }
             else
             {
-                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value);
+                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue);
             }
         }
 
