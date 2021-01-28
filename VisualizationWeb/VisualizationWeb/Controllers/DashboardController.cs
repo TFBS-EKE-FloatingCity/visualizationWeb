@@ -18,7 +18,7 @@ namespace VisualizationWeb.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private object lobject = new object();
         //For the ProgressBar
-        private SimStartViewModel _currentScenario;
+        private static SimStartViewModel _currentScenario;
 
         private ISimulationRepository _simulationRepository;
         public ISimulationRepository SimulationRepository
@@ -41,7 +41,7 @@ namespace VisualizationWeb.Controllers
 
         public DashboardController()
         {
-            ViewBag.ActiveNav = "dashboard";
+            ViewBag.ActiveNav = "dashboard";            
         }
 
         // GET: Dashboard
@@ -56,7 +56,7 @@ namespace VisualizationWeb.Controllers
         }
 
         public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
-        {
+        {            
             var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
             _currentScenario = vm;
             simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
@@ -75,11 +75,12 @@ namespace VisualizationWeb.Controllers
         }
 
         public string GetSimulationTitle()
-        {
+        {            
             if (_currentScenario is null)
             {
                 return "No Simulation started";
             }
+            ViewBag.Started = true;
             return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
         }
     }

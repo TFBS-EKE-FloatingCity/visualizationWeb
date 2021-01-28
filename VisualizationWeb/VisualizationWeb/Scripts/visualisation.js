@@ -52,6 +52,8 @@ function connect() {
 }
 connect();
 
+
+// Progressbar
 $(function () {
     var currentProgress = 0;
     var interval = setInterval(function () {
@@ -62,19 +64,20 @@ $(function () {
         var diff = endTime.getTime() - startTime.getTime();
         var diffNow = endTime.getTime() - now.getTime();
 
-        var actualTime = Math.round((100.00 - ((diffNow / diff) * 100))).toFixed(2);
+        //var actualTime = Math.round((100.00 - ((diffNow / diff) * 100))).toFixed(2);
+        var actualTime = Math.round(100.00 - (diffNow / diff) * 100).toFixed(2);
         currentProgress = actualTime;
 
         $("#simulationTimeProgressBar")
             .css("width", actualTime + "%")
             .attr("aria-valuenow", currentProgress)
-            .text(currentProgress + "% Complete");
+            .text(Math.trunc(currentProgress) + "% Complete");
         if (currentProgress >= 100)
             clearInterval(interval);
-    }, 1000);
+    }, 1000); // 1000
 });
 
-//For the SimulationProgressBar
+// Simulation title
 $(function () {
     $.ajax({
         url: '/Dashboard/GetSimulationTitle',
