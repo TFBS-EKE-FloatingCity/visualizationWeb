@@ -98,7 +98,7 @@ namespace VisualizationWeb.Controllers
                 return RedirectToAction($"Details/{vm.SimScenarioID}");
             }
 
-            return View();
+            return PartialView("PartialViews/PartialPositionCreate", vm);
         }
 
         public async Task<ActionResult> RemoveSimPosition(int? simPositionId, int? simScenarioId)
