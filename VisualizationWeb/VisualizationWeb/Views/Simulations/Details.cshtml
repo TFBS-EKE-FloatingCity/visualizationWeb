@@ -4,9 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Scenario Overview</h2>
+<h2>Details</h2>
 
 <div>
+    <h4>Szenario Detail</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,7 +18,7 @@
         </dd>
 
         <dt>
-             @Html.DisplayNameFor(model => model.StartDate)
+            @Html.DisplayNameFor(model => model.StartDate)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.StartDate)
@@ -50,21 +51,21 @@
 
             @if (Model.SimPositions?.Count() > 0)
             {
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().SunValue)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().WindValue)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyConsumptionValue)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().TimeRegistered)
-                </th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().SunValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().WindValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyConsumptionValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().TimeRegistered)
+                    </th>
+                    <th></th>
+                </tr>
                 foreach (var cs in Model.SimPositions)
                 {
                     <tr>
@@ -81,7 +82,7 @@
                             @Html.Label(cs.TimeRegistered.ToShortTimeString())
                         </td>
                         <td>
-                            @Html.ActionLink("Delete", "RemoveSimPosition", new { simPositionId = cs.SimPositionID, simScenarioId = Model.SimScenarioID })
+                            @Html.ActionLink("Remove", "RemoveSimPosition", new { simPositionId = cs.SimPositionID, simScenarioId = Model.SimScenarioID })
                         </td>
                     </tr>
                 }
@@ -91,7 +92,7 @@
                 <tr>
                     <td>
                         <p class="text-info">
-                            No Positions in Scenario!
+                            Das Szenario enthält keine Positionen!
                         </p>
                     </td>
                 </tr>
@@ -117,3 +118,4 @@
             </div>
         </div>
     </div>
+

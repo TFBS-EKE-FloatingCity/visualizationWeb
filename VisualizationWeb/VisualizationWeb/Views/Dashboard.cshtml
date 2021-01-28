@@ -26,14 +26,14 @@
     </div>
 
     @{
-        if (User != null)
-        {
-            if (User.IsInRole("Admin") || User.IsInRole("Simulant"))
-            {
+        if (User != null) {
+            <div class="col-md-2">
+                @Html.Partial("../Charts/Partials/_StartSimulationModalPartial")
+            </div>
 
-                <div class="col-md-2">
-                    @Html.Partial("../Charts/Partials/_StartSimulationModalPartial")
-                </div>
+            if (User.IsInRole("Admin") || User.IsInRole("Simulant")) {
+
+
             }
         }
     }
