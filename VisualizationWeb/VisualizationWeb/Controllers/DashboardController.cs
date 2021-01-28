@@ -65,7 +65,7 @@ namespace VisualizationWeb.Controllers
             return RedirectToAction("../Dashboard");
         }
 
-        [Authorize(Roles = "Admin, Simulant")]
+        //[Authorize(Roles = "Admin, Simulant")]
         public async Task<ActionResult> PartialSimulationStart()
         {
             SimStartViewModel vm = new SimStartViewModel();
