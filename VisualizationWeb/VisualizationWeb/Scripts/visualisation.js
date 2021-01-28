@@ -221,6 +221,9 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
 
     heightData.heightHY = Math.round((((heightData.heightA + heightData.heightB + heightData.heightC) / 3) + Number.EPSILON) * 100) / 100;
 
+    globals.cubeRotationX = cubeRotationX;
+    globals.cubeRotationZ = cubeRotationZ;
+
     //oldHeight = newHeight;
 
     return heightData;
