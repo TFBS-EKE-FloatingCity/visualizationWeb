@@ -57,6 +57,7 @@ namespace VisualizationWeb.Helpers {
                 CityData data = new CityData();
 
                 data.UUID = jsonData.uuid;
+                data.CityDataHeadID = SingletonHolder.CurrentCityDataHeadID;
 
                 foreach (var module in jsonData.payload.modules) {
                     if (module.sector == "One") {

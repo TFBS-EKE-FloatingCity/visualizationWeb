@@ -24,6 +24,8 @@ namespace VisualizationWeb.Models.IRepo
         Task RemovePosition(int positionID);
         Task<SimScenario> GetSimScenarioByID(int simScenarioID);
         Task<IList<vmSelectListItem>> SimScenarioSelect();
+        string GetSimulationTitle(int simScenarionID);
+
         Task<IEnumerable<SimPosition>> GetSimPositionsByID(int id);
         Task<Setting> GetSimulationSetting();
         Task SaveSetting(Setting setting);

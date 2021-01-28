@@ -185,5 +185,13 @@ namespace VisualizationWeb.Models.Repo
             _context.Settings.AddOrUpdate(setting);
             await _context.SaveChangesAsync();
         }
+
+        public string GetSimulationTitle(int simScenarionID)
+        {
+            return (from c in _context.SimScenarios
+                    orderby c.Title
+                    where c.SimScenarioID == simScenarionID
+                    select c.Title).Single();
+        }
     }
 }

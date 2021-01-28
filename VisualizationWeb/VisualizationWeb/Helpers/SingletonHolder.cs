@@ -38,6 +38,10 @@ namespace VisualizationWeb.Helpers {
             db.CityDataHeads.Add(head);
             db.SaveChanges();
 
+            head.CityDataHeadID = (from cdh in db.CityDataHeads
+                                   orderby cdh.CityDataHeadID descending
+                                   select cdh.CityDataHeadID).FirstOrDefault();
+
             currentCityDataHeadID = head.CityDataHeadID;
             CurrentCityDataHead = head;
 
@@ -67,6 +71,7 @@ namespace VisualizationWeb.Helpers {
             db.SaveChanges();
 
             CurrentCityDataHead = null;
+            currentCityDataHeadID = null;
 
             server.SendData(JsonConvert.SerializeObject(head));
         }
