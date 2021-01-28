@@ -18,7 +18,7 @@ namespace VisualizationWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private object lobject = new object();
-        private SimStartViewModel _currentScenario;
+     
 
         private ISimulationRepository _simulationRepository;
         public ISimulationRepository SimulationRepository
@@ -127,29 +127,23 @@ namespace VisualizationWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
-        {
-            _currentScenario = vm;
-            Helpers.SingletonHolder.StartSimulation(await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID), vm.Duration);
+        //STFR: Uncomment if you want to Start the Simulation in Simulation View directly!
+        //public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
+        //{
+           
+        //    Helpers.SingletonHolder.StartSimulation(await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID), vm.Duration);
 
-            return RedirectToAction("Index");
-        }
+        //    return RedirectToAction("Index");
+        //}
 
-        public async Task<ActionResult> PartialSimulationStart()
-        {
-            SimStartViewModel vm = new SimStartViewModel();
-            ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
+        //public async Task<ActionResult> PartialSimulationStart()
+        //{
+        //    SimStartViewModel vm = new SimStartViewModel();
+        //    ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
 
-            return PartialView("PartialViews/PartialSimulationStart", vm);
-        }
+        //    return PartialView("PartialViews/PartialSimulationStart", vm);
+        //}
 
-        public string GetSimulationTitle()
-        {
-            if (_currentScenario is null)
-            {
-                return "No Simulation started";
-            }
-            return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
-        }
+       
     }
 }

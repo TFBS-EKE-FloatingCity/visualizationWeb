@@ -20,5 +20,9 @@ namespace VisualizationWeb.Models
         [Display(Name = "Maximum Consumption")]
         [Range(0, Int32.MaxValue)]
         public int ConsumptionMax { get; set; }
+
+        [StringLength(500)]
+        [Display(Name = "Connection String to Raspberry")]
+        public string rbPiConnectionString { get; set; }
     }
 }

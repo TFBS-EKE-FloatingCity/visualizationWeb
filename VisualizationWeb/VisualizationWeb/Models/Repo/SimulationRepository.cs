@@ -9,6 +9,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.IRepo;
 using VisualizationWeb.Models.ViewModel;
@@ -164,7 +165,7 @@ namespace VisualizationWeb.Models.Repo
             return await select.ToListAsync();
         }
 
-        public async Task<Setting> GetSimulationSetting()
+        public Setting GetSimulationSetting()
         {
             Setting setting = _context.Settings.FirstOrDefault();
             if(setting != null)
@@ -182,6 +183,13 @@ namespace VisualizationWeb.Models.Repo
 
         public async Task SaveSetting(Setting setting)
         {
+            Setting settingComparison = GetSimulationSetting();
+
+            //Neustarten des Websocketclients wenn die Daten geändert wurden
+            if (settingComparison.rbPiConnectionString != setting.rbPiConnectionString) {
+                SingletonHolder.RestartWebsocketClient();
+            }
+
             _context.Settings.AddOrUpdate(setting);
             await _context.SaveChangesAsync();
         }

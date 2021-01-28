@@ -1,6 +1,4 @@
 ﻿//-------------Declare global Vars----------------------
-//var updateRate, wsData, cubeRotationZ, cubeRotationX, heightA, heightB, heightC, heightHY, heightFactor, cityDataHeadID, simulationID, simulationStartTime, simulationEndTime;
-//-------------------end-------------------------------
 var globals = {
     wsData: {},
     cubeRotationZ: 0.00,
@@ -9,7 +7,7 @@ var globals = {
     heightB: 0.00,
     heightC: 0.00,
     heightHY: 0.00,
-    cityDataHeadID: 1,
+    cityDataHeadID: 0,
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
@@ -20,7 +18,7 @@ const settings = {
     updateRate: 10000,
     heightFactor: 1
 }
-
+//-------------------end-------------------------------
 
 function connect() {
     var host = 'ws://localhost:8109/Connection';
@@ -54,6 +52,8 @@ function connect() {
 }
 connect();
 
+
+// Progressbar
 $(function () {
     var currentProgress = 0;
     var interval = setInterval(function () {
@@ -64,29 +64,33 @@ $(function () {
         var diff = endTime.getTime() - startTime.getTime();
         var diffNow = endTime.getTime() - now.getTime();
 
-        var actualTime = Math.round((100.00 - ((diffNow / diff) * 100))).toFixed(2);
+        //var actualTime = Math.round((100.00 - ((diffNow / diff) * 100))).toFixed(2);
+        var actualTime = Math.round(100.00 - (diffNow / diff) * 100).toFixed(2);
         currentProgress = actualTime;
 
         $("#simulationTimeProgressBar")
             .css("width", actualTime + "%")
             .attr("aria-valuenow", currentProgress)
-            .text(currentProgress + "% Complete");
+            .text(Math.trunc(currentProgress) + "% Complete");
         if (currentProgress >= 100)
             clearInterval(interval);
-    }, 1000);
+    }, 1000); // 1000
 });
 
-
+// Simulation title
 $(function () {
     $.ajax({
-        url: '/Simulations/GetSimulationTitle',
+        url: '/Dashboard/GetSimulationTitle',
         type: 'GET',
         success: function (data) {
             if (data === "") {
                 return;
             }
+            //Bug Fix
             var header = document.getElementById('SimulationNameH2');
-            header.innerHTML = data;
+            if (header != null) {
+                header.innerHTML = data;
+            }                     
         }
     });
 })
@@ -216,6 +220,9 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     };
 
     heightData.heightHY = Math.round((((heightData.heightA + heightData.heightB + heightData.heightC) / 3) + Number.EPSILON) * 100) / 100;
+
+    globals.cubeRotationX = cubeRotationX;
+    globals.cubeRotationZ = cubeRotationZ;
 
     //oldHeight = newHeight;
 

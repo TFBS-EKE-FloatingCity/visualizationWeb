@@ -17,6 +17,8 @@ namespace VisualizationWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private object lobject = new object();
+        //For the ProgressBar
+        private static SimStartViewModel _currentScenario;
 
         private ISimulationRepository _simulationRepository;
         public ISimulationRepository SimulationRepository
@@ -39,7 +41,7 @@ namespace VisualizationWeb.Controllers
 
         public DashboardController()
         {
-            ViewBag.ActiveNav = "dashboard";
+            ViewBag.ActiveNav = "dashboard";            
         }
 
         // GET: Dashboard
@@ -54,21 +56,32 @@ namespace VisualizationWeb.Controllers
         }
 
         public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
-        {
+        {            
             var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
+            _currentScenario = vm;
             simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
             Helpers.SingletonHolder.StartSimulation(simScenarioID, vm.Duration);
 
             return RedirectToAction("../Dashboard");
         }
 
-        [Authorize(Roles = "Admin, Simulant")]
+        //[Authorize(Roles = "Admin, Simulant")]
         public async Task<ActionResult> PartialSimulationStart()
         {
             SimStartViewModel vm = new SimStartViewModel();
             ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
 
             return PartialView("../Charts/Partials/_StartSimulationPartial", vm);
+        }
+
+        public string GetSimulationTitle()
+        {            
+            if (_currentScenario is null)
+            {
+                return "No Simulation started";
+            }
+            ViewBag.Started = true;
+            return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
         }
     }
 }

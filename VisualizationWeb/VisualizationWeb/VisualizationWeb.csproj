@@ -207,9 +207,9 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202101211323347_db create.cs" />
-    <Compile Include="Migrations\202101211323347_db create.designer.cs">
-      <DependentUpon>202101211323347_db create.cs</DependentUpon>
+    <Compile Include="Migrations\202101271107269_create db.cs" />
+    <Compile Include="Migrations\202101271107269_create db.Designer.cs">
+      <DependentUpon>202101271107269_create db.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202101261411541_SettingsRework.cs" />
     <Compile Include="Migrations\202101261411541_SettingsRework.designer.cs">
@@ -218,6 +218,10 @@
     <Compile Include="Migrations\202101270819247_ClearedUnusedModel.cs" />
     <Compile Include="Migrations\202101270819247_ClearedUnusedModel.Designer.cs">
       <DependentUpon>202101270819247_ClearedUnusedModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101281332297_Settingaddition.cs" />
+    <Compile Include="Migrations\202101281332297_Settingaddition.Designer.cs">
+      <DependentUpon>202101281332297_Settingaddition.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -340,6 +344,9 @@
     <Content Include="Views\Charts\EnergyBalanceChart.cshtml" />
     <Content Include="Views\Charts\ViewCityRotationChart.cshtml" />
     <Content Include="Views\Charts\SimulationTimeProgressBar.cshtml" />
+    <Content Include="Views\Charts\Partials\_StartSimulationModalPartial.cshtml" />
+    <Content Include="Views\Charts\Partials\_StartSimulationPartial.cshtml" />
+    <Content Include="Views\Charts\Partials\_SimulationTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,14 +371,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101211323347_db create.resx">
-      <DependentUpon>202101211323347_db create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101271107269_create db.resx">
+      <DependentUpon>202101271107269_create db.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101261411541_SettingsRework.resx">
       <DependentUpon>202101261411541_SettingsRework.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101270819247_ClearedUnusedModel.resx">
       <DependentUpon>202101270819247_ClearedUnusedModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101281332297_Settingaddition.resx">
+      <DependentUpon>202101281332297_Settingaddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -47,20 +47,23 @@ namespace VisualizationWeb.Controllers
 
         // GET: Settings
         //[Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await SimulationRepository.GetSimulationSetting());
+            return View(SimulationRepository.GetSimulationSetting());
         }
 
         // POST: Settings/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive")] Setting setting)
+        public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive, rbPiConnectionString")] Setting setting)
         {
             if (ModelState.IsValid)
             {
                 await SimulationRepository.SaveSetting(setting);
+
+                SingletonHolder.UpdateSimulationSettings(setting);
+
                 return RedirectToAction("../Dashboard");
             }
 
