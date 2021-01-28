@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Simulation.Library.Calculations;
+using Simulation.Library.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,11 +91,10 @@ namespace Simulation.Library.Models
         #endregion
 
         #region Constructor
-        public SimulationService()
+        public SimulationService(ISimulationServiceSettings settings)
         {
             SetIdleValues(0, 0, 0);
-            readConfig();
-            //readConfig(@"SimulationServiceConfig.json");
+            SetSettings(settings);
             _timer = new Timer();
             _timeFactor = 1;
         }
@@ -102,22 +102,23 @@ namespace Simulation.Library.Models
 
         #region Methods
         /// <summary>
-        /// Reads the maximum values from the SimulationServiceConfig.json and writes it to the fields.
+        /// Sets the maximum values for the Service.
         /// </summary>
-        private void readConfig(string configPath = "")
+        /// <param name="settings">The containing settings.</param>
+        public void SetSettings(ISimulationServiceSettings settings)
         {
-
-            JObject jdata = JObject.Parse(SimulationServiceConfig.Config);
-            _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
-            _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
-            _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
-
-            //using (StreamReader reader = new StreamReader(configPath)) {
-            //    JObject jdata = JObject.Parse(reader.ReadToEnd());
-            //    _maxEnergyConsumption = jdata["SimulationData"]["Consumption"]["Maximum"].ToObject<int>();
-            //    _maxEnergyProductionSun = jdata["SimulationData"]["Sun"]["Maximum"].ToObject<int>();
-            //    _maxEnergyProductionWind = jdata["SimulationData"]["Wind"]["Maximum"].ToObject<int>();
-            //}
+            if(settings == null)
+            {
+                _maxEnergyConsumption = 0;
+                _maxEnergyProductionSun = 0;
+                _maxEnergyProductionWind = 0;
+            }
+            else
+            {
+                _maxEnergyConsumption = settings.ConsumptionMax;
+                _maxEnergyProductionSun = settings.SunMax;
+                _maxEnergyProductionWind = settings.WindMax;
+            }
         }
 
         /// <summary>
@@ -196,9 +197,12 @@ namespace Simulation.Library.Models
             {
                 return null;
             }
-            decimal factor = CalculationHelper.InverseLerp(0, Duration.Ticks, timeStamp.Ticks - StartDateTimeReal.Value.Ticks);          //Calculates the percentage of how far the simulation is in the real time
-            decimal simTimeTicksValue = CalculationHelper.Lerp(_simScenario.StartDate.Value.Ticks, _simScenario.EndDate.Value.Ticks, factor);   //Translates the percentage value to the actual time value in the simulated time span
-            return new DateTime((long)simTimeTicksValue);
+
+            return new DateTime((long)InterpolationHelper.GetValue(StartDateTimeReal.Value.Ticks, 
+                _simScenario.StartDate.Value.Ticks, 
+                EndDateTimeReal.Value.Ticks, 
+                _simScenario.EndDate.Value.Ticks, 
+                timeStamp.Ticks));
         }
 
 
@@ -215,7 +219,7 @@ namespace Simulation.Library.Models
                 return _idleEnergyProductionWind;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+            return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.WindValue,
                 _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.WindValue,
@@ -235,7 +239,7 @@ namespace Simulation.Library.Models
                 return _idleEnergyProductionSun;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+            return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.SunValue,
                 _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.SunValue,
@@ -255,7 +259,7 @@ namespace Simulation.Library.Models
                 return _idleEnergyConsumption;
             }
 
-            return CalculationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
+            return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
                 _prevPosition.EnergyConsumptionValue,
                 _nextPosition.TimeRegistered.Ticks,
                 _nextPosition.EnergyConsumptionValue,
@@ -308,32 +312,24 @@ namespace Simulation.Library.Models
         }
 
         /// <summary>
-        /// Returns the actual StartedDateTime. Null if the Simulation is not running.
-        /// </summary>
-        public DateTime? GetSimulationStartedTimeStamp()
-        {
-            return _startDateTimeReal;
-        }
-
-        /// <summary>
         /// Calculates the energy balance for the given timeStamp. Negativ if the Consumption is higher than the production of Sun and Wind.
         /// </summary>
         /// <param name="timeStamp"></param>
         /// <returns>The simulated energy balance. Returns idle values if no Simulation is running.</returns>
         public int GetEnergyBalance(DateTime timeStamp)
         {
-            int windValue = GetEnergyProductionWind(timeStamp);
-            int sunValue = GetEnergyProductionSun(timeStamp);
-            int consumptionValue = GetEnergyConsumption(timeStamp);
+            int windValue = GetEnergyProductionWind(timeStamp) * MaxEnergyProductionWind;
+            int sunValue = GetEnergyProductionSun(timeStamp) * MaxEnergyProductionSun;
+            int consumptionValue = GetEnergyConsumption(timeStamp) * MaxEnergyConsumption;
 
-            int? balanceValue = windValue + sunValue - consumptionValue;
+            int balanceValue = windValue + sunValue - consumptionValue;
             if (balanceValue >= 0)
             {
-                return (int)CalculationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue.Value);
+                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue);
             }
             else
             {
-                return (int)CalculationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue.Value);
+                return (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue);
             }
         }
 
@@ -355,7 +351,7 @@ namespace Simulation.Library.Models
 
             _simScenario = scenario;
             _duration = duration;
-            _timeFactor = CalculationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
+            _timeFactor = InterpolationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
             _timer.Interval = duration.TotalMilliseconds;
             _timer.Elapsed += onSimDurationElapsed;
             return true;

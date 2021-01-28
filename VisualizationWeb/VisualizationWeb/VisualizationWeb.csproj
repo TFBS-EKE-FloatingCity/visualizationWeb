@@ -194,20 +194,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\APISimulationController.cs" />
     <Compile Include="Controllers\APIVDashboardController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SimDatasController.cs" />
-    <Compile Include="Controllers\SimTypesController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\SeedSimHelper.cs" />
-    <Compile Include="Helpers\SimulationHelper.cs" />
     <Compile Include="Helpers\SingletonHolder.cs" />
     <Compile Include="Helpers\UnitCalc.cs" />
     <Compile Include="Helpers\WebSocketClient.cs" />
@@ -216,6 +210,18 @@
     <Compile Include="Migrations\202101271107269_create db.cs" />
     <Compile Include="Migrations\202101271107269_create db.Designer.cs">
       <DependentUpon>202101271107269_create db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101261411541_SettingsRework.cs" />
+    <Compile Include="Migrations\202101261411541_SettingsRework.designer.cs">
+      <DependentUpon>202101261411541_SettingsRework.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101270819247_ClearedUnusedModel.cs" />
+    <Compile Include="Migrations\202101270819247_ClearedUnusedModel.Designer.cs">
+      <DependentUpon>202101270819247_ClearedUnusedModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101281332297_Settingaddition.cs" />
+    <Compile Include="Migrations\202101281332297_Settingaddition.Designer.cs">
+      <DependentUpon>202101281332297_Settingaddition.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -226,13 +232,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Repo\SimulationRepository.cs" />
     <Compile Include="Models\Setting.cs" />
-    <Compile Include="Models\SimData.cs" />
-    <Compile Include="Models\SimType.cs" />
-    <Compile Include="Models\SimulationHistory.cs" />
     <Compile Include="Models\ViewModel\JsonDataVM.cs" />
     <Compile Include="Models\ViewModel\JsonResponseVM.cs" />
-    <Compile Include="Models\ViewModel\SettingVM.cs" />
-    <Compile Include="Models\ViewModel\SimulationTimesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -292,9 +293,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Layouts\_AppLayout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -318,25 +316,12 @@
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Settings\Edit.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
-    <Content Include="Views\SimDatas\Create.cshtml" />
-    <Content Include="Views\SimDatas\Delete.cshtml" />
-    <Content Include="Views\SimDatas\Details.cshtml" />
-    <Content Include="Views\SimDatas\Edit.cshtml" />
-    <Content Include="Views\SimDatas\Index.cshtml" />
-    <Content Include="Views\SimTypes\Create.cshtml" />
-    <Content Include="Views\SimTypes\Delete.cshtml" />
-    <Content Include="Views\SimTypes\Details.cshtml" />
-    <Content Include="Views\SimTypes\Edit.cshtml" />
-    <Content Include="Views\SimTypes\Index.cshtml" />
     <Content Include="Views\Dashboard.cshtml" />
     <Content Include="Views\Charts\PumpsChart.cshtml" />
-    <Content Include="Views\SimDatas\EditModal.cshtml" />
     <Content Include="Views\Charts\WindChart.cshtml" />
     <Content Include="Views\Charts\CityRotationChart.cshtml" />
     <Content Include="Views\Charts\PowerChart.cshtml" />
-    <Content Include="Views\SimTypes\ModalPartial.cshtml" />
     <Content Include="Views\Simulations\Index.cshtml" />
     <Content Include="Views\Simulations\Details.cshtml" />
     <Content Include="Views\Simulations\Delete.cshtml" />
@@ -365,7 +350,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\APISimData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -389,6 +373,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101271107269_create db.resx">
       <DependentUpon>202101271107269_create db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101261411541_SettingsRework.resx">
+      <DependentUpon>202101261411541_SettingsRework.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101270819247_ClearedUnusedModel.resx">
+      <DependentUpon>202101270819247_ClearedUnusedModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101281332297_Settingaddition.resx">
+      <DependentUpon>202101281332297_Settingaddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

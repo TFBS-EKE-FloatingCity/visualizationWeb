@@ -5,11 +5,14 @@ using Simulation.Library.ViewModels.SimScenarioVM;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.IRepo;
+using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Models.Repo
 {
@@ -160,6 +163,35 @@ namespace VisualizationWeb.Models.Repo
                              DisplayMember = c.Title
                          };
             return await select.ToListAsync();
+        }
+
+        public Setting GetSimulationSetting()
+        {
+            Setting setting = _context.Settings.FirstOrDefault();
+            if(setting != null)
+            {
+                return setting;
+            }
+            return new Setting
+            {
+                SettingID = 1,
+                WindMax = 0,
+                SunMax = 0,
+                ConsumptionMax = 0
+            };
+        }
+
+        public async Task SaveSetting(Setting setting)
+        {
+            Setting settingComparison = GetSimulationSetting();
+
+            //Neustarten des Websocketclients wenn die Daten geändert wurden
+            if (settingComparison.rbPiConnectionString != setting.rbPiConnectionString) {
+                SingletonHolder.RestartWebsocketClient();
+            }
+
+            _context.Settings.AddOrUpdate(setting);
+            await _context.SaveChangesAsync();
         }
 
         public string GetSimulationTitle(int simScenarionID)

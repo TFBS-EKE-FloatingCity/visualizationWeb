@@ -8,6 +8,7 @@ using Simulation.Library.Models;
 using Simulation.Library.ViewModels;
 using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
+using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Models.IRepo
 {
@@ -26,6 +27,8 @@ namespace VisualizationWeb.Models.IRepo
         string GetSimulationTitle(int simScenarionID);
 
         Task<IEnumerable<SimPosition>> GetSimPositionsByID(int id);
+        Setting GetSimulationSetting();
+        Task SaveSetting(Setting setting);
 
     }
 }
