@@ -21,16 +21,30 @@ namespace VisualizationWeb.Helpers {
         WebsocketServer websocketserver;
         SimulationService simService;
 
-        Uri url = new Uri(ConfigurationManager.AppSettings["RaspberryWebsocketConnectionString"]);
+        Uri url;
         public static SocketIoClient client = new SocketIoClient();
 
-        public WebSocketClient(WebsocketServer server, SimulationService simService) {
+        public WebSocketClient(WebsocketServer server, SimulationService simService, string connectionString) {
             this.websocketserver = server;
             this.simService = simService;
+
+            if (connectionString != null) {
+                url = new Uri(connectionString);
+            }
         }
 
         public void Connect() {
-            client.ConnectAsync(url);
+            if (url != null) {
+                client.ConnectAsync(url);
+            }
+        }
+
+        public void ReConnect() {
+            client.DisconnectAsync();
+
+            if (url != null) {
+                client.ConnectAsync(url);
+            }
         }
 
         public void RegisterEvents() {

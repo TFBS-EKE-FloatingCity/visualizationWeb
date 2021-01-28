@@ -219,6 +219,10 @@
     <Compile Include="Migrations\202101270819247_ClearedUnusedModel.Designer.cs">
       <DependentUpon>202101270819247_ClearedUnusedModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101281332297_Settingaddition.cs" />
+    <Compile Include="Migrations\202101281332297_Settingaddition.Designer.cs">
+      <DependentUpon>202101281332297_Settingaddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityData.cs" />
@@ -372,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101270819247_ClearedUnusedModel.resx">
       <DependentUpon>202101270819247_ClearedUnusedModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101281332297_Settingaddition.resx">
+      <DependentUpon>202101281332297_Settingaddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
