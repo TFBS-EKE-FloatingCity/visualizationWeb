@@ -10,7 +10,7 @@ var cubeWaterLengths = {
     depth: 4,
 };
 
-var translateYValue = 2;
+var translateYValue = .7; // max: .8, min: .62
 
 var height = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
 var width = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
@@ -53,8 +53,6 @@ var cube = new THREE.Mesh(geometry, material);
 //Adds cube to the scene
 // scene.add(cube);
 
-translateYCube(cubeLengths.height);
-
 // water
 var waterGeometry = new THREE.BoxGeometry(cubeWaterLengths.width, cubeWaterLengths.height, cubeWaterLengths.depth);
 //Material to apply to the cube (green)
@@ -78,15 +76,17 @@ loader.load(
     '/StaticFiles/3d-model/scene.gltf',
     // called when the resource is loaded
     function (gltf) {
+        // scale 3d model
         gltf.scene.scale.x = .0009;
         gltf.scene.scale.y = .0009;
         gltf.scene.scale.z = .0009;
 
+        // position 3d model in middle
         gltf.scene.position.x = 0.4;
-        gltf.scene.position.y = .7;
+        gltf.scene.position.y = translateYValue;
         gltf.scene.position.z = .4;
 
-        cube = gltf.scene;
+        cube = gltf.scene; 
 
         scene.add(gltf.scene);
     },
@@ -117,11 +117,43 @@ function render() {
     requestAnimationFrame(render);
     renderer.render(scene, camera);
 
+
     if (globals.cubeRotationZ
         && globals.cubeRotationX) {
-        cube.rotation.z = globals.cubeRotationZ;
-        cube.rotation.x = globals.cubeRotationX;
-        // cube.translateY(newHeight - oldHeight); TODO: fix height values
+        // update rotation of y-axis
+        if (cube.rotation.z < globals.cubeRotationZ) {
+            cube.rotation.z += 0.0001; 
+        }
+
+        if (cube.rotation.z > globals.cubeRotationZ) {
+            cube.rotation.z -= 0.0001;
+        }
+
+        // update rotation of x-axis 
+        if (cube.rotation.x < globals.cubeRotationX) {
+            cube.rotation.x += 0.0001;
+        }
+
+        if (cube.rotation.x > globals.cubeRotationX) {
+            cube.rotation.x -= 0.0001;
+        }
+
+        // 400mm maxHeight => 100%
+        // 0.18 max-y-axis addition => 100%
+        // calculate percent for height
+        var percentHeightIncreaseFromZero = currentHeight / 400 * 100;
+        var newTranslateYValue = .62 + 0.18 / 100 * percentHeightIncreaseFromZero;
+
+        console.log(newTranslateYValue);
+
+        // update height of model
+        if (translateYValue < newTranslateYValue) {
+           translateYCube(0.0001);
+        }
+
+        if (translateYValue > newTranslateYValue) {
+           translateYCube(-0.0001);
+        }
     }
 
     if (shouldRotate) {
@@ -130,60 +162,6 @@ function render() {
 }
 
 render();
-
-// updateModelRotation(sensors);
-
-//function updateModelRotation2(sensors) {
-//    var radiant;
-
-//    if (sensors.a === sensors.b) {
-//        // sensors a and b are even
-//        cube.rotation.z = +0.0;
-//    }
-
-//    if (sensors.a === sensors.c) {
-//        // sensors a and c are even
-//        cube.rotation.x = +0.0;
-//    }
-
-//    if (sensors.b > sensors.a) {
-//        // B > A
-//        radiant = (-1) * Math.atan((sensors.b - sensors.a) / cubeLengths.width);
-//        cube.rotation.z = radiant;
-//    }
-
-//    if (sensors.a > sensors.b) {
-//        // A > B
-//        radiant = Math.atan((sensors.a - sensors.b) / cubeLengths.width);
-//        cube.rotation.z = radiant;
-//    }
-
-//    if (sensors.a > sensors.c) {
-//        // A > C
-//        radiant = (-1) * Math.atan((sensors.a - sensors.c) / cubeLengths.width);
-//        cube.rotation.x = radiant;
-//    }
-
-//    if (sensors.c > sensors.a) {
-//        // C > A
-//        radiant = Math.atan((sensors.c - sensors.a) / cubeLengths.width);
-//        cube.rotation.x = radiant;
-//    }
-
-//    // set height
-//    var heights = {
-//        a: sensors.a * Math.cos(Math.abs(cube.rotation.z)),
-//        b: sensors.b * Math.cos(Math.abs(cube.rotation.z)),
-//        c: sensors.c * Math.cos(Math.abs(cube.rotation.x)),
-//    };
-
-//    var newHeight = (heights.a + heights.b + heights.c) / 3 + cubeLengths.height;
-
-//    cube.translateY(newHeight - translateYValue);
-//    translateYValue = newHeight;
-
-//    updateForms();
-//}
 
 function getRadiantFromDegree(degree) {
     return degree * Math.PI / 180;

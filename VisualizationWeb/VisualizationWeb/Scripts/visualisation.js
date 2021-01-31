@@ -16,8 +16,13 @@ var globals = {
 
 const settings = {
     updateRate: 10000,
-    heightFactor: 1
+    heightFactor: 1,
+    standardHeight: 250 // 250mm
 }
+
+var currentHeight = settings.standardHeight;
+var lastHeight = settings.standardHeight;
+
 //-------------------end-------------------------------
 
 function connect() {
@@ -25,7 +30,6 @@ function connect() {
     var socket = new WebSocket(host);
 
     socket.onmessage = function (e) {
-        console.log(e.data);
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
         if (typeof globals.wsData.State == 'undefined') {
             //Citydata.json
@@ -34,7 +38,6 @@ function connect() {
             globals.heightB = heightData.heightB;
             globals.heightC = heightData.heightC;
             globals.heightHY = heightData.heightHY;
-
         } else {
             //CityDataHead.json
             globals.cityDataHeadID = globals.wsData.CityDataHeadID;
@@ -163,6 +166,14 @@ $(function () {
 //// END TEST
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
+    // USonicOuter1 = 0;
+    // USonicOuter2 = 0; // lowest value possible will lead to heightHY = 0
+    // USonicOuter3 = 0;
+
+    // USonicOuter1 = 300;
+    // USonicOuter2 = 300; // highest value possible will lead to heightHY = 300
+    // USonicOuter3 = 300;
+
     //Convert Sensordata from mm in m
     if (heightFactorValue > 0) {
         USonicOuter1 *= heightFactorValue;
@@ -173,9 +184,9 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     var radiant;
 
     var cubeLengths = {
-        width: 2,
+        width: 4000,
         height: .5,
-        depth: 2,
+        depth: 4000,
     };
 
     if (USonicOuter1 === USonicOuter2) {
@@ -224,7 +235,9 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     globals.cubeRotationX = cubeRotationX;
     globals.cubeRotationZ = cubeRotationZ;
 
-    //oldHeight = newHeight;
+    // set height variables
+    lastHeight = currentHeight;
+    currentHeight = heightData.heightHY;
 
     return heightData;
 }
