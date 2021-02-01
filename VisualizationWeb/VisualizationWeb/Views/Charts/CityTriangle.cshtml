@@ -25,9 +25,10 @@
             setInterval(function () {
                 if (globals.wsData != {}) {
                     
-                    $('#TriangleHeightA').text(Math.round((globals.heightA + Number.EPSILON) * 100) / 100);
-                    $('#TriangleHeightB').text(Math.round((globals.heightB + Number.EPSILON) * 100) / 100);
-                    $('#TriangleHeightC').text(Math.round((globals.heightC + Number.EPSILON) * 100) / 100);
+                    $('#TriangleHeightA').text(Math.round(globals.heightA * 100) / 100);
+                    $('#TriangleHeightB').text(Math.round(globals.heightB * 100) / 100);
+                    $('#TriangleHeightC').text(Math.round(globals.heightC * 100) / 100);
+
 
                 }
             }, settings.updateRate);
