@@ -17,6 +17,9 @@ namespace Simulation.Library.Models
         [StringLength(100, MinimumLength = 1)]
         public string Title { get; set; }
 
+        /// <summary>
+        /// StartDate = First Position OrderedBy TimeRegistered
+        /// </summary>
         [NotMapped]
         public DateTime? StartDate 
         { 
@@ -26,6 +29,9 @@ namespace Simulation.Library.Models
             } 
         }
 
+        /// <summary>
+        /// EndDate = Last Position OrderedBy TimeRegistered
+        /// </summary>
         [NotMapped]
         public DateTime? EndDate 
         {
