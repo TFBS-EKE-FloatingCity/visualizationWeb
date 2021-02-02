@@ -36,10 +36,10 @@ function connect() {
     //    success: function (result) {
     //        // do something with result
     //        if (result == '0.0.0.1') {
-    //            host = 'ws://localhost:44390/Connection';
+    //            host = 'ws://localhost:8109/Connection';
     //            socket = new WebSocket(host);
     //        } else {
-    //            host = 'ws://'+result+'/Connection';
+    //            host = 'ws://'+result+':8109/Connection';
     //            socket = new WebSocket(host);
     //        }
     //    },
@@ -49,7 +49,7 @@ function connect() {
     //    }
     //});
 
-    var host = 'ws://localhost:8109/Connection';;
+    var host = 'ws://localhost:8109/Connection';
     var socket = new WebSocket(host);
     socket.onmessage = function (e) {
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
