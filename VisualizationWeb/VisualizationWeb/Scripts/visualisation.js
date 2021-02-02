@@ -26,9 +26,31 @@ var lastHeight = settings.standardHeight;
 //-------------------end-------------------------------
 
 function connect() {
-    var host = 'ws://localhost:8109/Connection';
-    var socket = new WebSocket(host);
+    //Test to get the IP for the Connectionstring!
+    //var host;
+    //var socket;
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/Dashboard/GetID", // the URL of the controller action method
+    //    data: null, // optional data
+    //    success: function (result) {
+    //        // do something with result
+    //        if (result == '0.0.0.1') {
+    //            host = 'ws://localhost:44390/Connection';
+    //            socket = new WebSocket(host);
+    //        } else {
+    //            host = 'ws://'+result+'/Connection';
+    //            socket = new WebSocket(host);
+    //        }
+    //    },
+    //    error: function (req, status, error) {
+    //        host = 'ws://localhost:8109/Connection';
+    //        socket = new WebSocket(host);
+    //    }
+    //});
 
+    var host = 'ws://localhost:44390/Connection';;
+    var socket = new WebSocket(host);
     socket.onmessage = function (e) {
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
         if (typeof globals.wsData.State == 'undefined') {

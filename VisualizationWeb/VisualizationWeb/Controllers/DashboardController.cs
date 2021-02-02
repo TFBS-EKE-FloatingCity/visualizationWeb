@@ -47,7 +47,16 @@ namespace VisualizationWeb.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
+
             return View("../Dashboard");
+        }      
+
+
+        public string GetID()
+        {
+            System.Net.IPAddress ip = System.Net.IPAddress.Parse(Request.UserHostAddress);
+
+            return ip.MapToIPv4().ToString();
         }
 
         public ActionResult Open3DModell()

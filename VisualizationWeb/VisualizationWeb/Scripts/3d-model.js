@@ -144,7 +144,7 @@ function render() {
         var percentHeightIncreaseFromZero = currentHeight / 400 * 100;
         var newTranslateYValue = .62 + 0.18 / 100 * percentHeightIncreaseFromZero;
 
-        console.log(newTranslateYValue);
+        //console.log(newTranslateYValue);
 
         // update height of model
         if (translateYValue < newTranslateYValue) {
