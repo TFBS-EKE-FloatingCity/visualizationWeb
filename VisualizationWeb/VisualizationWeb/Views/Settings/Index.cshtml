@@ -4,6 +4,9 @@
     ViewBag.Title = "Application Settings";
 }
 
+@Scripts.Render("~/Scripts/Charts/moment.min.js")
+@Scripts.Render("~/Scripts/Charts/Chart.js")
+@Scripts.Render("~/Scripts/visualisation.js")
 <h2>Application Settings</h2>
 <hr />
 
@@ -40,7 +43,7 @@
                 @Html.ValidationMessageFor(model => model.ConsumptionMax, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.rbPiConnectionString, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-6">
