@@ -11,13 +11,13 @@ namespace VisualizationWeb.Models
     {
         [Key]
         public int SettingID { get; set; }
-        [Display(Name = "Maximum Wind")]
+        [Display(Name = "Maximum Wind(MW)")]
         [Range(0, Int32.MaxValue)]
         public int WindMax { get; set; }
-        [Display(Name = "Maximum Sun")]
+        [Display(Name = "Maximum Sun(MW)")]
         [Range(0, Int32.MaxValue)]
         public int SunMax { get; set; }
-        [Display(Name = "Maximum Consumption")]
+        [Display(Name = "Maximum Consumption(MW)")]
         [Range(0, Int32.MaxValue)]
         public int ConsumptionMax { get; set; }
 

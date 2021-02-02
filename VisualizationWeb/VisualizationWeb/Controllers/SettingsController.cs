@@ -15,7 +15,7 @@ using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -46,7 +46,6 @@ namespace VisualizationWeb.Controllers
         }
 
         // GET: Settings
-        //[Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(SimulationRepository.GetSimulationSetting());
@@ -55,7 +54,6 @@ namespace VisualizationWeb.Controllers
         // POST: Settings/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive, rbPiConnectionString")] Setting setting)
         {
             if (ModelState.IsValid)
