@@ -14,6 +14,7 @@ using VisualizationWeb.Models.Repo;
 
 namespace VisualizationWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SimulationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

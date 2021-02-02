@@ -55,6 +55,7 @@ namespace VisualizationWeb.Controllers
             return View("../Charts/ViewCityRotationChart");
         }
 
+        [Authorize(Roles = "Admin, Simulant")]
         public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
         {            
             var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
