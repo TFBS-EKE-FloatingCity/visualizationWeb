@@ -201,6 +201,10 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
+    <Compile Include="Migrations\202101281823190_create db.cs" />
+    <Compile Include="Migrations\202101281823190_create db.Designer.cs">
+      <DependentUpon>202101281823190_create db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityData.cs" />
@@ -238,7 +242,6 @@
     <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\Charts\Chart - 30x.js" />
     <Content Include="Scripts\Charts\moment.min.js" />
-    <Content Include="Scripts\clock.js" />
     <Content Include="Scripts\GLTFLoader.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -347,6 +350,11 @@
       <Project>{814807af-9c7e-46ce-8f8b-3705813ea843}</Project>
       <Name>Simulation.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101281823190_create db.resx">
+      <DependentUpon>202101281823190_create db.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

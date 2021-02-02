@@ -2,38 +2,26 @@
 @Scripts.Render("~/Scripts/Charts/Chart.js")
 @Scripts.Render("~/Scripts/visualisation.js")
 
-<script>
-
-
-    $(document).ready(function () {
-        $('#CityRotationChartPanel').height($('.main').height());
-        $('#3d-model').height($('.main').height());
-        $('#CityRotationChartPanel').width($('.main').width());
-    })
-
-</script>
-
-@Scripts.Render("~/Scripts/three.js")
-@Scripts.Render("~/Scripts/orbitControls.js")
-@Scripts.Render("~/Scripts/GLTFLoader.js")
-
-
 @{
     ViewBag.Title = "CityRotationChart";
 }
-<style>
-    h4 {
-        display: none;
-    }
 
+<style>
     .main {
         overflow: unset;
     }
 </style>
-<div id="CityRotationChartPanel">
 
+<div id="CityRotationChartPanel" class="city-rotation-chart-full-screen">
+
+    <div class="city-rotation-chart-title-box city-rotation-chart-title-box-close">
+        <h4></h4>
+        <a href="/Dashboard"><i class="glyphicon glyphicon-resize-small"></i></a>
+    </div>
 
     @Html.Partial("~/Views/Charts/CityRotationChart.cshtml")
-
 </div>
 
+<script>
+    $('.city-rotation-chart-title-box-open').hide()
+</script>
