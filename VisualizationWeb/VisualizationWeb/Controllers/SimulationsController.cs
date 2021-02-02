@@ -14,12 +14,16 @@ using VisualizationWeb.Models.Repo;
 
 namespace VisualizationWeb.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SimulationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private object lobject = new object();
-     
 
+        /// <summary>
+        /// Initialise Repository only if needed
+        /// Thread save (lobject)
+        /// </summary>
         private ISimulationRepository _simulationRepository;
         public ISimulationRepository SimulationRepository
         {
@@ -39,12 +43,19 @@ namespace VisualizationWeb.Controllers
             }
         }
 
-        // GET: Simulations
+        /// <summary>
+        /// Gets All SimScenarios for the Index View.
+        /// </summary>
         public async Task<ActionResult> Index()
         {
             return View(await SimulationRepository.GetSimScenarioIndex());
         }
 
+        /// <summary>
+        /// Gets All SimPositions for the given simScenarioID.
+        /// Shows Positions in PartialPositionIndex View
+        /// </summary>
+        /// <param name="id">The selected SimScenario</param>
         public async Task<ActionResult> PartialPositionIndex(int? id)
         {
             if (!id.HasValue)
@@ -55,6 +66,12 @@ namespace VisualizationWeb.Controllers
             return View(await SimulationRepository.GetSimPositionIndex(id.Value));
         }
 
+        /// <summary>
+        /// Gets SimScenario for the given simScenarioID.
+        /// Shows SimScenario in Details View
+        /// SimPositions for the Scenario are Included
+        /// </summary>
+        /// <param name="id">The selected SimScenario</param>
         public async Task<ActionResult> Details(int? id)
         {
             if (!id.HasValue)
@@ -68,11 +85,19 @@ namespace VisualizationWeb.Controllers
             return View(scenario);
         }
 
+        /// <summary>
+        /// Opens Scenario Create View.
+        /// </summary>
         public ActionResult Create()
         {
             return View(new SimScenarioCreateAndEditViewModel());
         }
 
+        /// <summary>
+        /// Creates SimScenario
+        /// After add redirect back to Scenario Index
+        /// </summary>
+        /// <param name="vm">Newly created SimScenario</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "SimScenarioID, Title, TimeFactor, Notes")] SimScenarioCreateAndEditViewModel vm)
@@ -88,6 +113,12 @@ namespace VisualizationWeb.Controllers
             return View(vm);
         }
 
+        /// <summary>
+        /// Opens PartialPositionCreate View
+        /// Creates SimPosition
+        /// After add redirect back to Scenario Detail
+        /// </summary>
+        /// <param name="vm">Newly created SimPosition</param>
         [HttpPost]
         public async Task<ActionResult> PartialPositionCreate([Bind(Include = "SimPositionID, SunValue, WindValue, EnergyConsumptionValue, TimeRegistered, SimScenarioID")] SimPositionCreateAndEditViewModel vm)
         {
@@ -101,6 +132,12 @@ namespace VisualizationWeb.Controllers
             return PartialView("PartialViews/PartialPositionCreate", vm);
         }
 
+        /// <summary>
+        /// Removes SimPosition
+        /// After remove redirect back to Scenario Detail
+        /// </summary>
+        /// <param name="simPositionId">SimPosition to delete</param>
+        /// <param name="simScenarioId">SimScenario to redirect</param>
         public async Task<ActionResult> RemoveSimPosition(int? simPositionId, int? simScenarioId)
         {
             if (!simPositionId.HasValue && !simScenarioId.HasValue)
@@ -114,6 +151,11 @@ namespace VisualizationWeb.Controllers
             return RedirectToAction($"Details/{simScenarioId}");
         }
 
+        /// <summary>
+        /// Removes SimScenario
+        /// After remove redirect back to Scenario Index
+        /// </summary>
+        /// <param name="simScenarioId">SimScenario to delete</param>
         public async Task<ActionResult> RemoveSimScenario(int? simScenarioId)
         {
             if (!simScenarioId.HasValue)

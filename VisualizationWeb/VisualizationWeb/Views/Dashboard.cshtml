@@ -24,20 +24,12 @@
             </div>
         </div>
     </div>
-
-    @{
-        if (User != null) {
+        @if (User.IsInRole("Admin") || User.IsInRole("Simulant")) {
             <div class="col-md-2">
                 @Html.Partial("../Charts/Partials/_StartSimulationModalPartial")
             </div>
-
-            if (User.IsInRole("Admin") || User.IsInRole("Simulant")) {
-
-
-            }
         }
-    }
-</div>
+    </div>
 <div class="row">
     <div class="col-md-8">
         <div class="panel panel-default">
