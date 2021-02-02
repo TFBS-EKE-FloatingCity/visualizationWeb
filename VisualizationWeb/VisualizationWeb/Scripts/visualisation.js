@@ -49,7 +49,7 @@ function connect() {
     //    }
     //});
 
-    var host = 'ws://localhost:44390/Connection';;
+    var host = 'ws://localhost:8109/Connection';;
     var socket = new WebSocket(host);
     socket.onmessage = function (e) {
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
