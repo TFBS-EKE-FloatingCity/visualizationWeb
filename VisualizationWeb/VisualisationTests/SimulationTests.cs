@@ -153,7 +153,7 @@ namespace VisualisationTests
         }
 
         [TestMethod]
-        public void SimulationServiceRun_InvalidParameters()
+        public void SimulationServiceRun_InvalidScenario()
         {
             ISimulationService service = new SimulationService(getConfig());
 
@@ -164,7 +164,25 @@ namespace VisualisationTests
             };
 
             Assert.ThrowsException<Exception>(() => service.Run(null, new TimeSpan(1,0,0)));
-            Assert.ThrowsException<Exception>(() => service.Run(getValidTestScenario(), new TimeSpan()));
+            Assert.ThrowsException<Exception>(() => service.Run(new SimScenario(), new TimeSpan()));
+            Assert.IsTrue(eventSender is null);
+            simulationService_AssertNotRunning(service);
+        }
+
+        [TestMethod]
+        public void SimulationServiceRun_InvalidDuration()
+        {
+            ISimulationService service = new SimulationService(getConfig());
+            SimScenario scenario = getValidTestScenario();
+
+            ISimulationService eventSender = null;
+            service.SimulationStarted += delegate (object sender, EventArgs e)
+            {
+                eventSender = (SimulationService)sender;
+            };
+
+            Assert.ThrowsException<Exception>(() => service.Run(scenario, TimeSpan.MaxValue));
+            Assert.ThrowsException<Exception>(() => service.Run(scenario, new TimeSpan()));
             Assert.IsTrue(eventSender is null);
             simulationService_AssertNotRunning(service);
         }
