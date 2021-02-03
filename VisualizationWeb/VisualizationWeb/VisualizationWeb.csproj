@@ -327,7 +327,6 @@
     <Content Include="Views\Charts\SimulationTimeProgressBar.cshtml" />
     <Content Include="Views\Charts\Partials\_StartSimulationModalPartial.cshtml" />
     <Content Include="Views\Charts\Partials\_StartSimulationPartial.cshtml" />
-    <Content Include="Views\Charts\Partials\_SimulationTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,7 @@
 ﻿//-------------Declare global Vars----------------------
+
+//Fix to not overwrite the ID with 0
+var headID;
 var globals = {
     wsData: {},
     cubeRotationZ: 0.00,
@@ -7,7 +10,7 @@ var globals = {
     heightB: 0.00,
     heightC: 0.00,
     heightHY: 0.00,
-    cityDataHeadID: 0,
+    cityDataHeadID: headID,
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
@@ -62,6 +65,7 @@ function connect() {
             globals.heightHY = heightData.heightHY;
         } else {
             //CityDataHead.json
+            headID = globals.wsData.CityDataHeadID;
             globals.cityDataHeadID = globals.wsData.CityDataHeadID;
             globals.simulationID = globals.wsData.SimulationID;
             globals.simulationStartTime = globals.wsData.StartTime;
