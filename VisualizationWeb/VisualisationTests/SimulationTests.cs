@@ -138,7 +138,7 @@ namespace VisualisationTests
         public void SimulationServiceRun_ValidParameters()
         {
             SimScenario scenario = getValidTestScenario();
-            TimeSpan duration = new TimeSpan(1, 0, 0);
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0, Int32.MaxValue);
             ISimulationService service = new SimulationService(getConfig());
 
             ISimulationService eventSender = null;
