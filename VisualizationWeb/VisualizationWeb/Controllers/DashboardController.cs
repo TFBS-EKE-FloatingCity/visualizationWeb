@@ -59,7 +59,7 @@ namespace VisualizationWeb.Controllers
             return ip.MapToIPv4().ToString();
         }
 
-        public ActionResult Open3DModell()
+        public ActionResult Open3DModel()
         {
             return View("../Charts/ViewCityRotationChart");
         }
