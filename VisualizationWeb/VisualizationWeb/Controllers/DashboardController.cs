@@ -52,7 +52,7 @@ namespace VisualizationWeb.Controllers
         }      
 
 
-        public string GetID()
+        public string GetIPFromSettings()
         {
             SimulationRepository simrep = new SimulationRepository(db);
             Setting setting = simrep.GetSimulationSetting();

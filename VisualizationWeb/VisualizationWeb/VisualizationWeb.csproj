@@ -201,9 +201,9 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202102040927279_DBCreation.cs" />
-    <Compile Include="Migrations\202102040927279_DBCreation.Designer.cs">
-      <DependentUpon>202102040927279_DBCreation.cs</DependentUpon>
+    <Compile Include="Migrations\202102041329577_db create.cs" />
+    <Compile Include="Migrations\202102041329577_db create.Designer.cs">
+      <DependentUpon>202102041329577_db create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -350,8 +350,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102040927279_DBCreation.resx">
-      <DependentUpon>202102040927279_DBCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102041329577_db create.resx">
+      <DependentUpon>202102041329577_db create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

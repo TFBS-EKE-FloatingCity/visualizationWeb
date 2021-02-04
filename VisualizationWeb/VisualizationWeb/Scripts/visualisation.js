@@ -30,19 +30,21 @@ var currentHeight = settings.standardHeight;
 var lastHeight = settings.standardHeight;
 
 var host;
-var socket;
 
 //-------------------end-------------------------------
 
-function getID() {
-    //Test to get the IP for the Connectionstring!
 
+//Get the IP for the websocket Connectionstring!
+function getIP() {
     $.ajax({
         type: "GET",
-        url: "/Dashboard/GetID", // the URL of the controller action method
-        data: null, // optional data
+        url: "/Dashboard/GetIPFromSettings",
         success: function (result) {
-            host = result;
+            if (result == "") {
+                host = 'ws://localhost:8109/Connection';
+            } else {
+                host = result;
+            }
 
             connect();
         },
@@ -57,8 +59,6 @@ function getID() {
 
 function connect() {
 
-
-    //var host = 'ws://localhost:8109/Connection';;
     var socket = new WebSocket(host);
     socket.onmessage = function (e) {
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
@@ -85,7 +85,9 @@ function connect() {
         }, settings.updateRate);
     };
 }
-getID();
+
+//First get IP to generate a Connectionstring
+getIP();
 
 
 // Progressbar
@@ -152,6 +154,39 @@ $(function () {
         }
     });
 });
+
+//fill EnergyConsumptionComparison chart with history from DB
+setInterval(function () {
+    if (globals.cityDataHeadID != null) {
+        $.ajax({
+            url: '/API/Dashboard/GetRecentlyGeneratedEnergy/' + globals.cityDataHeadID,
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                var energy = 0;
+                var consumption = 0;
+                var chartData = [];
+                data = JSON.parse(data)
+                data.forEach(function (value) {
+
+                    //Die Energie in MW/h errechnen
+                    energy += Math.round(globals.MaxWind * (value.WindCurrent / 100));
+                    energy += Math.round(globals.MaxSun * (value.SunCurrent / 100));
+                    consumption += Math.round(globals.MaxConsumption * (value.ConsumptionCurrent / 100));
+                })
+                globals.EnergyConsumptionComparisonVal = energy - consumption;
+                chartData[0] = energy;
+                chartData[1] = consumption;
+                setEnergyConsumptionData(chartData);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+}, settings.updateRate)
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
     // USonicOuter1 = 0;
