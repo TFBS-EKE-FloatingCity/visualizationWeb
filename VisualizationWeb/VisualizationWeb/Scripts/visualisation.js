@@ -24,7 +24,6 @@ var currentHeight = settings.standardHeight;
 var lastHeight = settings.standardHeight;
 
 var host;
-var socket;
 
 //-------------------end-------------------------------
 
@@ -50,12 +49,11 @@ function getID() {
 }
 
 function connect() {
-
-
     //var host = 'ws://localhost:8109/Connection';;
     var socket = new WebSocket(host);
     socket.onmessage = function (e) {
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
+        console.log(JSON.stringify(globals.wsData));
         if (typeof globals.wsData.State == 'undefined') {
             //Citydata.json
             heightData = updateModelRotation(globals.wsData.USonicOuter1, globals.wsData.USonicOuter2, globals.wsData.USonicOuter3, settings.heightFactor);
