@@ -14,7 +14,10 @@ var globals = {
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
-    EnergyConsumptionComparisonVal: 0
+    EnergyConsumptionComparisonVal: 0,
+    MaxWind: 0,
+    MaxSun: 0,
+    MaxConsumption: 0
 };
 
 const settings = {
@@ -119,77 +122,33 @@ $(function () {
             var header = document.getElementById('SimulationNameH2');
             if (header != null) {
                 header.innerHTML = data;
-            }                     
+            }
         }
     });
-})
+});
 
+//Get Values of Settings-Table
+$(function () {
 
-//// TESTDATA
-//testData = 
-//{
-//    "UUID": 3,
-//    "CityDataHeadID": 1,
-//	"USonicInner1": 399,
-//	"USonicOuter1": 334,
-//	"Pump1": -39,
-//	"USonicInner2": 163,
-//	"USonicOuter2": 309,
-//	"Pump2": -81,
-//	"USonicInner3": 214,
-//	"USonicOuter3": 170,
-//	"Pump3": -61,
-//	"CreatedAt": "2021-01-04T14:38:15.618",
-//	"MesurementTime": "2021-01-04T13:38:15.589",
-//	"SimulationID": 2,
-//	"WindMax": 0,
-//	"WindCurrent": 0,
-//	"SunMax": 0,
-//	"SunCurrent": 0,
-//	"ConsumptionMax": 0,
-//	"ConsumptionCurrent": 0,
-//	"SimulationActive": false,
-//	"Simulationtime": null,
-//	"TimeFactor": null
-//};
-
-//globals.wsData = testData;
-
-//setInterval(function () {
-//    globals.wsData.Pump1 = randomNumber(-100, 100);
-//    globals.wsData.Pump2 = randomNumber(-100, 100);
-//    globals.wsData.Pump3 = randomNumber(-100, 100);
-//    globals.wsData.WindCurrent = randomNumber(0, 50);
-//    globals.wsData.SunCurrent = randomNumber(0, 50);
-//    globals.wsData.ConsumptionCurrent = randomNumber(0, 50);
-//    globals.wsData.USonicOuter1 = randomNumber(150, 400);
-//    globals.wsData.USonicOuter2 = randomNumber(150, 400);
-//    globals.wsData.USonicOuter3 = randomNumber(150, 400);
-
-//    heightData = updateModelRotation(globals.wsData.USonicOuter1, globals.wsData.USonicOuter2, globals.wsData.USonicOuter3);
-
-//    globals.heightA = heightData.heightA;
-//    globals.heightB = heightData.heightB;
-//    globals.heightC = heightData.heightC;
-//    globals.heightHY = heightData.heightHY;
-
-
-//}, settings.updateRate);
-
-//function randomNumber(min, max) {
-//    if (min > max) {
-//        let temp = max;
-//        max = min;
-//        min = temp;
-//    }
-
-//    if (min <= 0) {
-//        return Math.floor(Math.random() * (max + Math.abs(min) + 1)) + min;
-//    } else {
-//        return Math.floor(Math.random() * (max - min + 1)) + min;
-//    }
-//}
-//// END TEST
+    $.ajax({
+        url: '/API/Dashboard/GetMaxValues',
+        dataType: 'json',
+        type: 'GET',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            data = JSON.parse(data)
+            data.forEach(function (value) {
+                globals.MaxSun = value.SunMax;
+                globals.MaxWind = value.WindMax;
+                globals.MaxConsumption = value.ConsumptionMax;
+            })
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+});
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
     // USonicOuter1 = 0;

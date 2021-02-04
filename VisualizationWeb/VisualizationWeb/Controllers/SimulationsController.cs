@@ -43,6 +43,11 @@ namespace VisualizationWeb.Controllers
             }
         }
 
+        public SimulationsController()
+        {
+            ViewBag.ActiveNav = "simulation";
+        }
+
         /// <summary>
         /// Gets All SimScenarios for the Index View.
         /// </summary>

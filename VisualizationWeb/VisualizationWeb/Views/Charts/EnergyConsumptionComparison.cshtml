@@ -85,27 +85,29 @@
                         var chartData = [];
                         data = JSON.parse(data)
                         data.forEach(function (value) {
-                            if (value.Pump1 < 0) {
-                                energy += (value.Pump1 * -1)
-                            } else {
-                                consumption += value.Pump1
-                            };
 
-                            if (value.Pump2 < 0) {
-                                energy += (value.Pump2 * -1)
-                            } else {
-                                consumption += value.Pump2
-                            };
+                            //if (value.Pump1 < 0) {
+                            //    energy += (value.Pump1 * -1)
+                            //} else {
+                            //    consumption += value.Pump1
+                            //};
 
-                            if (value.Pump3 < 0) {
-                                energy += (value.Pump3 * -1)
-                            } else {
-                                consumption += value.Pump3
-                            };
+                            //if (value.Pump2 < 0) {
+                            //    energy += (value.Pump2 * -1)
+                            //} else {
+                            //    consumption += value.Pump2
+                            //};
+                             
+                            //if (value.Pump3 < 0) {
+                            //    energy += (value.Pump3 * -1)
+                            //} else {
+                            //    consumption += value.Pump3
+                            //};
 
-                            energy += value.WindCurrent;
-                            energy += value.SunCurrent;
-                            consumption += value.ConsumptionCurrent;
+                            //Die Energie in MW/h errechnen
+                            energy += Math.round(globals.MaxWind * (value.WindCurrent / 100));
+                            energy += Math.round(globals.MaxSun * (value.SunCurrent/100));
+                            consumption += Math.round(globals.MaxConsumption * (value.ConsumptionCurrent / 100));
                         })
                         globals.EnergyConsumptionComparisonVal = energy - consumption;
                         chartData[0] = energy;
@@ -127,4 +129,5 @@
         eccConfig.data.datasets[1].data[0] = data[1]
         window.eccChart.update()
     }
+
 </script>

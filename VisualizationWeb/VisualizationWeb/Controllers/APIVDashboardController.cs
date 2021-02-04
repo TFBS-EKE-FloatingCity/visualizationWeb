@@ -36,5 +36,13 @@ namespace VisualizationWeb.Controllers
             return JsonConvert.SerializeObject(db.CityDatas.OrderBy(d => d.Simulationtime).Where(d => d.CityDataHeadID == id).Select(d => new { d.Pump1, d.Pump2, d.Pump3, d.WindCurrent, d.SunCurrent, d.ConsumptionCurrent }).ToList());
         }
 
+        [Route("GetMaxValues")]
+        [HttpGet]
+        public string GetMaxValues()
+        {
+            return JsonConvert.SerializeObject(db.Settings.Select(d => new { d.SunMax, d.WindMax, d.ConsumptionMax }).ToList());
+
+        }
+
     }
 }
