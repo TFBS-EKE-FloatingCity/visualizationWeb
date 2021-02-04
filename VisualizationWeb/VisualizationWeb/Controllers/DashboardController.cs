@@ -54,9 +54,12 @@ namespace VisualizationWeb.Controllers
 
         public string GetID()
         {
-            System.Net.IPAddress ip = System.Net.IPAddress.Parse(Request.UserHostAddress);
+            SimulationRepository simrep = new SimulationRepository(db);
+            Setting setting = simrep.GetSimulationSetting();
 
-            return ip.MapToIPv4().ToString();
+            //System.Net.IPAddress ip = System.Net.IPAddress.Parse(Request.UserHostAddress);
+
+            return setting.browserConnectionString;
         }
 
         public ActionResult Open3DModell()
