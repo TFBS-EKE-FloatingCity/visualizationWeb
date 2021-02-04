@@ -1,4 +1,7 @@
 ﻿//-------------Declare global Vars----------------------
+
+//Fix to not overwrite the ID with 0
+var headID;
 var globals = {
     wsData: {},
     cubeRotationZ: 0.00,
@@ -7,11 +10,14 @@ var globals = {
     heightB: 0.00,
     heightC: 0.00,
     heightHY: 0.00,
-    cityDataHeadID: 0,
+    cityDataHeadID: headID,
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
-    EnergyConsumptionComparisonVal: 0
+    EnergyConsumptionComparisonVal: 0,
+    MaxWind: 0,
+    MaxSun: 0,
+    MaxConsumption: 0
 };
 
 const settings = {
@@ -24,19 +30,21 @@ var currentHeight = settings.standardHeight;
 var lastHeight = settings.standardHeight;
 
 var host;
-var socket;
 
 //-------------------end-------------------------------
 
-function getID() {
-    //Test to get the IP for the Connectionstring!
 
+//Get the IP for the websocket Connectionstring!
+function getIP() {
     $.ajax({
         type: "GET",
-        url: "/Dashboard/GetID", // the URL of the controller action method
-        data: null, // optional data
+        url: "/Dashboard/GetIPFromSettings",
         success: function (result) {
-            host = result;
+            if (result == "") {
+                host = 'ws://localhost:8109/Connection';
+            } else {
+                host = result;
+            }
 
             connect();
         },
@@ -50,12 +58,11 @@ function getID() {
 }
 
 function connect() {
-
-
     //var host = 'ws://localhost:8109/Connection';;
     var socket = new WebSocket(host);
     socket.onmessage = function (e) {
         globals.wsData = JSON.parse(e.data);    // has to be parsed?!
+        console.log(JSON.stringify(globals.wsData));
         if (typeof globals.wsData.State == 'undefined') {
             //Citydata.json
             heightData = updateModelRotation(globals.wsData.USonicOuter1, globals.wsData.USonicOuter2, globals.wsData.USonicOuter3, settings.heightFactor);
@@ -65,6 +72,7 @@ function connect() {
             globals.heightHY = heightData.heightHY;
         } else {
             //CityDataHead.json
+            headID = globals.wsData.CityDataHeadID;
             globals.cityDataHeadID = globals.wsData.CityDataHeadID;
             globals.simulationID = globals.wsData.SimulationID;
             globals.simulationStartTime = globals.wsData.StartTime;
@@ -78,7 +86,9 @@ function connect() {
         }, settings.updateRate);
     };
 }
-getID();
+
+//First get IP to generate a Connectionstring
+getIP();
 
 
 // Progressbar
@@ -118,77 +128,66 @@ $(function () {
             var header = document.getElementById('SimulationNameH2');
             if (header != null) {
                 header.innerHTML = data;
-            }                     
+            }
         }
     });
-})
+});
 
+//Get Values of Settings-Table
+$(function () {
 
-//// TESTDATA
-//testData = 
-//{
-//    "UUID": 3,
-//    "CityDataHeadID": 1,
-//	"USonicInner1": 399,
-//	"USonicOuter1": 334,
-//	"Pump1": -39,
-//	"USonicInner2": 163,
-//	"USonicOuter2": 309,
-//	"Pump2": -81,
-//	"USonicInner3": 214,
-//	"USonicOuter3": 170,
-//	"Pump3": -61,
-//	"CreatedAt": "2021-01-04T14:38:15.618",
-//	"MesurementTime": "2021-01-04T13:38:15.589",
-//	"SimulationID": 2,
-//	"WindMax": 0,
-//	"WindCurrent": 0,
-//	"SunMax": 0,
-//	"SunCurrent": 0,
-//	"ConsumptionMax": 0,
-//	"ConsumptionCurrent": 0,
-//	"SimulationActive": false,
-//	"Simulationtime": null,
-//	"TimeFactor": null
-//};
+    $.ajax({
+        url: '/API/Dashboard/GetMaxValues',
+        dataType: 'json',
+        type: 'GET',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            data = JSON.parse(data)
+            data.forEach(function (value) {
+                globals.MaxSun = value.SunMax;
+                globals.MaxWind = value.WindMax;
+                globals.MaxConsumption = value.ConsumptionMax;
+            })
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+});
 
-//globals.wsData = testData;
+//fill EnergyConsumptionComparison chart with history from DB
+setInterval(function () {
+    if (globals.cityDataHeadID != null) {
+        $.ajax({
+            url: '/API/Dashboard/GetRecentlyGeneratedEnergy/' + globals.cityDataHeadID,
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                var energy = 0;
+                var consumption = 0;
+                var chartData = [];
+                data = JSON.parse(data)
+                data.forEach(function (value) {
 
-//setInterval(function () {
-//    globals.wsData.Pump1 = randomNumber(-100, 100);
-//    globals.wsData.Pump2 = randomNumber(-100, 100);
-//    globals.wsData.Pump3 = randomNumber(-100, 100);
-//    globals.wsData.WindCurrent = randomNumber(0, 50);
-//    globals.wsData.SunCurrent = randomNumber(0, 50);
-//    globals.wsData.ConsumptionCurrent = randomNumber(0, 50);
-//    globals.wsData.USonicOuter1 = randomNumber(150, 400);
-//    globals.wsData.USonicOuter2 = randomNumber(150, 400);
-//    globals.wsData.USonicOuter3 = randomNumber(150, 400);
-
-//    heightData = updateModelRotation(globals.wsData.USonicOuter1, globals.wsData.USonicOuter2, globals.wsData.USonicOuter3);
-
-//    globals.heightA = heightData.heightA;
-//    globals.heightB = heightData.heightB;
-//    globals.heightC = heightData.heightC;
-//    globals.heightHY = heightData.heightHY;
-
-
-//}, settings.updateRate);
-
-//function randomNumber(min, max) {
-//    if (min > max) {
-//        let temp = max;
-//        max = min;
-//        min = temp;
-//    }
-
-//    if (min <= 0) {
-//        return Math.floor(Math.random() * (max + Math.abs(min) + 1)) + min;
-//    } else {
-//        return Math.floor(Math.random() * (max - min + 1)) + min;
-//    }
-//}
-//// END TEST
+                    //Die Energie in MW/h errechnen
+                    energy += Math.round(globals.MaxWind * (value.WindCurrent / 100));
+                    energy += Math.round(globals.MaxSun * (value.SunCurrent / 100));
+                    consumption += Math.round(globals.MaxConsumption * (value.ConsumptionCurrent / 100));
+                })
+                globals.EnergyConsumptionComparisonVal = energy - consumption;
+                chartData[0] = energy;
+                chartData[1] = consumption;
+                setEnergyConsumptionData(chartData);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+}, settings.updateRate)
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
     // USonicOuter1 = 0;

@@ -1,20 +1,9 @@
 ﻿
-@Scripts.Render("~/Scripts/Charts/moment.min.js")
-@Scripts.Render("~/Scripts/Charts/Chart.js")
-@Scripts.Render("~/Scripts/visualisation.js")
-
 @{
     ViewBag.Title = "Dashboard";
 }
 
 <h2>Dashboard</h2>
-@*<div class="row">
-    <div class="col-md-8">
-        <div class="panel panel-default">
-            @Html.Partial("../Charts/Partials/_SimulationTitle")
-        </div>        
-    </div>
-</div>*@
 
 <div class="row">
     <div class="col-md-10">
@@ -24,12 +13,13 @@
             </div>
         </div>
     </div>
-        @if (User.IsInRole("Admin") || User.IsInRole("Simulant")) {
-            <div class="col-md-2">
-                @Html.Partial("../Charts/Partials/_StartSimulationModalPartial")
-            </div>
-        }
-    </div>
+    @if (User.IsInRole("Admin") || User.IsInRole("Simulant"))
+    {
+        <div class="col-md-2">
+            @Html.Partial("../Charts/Partials/_StartSimulationModalPartial")
+        </div>
+    }
+</div>
 <div class="row">
     <div class="col-md-8">
         <div class="panel panel-default">

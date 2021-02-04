@@ -52,7 +52,7 @@ namespace VisualizationWeb.Controllers
         }      
 
 
-        public string GetID()
+        public string GetIPFromSettings()
         {
             SimulationRepository simrep = new SimulationRepository(db);
             Setting setting = simrep.GetSimulationSetting();
@@ -62,7 +62,7 @@ namespace VisualizationWeb.Controllers
             return setting.browserConnectionString;
         }
 
-        public ActionResult Open3DModell()
+        public ActionResult Open3DModel()
         {
             return View("../Charts/ViewCityRotationChart");
         }

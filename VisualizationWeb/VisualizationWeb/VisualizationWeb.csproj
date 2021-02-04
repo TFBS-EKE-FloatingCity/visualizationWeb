@@ -201,9 +201,9 @@
     <Compile Include="Helpers\WebSocketClient.cs" />
     <Compile Include="Helpers\WebsocketServer.cs" />
     <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
-    <Compile Include="Migrations\202102040927279_DBCreation.cs" />
-    <Compile Include="Migrations\202102040927279_DBCreation.Designer.cs">
-      <DependentUpon>202102040927279_DBCreation.cs</DependentUpon>
+    <Compile Include="Migrations\202102041329577_db create.cs" />
+    <Compile Include="Migrations\202102041329577_db create.Designer.cs">
+      <DependentUpon>202102041329577_db create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -247,6 +247,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -296,7 +297,6 @@
     <Content Include="Views\Shared\Partials\_NavigationLoginPartial.cshtml" />
     <Content Include="Views\Shared\Layouts\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\Partials\_NavigationPartial.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Dashboard.cshtml" />
     <Content Include="Views\Charts\PumpsChart.cshtml" />
@@ -306,7 +306,6 @@
     <Content Include="Views\Simulations\Index.cshtml" />
     <Content Include="Views\Simulations\Details.cshtml" />
     <Content Include="Views\Simulations\Delete.cshtml" />
-    <Content Include="Views\Simulations\Edit.cshtml" />
     <Content Include="Views\Simulations\Create.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionCreate.cshtml" />
     <Content Include="Views\Simulations\PartialViews\PartialPositionIndex.cshtml" />
@@ -327,7 +326,6 @@
     <Content Include="Views\Charts\SimulationTimeProgressBar.cshtml" />
     <Content Include="Views\Charts\Partials\_StartSimulationModalPartial.cshtml" />
     <Content Include="Views\Charts\Partials\_StartSimulationPartial.cshtml" />
-    <Content Include="Views\Charts\Partials\_SimulationTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -352,8 +350,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102040927279_DBCreation.resx">
-      <DependentUpon>202102040927279_DBCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102041329577_db create.resx">
+      <DependentUpon>202102041329577_db create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
