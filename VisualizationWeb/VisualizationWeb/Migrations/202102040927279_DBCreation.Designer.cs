@@ -7,13 +7,13 @@ namespace VisualizationWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class createdb : IMigrationMetadata
+    public sealed partial class DBCreation : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(createdb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DBCreation));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101281823190_create db"; }
+            get { return "202102040927279_DBCreation"; }
         }
         
         string IMigrationMetadata.Source

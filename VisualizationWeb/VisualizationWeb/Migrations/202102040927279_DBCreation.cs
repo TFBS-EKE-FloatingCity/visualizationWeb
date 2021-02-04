@@ -3,7 +3,7 @@ namespace VisualizationWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class createdb : DbMigration
+    public partial class DBCreation : DbMigration
     {
         public override void Up()
         {
@@ -83,6 +83,7 @@ namespace VisualizationWeb.Migrations
                         SunMax = c.Int(nullable: false),
                         ConsumptionMax = c.Int(nullable: false),
                         rbPiConnectionString = c.String(maxLength: 500),
+                        browserConnectionString = c.String(maxLength: 500),
                     })
                 .PrimaryKey(t => t.SettingID);
             

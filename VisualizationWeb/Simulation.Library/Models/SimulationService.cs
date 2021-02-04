@@ -95,7 +95,6 @@ namespace Simulation.Library.Models
         {
             SetIdleValues(0, 0, 0);
             SetSettings(settings);
-            _timer = new Timer();
             _timeFactor = 1;
         }
         #endregion
@@ -126,8 +125,9 @@ namespace Simulation.Library.Models
         /// </summary>
         public void Run(SimScenario scenario, TimeSpan duration)
         {
-            if (setupForRunning(scenario, duration)) 
+            try 
             {
+                setupForRunning(scenario, duration);
                 StartDateTimeReal = DateTime.Now;
                 _timer.Start();
                 _prevPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).First();
@@ -135,10 +135,9 @@ namespace Simulation.Library.Models
                 _isScenarioRunning = true;
                 onSimulationStarted();
             }
-            else
+            catch(Exception e)
             {
-                throw new Exception($"Couldn't run the Simulation. Please check if the parameters were valid. " +
-                    $"The parameters are valid when the scenario contains at least two positions and the duration is longer than 0");
+                throw new Exception($"Could not run the Simulation. {e.Message}", e);
             }
         }
 
@@ -336,12 +335,17 @@ namespace Simulation.Library.Models
         /// <summary>
         /// Validates the Scenario and Duration and sets the Properties which are required for the simulation to run.
         /// </summary>
-        /// <returns>True if setup successfull</returns>
-        private bool setupForRunning(SimScenario scenario, TimeSpan duration)
+        private void setupForRunning(SimScenario scenario, TimeSpan duration)
         {
-            if(!isValidScenario(scenario) || !isValidDuration(duration))
+            if(!isValidScenario(scenario))
             {
-                return false;
+                throw new Exception("Scenario is invalid. The Scenario has to have at least 2 positions and must last at least 1 second.");
+            }
+
+            if (!isValidDuration(duration))
+            {
+                TimeSpan maxTime = new TimeSpan(0, 0, 0, 0, Int32.MaxValue);
+                throw new Exception($"Duration is invalid. The Duration has to be a value greater than 0 and less than {maxTime}!");
             }
 
             if (_isScenarioRunning)
@@ -352,9 +356,8 @@ namespace Simulation.Library.Models
             _simScenario = scenario;
             _duration = duration;
             _timeFactor = InterpolationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
-            _timer.Interval = duration.TotalMilliseconds;
+            _timer = new Timer(duration.TotalMilliseconds);
             _timer.Elapsed += onSimDurationElapsed;
-            return true;
         }
 
         /// <summary>
@@ -362,7 +365,7 @@ namespace Simulation.Library.Models
         /// </summary>
         protected bool isValidScenario(SimScenario scenario)
         {
-            return scenario != null && scenario.SimPositions != null && scenario.SimPositions.Count >= 2;
+            return scenario != null && scenario.SimPositions != null && scenario.SimPositions.Count >= 2 && scenario.GetDuration().TotalSeconds > 1;
         }
 
         /// <summary>
@@ -370,7 +373,7 @@ namespace Simulation.Library.Models
         /// </summary>
         protected bool isValidDuration(TimeSpan duration)
         {
-            return duration.Ticks > 0;
+            return duration.Ticks > 0 && duration <= new TimeSpan(0,0,0,0, int.MaxValue);
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace VisualizationWeb.Controllers
         // POST: Settings/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive, rbPiConnectionString")] Setting setting)
+        public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive,rbPiConnectionString,browserConnectionString")] Setting setting)
         {
             if (ModelState.IsValid)
             {

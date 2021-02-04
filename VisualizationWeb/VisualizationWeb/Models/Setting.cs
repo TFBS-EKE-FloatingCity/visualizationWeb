@@ -24,5 +24,9 @@ namespace VisualizationWeb.Models
         [StringLength(500)]
         [Display(Name = "Connection String to Raspberry")]
         public string rbPiConnectionString { get; set; }
+
+        [StringLength(500)]
+        [Display(Name = "Connection String from Browser to Server")]
+        public string browserConnectionString { get; set; }
     }
 }
