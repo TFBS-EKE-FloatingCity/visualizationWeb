@@ -15,7 +15,7 @@ var globals = {
 };
 
 const settings = {
-    updateRate: 10000,
+    updateRate: 1000,
     heightFactor: 1,
     standardHeight: 250 // 250mm
 }
