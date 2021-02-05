@@ -11,7 +11,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
+using VisualizationWeb.Models.Repo;
 
 namespace VisualizationWeb.Controllers
 {
@@ -19,6 +21,13 @@ namespace VisualizationWeb.Controllers
     public class APIVDashboardController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        [Route("GetCurrentCityDataHeadID")]
+        [HttpGet]
+        public object GetCurrentCityDataHeadID()
+        {
+            return SingletonHolder.CurrentCityDataHeadID;
+        }
 
         // GET: API/Dashboard
         [Route("GetSimulationHistory/{id}")]
@@ -40,6 +49,7 @@ namespace VisualizationWeb.Controllers
         [HttpGet]
         public string GetMaxValues()
         {
+            
             return JsonConvert.SerializeObject(db.Settings.Select(d => new { d.SunMax, d.WindMax, d.ConsumptionMax }).ToList());
 
         }

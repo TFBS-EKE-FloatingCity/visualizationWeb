@@ -49,7 +49,11 @@
         <div class="panel panel-default">
             <div class="panel-body" id="HeightPanel">
                 @Html.Partial("../Charts/CityHeight")
+                <button class="btn btn-default" id="resetHeightChart" onclick="resetCityHeight()">Reset</button>
+                <button class="btn btn-default" id="stopHeightChart" onclick="stopCityHeight()">Stop</button>
+                <button class="btn btn-default" id="startHeightChart" onclick="startCityHeight()">Start</button>
             </div>
+            
         </div>
     </div>
 </div>

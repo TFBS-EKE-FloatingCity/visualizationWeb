@@ -57,8 +57,6 @@ namespace VisualizationWeb.Controllers
             SimulationRepository simrep = new SimulationRepository(db);
             Setting setting = simrep.GetSimulationSetting();
 
-            //System.Net.IPAddress ip = System.Net.IPAddress.Parse(Request.UserHostAddress);
-
             return setting.browserConnectionString;
         }
 

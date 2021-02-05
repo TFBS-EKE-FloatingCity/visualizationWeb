@@ -29,8 +29,18 @@ h4.nomargin {
     right: 5%;
 }
 
+div#PumpsChartPanel {
+    padding-bottom: 49px;
+}
+
+
+#resetHeightChart, #stopHeightChart, #startHeightChart {
+    display: inline-block;
+}
+
 @media (min-width: 1025px) {
     .city-rotation-chart-full-screen {
         margin-top: -20%;
     }
 }
+

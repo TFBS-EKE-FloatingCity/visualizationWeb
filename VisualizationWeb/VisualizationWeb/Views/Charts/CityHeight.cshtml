@@ -82,32 +82,12 @@
     $(document).ready(function () {
         var ctx = document.getElementById('HeightChart').getContext('2d');
         window.cityHeight = new Chart(ctx, heightDataConfig);
-        if (globals.cityDataHeadID != null) {
-            // fill chart with history from DB
-            $.ajax({
-                url: '/API/Dashboard/GetSimulationHistory/' + globals.cityDataHeadID,
-                dataType: 'json',
-                type: 'GET',
-                contentType: 'application/json',
-                processData: false,
-                success: function (data, textStatus, jQxhr) {
-                    var chartData = []
-                    data = JSON.parse(data)
-                    data.forEach(function (value) {
-                        heightData = updateModelRotation(value.USonicOuter1, value.USonicOuter2, value.USonicOuter3, settings.heightFactor);
-                        setCityHeight(new Date(value.Simulationtime).getTime(), heightData.heightHY)
-                    })
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            });
-        }
-        
 
+       //History will be loaded once in the visualisation.js
         //get Simulation Time and height Data from Websocket
+        
         setInterval(function () {
-            if (globals.wsData != {}) {
+            if (globals.wsData != {} && globals.AnimationStop == false) {
                 if (!globals.wsData.SimulationActive) {
                     setCityHeight(new Date().getTime(), globals.heightHY)
                 } else {

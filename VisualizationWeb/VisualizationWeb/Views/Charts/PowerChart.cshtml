@@ -100,27 +100,6 @@
         var ctx = document.getElementById('PowerChart').getContext('2d');
         window.powerChart = new Chart(ctx, simdatasconfig);
 
-        //fill chart with history from DB
-        if (globals.cityDataHeadID != null) {
-            $.ajax({
-                url: '/API/Dashboard/GetSimulationHistory/' + globals.cityDataHeadID,
-                dataType: 'json',
-                type: 'GET',
-                contentType: 'application/json',
-                processData: false,
-                success: function (data, textStatus, jQxhr) {
-                    data = JSON.parse(data)
-                    data.forEach(function (value) {
-                        setSimData(new Date(value.Simulationtime).getTime(), value.WindCurrent, value.SunCurrent, value.ConsumptionCurrent)
-                    })
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            });
-        }
-           
-
         //get Wind, Sun and Consumption Data from Websocket
         setInterval(function () {
             if (globals.wsData != {}) {

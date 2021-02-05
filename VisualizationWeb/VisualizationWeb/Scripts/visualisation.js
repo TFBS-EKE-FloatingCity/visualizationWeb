@@ -1,7 +1,7 @@
 ﻿//-------------Declare global Vars----------------------
 
 //Fix to not overwrite the ID with 0
-var headID;
+
 var globals = {
     wsData: {},
     cubeRotationZ: 0.00,
@@ -10,18 +10,19 @@ var globals = {
     heightB: 0.00,
     heightC: 0.00,
     heightHY: 0.00,
-    cityDataHeadID: headID,
+    cityDataHeadID: null,
     simulationID: 0,
     simulationStartTime: "0001-01-01T00:00:00",
     simulationEndTime: "0001-01-01T00:00:00",
     EnergyConsumptionComparisonVal: 0,
     MaxWind: 0,
     MaxSun: 0,
-    MaxConsumption: 0
+    MaxConsumption: 0,
+    AnimationStop: false
 };
 
 const settings = {
-    updateRate: 10000,
+    updateRate: 2000,
     heightFactor: 1,
     standardHeight: 250 // 250mm
 }
@@ -71,7 +72,6 @@ function connect() {
             globals.heightHY = heightData.heightHY;
         } else {
             //CityDataHead.json
-            headID = globals.wsData.CityDataHeadID;
             globals.cityDataHeadID = globals.wsData.CityDataHeadID;
             globals.simulationID = globals.wsData.SimulationID;
             globals.simulationStartTime = globals.wsData.StartTime;
@@ -132,6 +132,51 @@ $(function () {
     });
 });
 
+
+// fill PowerChart and  CityHeight Chart with history from DB
+$(function () {
+    $.ajax({
+        url: '/API/Dashboard/GetCurrentCityDataHeadID',
+        dataType: 'json',
+        type: 'GET',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            globals.cityDataHeadID = data;
+            GetSimulationHistory();
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            globals.cityDataHeadID = null;
+        }
+    });
+
+    function GetSimulationHistory() {
+        if (globals.cityDataHeadID != null) {
+            $.ajax({
+                url: '/API/Dashboard/GetSimulationHistory/' + globals.cityDataHeadID,
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    var chartData = []
+                    data = JSON.parse(data)
+                    data.forEach(function (value) {
+                        //HeightChart
+                        heightData = updateModelRotation(value.USonicOuter1, value.USonicOuter2, value.USonicOuter3, settings.heightFactor);
+                        setCityHeight(new Date(value.Simulationtime).getTime(), heightData.heightHY);
+                        //PowerChart
+                        setSimData(new Date(value.Simulationtime).getTime(), value.WindCurrent, value.SunCurrent, value.ConsumptionCurrent)
+                    })
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    }
+});
+
 //Get Values of Settings-Table
 $(function () {
 
@@ -154,6 +199,7 @@ $(function () {
         }
     });
 });
+
 
 //fill EnergyConsumptionComparison chart with history from DB
 setInterval(function () {
@@ -187,6 +233,7 @@ setInterval(function () {
         });
     }
 }, settings.updateRate)
+
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
     // USonicOuter1 = 0;
@@ -263,4 +310,22 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     currentHeight = heightData.heightHY;
 
     return heightData;
+}
+
+
+//Reset CityHeight Chart
+function resetCityHeight() {
+    heightDataConfig.data.datasets[0].data = [];
+    globals.AnimationStop = false;
+}
+
+function stopCityHeight() {
+    window.cityHeight.stop();
+    globals.AnimationStop = true;
+
+}
+
+function startCityHeight() {
+    window.cityHeight.render();
+    globals.AnimationStop = false;
 }
