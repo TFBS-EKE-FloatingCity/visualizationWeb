@@ -208,9 +208,9 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     var radiant;
 
     var cubeLengths = {
-        width: 4000,
+        width: 500,
         height: .5,
-        depth: 4000,
+        depth: 500,
     };
 
     if (USonicOuter1 === USonicOuter2) {
