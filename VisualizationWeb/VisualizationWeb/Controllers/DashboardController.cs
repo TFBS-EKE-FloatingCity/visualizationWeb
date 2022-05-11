@@ -1,12 +1,9 @@
-﻿using Simulation.Library.Models;
-using Simulation.Library.ViewModels.SimScenarioVM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using VisualizationWeb.Helpers;
+using Simulation.Library.Models;
+using Simulation.Library.ViewModels.SimScenarioVM;
+using VisualizationWeb.Context;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.IRepo;
 using VisualizationWeb.Models.Repo;

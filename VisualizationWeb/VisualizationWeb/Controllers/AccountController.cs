@@ -12,7 +12,6 @@ using VisualizationWeb.Models;
 
 namespace VisualizationWeb.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -75,6 +74,8 @@ namespace VisualizationWeb.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+
+            //NOTE: For successful sign in, the role "Simulant" is required in UserRoles table
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -136,7 +137,6 @@ namespace VisualizationWeb.Controllers
 
 
         ////// GET: /Account/Register
-        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View(new RegisterViewModel());
@@ -146,7 +146,6 @@ namespace VisualizationWeb.Controllers
         // POST: /Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -159,7 +158,7 @@ namespace VisualizationWeb.Controllers
                     //Adding UserRole "Simulant" to New Users
                     var result1 = await UserManager.AddToRoleAsync(user.Id, "Simulant");
 
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

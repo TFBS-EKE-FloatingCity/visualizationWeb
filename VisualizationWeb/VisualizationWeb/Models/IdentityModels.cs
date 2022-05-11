@@ -18,24 +18,4 @@ namespace VisualizationWeb.Models
             return userIdentity;
         }
     }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
-        public virtual DbSet<Setting> Settings { get; set; }
-        public virtual DbSet<SimScenario> SimScenarios { get; set; }
-        public virtual DbSet<SimPosition> SimPositions { get; set; }
-        public virtual DbSet<CityData> CityDatas { get; set; }
-        public virtual DbSet<CityDataHead> CityDataHeads { get; set; }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-
-    }
 }

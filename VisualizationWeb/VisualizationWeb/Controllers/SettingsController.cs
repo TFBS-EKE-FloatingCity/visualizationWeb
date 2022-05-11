@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.IRepo;
 using VisualizationWeb.Models.Repo;
-using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
