@@ -1,0 +1,60 @@
+﻿#app {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+}
+@media (max-width: 767px) {
+    #app {
+        flex-direction: column;
+    }
+}
+
+.main {
+    flex: 1;
+    padding: 0 25px;
+    overflow-y: auto;
+}
+
+
+.app-headline {
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.app-headline--no-line {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.app-headline h2, .app-headline h3 {
+    margin: 0px;
+    margin-right: 15px;
+}
+
+.app-headline .btn.glyphicon {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+}
+
+.app-headline .btn.glyphicon:before {
+    margin-right: 10px;
+    font-family: "Glyphicons Halflings";
+}
+
+.app-headline .back-to-list {
+    color: black;
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.app-headline .back-to-list:hover, .app-headline .back-to-list:hover {
+    text-decoration: none;
+} 
+
+.panel h4 {
+    margin-bottom: 20px;
+}

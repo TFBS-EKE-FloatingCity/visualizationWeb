@@ -1,0 +1,115 @@
+﻿.navigation {
+    width: 240px;
+    height: 100%;
+    box-shadow: 0 0 12px -6px rgba(0, 0, 0, 0.4);
+}
+@media (max-width: 767px) {
+    .navigation {
+        height: auto;
+        width: 100%;
+        border-bottom: 1px solid #eaeaea;
+    }
+}
+
+.navigation-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-collapse.collapse {
+    padding: 0;
+    flex: 1;
+}
+
+.navbar-wrapper {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+@media (max-width: 767px) {
+    .navbar-wrapper {
+        display: block;
+    }
+}
+
+.nav-top {
+    flex: 1;
+    overflow-x: hidden;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+    margin: 0 7px;
+    float: none;
+}
+
+.navigation-header {
+    width: 100%;
+    display: flex;
+
+}
+
+.navbar-nav > li.active, .navbar-nav > li:hover {
+    background-color: rgba(26, 115, 232, 0.15);
+}
+
+.navbar-nav > li.active a, .navbar-nav > li:hover a {
+    color: #1A73E8;
+}
+
+.navbar-nav > li > a {
+    display: flex;
+    align-items: center;
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 9px 15px;
+}
+
+.navbar-nav > li {
+    margin: 1px 0;
+    border-radius: 4px;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    background-color: transparent;
+}
+
+.navbar-nav > li > a::before {
+    margin-right: 10px;
+    font-family: "Glyphicons Halflings";
+}
+
+.navbar-login {
+    border-top: 1px solid #eaeaea;
+}
+
+.navbar-toggle {
+    margin-left: 5px;
+    margin-right: 0px;
+}
+
+.icon-bar {
+    background-color: black;
+}
+
+.navbar-brand {
+    color: black;
+    font-weight: bold;
+}
+
+.sim-time {
+    padding: 5px 0;
+    margin: 0 7px;
+    text-align: center;
+}
+
+.sim-time h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

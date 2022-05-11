@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Simulation.Library.ViewModels.SimPositionVM.SimPositionIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Positions</h2>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.SimPositionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SunValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WindValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnergyConsumptionValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRegistered)
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SimPositionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SunValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WindValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnergyConsumptionValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeRegistered)
+            </td>           
+            <td>
+                @Html.ActionLink("Edit", "") |
+                @Html.ActionLink("Delete", "")
+            </td>
+        </tr>
+    }
+
+</table>
+

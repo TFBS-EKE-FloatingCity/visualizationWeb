@@ -1,0 +1,92 @@
+﻿
+
+<canvas id="EnergyBalance" class="chartjs-render-monitor"></canvas>
+
+<script>
+
+    //Power Chart Config
+    var energyBalanceConfig = {
+        type: 'bar',
+        data: {
+            labels: ["Energy Balance:"],
+            datasets: [{
+                data: [],
+                borderWidth: 2
+            }
+            ]
+        },
+        options: {
+            aspectRatio: 1,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 2;
+                } else {
+                    chart.aspectRatio = 1;
+                }
+
+                chart.update();
+            },
+            title: {
+                display: true,
+                text: 'Energy Balance'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            legend: {
+                display: false
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    display: false,
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'MW/h'
+                    },
+                    ticks: {
+                        stepSize: 10,
+                        suggestedMax: 100,
+                        suggestedMin: -100
+                    }
+                }]
+            }
+        }
+    }
+    //end Config
+
+    //Create and fill Energy Balance Chart
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('EnergyBalance').getContext('2d');
+        window.energyBalanceChart = new Chart(ctx, energyBalanceConfig);
+
+        //fill chart with history from DB
+        setInterval(function () {
+            setEnergyBalanceData(globals.EnergyConsumptionComparisonVal)
+        }, settings.updateRate)
+
+    })
+
+    //Update Chart
+    function setEnergyBalanceData(data) {
+        if (data < 0) {
+            energyBalanceConfig.data.datasets[0].backgroundColor = "rgb(219, 0, 40)";
+            energyBalanceConfig.data.datasets[0].label = "Negative";
+        } else if(data == 0 || typeof(data) == 'undefined') {
+            energyBalanceConfig.data.datasets[0].label = "Neutral";
+        } else {
+            energyBalanceConfig.data.datasets[0].backgroundColor = "rgb(142, 219, 126)";
+            energyBalanceConfig.data.datasets[0].label = "Positive";          
+        }
+        energyBalanceConfig.data.datasets[0].data[0] = data;        
+        window.energyBalanceChart.update()
+    }
+</script>

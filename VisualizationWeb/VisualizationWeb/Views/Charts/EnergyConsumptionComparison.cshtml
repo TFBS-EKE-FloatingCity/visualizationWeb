@@ -1,0 +1,82 @@
+﻿
+<canvas id="Energy-Consumption-Comparison" class="chartjs-render-monitor"></canvas>
+
+<script>
+
+    //Energy Consumption Comparison Chart Config
+    var eccConfig = {
+        type: 'bar',
+        data: {
+            labels: ["Comparison"],
+            datasets: [{
+                label: "Generated Energy",
+                backgroundColor: ["rgba(4, 0, 219, 1)"],
+                data: [],              
+                borderWidth: 2
+            }, {
+                label: "Consumption",
+                backgroundColor: ["rgba(219, 0, 40, 1)"],
+                data: [],               
+                borderWidth: 2
+            }
+                
+            ]
+        },
+        options: {
+            aspectRatio: 2,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 1;
+                } else {
+                    chart.aspectRatio = 2;
+                }
+
+                chart.update();
+            },
+            title: {
+                display: true,
+                text: 'Energy Consumption Comparison'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false            
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    display: false,                                   
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'MW / h'
+                    },
+                    ticks: {
+                        min: 0
+                    }
+                }]
+            }
+        }
+    }
+    //end Config
+
+    //Create and fill Energy-Consumption-Comparison Chart
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('Energy-Consumption-Comparison').getContext('2d');
+        window.eccChart = new Chart(ctx, eccConfig);
+
+    })
+
+    //Update Chart -> function gets called in the visualisation.js
+    function setEnergyConsumptionData(data) {
+        eccConfig.data.datasets[0].data[0] = data[0]
+        eccConfig.data.datasets[1].data[0] = data[1]
+        window.eccChart.update()
+    }
+
+</script>

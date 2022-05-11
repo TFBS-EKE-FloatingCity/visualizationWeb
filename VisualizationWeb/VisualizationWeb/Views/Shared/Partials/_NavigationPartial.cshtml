@@ -1,0 +1,42 @@
+﻿<nav class="navigation">
+    <div class="navigation-container">
+        <div class="navigation-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Floating City", "Index", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        @*<div class="sim-time">
+              <h2>00:00:00</h2>
+        </div>*@
+        <div class="navbar-collapse collapse">
+            <div class="navbar-wrapper">
+                <div class="nav-top">
+                    <ul class="nav navbar-nav">
+                        <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "dashboard" ? "active" : "")">
+                            @Html.ActionLink("Dashboard", "Index", "Dashboard", new { area = "" }, new { @class = "glyphicon glyphicon-dashboard" })
+                        </li>
+                        @if (User.IsInRole("Admin")) {
+                            <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "simulation" ? "active" : "")">
+                                @Html.ActionLink("Simulation", "Index", "Simulations", new { area = "" }, new { @class = "glyphicon glyphicon-hourglass" })
+                            </li>
+                            <li class="@(ViewBag.ActiveNav != null && ViewBag.ActiveNav.ToString() == "settings" ? "active" : "")">
+                                @Html.ActionLink("Settings", "Index", "Settings", new { area = "" }, new { @class = "glyphicon glyphicon-cog" })
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @Html.Partial("../Charts/EnergyBalanceChart")
+                    </div>
+                </div>
+                <div class="nav-bottom">
+                    @Html.Partial("Partials/_NavigationLoginPartial")
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

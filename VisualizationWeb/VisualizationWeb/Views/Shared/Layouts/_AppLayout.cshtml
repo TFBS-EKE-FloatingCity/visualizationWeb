@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Floating City</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/layouts/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jqueryval")
+    @*Visualisation Scripts *@
+    @Scripts.Render("~/Scripts/Charts/moment.min.js")
+    @Scripts.Render("~/Scripts/Charts/Chart.js")
+    @Scripts.Render("~/Scripts/visualisation.js")
+   
+    </head>
+<body>
+    <div id="app">
+        @Html.Partial("Partials/_NavigationPartial")
+        <main class="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

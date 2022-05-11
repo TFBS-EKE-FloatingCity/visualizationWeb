@@ -1,0 +1,114 @@
+﻿<canvas id="HeightChart" class="chartjs-render-monitor"></canvas>
+
+<script>
+    //CityHeight Chart Config
+    var heightDataConfig = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Height',               
+                borderColor: "rgba(48, 80, 81, 1)",
+                data: []
+            }]
+        },
+        options: {
+            aspectRatio: 2,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 1;
+                } else {
+                    chart.aspectRatio = 2;
+                }
+
+                chart.update();
+            },
+            title: {
+                display: true,
+                text: 'Height (in m) above sea level' 
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return 'Time: ' + new Date(tooltipItem[0].label).toLocaleTimeString();
+                    }
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    },
+                    type: 'time',
+                    distribution: 'series',
+                    time: {
+                        displayFormats: {
+                            second: 'HH:mm:ss',
+                            minute: 'HH:mm:ss',
+                            hour: 'HH:mm:ss',
+                            dateTime: 'D.MMM.YYYY HH:mm:ss'
+                        }
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Height'
+                    },
+                    ticks: {
+                        min: 0
+                    },
+                    gridLines: {
+                        zeroLineColor: "#03b6fc",
+                        zeroLineWidth: 3
+                    },
+                }]
+            }
+        }
+    };
+
+    //end Config
+
+    //Create and Fill CityHeight Chart
+    $(document).ready(function () {
+        var ctx = document.getElementById('HeightChart').getContext('2d');
+        window.cityHeight = new Chart(ctx, heightDataConfig);
+
+       //History will be loaded once in the visualisation.js
+        //get Simulation Time and height Data from Websocket
+        
+        setInterval(function () {
+            if (globals.wsData != {} && globals.AnimationStop == false) {
+                if (!globals.wsData.SimulationActive) {
+                    setCityHeight(new Date().getTime(), globals.heightHY)
+                } else {
+                    setCityHeight(new Date(globals.wsData.Simulationtime).getTime(), globals.heightHY)
+                }
+
+            }
+        }, settings.updateRate);
+    })
+
+    //Update Chart
+    function setCityHeight(currentdate, currentHeight) {
+
+        if (currentHeight != 0) {
+            heightDataConfig.data.datasets[0].data.push({
+                x: currentdate,
+                y: currentHeight
+            })
+
+            window.cityHeight.update()
+        }
+
+    }
+</script>

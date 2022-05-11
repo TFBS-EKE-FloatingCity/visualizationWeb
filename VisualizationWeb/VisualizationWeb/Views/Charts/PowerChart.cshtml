@@ -1,0 +1,151 @@
+﻿<canvas id="PowerChart" class="chartjs-render-monitor"></canvas>
+
+<script>
+
+    //Power Chart Config
+    var simdatasconfig = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Wind',
+                backgroundColor: "rgba(185, 241, 244, 1)",
+                borderColor: "rgba(185, 241, 244, 1)",
+                data: [],
+                fill: false,
+            }, {
+                label: 'Sun',
+                fill: false,
+                backgroundColor: "rgba(251, 217, 24, 1)",
+                borderColor: "rgba(251, 217, 24, 1)",
+                data: [],
+            }, {
+                label: 'Consumption',
+                fill: false,
+                backgroundColor: "rgba(231, 70, 70, 1)",
+                borderColor: "rgba(231, 70, 70, 1)",
+                data: [],
+            }]
+        },
+        options: {
+            aspectRatio: 2,
+            onResize: function (chart, size) {
+                if (size.width < 685) {
+                    chart.aspectRatio = 1;
+                } else {
+                    chart.aspectRatio = 2;
+                }
+
+                chart.update();
+            },
+            title: {
+                display: true,
+                text: 'Simulation Data Overview'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return 'Time: ' + new Date(tooltipItem[0].label).toLocaleTimeString();
+                    },
+                    //label: function (tooltipItems, data) {
+                    //    return tooltipItems.va + ' : ' + (globals.wsData.WindCurrent / 10) * globals.wsData.WindMax  + " kw/h";
+                    //}
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    },
+                    type: 'time',
+                    distribution: 'series',
+                    time: {
+                        displayFormats: {
+                            second: 'HH:mm:ss',
+                            minute: 'HH:mm:ss',
+                            hour: 'HH:mm:ss',
+                            dateTime: 'D.MMM.YYYY HH:mm:ss'
+                        }
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Share of generated Energy (in %)'
+                    },
+                    ticks: {
+                        min: 0,
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                        
+                    }
+                }]
+            }
+        }
+    }
+    //end Config
+
+    //Create and fill PowerChart
+    $(document).ready(function () {
+        // chart
+        var ctx = document.getElementById('PowerChart').getContext('2d');
+        window.powerChart = new Chart(ctx, simdatasconfig);
+
+        //get Wind, Sun and Consumption Data from Websocket
+        setInterval(function () {
+            if (globals.wsData != {}) {
+                if (!globals.wsData.SimulationActive) {
+                    setSimData(new Date().getTime(), globals.wsData.WindCurrent, globals.wsData.SunCurrent, globals.wsData.ConsumptionCurrent)
+                } else {
+                    setSimData(new Date(globals.wsData.Simulationtime).getTime(), globals.wsData.WindCurrent, globals.wsData.SunCurrent, globals.wsData.ConsumptionCurrent)
+                }
+            }
+        }, settings.updateRate);
+
+    })
+
+    //Update Chart
+    function setSimData(currentdate, wind, sun, consumption) {
+        var update = false;
+
+        if (typeof (wind) !== 'undefined' && wind != 0) {
+            update = true;
+
+            simdatasconfig.data.datasets[0].data.push({
+                x: currentdate,
+                y: wind
+            })
+        }
+
+        if (typeof (sun) !== 'undefined' && sun != 0) {
+            update = true;
+
+            simdatasconfig.data.datasets[1].data.push({
+                x: currentdate,
+                y: sun
+            })
+        }
+
+        if (typeof (consumption) !== 'undefined' && consumption != 0) {
+            update = true;
+
+            simdatasconfig.data.datasets[2].data.push({
+                x: currentdate,
+                y: consumption
+            })
+        }
+
+        if (update) {
+            window.powerChart.update()
+        }
+    }
+</script>

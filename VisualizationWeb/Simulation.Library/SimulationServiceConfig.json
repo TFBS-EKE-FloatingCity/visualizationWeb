@@ -1,0 +1,19 @@
+{
+  "SimulationData": {
+    "Wind": {
+      "Unit": "Wh",
+      "Maximum": 250000,
+      "Minimum": 0
+    },
+    "Sun": {
+      "Unit": "Wh",
+      "Maximum": 250000,
+      "Minimum": 0
+    },
+    "Consumption": {
+      "Unit": "Wh",
+      "Maximum": 500000,
+      "Minimum": 0
+    }
+  }
+}

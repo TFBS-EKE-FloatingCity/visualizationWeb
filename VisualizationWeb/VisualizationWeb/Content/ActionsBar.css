@@ -1,0 +1,25 @@
+﻿.actions-bar {
+    display: inline-block;
+}
+
+.actions-bar .btn {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.actions-bar .btn:hover {
+    text-decoration: none;
+}
+
+.actions-bar .btn:before {
+    color: black;
+    font-size: 16px;
+    font-family: "Glyphicons Halflings";
+}
+
+.actions-bar .btn-danger:before {
+    color: white;
+}
+
+.actions-bar div {
+    border: none;
+}
