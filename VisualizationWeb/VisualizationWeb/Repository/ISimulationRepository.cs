@@ -10,7 +10,7 @@ using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
 using VisualizationWeb.Models.ViewModel;
 
-namespace VisualizationWeb.Models.IRepo
+namespace VisualizationWeb.Models.Repository
 {
     public interface ISimulationRepository
     {

@@ -3,8 +3,8 @@ using System.Web.Mvc;
 using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
-using VisualizationWeb.Models.IRepo;
-using VisualizationWeb.Models.Repo;
+using VisualizationWeb.Models.Repository;
+using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Controllers
 {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
-using VisualizationWeb.Models.Repo;
+using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Helpers {
     public static class SingletonHolder {

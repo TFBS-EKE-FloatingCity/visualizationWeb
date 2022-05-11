@@ -5,8 +5,8 @@ using Simulation.Library.Models;
 using Simulation.Library.ViewModels.SimScenarioVM;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
-using VisualizationWeb.Models.IRepo;
-using VisualizationWeb.Models.Repo;
+using VisualizationWeb.Models.Repository;
+using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Controllers
 {

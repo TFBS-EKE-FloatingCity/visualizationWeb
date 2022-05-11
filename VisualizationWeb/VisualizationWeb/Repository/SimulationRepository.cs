@@ -12,10 +12,10 @@ using System.Web;
 using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
-using VisualizationWeb.Models.IRepo;
+using VisualizationWeb.Models.Repository;
 using VisualizationWeb.Models.ViewModel;
 
-namespace VisualizationWeb.Models.Repo
+namespace VisualizationWeb.Models.Repository
 {
     public class SimulationRepository : ISimulationRepository
     {
@@ -23,7 +23,7 @@ namespace VisualizationWeb.Models.Repo
 
         public SimulationRepository(ApplicationDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public async Task CreatePosition(SimPositionCreateAndEditViewModel position)
