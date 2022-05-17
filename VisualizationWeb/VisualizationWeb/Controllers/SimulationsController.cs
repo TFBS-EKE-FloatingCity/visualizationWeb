@@ -1,21 +1,15 @@
-﻿using Simulation.Library.Models;
-using Simulation.Library.ViewModels.SimPositionVM;
+﻿using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using VisualizationWeb.Context;
-using VisualizationWeb.Models;
-using VisualizationWeb.Models.Repository;
 using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   [Authorize(Roles = "Admin")]
     public class SimulationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

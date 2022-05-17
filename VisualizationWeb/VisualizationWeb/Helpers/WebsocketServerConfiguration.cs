@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebSocketSharp;
+﻿using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace VisualizationWeb.Helpers {
-    public class WebsocketServerConfiguration : WebSocketBehavior {
+namespace VisualizationWeb.Helpers
+{
+   public class WebsocketServerConfiguration : WebSocketBehavior {
         protected override void OnOpen() {
             base.OnOpen();
             SingletonHolder.SendCityDataHead();

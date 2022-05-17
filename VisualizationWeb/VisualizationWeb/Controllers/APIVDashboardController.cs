@@ -1,13 +1,13 @@
-﻿using System.Data;
+﻿using Newtonsoft.Json;
+using System.Data;
 using System.Linq;
 using System.Web.Http;
-using Newtonsoft.Json;
 using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
 
 namespace VisualizationWeb.Controllers
 {
-    [RoutePrefix("API/Dashboard")]
+   [RoutePrefix("API/Dashboard")]
     public class APIVDashboardController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Globalization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using VisualizationWeb.Models;
 
 namespace VisualizationWeb.Controllers
 {
-    public class AccountController : Controller
+   public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -77,6 +74,7 @@ namespace VisualizationWeb.Controllers
 
             //NOTE: For successful sign in, the role "Simulant" is required in UserRoles table
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -156,7 +154,7 @@ namespace VisualizationWeb.Controllers
                 if (result.Succeeded)
                 {
                     //Adding UserRole "Simulant" to New Users
-                    var result1 = await UserManager.AddToRoleAsync(user.Id, "Simulant");
+                    await UserManager.AddToRoleAsync(user.Id, "Simulant");
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

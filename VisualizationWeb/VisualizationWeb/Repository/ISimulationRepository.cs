@@ -1,18 +1,13 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Simulation.Library.Models;
+﻿using Simulation.Library.Models;
 using Simulation.Library.ViewModels;
 using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
-using VisualizationWeb.Models.ViewModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace VisualizationWeb.Models.Repository
 {
-    public interface ISimulationRepository
+   public interface ISimulationRepository
     {
         /// <summary>
         /// Gets All SimPositions for the given simScenarioID.

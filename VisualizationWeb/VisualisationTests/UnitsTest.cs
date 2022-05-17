@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VisualizationWeb.Helpers;
 
 namespace VisualisationTests
 {
 
-    [TestClass]
+   [TestClass]
     public class UnitsTest
     {   
         #region PrefixToNumber

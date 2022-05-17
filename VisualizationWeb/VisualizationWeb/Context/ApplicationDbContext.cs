@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Simulation.Library.Models;
+using System.Data.Entity;
 using VisualizationWeb.Models;
 
 namespace VisualizationWeb.Context
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+   public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

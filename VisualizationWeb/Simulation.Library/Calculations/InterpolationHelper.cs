@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simulation.Library.Calculations
 {
-    public static class InterpolationHelper
+   public static class InterpolationHelper
     {
         //Returns searched Value between 2 Function positions
         public static decimal GetValue(long x1, long y1, long x2, long y2, decimal givenX)

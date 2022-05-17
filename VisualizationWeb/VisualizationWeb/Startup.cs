@@ -5,7 +5,7 @@ using VisualizationWeb.Helpers;
 [assembly: OwinStartupAttribute(typeof(VisualizationWeb.Startup))]
 namespace VisualizationWeb
 {
-    public partial class Startup
+   public partial class Startup
     {
         public void Configuration(IAppBuilder app)
         {

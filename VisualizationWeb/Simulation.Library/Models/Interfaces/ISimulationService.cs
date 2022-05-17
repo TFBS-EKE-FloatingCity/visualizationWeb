@@ -2,7 +2,7 @@
 
 namespace Simulation.Library.Models.Interfaces
 {
-    public interface ISimulationService : IDisposable
+   public interface ISimulationService : IDisposable
     {
         #region Properties
         /// <summary>

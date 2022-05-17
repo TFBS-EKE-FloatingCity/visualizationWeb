@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Simulation.Library.ViewModels
 {
-    public class vmSelectListItem
+   public class vmSelectListItem
     {
         [Key]
         public int ValueMember { get; set; }

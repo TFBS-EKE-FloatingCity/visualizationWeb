@@ -2,22 +2,17 @@
 using Simulation.Library.ViewModels;
 using Simulation.Library.ViewModels.SimPositionVM;
 using Simulation.Library.ViewModels.SimScenarioVM;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
-using VisualizationWeb.Models;
-using VisualizationWeb.Models.Repository;
-using VisualizationWeb.Models.ViewModel;
 
 namespace VisualizationWeb.Models.Repository
 {
-    public class SimulationRepository : ISimulationRepository
+   public class SimulationRepository : ISimulationRepository
     {
         private readonly ApplicationDbContext _context;
 

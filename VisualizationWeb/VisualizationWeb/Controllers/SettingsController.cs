@@ -4,11 +4,10 @@ using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.Repository;
-using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   [Authorize(Roles = "Admin")]
     public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

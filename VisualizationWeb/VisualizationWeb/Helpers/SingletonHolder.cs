@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Simulation.Library.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.Repository;
 
-namespace VisualizationWeb.Helpers {
-    public static class SingletonHolder {
+namespace VisualizationWeb.Helpers
+{
+   public static class SingletonHolder {
 
         private static ApplicationDbContext db = new ApplicationDbContext();
 

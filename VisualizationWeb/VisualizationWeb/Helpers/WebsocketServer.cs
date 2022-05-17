@@ -1,13 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebSocketSharp;
-using WebSocketSharp.Server;
+﻿using WebSocketSharp.Server;
 
-namespace VisualizationWeb.Helpers {
-    public class WebsocketServer 
+namespace VisualizationWeb.Helpers
+{
+   public class WebsocketServer 
     {
         WebSocketServer webServer = new WebSocketServer("ws://localhost:8109");
 

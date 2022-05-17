@@ -1,17 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
-using Simulation.Library.Calculations;
+﻿using Simulation.Library.Calculations;
 using Simulation.Library.Models.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace Simulation.Library.Models
 {
-    public class SimulationService : IDisposable, ISimulationService
+   public class SimulationService : IDisposable, ISimulationService
     {
         #region Properties
         private TimeSpan _duration;

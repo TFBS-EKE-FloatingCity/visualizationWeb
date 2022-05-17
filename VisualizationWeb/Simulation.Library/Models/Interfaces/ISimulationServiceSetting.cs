@@ -1,6 +1,6 @@
 ﻿namespace Simulation.Library.Models.Interfaces
 {
-    public interface ISimulationServiceSettings
+   public interface ISimulationServiceSettings
     {
         
         int SunMax { get; set; }

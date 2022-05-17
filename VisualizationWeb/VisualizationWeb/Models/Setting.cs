@@ -1,13 +1,10 @@
 ﻿using Simulation.Library.Models.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace VisualizationWeb.Models
 {
-    public class Setting : ISimulationServiceSettings
+   public class Setting : ISimulationServiceSettings
     {
         [Key]
         public int SettingID { get; set; }

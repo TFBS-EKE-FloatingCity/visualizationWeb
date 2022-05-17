@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace VisualizationWeb.Models {
-    public class CityDataHead {
+namespace VisualizationWeb.Models
+{
+   public class CityDataHead {
         public int CityDataHeadID { get; set; }
 
         //Running / Stopped

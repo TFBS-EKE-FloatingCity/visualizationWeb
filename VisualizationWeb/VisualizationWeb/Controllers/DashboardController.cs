@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Simulation.Library.Models;
+using Simulation.Library.ViewModels.SimScenarioVM;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Simulation.Library.Models;
-using Simulation.Library.ViewModels.SimScenarioVM;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
-using VisualizationWeb.Models.Repository;
 using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Controllers
 {
-    public class DashboardController : Controller
+   public class DashboardController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private object lobject = new object();

@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace Simulation.Library.ViewModels.SimScenarioVM
 {
-    public class SimScenarioIndexViewModel
+   public class SimScenarioIndexViewModel
     {
         [Key]
         public int SimScenarioID { get; set; }

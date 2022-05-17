@@ -35,7 +35,6 @@ namespace VisualizationWeb.Helpers
         public static string NumberToPrefix(double value)
         {
             int digits = 0;
-            string valueString = "";
 
             while (value > 10)
             {
@@ -47,9 +46,7 @@ namespace VisualizationWeb.Helpers
 
             string[] units = new string[] { "W", "kW", "MW", "GW", "TW" };
 
-            valueString = value.ToString() + units[digits];
-
-            return valueString;
+            return value.ToString() + units[digits];
         }
     }
 }
