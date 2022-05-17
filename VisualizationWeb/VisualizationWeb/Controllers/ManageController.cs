@@ -64,7 +64,7 @@ namespace VisualizationWeb.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new ManageViewModels
+            var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
