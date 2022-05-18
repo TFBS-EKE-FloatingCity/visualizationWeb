@@ -201,9 +201,9 @@
     </Compile>
     <Compile Include="Helpers\Mediator.cs" />
     <Compile Include="Helpers\UnitConverter.cs" />
-    <Compile Include="Helpers\WebSocketClient.cs" />
-    <Compile Include="Helpers\WebsocketServer.cs" />
-    <Compile Include="Helpers\WebsocketServerConfiguration.cs" />
+    <Compile Include="Helpers\ApplicationWebSocketClient.cs" />
+    <Compile Include="Helpers\ApplicationWebSocketServer.cs" />
+    <Compile Include="Helpers\WebSocketServerConfiguration.cs" />
     <Compile Include="Migrations\202205090859263_init.cs" />
     <Compile Include="Migrations\202205090859263_init.designer.cs">
       <DependentUpon>202205090859263_init.cs</DependentUpon>
@@ -236,7 +236,7 @@
     <Compile Include="ViewModel\JsonResponseVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\SelectListVM.cs" />
+    <Compile Include="ViewModel\SelectListItemVM.cs" />
     <Compile Include="ViewModel\SimPositionVM\SimPositionBindingViewModel.cs" />
     <Compile Include="ViewModel\SimPositionVM\SimPositionCreateAndEditViewModel.cs" />
     <Compile Include="ViewModel\SimPositionVM\SimPositionIndexViewModel.cs" />
