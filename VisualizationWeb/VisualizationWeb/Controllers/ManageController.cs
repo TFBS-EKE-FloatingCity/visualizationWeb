@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using VisualizationWeb.Models;
+using VisualizationWeb.ViewModel.ManageViewModels;
 
 namespace VisualizationWeb.Controllers
 {

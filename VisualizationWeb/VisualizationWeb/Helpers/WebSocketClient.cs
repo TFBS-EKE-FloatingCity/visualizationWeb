@@ -5,7 +5,7 @@ using Simulation.Library;
 using System;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
-using VisualizationWeb.Models.ViewModel;
+using VisualizationWeb.ViewModel;
 
 namespace VisualizationWeb.Helpers
 {

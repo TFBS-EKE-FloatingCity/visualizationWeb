@@ -1,9 +1,9 @@
 ﻿using Simulation.Library.Models;
-using Simulation.Library.ViewModels;
-using Simulation.Library.ViewModels.SimPositionVM;
-using Simulation.Library.ViewModels.SimScenarioVM;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VisualizationWeb.ViewModel;
+using VisualizationWeb.ViewModel.SimPositionVM;
+using VisualizationWeb.ViewModel.SimScenarioVM;
 
 namespace VisualizationWeb.Models.Repository
 {
@@ -76,7 +76,7 @@ namespace VisualizationWeb.Models.Repository
         /// Gets all SimScenarios.
         /// Converts SimScenario to vmSelectListItem
         /// </summary>
-        Task<IList<vmSelectListItem>> SimScenarioSelect();
+        Task<IList<SelectListVM>> SimScenarioSelect();
 
         /// <summary>
         /// Gets the Title from the given simScenarioID.

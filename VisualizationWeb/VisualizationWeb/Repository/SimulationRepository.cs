@@ -1,7 +1,4 @@
 ﻿using Simulation.Library.Models;
-using Simulation.Library.ViewModels;
-using Simulation.Library.ViewModels.SimPositionVM;
-using Simulation.Library.ViewModels.SimScenarioVM;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -9,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using VisualizationWeb.Context;
 using VisualizationWeb.Helpers;
+using VisualizationWeb.ViewModel;
+using VisualizationWeb.ViewModel.SimPositionVM;
+using VisualizationWeb.ViewModel.SimScenarioVM;
 
 namespace VisualizationWeb.Models.Repository
 {
@@ -149,11 +149,11 @@ namespace VisualizationWeb.Models.Repository
             _context.SimScenarios.Remove(await _context.SimScenarios.FindAsync(scenarioID));
         }
 
-        public async Task<IList<vmSelectListItem>> SimScenarioSelect()
+        public async Task<IList<SelectListVM>> SimScenarioSelect()
         {
             var select = from c in _context.SimScenarios
                          orderby c.Title
-                         select new vmSelectListItem
+                         select new SelectListVM
                          {
                              ValueMember = c.SimScenarioID,
                              DisplayMember = c.Title

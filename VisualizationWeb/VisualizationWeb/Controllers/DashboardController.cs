@@ -1,11 +1,11 @@
 ﻿using Simulation.Library.Models;
-using Simulation.Library.ViewModels.SimScenarioVM;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.Repository;
+using VisualizationWeb.ViewModel.SimScenarioVM;
 
 namespace VisualizationWeb.Controllers
 {

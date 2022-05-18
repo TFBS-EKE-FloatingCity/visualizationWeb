@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VisualizationWeb.Models;
+using VisualizationWeb.ViewModel.AccountViewModels;
 
 namespace VisualizationWeb.Controllers
 {
