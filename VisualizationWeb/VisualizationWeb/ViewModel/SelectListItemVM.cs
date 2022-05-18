@@ -2,7 +2,7 @@
 
 namespace VisualizationWeb.ViewModel
 {
-   public class SelectListVM
+   public class SelectListItemVM
    {
       [Key]
       public int ValueMember { get; set; }

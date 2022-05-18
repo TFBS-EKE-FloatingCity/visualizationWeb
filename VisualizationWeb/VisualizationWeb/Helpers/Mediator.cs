@@ -28,12 +28,12 @@ namespace VisualizationWeb.Helpers
         /// <summary>
         /// Websocketserver mit welchem sich der Browser verbindet um Live Daten zu holen
         /// </summary>
-        private static readonly WebsocketServer _server = new WebsocketServer();
+        private static readonly ApplicationWebSocketServer _server = new ApplicationWebSocketServer();
 
         /// <summary>
         /// Websocketclient welcher sich mit dem Raspberry verbindet um die Live Daten zu bekommen, abzuspeichern und über den Websocketserver an die Browser zu verteilen
         /// </summary>
-        private static readonly WebSocketClient _wsClient = new WebSocketClient(_server, _simService, _settings.rbPiConnectionString);
+        private static readonly ApplicationWebSocketClient _wsClient = new ApplicationWebSocketClient(_server, _simService, _settings.rbPiConnectionString);
 
         /// <summary>
         /// Die ID des Kopfdatensatzes der aktuell laufenden Simulation

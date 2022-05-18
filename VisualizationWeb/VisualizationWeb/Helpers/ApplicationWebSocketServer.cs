@@ -2,13 +2,13 @@
 
 namespace VisualizationWeb.Helpers
 {
-   public class WebsocketServer 
+   public class ApplicationWebSocketServer 
     {
         private readonly WebSocketServer _webServer = new WebSocketServer("ws://localhost:8109");
 
         public void OpenConnection()
         {
-            _webServer.AddWebSocketService<WebsocketServerConfiguration>("/Connection");
+            _webServer.AddWebSocketService<WebSocketServerConfiguration>("/Connection");
             _webServer.Start();
         }
 

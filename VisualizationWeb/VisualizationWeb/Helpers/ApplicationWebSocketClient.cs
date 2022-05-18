@@ -9,17 +9,17 @@ using VisualizationWeb.ViewModel;
 
 namespace VisualizationWeb.Helpers
 {
-   public class WebSocketClient
+   public class ApplicationWebSocketClient
    {
       public static SocketIoClient Client { get; private set; } = new SocketIoClient();
 
       private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-      private readonly WebsocketServer _server;
+      private readonly ApplicationWebSocketServer _server;
       private readonly SimulationService _service;
       private readonly Uri _uri;
 
-      public WebSocketClient(WebsocketServer server, SimulationService simService, string connectionString)
+      public ApplicationWebSocketClient(ApplicationWebSocketServer server, SimulationService simService, string connectionString)
       {
          _server = server;
          _service = simService;

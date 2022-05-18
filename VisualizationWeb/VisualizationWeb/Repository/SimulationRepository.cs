@@ -149,11 +149,11 @@ namespace VisualizationWeb.Models.Repository
             _context.SimScenarios.Remove(await _context.SimScenarios.FindAsync(scenarioID));
         }
 
-        public async Task<IList<SelectListVM>> SimScenarioSelect()
+        public async Task<IList<SelectListItemVM>> SimScenarioSelect()
         {
             var select = from c in _context.SimScenarios
                          orderby c.Title
-                         select new SelectListVM
+                         select new SelectListItemVM
                          {
                              ValueMember = c.SimScenarioID,
                              DisplayMember = c.Title

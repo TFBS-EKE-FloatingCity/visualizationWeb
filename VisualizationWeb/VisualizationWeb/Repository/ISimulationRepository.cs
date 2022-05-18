@@ -76,7 +76,7 @@ namespace VisualizationWeb.Models.Repository
         /// Gets all SimScenarios.
         /// Converts SimScenario to vmSelectListItem
         /// </summary>
-        Task<IList<SelectListVM>> SimScenarioSelect();
+        Task<IList<SelectListItemVM>> SimScenarioSelect();
 
         /// <summary>
         /// Gets the Title from the given simScenarioID.

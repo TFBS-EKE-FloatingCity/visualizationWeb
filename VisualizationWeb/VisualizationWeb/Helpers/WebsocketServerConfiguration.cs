@@ -3,7 +3,7 @@ using WebSocketSharp.Server;
 
 namespace VisualizationWeb.Helpers
 {
-   public class WebsocketServerConfiguration : WebSocketBehavior {
+   public class WebSocketServerConfiguration : WebSocketBehavior {
         protected override void OnOpen() {
             base.OnOpen();
             Mediator.SendCityDataHead();
