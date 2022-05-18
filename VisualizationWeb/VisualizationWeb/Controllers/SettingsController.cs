@@ -10,8 +10,8 @@ namespace VisualizationWeb.Controllers
    [Authorize(Roles = "Admin")]
     public class SettingsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private object lobject = new object();
+        private ApplicationDbContext _db = new ApplicationDbContext();
+        private object _lock = new object();
 
         private ISimulationRepository _simulationRepository;
         public ISimulationRepository SimulationRepository
@@ -20,11 +20,11 @@ namespace VisualizationWeb.Controllers
             {
                 if (_simulationRepository == null)
                 {
-                    lock (lobject)
+                    lock (_lock)
                     {
                         if (_simulationRepository == null)
                         {
-                            _simulationRepository = new SimulationRepository(db);
+                            _simulationRepository = new SimulationRepository(_db);
                         }
                     }
                 }
@@ -52,7 +52,7 @@ namespace VisualizationWeb.Controllers
             {
                 await SimulationRepository.SaveSetting(setting);
 
-                SingletonHolder.UpdateSimulationSettings(setting);
+                Mediator.UpdateSimulationSettings(setting);
 
                 return RedirectToAction("../Dashboard");
             }
@@ -64,7 +64,7 @@ namespace VisualizationWeb.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
 
             base.Dispose(disposing);

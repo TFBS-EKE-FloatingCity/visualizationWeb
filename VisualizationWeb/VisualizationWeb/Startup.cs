@@ -11,8 +11,8 @@ namespace VisualizationWeb
         {
             ConfigureAuth(app);
 
-            SingletonHolder.StartWebsocketServer();
-            SingletonHolder.StartWebsocketClient();
+            Mediator.StartWebsocketServer();
+            Mediator.StartWebsocketClient();
         }
     }
 }

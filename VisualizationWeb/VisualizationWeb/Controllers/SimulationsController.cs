@@ -12,8 +12,8 @@ namespace VisualizationWeb.Controllers
    [Authorize(Roles = "Admin")]
     public class SimulationsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private object lobject = new object();
+        private ApplicationDbContext _db = new ApplicationDbContext();
+        private object _lock = new object();
 
         /// <summary>
         /// Initialise Repository only if needed
@@ -26,11 +26,11 @@ namespace VisualizationWeb.Controllers
             {
                 if (_simulationRepository == null)
                 {
-                    lock (lobject)
+                    lock (_lock)
                     {
                         if (_simulationRepository == null)
                         {
-                            _simulationRepository = new SimulationRepository(db);
+                            _simulationRepository = new SimulationRepository(_db);
                         }
                     }
                 }
@@ -106,7 +106,7 @@ namespace VisualizationWeb.Controllers
             if (ModelState.IsValid)
             {
                 await SimulationRepository.CreateScenario(vm);
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -125,7 +125,7 @@ namespace VisualizationWeb.Controllers
             if (ModelState.IsValid)
             {
                 await SimulationRepository.CreatePosition(vm);
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
                 return RedirectToAction($"Details/{vm.SimScenarioID}");
             }
 
@@ -146,7 +146,7 @@ namespace VisualizationWeb.Controllers
             }
 
             await SimulationRepository.RemovePosition(simPositionId.Value);
-            await db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return RedirectToAction($"Details/{simScenarioId}");
         }
@@ -164,28 +164,9 @@ namespace VisualizationWeb.Controllers
             }
 
             await SimulationRepository.RemoveScenario(simScenarioId.Value);
-            await db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
-
-        //STFR: Uncomment if you want to Start the Simulation in Simulation View directly!
-        //public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
-        //{
-           
-        //    Helpers.SingletonHolder.StartSimulation(await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID), vm.Duration);
-
-        //    return RedirectToAction("Index");
-        //}
-
-        //public async Task<ActionResult> PartialSimulationStart()
-        //{
-        //    SimStartViewModel vm = new SimStartViewModel();
-        //    ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
-
-        //    return PartialView("PartialViews/PartialSimulationStart", vm);
-        //}
-
-       
     }
 }

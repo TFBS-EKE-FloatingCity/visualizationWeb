@@ -11,8 +11,8 @@ namespace VisualizationWeb.Controllers
 {
    public class DashboardController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private object lobject = new object();
+        private ApplicationDbContext _db = new ApplicationDbContext();
+        private object _lock = new object();
         //For the ProgressBar
         private static SimStartViewModel _currentScenario;
 
@@ -23,11 +23,11 @@ namespace VisualizationWeb.Controllers
             {
                 if (_simulationRepository == null)
                 {
-                    lock (lobject)
+                    lock (_lock)
                     {
                         if (_simulationRepository == null)
                         {
-                            _simulationRepository = new SimulationRepository(db);
+                            _simulationRepository = new SimulationRepository(_db);
                         }
                     }
                 }
@@ -43,14 +43,12 @@ namespace VisualizationWeb.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-
             return View("../Dashboard");
         }      
 
-
         public string GetIPFromSettings()
         {
-            SimulationRepository simrep = new SimulationRepository(db);
+            SimulationRepository simrep = new SimulationRepository(_db);
             Setting setting = simrep.GetSimulationSetting();
 
             return setting.browserConnectionString;
@@ -67,7 +65,7 @@ namespace VisualizationWeb.Controllers
             var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
             _currentScenario = vm;
             simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
-            Helpers.SingletonHolder.StartSimulation(simScenarioID, vm.Duration);
+            Helpers.Mediator.StartSimulation(simScenarioID, vm.Duration);
 
             return RedirectToAction("../Dashboard");
         }

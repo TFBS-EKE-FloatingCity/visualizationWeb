@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Simulation.Library;
 using Simulation.Library.Models;
 using System;
 using System.Linq;
@@ -8,53 +9,49 @@ using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Helpers
 {
-   public static class SingletonHolder {
+   public static class Mediator {
 
-        private static ApplicationDbContext db = new ApplicationDbContext();
+        private static ApplicationDbContext _db = new ApplicationDbContext();
 
         /// <summary>
         /// Aus dem Simulationrepository werden hier die Settings geholt und abgespeichert
         /// </summary>
-        private static SimulationRepository repo = new SimulationRepository(db);
-        private static Setting settings = repo.GetSimulationSetting();
+        private static SimulationRepository _repo = new SimulationRepository(_db);
+        private static Setting _settings = _repo.GetSimulationSetting();
 
         /// <summary>
         /// Instanz des SimulationService welcher von Max Hiltpolt geschrieben wurde
         /// An diesen werden die Settings übergeben
         /// </summary>
-        private static readonly SimulationService simService = new SimulationService(settings);
+        private static readonly SimulationService _simService = new SimulationService(_settings);
 
         /// <summary>
         /// Websocketserver mit welchem sich der Browser verbindet um Live Daten zu holen
         /// </summary>
-        private static readonly WebsocketServer server = new WebsocketServer();
+        private static readonly WebsocketServer _server = new WebsocketServer();
 
         /// <summary>
         /// Websocketclient welcher sich mit dem Raspberry verbindet um die Live Daten zu bekommen, abzuspeichern und über den Websocketserver an die Browser zu verteilen
         /// </summary>
-        private static readonly WebSocketClient client = new WebSocketClient(server, simService, settings.rbPiConnectionString);
+        private static readonly WebSocketClient _wsClient = new WebSocketClient(_server, _simService, _settings.rbPiConnectionString);
 
         /// <summary>
         /// Die ID des Kopfdatensatzes der aktuell laufenden Simulation
         /// </summary>
-        private static int? currentCityDataHeadID;
-        public static int? CurrentCityDataHeadID {
-            get { return currentCityDataHeadID; }
-        }
+        public static int? CurrentCityDataHeadID { get; private set; }
 
         /// <summary>
         /// der Kopfdatensatz der aktuell laufenden Simulation
         /// </summary>
-        public static CityDataHead CurrentCityDataHead;
+        public static CityDataHead CurrentCityDataHead { get; private set; }
 
         /// <summary>
         /// Wenn auf der Settings unterseite Settings geändert werden werden diese auch hier im Simulationservice geändert ohne einen Webserver neustart
         /// </summary>
         /// <param name="setting"></param>
         public static void UpdateSimulationSettings(Setting setting) {
-            simService.SetSettings(setting);
-
-            settings = setting;
+            _simService.SetSettings(setting);
+            _settings = setting;
         }
 
         /// <summary>
@@ -63,25 +60,25 @@ namespace VisualizationWeb.Helpers
         /// <param name="simScenario"></param>
         /// <param name="duration"></param>
         public static void StartSimulation(SimScenario simScenario, TimeSpan duration) {
-            simService.Run(simScenario, duration);
+            _simService.Run(simScenario, duration);
 
-            simService.SimulationEnded += HandleStopSimulationEvent;
+            _simService.SimulationEnded += HandleStopSimulationEvent;
 
             CityDataHead head = new CityDataHead { 
-                StartTime = (DateTime)simService.StartDateTimeReal,
-                EndTime = (DateTime)simService.EndDateTimeReal,
+                StartTime = (DateTime)_simService.StartDateTimeReal,
+                EndTime = (DateTime)_simService.EndDateTimeReal,
                 SimulationID = simScenario.SimScenarioID,
                 State = "Running"
             };
 
-            db.CityDataHeads.Add(head);
-            db.SaveChanges();
+            _db.CityDataHeads.Add(head);
+            _db.SaveChanges();
 
-            head.CityDataHeadID = (from cdh in db.CityDataHeads
+            head.CityDataHeadID = (from cdh in _db.CityDataHeads
                                    orderby cdh.CityDataHeadID descending
                                    select cdh.CityDataHeadID).FirstOrDefault();
 
-            currentCityDataHeadID = head.CityDataHeadID;
+            CurrentCityDataHeadID = head.CityDataHeadID;
             CurrentCityDataHead = head;
 
             SendCityDataHead();
@@ -93,7 +90,7 @@ namespace VisualizationWeb.Helpers
         /// <param name="sender"></param>
         /// <param name="a"></param>
         private static void HandleStopSimulationEvent(object sender, System.EventArgs a) {
-            simService.SimulationEnded -= HandleStopSimulationEvent;
+            _simService.SimulationEnded -= HandleStopSimulationEvent;
 
             StopSimulation();
         }
@@ -103,7 +100,7 @@ namespace VisualizationWeb.Helpers
         /// </summary>
         public static void SendCityDataHead() {
             if (CurrentCityDataHead != null) {
-                server.SendData(JsonConvert.SerializeObject(CurrentCityDataHead));
+                _server.SendData(JsonConvert.SerializeObject(CurrentCityDataHead));
             }
         }
 
@@ -111,19 +108,19 @@ namespace VisualizationWeb.Helpers
         /// Wenn eine Simulation manuell frühzeitig gestoppt wird
         /// </summary>
         public static void StopSimulation() {
-            simService.Stop();
+            _simService.Stop();
 
-            CityDataHead head = db.CityDataHeads.Find(CurrentCityDataHeadID);
+            CityDataHead head = _db.CityDataHeads.Find(CurrentCityDataHeadID);
 
             head.EndTime = DateTime.Now;
             head.State = "Stopped";
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
             CurrentCityDataHead = null;
-            currentCityDataHeadID = null;
+            CurrentCityDataHeadID = null;
 
-            server.SendData(JsonConvert.SerializeObject(head));
+            _server.SendData(JsonConvert.SerializeObject(head));
         }
 
         /// <summary>
@@ -133,29 +130,29 @@ namespace VisualizationWeb.Helpers
         /// <param name="energyProductionSun"></param>
         /// <param name="energyProductionWind"></param>
         public static void SetIdleValues(int energyConsumption, int energyProductionSun, int energyProductionWind) {
-            simService.SetIdleValues(energyConsumption, energyProductionSun, energyProductionWind);
+            _simService.SetIdleValues(energyConsumption, energyProductionSun, energyProductionWind);
         }
 
         /// <summary>
         /// Starten des Websocketclients und Verbindungsaufbau mit dem Raspberry
         /// </summary>
         public static void StartWebsocketClient() {
-            client.RegisterEvents();
-            client.Connect();
+            _wsClient.RegisterEvents();
+            _wsClient.Connect();
         }
 
         /// <summary>
         /// Falls der Connectionstring geändert wird kann hier der Websocketclient neugestartet werden
         /// </summary>
         public static void RestartWebsocketClient() {
-            client.ReConnect();
+            _wsClient.Reconnect();
         }
 
         /// <summary>
         /// Start des Websocketservers damit sich Browser damit verbinden können
         /// </summary>
         public static void StartWebsocketServer() {
-            server.OpenConnection();
+            _server.OpenConnection();
         }
     }
 }

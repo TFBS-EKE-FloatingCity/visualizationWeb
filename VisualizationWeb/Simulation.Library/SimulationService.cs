@@ -1,10 +1,11 @@
 ﻿using Simulation.Library.Calculations;
+using Simulation.Library.Models;
 using Simulation.Library.Models.Interfaces;
 using System;
 using System.Linq;
 using System.Timers;
 
-namespace Simulation.Library.Models
+namespace Simulation.Library
 {
    public class SimulationService : IDisposable, ISimulationService
     {

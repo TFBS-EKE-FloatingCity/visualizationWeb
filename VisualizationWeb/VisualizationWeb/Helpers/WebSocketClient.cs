@@ -1,7 +1,7 @@
 ﻿using H.Socket.IO;
 using H.Socket.IO.EventsArgs;
 using Newtonsoft.Json;
-using Simulation.Library.Models;
+using Simulation.Library;
 using System;
 using VisualizationWeb.Context;
 using VisualizationWeb.Models;
@@ -11,74 +11,72 @@ namespace VisualizationWeb.Helpers
 {
    public class WebSocketClient
    {
+      public static SocketIoClient Client { get; private set; } = new SocketIoClient();
 
-      private ApplicationDbContext db = new ApplicationDbContext();
+      private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-      WebsocketServer websocketserver;
-      SimulationService simService;
-
-      Uri url;
-      public static SocketIoClient client = new SocketIoClient();
+      private readonly WebsocketServer _server;
+      private readonly SimulationService _service;
+      private readonly Uri _uri;
 
       public WebSocketClient(WebsocketServer server, SimulationService simService, string connectionString)
       {
-         this.websocketserver = server;
-         this.simService = simService;
+         _server = server;
+         _service = simService;
 
          if (connectionString != null)
          {
-            url = new Uri(connectionString);
+            _uri = new Uri(connectionString);
          }
       }
 
       public void Connect()
       {
-         if (url != null)
+         if (_uri != null)
          {
-            client.ConnectAsync(url);
+            Client.ConnectAsync(_uri);
          }
       }
 
-      public void ReConnect()
+      public void Reconnect()
       {
-         client.DisconnectAsync();
+         Client.DisconnectAsync();
 
-         if (url != null)
+         if (_uri != null)
          {
-            client.ConnectAsync(url);
+            Client.ConnectAsync(_uri);
          }
       }
 
       public void RegisterEvents()
       {
-         client.Connected += onConnected;
+         Client.Connected += OnConnectedHandler;
 
-         client.On("sensorData", json =>
+         Client.On("sensorData", json =>
          {
             MessageHandler(json);
          });
       }
 
-      private void onConnected(object sender, SocketIoEventEventArgs e)
+      private void OnConnectedHandler(object sender, SocketIoEventEventArgs e)
       {
-         client.Emit("authenticate", "");
+         Client.Emit("authenticate", "");
       }
 
       private void MessageHandler(string json)
       {
-
          DateTime recieved = DateTime.Now;
 
          JsonDataVM jsonData = JsonConvert.DeserializeObject<JsonDataVM>(json);
          JsonResponseVM response = new JsonResponseVM();
 
-         if (db.CityDatas.Find(jsonData.uuid) == null)
+         if (_db.CityDatas.Find(jsonData.uuid) == null)
          {
 
             CityData data = new CityData();
 
             data.UUID = jsonData.uuid;
-            data.CityDataHeadID = SingletonHolder.CurrentCityDataHeadID;
+            data.CityDataHeadID = Mediator.CurrentCityDataHeadID;
 
             foreach (var module in jsonData.payload.modules)
             {
@@ -107,22 +105,22 @@ namespace VisualizationWeb.Helpers
             data.MesurementTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(Convert.ToDouble(jsonData.payload.timestamp));
             data.CreatedAt = recieved;
 
-            data.WindMax = simService.MaxEnergyProductionWind;
-            data.WindCurrent = Convert.ToInt16(simService.GetEnergyProductionWind(recieved));
-            data.SunMax = simService.MaxEnergyProductionSun;
-            data.SunCurrent = Convert.ToInt16(simService.GetEnergyProductionSun(recieved));
-            data.ConsumptionMax = simService.MaxEnergyConsumption;
-            data.ConsumptionCurrent = Convert.ToInt16(simService.GetEnergyConsumption(recieved));
-            data.SimulationActive = simService.IsSimulationRunning;
-            data.Simulationtime = simService.GetSimulatedTimeStamp(recieved);
-            data.SimulationID = simService.SimulationScenarioId;
-            data.TimeFactor = simService.TimeFactor;
+            data.WindMax = _service.MaxEnergyProductionWind;
+            data.WindCurrent = Convert.ToInt16(_service.GetEnergyProductionWind(recieved));
+            data.SunMax = _service.MaxEnergyProductionSun;
+            data.SunCurrent = Convert.ToInt16(_service.GetEnergyProductionSun(recieved));
+            data.ConsumptionMax = _service.MaxEnergyConsumption;
+            data.ConsumptionCurrent = Convert.ToInt16(_service.GetEnergyConsumption(recieved));
+            data.SimulationActive = _service.IsSimulationRunning;
+            data.Simulationtime = _service.GetSimulatedTimeStamp(recieved);
+            data.SimulationID = _service.SimulationScenarioId;
+            data.TimeFactor = _service.TimeFactor;
 
             try
             {
-               db.CityDatas.Add(data);
-               db.SaveChanges();
-               websocketserver.SendData(JsonConvert.SerializeObject(data));
+               _db.CityDatas.Add(data);
+               _db.SaveChanges();
+               _server.SendData(JsonConvert.SerializeObject(data));
 
                response.status = "ack";
             }
@@ -134,11 +132,11 @@ namespace VisualizationWeb.Helpers
          }
 
          response.uuid = jsonData.uuid;
-         response.energyBalance = simService.GetEnergyBalance(recieved);
-         response.sun = simService.GetEnergyProductionSun(recieved);
-         response.wind = simService.GetEnergyProductionWind(recieved);
+         response.energyBalance = _service.GetEnergyBalance(recieved);
+         response.sun = _service.GetEnergyProductionSun(recieved);
+         response.wind = _service.GetEnergyProductionWind(recieved);
 
-         client.Emit("sensorDataResponse", response);
+         Client.Emit("sensorDataResponse", response);
       }
    }
 }

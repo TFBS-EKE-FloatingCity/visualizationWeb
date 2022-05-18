@@ -183,7 +183,7 @@ namespace VisualizationWeb.Models.Repository
 
             //Neustarten des Websocketclients wenn die Daten geändert wurden
             if (settingComparison.rbPiConnectionString != setting.rbPiConnectionString) {
-                SingletonHolder.RestartWebsocketClient();
+                Mediator.RestartWebsocketClient();
             }
 
             _context.Settings.AddOrUpdate(setting);

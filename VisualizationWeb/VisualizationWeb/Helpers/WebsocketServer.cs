@@ -4,19 +4,17 @@ namespace VisualizationWeb.Helpers
 {
    public class WebsocketServer 
     {
-        WebSocketServer webServer = new WebSocketServer("ws://localhost:8109");
+        private readonly WebSocketServer _webServer = new WebSocketServer("ws://localhost:8109");
 
         public void OpenConnection()
         {
-            webServer.AddWebSocketService<WebsocketServerConfiguration>("/Connection");
-
-            webServer.Start();
-
+            _webServer.AddWebSocketService<WebsocketServerConfiguration>("/Connection");
+            _webServer.Start();
         }
 
         public void SendData(string json) 
         {
-            webServer.WebSocketServices.BroadcastAsync(json, null);
+            _webServer.WebSocketServices.BroadcastAsync(json, null);
         }
     }
 }
