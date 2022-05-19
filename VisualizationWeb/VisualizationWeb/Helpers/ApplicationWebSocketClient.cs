@@ -83,19 +83,19 @@ namespace VisualizationWeb.Helpers
                switch (module.sector)
                {
                   case "One":
-                     data.USonicInner1 = Convert.ToInt16(module.sensorInside);
-                     data.USonicOuter1 = Convert.ToInt16(module.sensorOutside);
-                     data.Pump1 = Convert.ToInt16(module.pumpLevel);
+                     data.USonicInner1 =ConvertToShort(module.sensorInside);
+                     data.USonicOuter1 = ConvertToShort(module.sensorOutside);
+                     data.Pump1 = ConvertToShort(module.pumpLevel);
                      break;
                   case "Two":
-                     data.USonicInner2 = Convert.ToInt16(module.sensorInside);
-                     data.USonicOuter2 = Convert.ToInt16(module.sensorOutside);
-                     data.Pump2 = Convert.ToInt16(module.pumpLevel);
+                     data.USonicInner2 = ConvertToShort(module.sensorInside);
+                     data.USonicOuter2 = ConvertToShort(module.sensorOutside);
+                     data.Pump2 = ConvertToShort(module.pumpLevel);
                      break;
                   case "Three":
-                     data.USonicInner3 = Convert.ToInt16(module.sensorInside);
-                     data.USonicOuter3 = Convert.ToInt16(module.sensorOutside);
-                     data.Pump3 = Convert.ToInt16(module.pumpLevel);
+                     data.USonicInner3 = ConvertToShort(module.sensorInside);
+                     data.USonicOuter3 = ConvertToShort(module.sensorOutside);
+                     data.Pump3 = ConvertToShort(module.pumpLevel);
                      break;
                   default:
                      break;
@@ -137,6 +137,12 @@ namespace VisualizationWeb.Helpers
          response.wind = _service.GetEnergyProductionWind(recieved);
 
          Client.Emit("sensorDataResponse", response);
+
+         short ConvertToShort(int num)
+         {
+            if (num > short.MaxValue) return short.MaxValue;
+            return Math.Max(Convert.ToInt16(num), (short)0);
+         }
       }
    }
 }
