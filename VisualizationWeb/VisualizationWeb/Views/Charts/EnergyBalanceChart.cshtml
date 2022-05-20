@@ -1,6 +1,4 @@
-﻿
-
-<canvas id="EnergyBalance" class="chartjs-render-monitor"></canvas>
+﻿<canvas id="EnergyBalance" class="chartjs-render-monitor"></canvas>
 
 <script>
 
@@ -84,9 +82,9 @@
             energyBalanceConfig.data.datasets[0].label = "Neutral";
         } else {
             energyBalanceConfig.data.datasets[0].backgroundColor = "rgb(142, 219, 126)";
-            energyBalanceConfig.data.datasets[0].label = "Positive";          
+            energyBalanceConfig.data.datasets[0].label = "Positive";
         }
-        energyBalanceConfig.data.datasets[0].data[0] = data;        
+        energyBalanceConfig.data.datasets[0].data[0] = data;
         window.energyBalanceChart.update()
     }
 </script>

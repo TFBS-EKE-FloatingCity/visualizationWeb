@@ -51,51 +51,51 @@
 
             @if (Model.SimPositions?.Count() > 0)
             {
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().SunValue)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().WindValue)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyConsumptionValue)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().TimeRegistered)
-                    </th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().SunValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().WindValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().EnergyConsumptionValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SimPositions.FirstOrDefault().TimeRegistered)
+                </th>
+                <th></th>
+            </tr>
                 foreach (var cs in Model.SimPositions)
                 {
-                    <tr>
-                        <td>
-                            @Html.Label(cs.SunValue.ToString())
-                        </td>
-                        <td>
-                            @Html.Label(cs.WindValue.ToString())
-                        </td>
-                        <td>
-                            @Html.Label(cs.EnergyConsumptionValue.ToString())
-                        </td>
-                        <td>
-                            @Html.Label(cs.TimeRegistered.ToShortTimeString())
-                        </td>
-                        <td>
-                            @Html.ActionLink("Remove", "RemoveSimPosition", new { simPositionId = cs.SimPositionID, simScenarioId = Model.SimScenarioID })
-                        </td>
-                    </tr>
+            <tr>
+                <td>
+                    @Html.Label(cs.SunValue.ToString())
+                </td>
+                <td>
+                    @Html.Label(cs.WindValue.ToString())
+                </td>
+                <td>
+                    @Html.Label(cs.EnergyConsumptionValue.ToString())
+                </td>
+                <td>
+                    @Html.Label(cs.TimeRegistered.ToShortTimeString())
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "RemoveSimPosition", new { simPositionId = cs.SimPositionID, simScenarioId = Model.SimScenarioID })
+                </td>
+            </tr>
                 }
             }
             else
             {
-                <tr>
-                    <td>
-                        <p class="text-info">
-                            Das Szenario enthält keine Positionen!
-                        </p>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <p class="text-info">
+                        Das Szenario enthält keine Positionen!
+                    </p>
+                </td>
+            </tr>
             }
         </table>
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Position</button>
@@ -114,8 +114,6 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-

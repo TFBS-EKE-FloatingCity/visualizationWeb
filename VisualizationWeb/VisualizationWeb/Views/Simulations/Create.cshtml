@@ -9,10 +9,9 @@
     <h2>Create Scenario</h2>
 </div>
 
-
 @using (Html.BeginForm("Create", "Simulations", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace VisualizationWeb.Helpers
 {
@@ -23,12 +21,16 @@ namespace VisualizationWeb.Helpers
          {
             case "w":
                return value;
+
             case "kw":
                return value * 1000;
+
             case "mw":
                return value * 1000000;
+
             case "gw":
                return value * 1000000000;
+
             default:
                return value;
          }

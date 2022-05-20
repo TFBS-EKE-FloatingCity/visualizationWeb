@@ -1,5 +1,4 @@
-﻿
-<canvas id="Energy-Consumption-Comparison" class="chartjs-render-monitor"></canvas>
+﻿<canvas id="Energy-Consumption-Comparison" class="chartjs-render-monitor"></canvas>
 
 <script>
 
@@ -11,15 +10,15 @@
             datasets: [{
                 label: "Generated Energy",
                 backgroundColor: ["rgba(4, 0, 219, 1)"],
-                data: [],              
+                data: [],
                 borderWidth: 2
             }, {
                 label: "Consumption",
                 backgroundColor: ["rgba(219, 0, 40, 1)"],
-                data: [],               
+                data: [],
                 borderWidth: 2
             }
-                
+
             ]
         },
         options: {
@@ -39,7 +38,7 @@
             },
             tooltips: {
                 mode: 'index',
-                intersect: false            
+                intersect: false
             },
             hover: {
                 mode: 'nearest',
@@ -47,7 +46,7 @@
             },
             scales: {
                 xAxes: [{
-                    display: false,                                   
+                    display: false,
                 }],
                 yAxes: [{
                     display: true,
@@ -78,5 +77,4 @@
         eccConfig.data.datasets[1].data[0] = data[1]
         window.eccChart.update()
     }
-
 </script>

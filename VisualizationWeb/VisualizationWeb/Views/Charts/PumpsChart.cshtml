@@ -1,5 +1,4 @@
-﻿
-<canvas id="PumpsChart" class="chartjs-render-monitor"></canvas>
+﻿<canvas id="PumpsChart" class="chartjs-render-monitor"></canvas>
 
 <script>
     //Pump Chart Config
@@ -12,7 +11,7 @@
             datasets: [{
                 label: "Pumps",
                 data: [],
-                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)'], 
+                backgroundColor: ["rgba(219, 0, 40, 1)", 'rgba(4, 0, 219, 1)', 'rgba(61, 117, 0, 1)'],
                 borderWidth: 2
             }]
         },
@@ -64,11 +63,11 @@
             }
         }, settings.updateRate);
     })
-   
+
     //Update
     function setPumpData(data) {
         pumpsConfig.data.datasets.forEach(function (dataset) {
-            dataset.data = data           
+            dataset.data = data
         });
         window.pumpChart.update()
     }

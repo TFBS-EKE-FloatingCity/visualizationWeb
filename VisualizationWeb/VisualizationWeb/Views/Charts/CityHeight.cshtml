@@ -7,7 +7,7 @@
         data: {
             labels: [],
             datasets: [{
-                label: 'Height',               
+                label: 'Height',
                 borderColor: "rgba(48, 80, 81, 1)",
                 data: []
             }]
@@ -25,7 +25,7 @@
             },
             title: {
                 display: true,
-                text: 'Height (in m) above sea level' 
+                text: 'Height (in m) above sea level'
             },
             tooltips: {
                 mode: 'index',
@@ -85,7 +85,7 @@
 
        //History will be loaded once in the visualisation.js
         //get Simulation Time and height Data from Websocket
-        
+
         setInterval(function () {
             if (globals.wsData != {} && globals.AnimationStop == false) {
                 if (!globals.wsData.SimulationActive) {

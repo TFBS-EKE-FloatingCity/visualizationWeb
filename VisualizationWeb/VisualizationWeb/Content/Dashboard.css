@@ -13,14 +13,14 @@ h4.nomargin {
     flex-direction: row;
 }
 
-.city-rotation-chart-title-box h4 {
-    width: 70%;
-}
+    .city-rotation-chart-title-box h4 {
+        width: 70%;
+    }
 
-.city-rotation-chart-title-box a {
-    width: 30%;
-    text-align: right;
-}
+    .city-rotation-chart-title-box a {
+        width: 30%;
+        text-align: right;
+    }
 
 .city-rotation-chart-title-box-close {
     position: absolute;
@@ -33,7 +33,6 @@ div#PumpsChartPanel {
     padding-bottom: 49px;
 }
 
-
 #resetHeightChart, #stopHeightChart, #startHeightChart {
     display: inline-block;
 }
@@ -43,4 +42,3 @@ div#PumpsChartPanel {
         margin-top: -20%;
     }
 }
-

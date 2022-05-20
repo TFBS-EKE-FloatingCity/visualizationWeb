@@ -34,7 +34,6 @@ var host;
 
 //-------------------end-------------------------------
 
-
 //Get the IP for the websocket Connectionstring!
 function getIP() {
     $.ajax({
@@ -89,7 +88,6 @@ function connect() {
 //First get IP to generate a Connectionstring
 getIP();
 
-
 // Progressbar
 $(function () {
     var currentProgress = 0;
@@ -131,7 +129,6 @@ $(function () {
         }
     });
 });
-
 
 // fill PowerChart and  CityHeight Chart with history from DB
 $(function () {
@@ -179,7 +176,6 @@ $(function () {
 
 //Get Values of Settings-Table
 $(function () {
-
     $.ajax({
         url: '/API/Dashboard/GetMaxValues',
         dataType: 'json',
@@ -200,7 +196,6 @@ $(function () {
     });
 });
 
-
 //fill EnergyConsumptionComparison chart with history from DB
 setInterval(function () {
     if (globals.cityDataHeadID != null) {
@@ -216,7 +211,6 @@ setInterval(function () {
                 var chartData = [];
                 data = JSON.parse(data)
                 data.forEach(function (value) {
-
                     //Die Energie in MW/h errechnen
                     energy += Math.round(globals.MaxWind * (value.WindCurrent / 100));
                     energy += Math.round(globals.MaxSun * (value.SunCurrent / 100));
@@ -233,7 +227,6 @@ setInterval(function () {
         });
     }
 }, settings.updateRate)
-
 
 function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFactorValue) {
     // USonicOuter1 = 0;
@@ -312,7 +305,6 @@ function updateModelRotation(USonicOuter1, USonicOuter2, USonicOuter3, heightFac
     return heightData;
 }
 
-
 //Reset CityHeight Chart
 function resetCityHeight() {
     heightDataConfig.data.datasets[0].data = [];
@@ -322,7 +314,6 @@ function resetCityHeight() {
 function stopCityHeight() {
     window.cityHeight.stop();
     globals.AnimationStop = true;
-
 }
 
 function startCityHeight() {

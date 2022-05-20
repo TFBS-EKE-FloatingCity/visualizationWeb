@@ -72,7 +72,6 @@ namespace VisualizationWeb.Helpers
 
          if (_db.CityDatas.Find(jsonData.uuid) == null)
          {
-
             CityData data = new CityData();
 
             data.UUID = jsonData.uuid;
@@ -83,20 +82,23 @@ namespace VisualizationWeb.Helpers
                switch (module.sector)
                {
                   case "One":
-                     data.USonicInner1 =ConvertToShort(module.sensorInside);
+                     data.USonicInner1 = ConvertToShort(module.sensorInside);
                      data.USonicOuter1 = ConvertToShort(module.sensorOutside);
                      data.Pump1 = ConvertToShort(module.pumpLevel);
                      break;
+
                   case "Two":
                      data.USonicInner2 = ConvertToShort(module.sensorInside);
                      data.USonicOuter2 = ConvertToShort(module.sensorOutside);
                      data.Pump2 = ConvertToShort(module.pumpLevel);
                      break;
+
                   case "Three":
                      data.USonicInner3 = ConvertToShort(module.sensorInside);
                      data.USonicOuter3 = ConvertToShort(module.sensorOutside);
                      data.Pump3 = ConvertToShort(module.pumpLevel);
                      break;
+
                   default:
                      break;
                }
@@ -128,7 +130,6 @@ namespace VisualizationWeb.Helpers
             {
                response.status = "error";
             }
-
          }
 
          response.uuid = jsonData.uuid;

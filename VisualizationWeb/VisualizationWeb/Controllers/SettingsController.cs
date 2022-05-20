@@ -8,66 +8,67 @@ using VisualizationWeb.Models.Repository;
 namespace VisualizationWeb.Controllers
 {
    [Authorize(Roles = "Admin")]
-    public class SettingsController : Controller
-    {
-        private ApplicationDbContext _db = new ApplicationDbContext();
-        private object _lock = new object();
-
-        private ISimulationRepository _simulationRepository;
-        public ISimulationRepository SimulationRepository
-        {
-            get
+   public class SettingsController : Controller
+   {
+      public ISimulationRepository SimulationRepository
+      {
+         get
+         {
+            if (_simulationRepository == null)
             {
-                if (_simulationRepository == null)
-                {
-                    lock (_lock)
-                    {
-                        if (_simulationRepository == null)
-                        {
-                            _simulationRepository = new SimulationRepository(_db);
-                        }
-                    }
-                }
-                return _simulationRepository;
+               lock (_lock)
+               {
+                  if (_simulationRepository == null)
+                  {
+                     _simulationRepository = new SimulationRepository(_db);
+                  }
+               }
             }
-        }
+            return _simulationRepository;
+         }
+      }
 
-        public SettingsController()
-        {
-            ViewBag.ActiveNav = "settings";
-        }
+      private ApplicationDbContext _db = new ApplicationDbContext();
+      private object _lock = new object();
 
-        // GET: Settings
-        public ActionResult Index()
-        {
-            return View(SimulationRepository.GetSimulationSetting());
-        }
+      private ISimulationRepository _simulationRepository;
 
-        // POST: Settings/Edit/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive,rbPiConnectionString,browserConnectionString")] Setting setting)
-        {
-            if (ModelState.IsValid)
-            {
-                await SimulationRepository.SaveSetting(setting);
+      public SettingsController()
+      {
+         ViewBag.ActiveNav = "settings";
+      }
 
-                Mediator.UpdateSimulationSettings(setting);
+      // GET: Settings
+      public ActionResult Index()
+      {
+         return View(SimulationRepository.GetSimulationSetting());
+      }
 
-                return RedirectToAction("../Dashboard");
-            }
+      // POST: Settings/Edit/
+      [HttpPost]
+      [ValidateAntiForgeryToken]
+      public async Task<ActionResult> Index([Bind(Include = "SettingID,WindMax,SunMax,ConsumptionMax,WindActive,SunActive,ConsumptionActive,rbPiConnectionString,browserConnectionString")] Setting setting)
+      {
+         if (ModelState.IsValid)
+         {
+            await SimulationRepository.SaveSetting(setting);
 
-            return View(setting);
-        }
+            Mediator.UpdateSimulationSettings(setting);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _db.Dispose();
-            }
+            return RedirectToAction("../Dashboard");
+         }
 
-            base.Dispose(disposing);
-        }
-    }
+         return View(setting);
+      }
+
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing)
+         {
+            _db.Dispose();
+         }
+
+         base.Dispose(disposing);
+      }
+   }
 }

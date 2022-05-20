@@ -3,22 +3,27 @@ using WebSocketSharp.Server;
 
 namespace VisualizationWeb.Helpers
 {
-   public class WebSocketServerConfiguration : WebSocketBehavior {
-        protected override void OnOpen() {
-            base.OnOpen();
-            Mediator.SendCityDataHead();
-        }
+   public class WebSocketServerConfiguration : WebSocketBehavior
+   {
+      protected override void OnOpen()
+      {
+         base.OnOpen();
+         Mediator.SendCityDataHead();
+      }
 
-        protected override void OnClose(CloseEventArgs e) {
-            base.OnClose(e);
-        }
+      protected override void OnClose(CloseEventArgs e)
+      {
+         base.OnClose(e);
+      }
 
-        protected override void OnMessage(MessageEventArgs e) {
-            base.OnMessage(e);
-        }
+      protected override void OnMessage(MessageEventArgs e)
+      {
+         base.OnMessage(e);
+      }
 
-        protected override void OnError(ErrorEventArgs e) {
-            base.OnError(e);
-        }
-    }
+      protected override void OnError(ErrorEventArgs e)
+      {
+         base.OnError(e);
+      }
+   }
 }

@@ -3,6 +3,7 @@
     height: 100%;
     box-shadow: 0 0 12px -6px rgba(0, 0, 0, 0.4);
 }
+
 @media (max-width: 767px) {
     .navigation {
         height: auto;
@@ -30,6 +31,7 @@
     justify-content: space-between;
     flex-direction: column;
 }
+
 @media (max-width: 767px) {
     .navbar-wrapper {
         display: block;
@@ -52,16 +54,15 @@
 .navigation-header {
     width: 100%;
     display: flex;
-
 }
 
 .navbar-nav > li.active, .navbar-nav > li:hover {
     background-color: rgba(26, 115, 232, 0.15);
 }
 
-.navbar-nav > li.active a, .navbar-nav > li:hover a {
-    color: #1A73E8;
-}
+    .navbar-nav > li.active a, .navbar-nav > li:hover a {
+        color: #1A73E8;
+    }
 
 .navbar-nav > li > a {
     display: flex;
@@ -76,14 +77,14 @@
     border-radius: 4px;
 }
 
-.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
-    background-color: transparent;
-}
+    .navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+        background-color: transparent;
+    }
 
-.navbar-nav > li > a::before {
-    margin-right: 10px;
-    font-family: "Glyphicons Halflings";
-}
+    .navbar-nav > li > a::before {
+        margin-right: 10px;
+        font-family: "Glyphicons Halflings";
+    }
 
 .navbar-login {
     border-top: 1px solid #eaeaea;
@@ -109,7 +110,7 @@
     text-align: center;
 }
 
-.sim-time h2 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
+    .sim-time h2 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }

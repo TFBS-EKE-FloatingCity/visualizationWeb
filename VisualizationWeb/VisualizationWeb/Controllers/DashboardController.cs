@@ -10,83 +10,84 @@ using VisualizationWeb.ViewModel.SimScenarioVM;
 namespace VisualizationWeb.Controllers
 {
    public class DashboardController : Controller
-    {
-        private ApplicationDbContext _db = new ApplicationDbContext();
-        private object _lock = new object();
-        //For the ProgressBar
-        private static SimStartViewModel _currentScenario;
-
-        private ISimulationRepository _simulationRepository;
-        public ISimulationRepository SimulationRepository
-        {
-            get
+   {
+      public ISimulationRepository SimulationRepository
+      {
+         get
+         {
+            if (_simulationRepository == null)
             {
-                if (_simulationRepository == null)
-                {
-                    lock (_lock)
-                    {
-                        if (_simulationRepository == null)
-                        {
-                            _simulationRepository = new SimulationRepository(_db);
-                        }
-                    }
-                }
-                return _simulationRepository;
+               lock (_lock)
+               {
+                  if (_simulationRepository == null)
+                  {
+                     _simulationRepository = new SimulationRepository(_db);
+                  }
+               }
             }
-        }
+            return _simulationRepository;
+         }
+      }
 
-        public DashboardController()
-        {
-            ViewBag.ActiveNav = "dashboard";            
-        }
+      //For the ProgressBar
+      private static SimStartViewModel _currentScenario;
 
-        // GET: Dashboard
-        public ActionResult Index()
-        {
-            return View("../Dashboard");
-        }      
+      private ApplicationDbContext _db = new ApplicationDbContext();
+      private object _lock = new object();
+      private ISimulationRepository _simulationRepository;
 
-        public string GetIPFromSettings()
-        {
-            SimulationRepository simrep = new SimulationRepository(_db);
-            Setting setting = simrep.GetSimulationSetting();
+      public DashboardController()
+      {
+         ViewBag.ActiveNav = "dashboard";
+      }
 
-            return setting.browserConnectionString;
-        }
+      // GET: Dashboard
+      public ActionResult Index()
+      {
+         return View("../Dashboard");
+      }
 
-        public ActionResult Open3DModel()
-        {
-            return View("../Charts/ViewCityRotationChart");
-        }
+      public string GetIPFromSettings()
+      {
+         SimulationRepository simrep = new SimulationRepository(_db);
+         Setting setting = simrep.GetSimulationSetting();
 
-        [Authorize(Roles = "Admin, Simulant")]
-        public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
-        {            
-            var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
-            _currentScenario = vm;
-            simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
-            Helpers.Mediator.StartSimulation(simScenarioID, vm.Duration);
+         return setting.browserConnectionString;
+      }
 
-            return RedirectToAction("../Dashboard");
-        }
+      public ActionResult Open3DModel()
+      {
+         return View("../Charts/ViewCityRotationChart");
+      }
 
-        //[Authorize(Roles = "Admin, Simulant")]
-        public async Task<ActionResult> PartialSimulationStart()
-        {
-            SimStartViewModel vm = new SimStartViewModel();
-            ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
+      [Authorize(Roles = "Admin, Simulant")]
+      public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
+      {
+         var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
+         _currentScenario = vm;
+         simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
+         Helpers.Mediator.StartSimulation(simScenarioID, vm.Duration);
 
-            return PartialView("../Charts/Partials/_StartSimulationPartial", vm);
-        }
+         return RedirectToAction("../Dashboard");
+      }
 
-        public string GetSimulationTitle()
-        {            
-            if (_currentScenario is null)
-            {
-                return "No Simulation started";
-            }
-            ViewBag.Started = true;
-            return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
-        }
-    }
+      //[Authorize(Roles = "Admin, Simulant")]
+      public async Task<ActionResult> PartialSimulationStart()
+      {
+         SimStartViewModel vm = new SimStartViewModel();
+         ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
+
+         return PartialView("../Charts/Partials/_StartSimulationPartial", vm);
+      }
+
+      public string GetSimulationTitle()
+      {
+         if (_currentScenario is null)
+         {
+            return "No Simulation started";
+         }
+         ViewBag.Started = true;
+         return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
+      }
+   }
 }

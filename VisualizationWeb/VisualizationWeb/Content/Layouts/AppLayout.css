@@ -3,6 +3,7 @@
     overflow: hidden;
     display: flex;
 }
+
 @media (max-width: 767px) {
     #app {
         flex-direction: column;
@@ -14,7 +15,6 @@
     padding: 0 25px;
     overflow-y: auto;
 }
-
 
 .app-headline {
     display: flex;
@@ -40,10 +40,10 @@
     align-items: center;
 }
 
-.app-headline .btn.glyphicon:before {
-    margin-right: 10px;
-    font-family: "Glyphicons Halflings";
-}
+    .app-headline .btn.glyphicon:before {
+        margin-right: 10px;
+        font-family: "Glyphicons Halflings";
+    }
 
 .app-headline .back-to-list {
     color: black;
@@ -51,9 +51,9 @@
     margin-right: 15px;
 }
 
-.app-headline .back-to-list:hover, .app-headline .back-to-list:hover {
-    text-decoration: none;
-} 
+    .app-headline .back-to-list:hover, .app-headline .back-to-list:hover {
+        text-decoration: none;
+    }
 
 .panel h4 {
     margin-bottom: 20px;

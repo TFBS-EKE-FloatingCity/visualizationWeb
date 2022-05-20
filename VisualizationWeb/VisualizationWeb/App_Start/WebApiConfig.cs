@@ -3,10 +3,10 @@
 namespace VisualizationWeb
 {
    public static class WebApiConfig
-    {
-        public static void Register(HttpConfiguration config)
-        {
-            config.MapHttpAttributeRoutes();
-        }
-    }
+   {
+      public static void Register(HttpConfiguration config)
+      {
+         config.MapHttpAttributeRoutes();
+      }
+   }
 }

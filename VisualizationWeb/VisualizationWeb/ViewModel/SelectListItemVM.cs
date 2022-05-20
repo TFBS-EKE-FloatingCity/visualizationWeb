@@ -6,6 +6,7 @@ namespace VisualizationWeb.ViewModel
    {
       [Key]
       public int ValueMember { get; set; }
+
       public string DisplayMember { get; set; }
    }
 }

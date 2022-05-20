@@ -86,21 +86,17 @@ loader.load(
         gltf.scene.position.y = translateYValue;
         gltf.scene.position.z = .4;
 
-        cube = gltf.scene; 
+        cube = gltf.scene;
 
         scene.add(gltf.scene);
     },
     // called while loading is progressing
     function (xhr) {
-
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-
     },
     // called when loading has errors
     function (error) {
-
         console.log('An error happened');
-
     }
 );
 
@@ -117,19 +113,18 @@ function render() {
     requestAnimationFrame(render);
     renderer.render(scene, camera);
 
-
     if (globals.cubeRotationZ
         && globals.cubeRotationX) {
         // update rotation of y-axis
         if (cube.rotation.z < globals.cubeRotationZ) {
-            cube.rotation.z += 0.0001; 
+            cube.rotation.z += 0.0001;
         }
 
         if (cube.rotation.z > globals.cubeRotationZ) {
             cube.rotation.z -= 0.0001;
         }
 
-        // update rotation of x-axis 
+        // update rotation of x-axis
         if (cube.rotation.x < globals.cubeRotationX) {
             cube.rotation.x += 0.0001;
         }

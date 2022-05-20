@@ -7,54 +7,53 @@ using System.Linq;
 namespace Simulation.Library.Models
 {
    public class SimScenario
-    {
-        [Key]
-        public int SimScenarioID { get; set; }
+   {
+      [Key]
+      public int SimScenarioID { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 1)]
-        public string Title { get; set; }
+      [Required]
+      [StringLength(100, MinimumLength = 1)]
+      public string Title { get; set; }
 
-        /// <summary>
-        /// StartDate = First Position OrderedBy TimeRegistered
-        /// </summary>
-        [NotMapped]
-        public DateTime? StartDate 
-        { 
-            get 
-            {
-                return SimPositions?.OrderBy(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
-            } 
-        }
+      /// <summary>
+      ///   StartDate = First Position OrderedBy TimeRegistered
+      /// </summary>
+      [NotMapped]
+      public DateTime? StartDate
+      {
+         get
+         {
+            return SimPositions?.OrderBy(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
+         }
+      }
 
-        /// <summary>
-        /// EndDate = Last Position OrderedBy TimeRegistered
-        /// </summary>
-        [NotMapped]
-        public DateTime? EndDate 
-        {
-            get
-            {
-                return SimPositions?.OrderByDescending(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
-            }
-        }
+      /// <summary>
+      ///   EndDate = Last Position OrderedBy TimeRegistered
+      /// </summary>
+      [NotMapped]
+      public DateTime? EndDate
+      {
+         get
+         {
+            return SimPositions?.OrderByDescending(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
+         }
+      }
 
-        [StringLength(500)]
-        public string Notes { get; set; }
+      [StringLength(500)]
+      public string Notes { get; set; }
 
-        public ICollection<SimPosition> SimPositions { get; set; }
+      public ICollection<SimPosition> SimPositions { get; set; }
 
-        public bool IsSimulationRunning { get; set; }
-        
-        public TimeSpan GetDuration()
-        {
-            if(SimPositions != null && SimPositions.Count >= 2)
-            {
-                List<SimPosition> positions = SimPositions.OrderBy(p => p.TimeRegistered).ToList();
-                return positions.Last().TimeRegistered - positions.First().TimeRegistered;
-            }
-            return new TimeSpan(0);
-        }
+      public bool IsSimulationRunning { get; set; }
 
-    }
+      public TimeSpan GetDuration()
+      {
+         if (SimPositions != null && SimPositions.Count >= 2)
+         {
+            List<SimPosition> positions = SimPositions.OrderBy(p => p.TimeRegistered).ToList();
+            return positions.Last().TimeRegistered - positions.First().TimeRegistered;
+         }
+         return new TimeSpan(0);
+      }
+   }
 }
