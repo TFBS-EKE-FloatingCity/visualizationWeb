@@ -14,24 +14,15 @@ namespace VisualizationWeb.Controllers
       {
          get
          {
-            if (_simulationRepository == null)
-            {
-               lock (_lock)
-               {
-                  if (_simulationRepository == null)
-                  {
-                     _simulationRepository = new SimulationRepository(_db);
-                  }
-               }
-            }
-            return _simulationRepository;
+            if (_simRepo != null) return _simRepo;
+            lock (_lock) return _simRepo ?? (_simRepo = new SimulationRepository(_context));
          }
       }
 
-      private ApplicationDbContext _db = new ApplicationDbContext();
+      private ApplicationDbContext _context = new ApplicationDbContext();
       private object _lock = new object();
 
-      private ISimulationRepository _simulationRepository;
+      private ISimulationRepository _simRepo;
 
       public SettingsController()
       {
@@ -65,7 +56,7 @@ namespace VisualizationWeb.Controllers
       {
          if (disposing)
          {
-            _db.Dispose();
+            _context.Dispose();
          }
 
          base.Dispose(disposing);

@@ -153,26 +153,14 @@ namespace VisualizationWeb.Controllers
 
             if (result.Succeeded)
             {
-               //Adding UserRole "Simulant" to New Users
                await UserManager.AddToRoleAsync(user.Id, "Simulant");
-
                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-               // For more information on how to enable account confirmation and password reset
-               // please visit https://go.microsoft.com/fwlink/?LinkID=320771 Send an email with
-               // this link string code = await
-               // UserManager.GenerateEmailConfirmationTokenAsync(user.Id); var callbackUrl =
-               // Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-               // protocol: Request.Url.Scheme); await UserManager.SendEmailAsync(user.Id, "Confirm
-               // your account", "Please confirm your account by clicking <a href=\"" + callbackUrl
-               // + "\">here</a>");
-
                return RedirectToAction("Index", "Dashboard");
             }
+
             AddErrors(result);
          }
 
-         // If we got this far, something failed, redisplay form
          return View(model);
       }
 
@@ -180,10 +168,7 @@ namespace VisualizationWeb.Controllers
       [AllowAnonymous]
       public async Task<ActionResult> ConfirmEmail(string userId, string code)
       {
-         if (userId == null || code == null)
-         {
-            return View("Error");
-         }
+         if (userId == null || code == null) return View("Error");
          var result = await UserManager.ConfirmEmailAsync(userId, code);
          return View(result.Succeeded ? "ConfirmEmail" : "Error");
       }
@@ -204,22 +189,12 @@ namespace VisualizationWeb.Controllers
          if (ModelState.IsValid)
          {
             var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+            if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
             {
-               // Don't reveal that the user does not exist or is not confirmed
                return View("ForgotPasswordConfirmation");
             }
-
-            // For more information on how to enable account confirmation and password reset please
-            // visit https://go.microsoft.com/fwlink/?LinkID=320771 Send an email with this link
-            // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id); var
-            // callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code =
-            // code }, protocol: Request.Url.Scheme); await UserManager.SendEmailAsync(user.Id,
-            // "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl +
-            // "\">here</a>"); return RedirectToAction("ForgotPasswordConfirmation", "Account");
          }
 
-         // If we got this far, something failed, redisplay form
          return View(model);
       }
 
@@ -250,7 +225,6 @@ namespace VisualizationWeb.Controllers
          var user = await UserManager.FindByNameAsync(model.Email);
          if (user == null)
          {
-            // Don't reveal that the user does not exist
             return RedirectToAction("ResetPasswordConfirmation", "Account");
          }
          var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
@@ -357,7 +331,6 @@ namespace VisualizationWeb.Controllers
 
          if (ModelState.IsValid)
          {
-            // Get the information about the user from the external login provider
             var info = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -422,13 +395,7 @@ namespace VisualizationWeb.Controllers
       // Used for XSRF protection when adding external logins
       private const string XsrfKey = "XsrfId";
 
-      private IAuthenticationManager AuthenticationManager
-      {
-         get
-         {
-            return HttpContext.GetOwinContext().Authentication;
-         }
-      }
+      private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
       private void AddErrors(IdentityResult result)
       {
@@ -440,19 +407,13 @@ namespace VisualizationWeb.Controllers
 
       private ActionResult RedirectToLocal(string returnUrl)
       {
-         if (Url.IsLocalUrl(returnUrl))
-         {
-            return Redirect(returnUrl);
-         }
+         if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
          return RedirectToAction("Index", "Dashboard");
       }
 
       internal class ChallengeResult : HttpUnauthorizedResult
       {
-         public ChallengeResult(string provider, string redirectUri)
-             : this(provider, redirectUri, null)
-         {
-         }
+         public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null) { }
 
          public ChallengeResult(string provider, string redirectUri, string userId)
          {

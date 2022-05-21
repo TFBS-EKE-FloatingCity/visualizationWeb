@@ -10,15 +10,15 @@ namespace VisualizationWeb.Models
       public int SettingID { get; set; }
 
       [Display(Name = "Maximum Wind(MW)")]
-      [Range(0, Int32.MaxValue)]
+      [Range(0, int.MaxValue)]
       public int WindMax { get; set; }
 
       [Display(Name = "Maximum Sun(MW)")]
-      [Range(0, Int32.MaxValue)]
+      [Range(0, int.MaxValue)]
       public int SunMax { get; set; }
 
       [Display(Name = "Maximum Consumption(MW)")]
-      [Range(0, Int32.MaxValue)]
+      [Range(0, int.MaxValue)]
       public int ConsumptionMax { get; set; }
 
       [StringLength(500)]

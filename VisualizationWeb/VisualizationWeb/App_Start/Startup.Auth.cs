@@ -11,6 +11,8 @@ namespace VisualizationWeb
 {
    public partial class Startup
    {
+      public const string CookieAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie;
+
       // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
       public void ConfigureAuth(IAppBuilder app)
       {
@@ -24,7 +26,7 @@ namespace VisualizationWeb
          // party login provider Configure the sign in cookie
          app.UseCookieAuthentication(new CookieAuthenticationOptions
          {
-            AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+            AuthenticationType = CookieAuthenticationType,
             LoginPath = new PathString("/Account/Login"),
             Provider = new CookieAuthenticationProvider
             {

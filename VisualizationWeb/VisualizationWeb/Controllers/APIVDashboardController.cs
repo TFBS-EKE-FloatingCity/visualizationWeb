@@ -24,7 +24,8 @@ namespace VisualizationWeb.Controllers
       [HttpGet]
       public string GetSimulationHistory(int id)
       {
-         return JsonConvert.SerializeObject(_db.CityDatas.OrderBy(d => d.Simulationtime).Where(d => d.CityDataHeadID == id).ToList());
+         return JsonConvert.SerializeObject(_db.CityDatas.OrderBy(d => d.Simulationtime)
+            .Where(d => d.CityDataHeadID == id).ToList());
       }
 
       //GET: API/Dashboard
@@ -32,14 +33,20 @@ namespace VisualizationWeb.Controllers
       [HttpGet]
       public string GetRecentlyGeneratedEnergy(int id)
       {
-         return JsonConvert.SerializeObject(_db.CityDatas.OrderBy(d => d.Simulationtime).Where(d => d.CityDataHeadID == id).Select(d => new { d.Pump1, d.Pump2, d.Pump3, d.WindCurrent, d.SunCurrent, d.ConsumptionCurrent }).ToList());
+         return JsonConvert.SerializeObject(_db.CityDatas.OrderBy(d => d.Simulationtime)
+            .Where(d => d.CityDataHeadID == id)
+            .Select(d => new { d.Pump1, d.Pump2, d.Pump3, d.WindCurrent, d.SunCurrent, d.ConsumptionCurrent })
+            .ToList());
       }
 
       [Route("GetMaxValues")]
       [HttpGet]
       public string GetMaxValues()
       {
-         return JsonConvert.SerializeObject(_db.Settings.Select(d => new { d.SunMax, d.WindMax, d.ConsumptionMax }).ToList());
+         return JsonConvert.SerializeObject(
+            _db.Settings.Select(d => new { d.SunMax, d.WindMax, d.ConsumptionMax }
+            ).ToList()
+         );
       }
    }
 }

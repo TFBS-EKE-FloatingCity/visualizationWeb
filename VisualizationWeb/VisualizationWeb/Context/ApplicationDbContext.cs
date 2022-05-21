@@ -17,10 +17,7 @@ namespace VisualizationWeb.Context
 
       public virtual DbSet<CityDataHead> CityDataHeads { get; set; }
 
-      public ApplicationDbContext()
-                                          : base("DefaultConnection", throwIfV1Schema: false)
-      {
-      }
+      public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
 
       public static ApplicationDbContext Create()
       {

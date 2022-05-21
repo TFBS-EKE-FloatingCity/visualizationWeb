@@ -16,27 +16,18 @@ namespace VisualizationWeb.Controllers
       {
          get
          {
-            if (_simulationRepository == null)
-            {
-               lock (_lock)
-               {
-                  if (_simulationRepository == null)
-                  {
-                     _simulationRepository = new SimulationRepository(_db);
-                  }
-               }
-            }
-            return _simulationRepository;
+            if (_simRepo != null) return _simRepo;
+            lock (_lock) return _simRepo ?? (_simRepo = new SimulationRepository(_context));
          }
       }
 
-      private ApplicationDbContext _db = new ApplicationDbContext();
+      private ApplicationDbContext _context = new ApplicationDbContext();
       private object _lock = new object();
 
       /// <summary>
       ///   Initialise Repository only if needed Thread save (lobject)
       /// </summary>
-      private ISimulationRepository _simulationRepository;
+      private ISimulationRepository _simRepo;
 
       public SimulationsController()
       {
@@ -58,11 +49,7 @@ namespace VisualizationWeb.Controllers
       /// <param name="id"> The selected SimScenario </param>
       public async Task<ActionResult> PartialPositionIndex(int? id)
       {
-         if (!id.HasValue)
-         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         }
-
+         if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
          return View(await SimulationRepository.GetSimPositionIndex(id.Value));
       }
 
@@ -73,11 +60,7 @@ namespace VisualizationWeb.Controllers
       /// <param name="id"> The selected SimScenario </param>
       public async Task<ActionResult> Details(int? id)
       {
-         if (!id.HasValue)
-         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         }
-
+         if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
          SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails(id.Value);
          var test = await SimulationRepository.GetSimPositionIndex(id.Value);
          scenario.SimPositions = test.OrderBy(x => x.TimeRegistered.TimeOfDay);
@@ -85,7 +68,7 @@ namespace VisualizationWeb.Controllers
       }
 
       /// <summary>
-      ///   Opens Scenario Create View.
+      ///   Opens Scenario Create View
       /// </summary>
       public ActionResult Create()
       {
@@ -104,7 +87,7 @@ namespace VisualizationWeb.Controllers
          if (ModelState.IsValid)
          {
             await SimulationRepository.CreateScenario(vm);
-            await _db.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
          }
 
@@ -121,7 +104,7 @@ namespace VisualizationWeb.Controllers
          if (ModelState.IsValid)
          {
             await SimulationRepository.CreatePosition(vm);
-            await _db.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction($"Details/{vm.SimScenarioID}");
          }
 
@@ -136,12 +119,10 @@ namespace VisualizationWeb.Controllers
       public async Task<ActionResult> RemoveSimPosition(int? simPositionId, int? simScenarioId)
       {
          if (!simPositionId.HasValue && !simScenarioId.HasValue)
-         {
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         }
 
          await SimulationRepository.RemovePosition(simPositionId.Value);
-         await _db.SaveChangesAsync();
+         await _context.SaveChangesAsync();
 
          return RedirectToAction($"Details/{simScenarioId}");
       }
@@ -153,12 +134,10 @@ namespace VisualizationWeb.Controllers
       public async Task<ActionResult> RemoveSimScenario(int? simScenarioId)
       {
          if (!simScenarioId.HasValue)
-         {
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         }
 
          await SimulationRepository.RemoveScenario(simScenarioId.Value);
-         await _db.SaveChangesAsync();
+         await _context.SaveChangesAsync();
 
          return RedirectToAction("Index");
       }

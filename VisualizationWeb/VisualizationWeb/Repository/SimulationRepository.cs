@@ -46,14 +46,13 @@ namespace VisualizationWeb.Models.Repository
 
       public async Task CreateScenario(SimScenarioCreateAndEditViewModel scenario)
       {
-         if (scenario != null)
+         if (scenario == null) return;
+
+         _context.SimScenarios.Add(new SimScenario
          {
-            _context.SimScenarios.Add(new SimScenario
-            {
-               Title = scenario.Title,
-               Notes = scenario.Notes
-            });
-         }
+            Title = scenario.Title,
+            Notes = scenario.Notes
+         });
       }
 
       public async Task<IEnumerable<SimPositionBindingViewModel>> GetSimPositionBindingList(int simScenarioID)
@@ -161,10 +160,8 @@ namespace VisualizationWeb.Models.Repository
       public Setting GetSimulationSetting()
       {
          Setting setting = _context.Settings.FirstOrDefault();
-         if (setting != null)
-         {
-            return setting;
-         }
+         if (setting != null) return setting;
+
          return new Setting
          {
             SettingID = 1,
@@ -176,10 +173,7 @@ namespace VisualizationWeb.Models.Repository
 
       public async Task SaveSetting(Setting setting)
       {
-         Setting settingComparison = GetSimulationSetting();
-
-         //Neustarten des Websocketclients wenn die Daten geändert wurden
-         if (settingComparison.rbPiConnectionString != setting.rbPiConnectionString)
+         if (GetSimulationSetting().rbPiConnectionString != setting.rbPiConnectionString)
          {
             Mediator.RestartWebsocketClient();
          }

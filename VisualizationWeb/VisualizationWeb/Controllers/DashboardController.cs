@@ -15,26 +15,15 @@ namespace VisualizationWeb.Controllers
       {
          get
          {
-            if (_simulationRepository == null)
-            {
-               lock (_lock)
-               {
-                  if (_simulationRepository == null)
-                  {
-                     _simulationRepository = new SimulationRepository(_db);
-                  }
-               }
-            }
-            return _simulationRepository;
+            if (_simRepo != null) return _simRepo;
+            lock (_lock) return _simRepo ?? (_simRepo = new SimulationRepository(_context));
          }
       }
 
-      //For the ProgressBar
       private static SimStartViewModel _currentScenario;
-
-      private ApplicationDbContext _db = new ApplicationDbContext();
+      private ApplicationDbContext _context = new ApplicationDbContext();
       private object _lock = new object();
-      private ISimulationRepository _simulationRepository;
+      private ISimulationRepository _simRepo;
 
       public DashboardController()
       {
@@ -49,10 +38,7 @@ namespace VisualizationWeb.Controllers
 
       public string GetIPFromSettings()
       {
-         SimulationRepository simrep = new SimulationRepository(_db);
-         Setting setting = simrep.GetSimulationSetting();
-
-         return setting.browserConnectionString;
+         return SimulationRepository.GetSimulationSetting().browserConnectionString;
       }
 
       public ActionResult Open3DModel()
@@ -74,18 +60,18 @@ namespace VisualizationWeb.Controllers
       //[Authorize(Roles = "Admin, Simulant")]
       public async Task<ActionResult> PartialSimulationStart()
       {
-         SimStartViewModel vm = new SimStartViewModel();
-         ViewBag.SimScenarioID = new SelectList(await SimulationRepository.SimScenarioSelect(), "ValueMember", "DisplayMember");
+         ViewBag.SimScenarioID = new SelectList(
+            await SimulationRepository.SimScenarioSelect(), 
+            "ValueMember", 
+            "DisplayMember"
+            );
 
-         return PartialView("../Charts/Partials/_StartSimulationPartial", vm);
+         return PartialView("../Charts/Partials/_StartSimulationPartial", new SimStartViewModel());
       }
 
       public string GetSimulationTitle()
       {
-         if (_currentScenario is null)
-         {
-            return "No Simulation started";
-         }
+         if (_currentScenario is null) return "No Simulation started";
          ViewBag.Started = true;
          return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
       }

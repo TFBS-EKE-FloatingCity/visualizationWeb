@@ -38,14 +38,14 @@ namespace VisualizationWeb.Helpers
       /// </summary>
       private static readonly ApplicationWebSocketClient _wsClient = new ApplicationWebSocketClient(_server, _simService, _settings.rbPiConnectionString);
 
-      private static ApplicationDbContext _db = new ApplicationDbContext();
+      private static ApplicationDbContext _context = new ApplicationDbContext();
 
       /// <summary>
       ///   Aus dem Simulationrepository werden hier die Settings geholt und abgespeichert
       /// </summary>
-      private static SimulationRepository _repo = new SimulationRepository(_db);
+      private static SimulationRepository _simRepo = new SimulationRepository(_context);
 
-      private static Setting _settings = _repo.GetSimulationSetting();
+      private static Setting _settings = _simRepo.GetSimulationSetting();
 
       /// <summary>
       ///   Wenn auf der Settings unterseite Settings geändert werden werden diese auch hier im
@@ -78,10 +78,10 @@ namespace VisualizationWeb.Helpers
             State = "Running"
          };
 
-         _db.CityDataHeads.Add(head);
-         _db.SaveChanges();
+         _context.CityDataHeads.Add(head);
+         _context.SaveChanges();
 
-         head.CityDataHeadID = (from cdh in _db.CityDataHeads
+         head.CityDataHeadID = (from cdh in _context.CityDataHeads
                                 orderby cdh.CityDataHeadID descending
                                 select cdh.CityDataHeadID).FirstOrDefault();
 
@@ -109,12 +109,12 @@ namespace VisualizationWeb.Helpers
       {
          _simService.Stop();
 
-         CityDataHead head = _db.CityDataHeads.Find(CurrentCityDataHeadID);
+         CityDataHead head = _context.CityDataHeads.Find(CurrentCityDataHeadID);
 
          head.EndTime = DateTime.Now;
          head.State = "Stopped";
 
-         _db.SaveChanges();
+         _context.SaveChanges();
 
          CurrentCityDataHead = null;
          CurrentCityDataHeadID = null;

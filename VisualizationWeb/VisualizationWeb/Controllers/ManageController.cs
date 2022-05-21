@@ -14,26 +14,14 @@ namespace VisualizationWeb.Controllers
    {
       public ApplicationSignInManager SignInManager
       {
-         get
-         {
-            return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-         }
-         private set
-         {
-            _signInManager = value;
-         }
+         get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+         private set => _signInManager = value;
       }
 
       public ApplicationUserManager UserManager
       {
-         get
-         {
-            return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-         }
-         private set
-         {
-            _userManager = value;
-         }
+         get =>_userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+         private set => _userManager = value;
       }
 
       private ApplicationSignInManager _signInManager;
@@ -93,6 +81,7 @@ namespace VisualizationWeb.Controllers
          {
             message = ManageMessageId.Error;
          }
+
          return RedirectToAction("ManageLogins", new { Message = message });
       }
 
@@ -105,24 +94,23 @@ namespace VisualizationWeb.Controllers
       // POST: /Manage/AddPhoneNumber
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+      public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel vm)
       {
-         if (!ModelState.IsValid)
-         {
-            return View(model);
-         }
+         if (!ModelState.IsValid) return View(vm);
+
          // Generate the token and send it
-         var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+         var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), vm.Number);
          if (UserManager.SmsService != null)
          {
             var message = new IdentityMessage
             {
-               Destination = model.Number,
+               Destination = vm.Number,
                Body = "Your security code is: " + code
             };
             await UserManager.SmsService.SendAsync(message);
          }
-         return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+
+         return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = vm.Number });
       }
 
       // POST: /Manage/EnableTwoFactorAuthentication
@@ -164,13 +152,11 @@ namespace VisualizationWeb.Controllers
       // POST: /Manage/VerifyPhoneNumber
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
+      public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel vm)
       {
-         if (!ModelState.IsValid)
-         {
-            return View(model);
-         }
-         var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+         if (!ModelState.IsValid) return View(vm);
+
+         var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), vm.PhoneNumber, vm.Code);
          if (result.Succeeded)
          {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -180,9 +166,9 @@ namespace VisualizationWeb.Controllers
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
          }
-         // If we got this far, something failed, redisplay form
+
          ModelState.AddModelError("", "Failed to verify phone");
-         return View(model);
+         return View(vm);
       }
 
       // POST: /Manage/RemovePhoneNumber
@@ -212,13 +198,13 @@ namespace VisualizationWeb.Controllers
       // POST: /Manage/ChangePassword
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+      public async Task<ActionResult> ChangePassword(ChangePasswordViewModel vm)
       {
          if (!ModelState.IsValid)
          {
-            return View(model);
+            return View(vm);
          }
-         var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+         var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), vm.OldPassword, vm.NewPassword);
          if (result.Succeeded)
          {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -229,7 +215,7 @@ namespace VisualizationWeb.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
          }
          AddErrors(result);
-         return View(model);
+         return View(vm);
       }
 
       // GET: /Manage/SetPassword
@@ -241,11 +227,11 @@ namespace VisualizationWeb.Controllers
       // POST: /Manage/SetPassword
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
+      public async Task<ActionResult> SetPassword(SetPasswordViewModel vm)
       {
          if (ModelState.IsValid)
          {
-            var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+            var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), vm.NewPassword);
             if (result.Succeeded)
             {
                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -258,8 +244,7 @@ namespace VisualizationWeb.Controllers
             AddErrors(result);
          }
 
-         // If we got this far, something failed, redisplay form
-         return View(model);
+         return View(vm);
       }
 
       // GET: /Manage/ManageLogins
