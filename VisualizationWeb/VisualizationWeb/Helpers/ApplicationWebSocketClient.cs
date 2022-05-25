@@ -22,8 +22,8 @@ namespace VisualizationWeb.Helpers
       {
          if (connectionString != null) _uri = new Uri(connectionString);
 
-         _server = server;
-         _service = simService;
+         _server = server ?? throw new ArgumentNullException(nameof(server));
+         _service = simService ?? throw new ArgumentNullException(nameof(simService));
       }
 
       public void Connect()

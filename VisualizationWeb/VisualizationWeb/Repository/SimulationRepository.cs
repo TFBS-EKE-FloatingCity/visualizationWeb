@@ -1,4 +1,5 @@
 ﻿using Simulation.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -18,7 +19,7 @@ namespace VisualizationWeb.Models.Repository
 
       public SimulationRepository(ApplicationDbContext context)
       {
-         _context = context;
+         _context = context ?? throw new ArgumentNullException(nameof(context));
       }
 
       public async Task CreatePosition(SimPositionCreateAndEditViewModel position)
