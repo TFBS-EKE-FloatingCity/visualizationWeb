@@ -77,21 +77,21 @@ namespace VisualizationWeb.Helpers
             switch (module.sector)
             {
                case "One":
-                  data.USonicInner1 = ConvertToShort(module.sensorInside);
-                  data.USonicOuter1 = ConvertToShort(module.sensorOutside);
-                  data.Pump1 = ConvertToShort(module.pumpLevel);
+                  data.USonicInner1 = Int32ToShort(module.sensorInside);
+                  data.USonicOuter1 = Int32ToShort(module.sensorOutside);
+                  data.Pump1 = Int32ToShort(module.pumpLevel);
                   break;
 
                case "Two":
-                  data.USonicInner2 = ConvertToShort(module.sensorInside);
-                  data.USonicOuter2 = ConvertToShort(module.sensorOutside);
-                  data.Pump2 = ConvertToShort(module.pumpLevel);
+                  data.USonicInner2 = Int32ToShort(module.sensorInside);
+                  data.USonicOuter2 = Int32ToShort(module.sensorOutside);
+                  data.Pump2 = Int32ToShort(module.pumpLevel);
                   break;
 
                case "Three":
-                  data.USonicInner3 = ConvertToShort(module.sensorInside);
-                  data.USonicOuter3 = ConvertToShort(module.sensorOutside);
-                  data.Pump3 = ConvertToShort(module.pumpLevel);
+                  data.USonicInner3 = Int32ToShort(module.sensorInside);
+                  data.USonicOuter3 = Int32ToShort(module.sensorOutside);
+                  data.Pump3 = Int32ToShort(module.pumpLevel);
                   break;
 
                default:
@@ -125,12 +125,16 @@ namespace VisualizationWeb.Helpers
          {
             response.status = "error";
          }
+         
+      }
 
-         short ConvertToShort(int num)
-         {
-            if (num > short.MaxValue) return short.MaxValue;
-            return Math.Max(Convert.ToInt16(num), (short)0);
-         }
+      /// <summary>
+      /// Converts an Int32 to Short, capping the value at the minimum and maximum values.
+      /// </summary>
+      short Int32ToShort(int num)
+      {
+         if (num > short.MaxValue) return short.MaxValue;
+         return Math.Max(Convert.ToInt16(num), short.MinValue);
       }
    }
 }
