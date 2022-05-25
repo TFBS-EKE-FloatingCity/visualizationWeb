@@ -76,19 +76,19 @@ namespace VisualizationWeb.Helpers
          {
             switch (module.sector)
             {
-               case "One":
+               case modulesVM.SectorOne:
                   data.USonicInner1 = Int32ToShort(module.sensorInside);
                   data.USonicOuter1 = Int32ToShort(module.sensorOutside);
                   data.Pump1 = Int32ToShort(module.pumpLevel);
                   break;
 
-               case "Two":
+               case modulesVM.SectorTwo:
                   data.USonicInner2 = Int32ToShort(module.sensorInside);
                   data.USonicOuter2 = Int32ToShort(module.sensorOutside);
                   data.Pump2 = Int32ToShort(module.pumpLevel);
                   break;
 
-               case "Three":
+               case modulesVM.SectorThree:
                   data.USonicInner3 = Int32ToShort(module.sensorInside);
                   data.USonicOuter3 = Int32ToShort(module.sensorOutside);
                   data.Pump3 = Int32ToShort(module.pumpLevel);
