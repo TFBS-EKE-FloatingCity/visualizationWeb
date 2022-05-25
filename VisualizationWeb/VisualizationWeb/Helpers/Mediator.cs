@@ -21,6 +21,15 @@ namespace VisualizationWeb.Helpers
       /// </summary>
       public static CityDataHead CurrentCityDataHead { get; private set; }
 
+      private static ApplicationDbContext _context = new ApplicationDbContext();
+
+      /// <summary>
+      ///   Aus dem Simulationrepository werden hier die Settings geholt und abgespeichert
+      /// </summary>
+      private static SimulationRepository _simRepo = new SimulationRepository(_context);
+
+      private static Setting _settings = _simRepo.GetSimulationSetting();
+
       /// <summary>
       ///   Instanz des SimulationService welcher von Max Hiltpolt geschrieben wurde An diesen
       ///   werden die Settings übergeben
@@ -31,21 +40,12 @@ namespace VisualizationWeb.Helpers
       ///   Websocketserver mit welchem sich der Browser verbindet um Live Daten zu holen
       /// </summary>
       private static readonly ApplicationWebSocketServer _server = new ApplicationWebSocketServer();
-
+   
       /// <summary>
       ///   Websocketclient welcher sich mit dem Raspberry verbindet um die Live Daten zu bekommen,
       ///   abzuspeichern und über den Websocketserver an die Browser zu verteilen
       /// </summary>
       private static readonly ApplicationWebSocketClient _wsClient = new ApplicationWebSocketClient(_server, _simService, _settings.rbPiConnectionString);
-
-      private static ApplicationDbContext _context = new ApplicationDbContext();
-
-      /// <summary>
-      ///   Aus dem Simulationrepository werden hier die Settings geholt und abgespeichert
-      /// </summary>
-      private static SimulationRepository _simRepo = new SimulationRepository(_context);
-
-      private static Setting _settings = _simRepo.GetSimulationSetting();
 
       /// <summary>
       ///   Wenn auf der Settings unterseite Settings geändert werden werden diese auch hier im
