@@ -2,9 +2,12 @@
 {
    public class modulesVM
    {
-      public const string SectorOne = "One";
-      public const string SectorTwo = "Two";
-      public const string SectorThree = "Three";
+      public static class Sectors
+      {
+         public const string One = "One";
+         public const string Two = "Two";
+         public const string Three = "Three";
+      }
 
       public string sector { get; set; }
       public int sensorOutside { get; set; }

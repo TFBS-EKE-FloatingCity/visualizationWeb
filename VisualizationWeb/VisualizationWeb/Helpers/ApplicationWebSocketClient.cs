@@ -56,16 +56,6 @@ namespace VisualizationWeb.Helpers
          JsonDataVM jsonData = JsonConvert.DeserializeObject<JsonDataVM>(json);
          JsonResponseVM response = new JsonResponseVM();
 
-         if (_context.CityDatas.Find(jsonData.uuid) != null)
-         {
-            response.uuid = jsonData.uuid;
-            response.energyBalance = _service.GetEnergyBalance(recieved);
-            response.sun = _service.GetEnergyProductionSun(recieved);
-            response.wind = _service.GetEnergyProductionWind(recieved);
-
-            Client.Emit("sensorDataResponse", response);
-         }
-
          CityData data = new CityData()
          {
             UUID = jsonData.uuid,
@@ -76,19 +66,19 @@ namespace VisualizationWeb.Helpers
          {
             switch (module.sector)
             {
-               case modulesVM.SectorOne:
+               case modulesVM.Sectors.One:
                   data.USonicInner1 = Int32ToShort(module.sensorInside);
                   data.USonicOuter1 = Int32ToShort(module.sensorOutside);
                   data.Pump1 = Int32ToShort(module.pumpLevel);
                   break;
 
-               case modulesVM.SectorTwo:
+               case modulesVM.Sectors.Two:
                   data.USonicInner2 = Int32ToShort(module.sensorInside);
                   data.USonicOuter2 = Int32ToShort(module.sensorOutside);
                   data.Pump2 = Int32ToShort(module.pumpLevel);
                   break;
 
-               case modulesVM.SectorThree:
+               case modulesVM.Sectors.Three:
                   data.USonicInner3 = Int32ToShort(module.sensorInside);
                   data.USonicOuter3 = Int32ToShort(module.sensorOutside);
                   data.Pump3 = Int32ToShort(module.pumpLevel);
@@ -115,8 +105,11 @@ namespace VisualizationWeb.Helpers
 
          try
          {
-            _context.CityDatas.Add(data);
-            _context.SaveChanges();
+            if (_context.CityDatas.Find(data.UUID) == null)
+            {
+               _context.CityDatas.Add(data);
+               _context.SaveChanges();
+            }
             _server.SendData(JsonConvert.SerializeObject(data));
 
             response.status = "ack";
@@ -125,7 +118,16 @@ namespace VisualizationWeb.Helpers
          {
             response.status = "error";
          }
-         
+
+         if (_context.CityDatas.Find(jsonData.uuid) != null)
+         {
+            response.uuid = jsonData.uuid;
+            response.energyBalance = _service.GetEnergyBalance(recieved);
+            response.sun = _service.GetEnergyProductionSun(recieved);
+            response.wind = _service.GetEnergyProductionWind(recieved);
+
+            Client.Emit("sensorDataResponse", response);
+         }
       }
 
       /// <summary>
