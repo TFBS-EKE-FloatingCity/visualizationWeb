@@ -124,13 +124,13 @@ namespace Simulation.Library
       /// </summary>
       private DateTime? Update(DateTime timeStamp)
       {
-         if (IsSimulationRunning == false || isTimeStampValid(timeStamp) == false)
+         if (IsSimulationRunning == false || IsTimeStampValid(timeStamp) == false)
          {
             return null;
          }
 
          DateTime simTimeStamp = GetSimulatedTimeStamp(timeStamp).Value;
-         refreshPositions(simTimeStamp);
+         RefreshPositions(simTimeStamp);
 
          if (_prevPosition is null || _nextPosition is null)  //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
          {                                                    //This shouldn't occur since we check if the given timeStamp is valid.
@@ -224,14 +224,14 @@ namespace Simulation.Library
       /// <returns>
       ///   True if the simulation is running and the simulated time is between the first and the last position of the Scenario.
       /// </returns>
-      protected virtual bool isTimeStampValid(DateTime timeStamp)
+      protected virtual bool IsTimeStampValid(DateTime timeStamp)
       {
          if (IsSimulationRunning == false) return false;
          DateTime? simTimeStamp = GetSimulatedTimeStamp(timeStamp);
          return simTimeStamp >= _simScenario.StartDate && simTimeStamp <= _simScenario.EndDate;
       }
 
-      protected void refreshPositions(DateTime simTimeStamp)
+      protected void RefreshPositions(DateTime simTimeStamp)
       {
          if (simTimeStamp >= _nextPosition.TimeRegistered 
             && simTimeStamp <= _prevPosition.TimeRegistered) return;
