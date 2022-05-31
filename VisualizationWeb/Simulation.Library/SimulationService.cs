@@ -32,11 +32,10 @@ namespace Simulation.Library
             if (value != null && Duration != null)
             {
                EndDateTimeReal = value.Value + Duration;
+               return;
             }
-            else
-            {
-               EndDateTimeReal = null;
-            }
+
+            EndDateTimeReal = null;
          }
       }
 
@@ -72,13 +71,12 @@ namespace Simulation.Library
             MaxEnergyConsumption = 0;
             MaxEnergyProductionSun = 0;
             MaxEnergyProductionWind = 0;
+            return;
          }
-         else
-         {
-            MaxEnergyConsumption = settings.ConsumptionMax;
-            MaxEnergyProductionSun = settings.SunMax;
-            MaxEnergyProductionWind = settings.WindMax;
-         }
+
+         MaxEnergyConsumption = settings.ConsumptionMax;
+         MaxEnergyProductionSun = settings.SunMax;
+         MaxEnergyProductionWind = settings.WindMax;
       }
 
       public void Run(SimScenario scenario, TimeSpan duration)
@@ -150,10 +148,7 @@ namespace Simulation.Library
       /// </returns>
       public DateTime? GetSimulatedTimeStamp(DateTime timeStamp)
       {
-         if (StartDateTimeReal == null)
-         {
-            return null;
-         }
+         if (StartDateTimeReal == null) return null;
 
          return new DateTime((long)InterpolationHelper.GetValue(StartDateTimeReal.Value.Ticks,
              _simScenario.StartDate.Value.Ticks,
@@ -172,16 +167,14 @@ namespace Simulation.Library
       public int GetEnergyProductionWind(DateTime timeStamp)
       {
          DateTime? simTimeStamp = Update(timeStamp);
-         if (simTimeStamp == null)
-         {
-            return _idleEnergyProductionWind;
-         }
+         if (simTimeStamp == null) return _idleEnergyProductionWind;
 
-         return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
-             _prevPosition.WindValue,
-             _nextPosition.TimeRegistered.Ticks,
-             _nextPosition.WindValue,
-             simTimeStamp.Value.Ticks);
+         return (int)InterpolationHelper.GetValue(
+            _prevPosition.TimeRegistered.Ticks,
+            _prevPosition.WindValue,
+            _nextPosition.TimeRegistered.Ticks,
+            _nextPosition.WindValue,
+            simTimeStamp.Value.Ticks);
       }
 
       /// <summary>
@@ -194,16 +187,14 @@ namespace Simulation.Library
       public int GetEnergyProductionSun(DateTime timeStamp)
       {
          DateTime? simTimeStamp = Update(timeStamp);
-         if (simTimeStamp == null)
-         {
-            return _idleEnergyProductionSun;
-         }
+         if (simTimeStamp == null) return _idleEnergyProductionSun;
 
-         return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
-             _prevPosition.SunValue,
-             _nextPosition.TimeRegistered.Ticks,
-             _nextPosition.SunValue,
-             simTimeStamp.Value.Ticks);
+         return (int)InterpolationHelper.GetValue(
+            _prevPosition.TimeRegistered.Ticks,
+            _prevPosition.SunValue,
+            _nextPosition.TimeRegistered.Ticks,
+            _nextPosition.SunValue,
+            simTimeStamp.Value.Ticks);
       }
 
       /// <summary>
@@ -216,16 +207,14 @@ namespace Simulation.Library
       public int GetEnergyConsumption(DateTime timeStamp)
       {
          DateTime? simTimeStamp = Update(timeStamp);
-         if (simTimeStamp == null)
-         {
-            return _idleEnergyConsumption;
-         }
+         if (simTimeStamp == null) return _idleEnergyConsumption;
 
-         return (int)InterpolationHelper.GetValue(_prevPosition.TimeRegistered.Ticks,
-             _prevPosition.EnergyConsumptionValue,
-             _nextPosition.TimeRegistered.Ticks,
-             _nextPosition.EnergyConsumptionValue,
-             simTimeStamp.Value.Ticks);
+         return (int)InterpolationHelper.GetValue(
+            _prevPosition.TimeRegistered.Ticks,
+            _prevPosition.EnergyConsumptionValue,
+            _nextPosition.TimeRegistered.Ticks,
+            _nextPosition.EnergyConsumptionValue,
+            simTimeStamp.Value.Ticks);
       }
 
       /// <summary>
@@ -237,23 +226,25 @@ namespace Simulation.Library
       /// </returns>
       protected virtual bool isTimeStampValid(DateTime timeStamp)
       {
-         if (IsSimulationRunning == false)
-         {
-            return false;
-         }
+         if (IsSimulationRunning == false) return false;
          DateTime? simTimeStamp = GetSimulatedTimeStamp(timeStamp);
          return simTimeStamp >= _simScenario.StartDate && simTimeStamp <= _simScenario.EndDate;
       }
 
       protected void refreshPositions(DateTime simTimeStamp)
       {
-         if (simTimeStamp >= _nextPosition.TimeRegistered && simTimeStamp <= _prevPosition.TimeRegistered)
-         {
-            return;
-         }
+         if (simTimeStamp >= _nextPosition.TimeRegistered 
+            && simTimeStamp <= _prevPosition.TimeRegistered) return;
 
-         _prevPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).Where(p => p.TimeRegistered <= simTimeStamp).LastOrDefault();
-         _nextPosition = _simScenario.SimPositions.OrderBy(p => p.TimeRegistered).Where(p => p.TimeRegistered >= simTimeStamp).FirstOrDefault();
+         _prevPosition = _simScenario.SimPositions
+            .OrderBy(p => p.TimeRegistered)
+            .Where(p => p.TimeRegistered <= simTimeStamp)
+            .LastOrDefault();
+
+         _nextPosition = _simScenario.SimPositions
+            .OrderBy(p => p.TimeRegistered)
+            .Where(p => p.TimeRegistered >= simTimeStamp)
+            .FirstOrDefault();
       }
 
       protected virtual void OnSimulationStarted()
@@ -280,14 +271,10 @@ namespace Simulation.Library
          int consumptionValue = GetEnergyConsumption(timeStamp) * MaxEnergyConsumption;
 
          int balanceValue = windValue + sunValue - consumptionValue;
-         if (balanceValue >= 0)
-         {
-            return (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue);
-         }
-         else
-         {
-            return (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue);
-         }
+
+         return balanceValue >= 0 
+            ? (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue)
+            : (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue);
       }
 
       /// <summary>
@@ -317,7 +304,10 @@ namespace Simulation.Library
 
       protected bool IsValidScenario(SimScenario scenario)
       {
-         return scenario != null && scenario.SimPositions != null && scenario.SimPositions.Count >= 2 && scenario.GetDuration().TotalSeconds > 1;
+         return scenario != null 
+            && scenario.SimPositions != null 
+            && scenario.SimPositions.Count >= 2 
+            && scenario.GetDuration().TotalSeconds > 1;
       }
 
       protected bool IsValidDuration(TimeSpan duration)
@@ -339,9 +329,20 @@ namespace Simulation.Library
       /// </param>
       public void SetIdleValues(int energyConsumption, int energyProductionSun, int energyProductionWind)
       {
-         _idleEnergyConsumption = energyConsumption >= 0 && energyConsumption <= 100 ? energyConsumption : _idleEnergyConsumption;
-         _idleEnergyProductionSun = energyProductionSun >= 0 && energyProductionSun <= 100 ? energyProductionSun : _idleEnergyProductionSun;
-         _idleEnergyProductionWind = energyProductionWind >= 0 && energyProductionWind <= 100 ? energyProductionWind : _idleEnergyProductionWind;
+         _idleEnergyConsumption = energyConsumption >= 0 
+            && energyConsumption <= 100 
+            ? energyConsumption 
+            : _idleEnergyConsumption;
+
+         _idleEnergyProductionSun = energyProductionSun >= 0 
+            && energyProductionSun <= 100 
+            ? energyProductionSun 
+            : _idleEnergyProductionSun;
+
+         _idleEnergyProductionWind = energyProductionWind >= 0 
+            && energyProductionWind <= 100 
+            ? energyProductionWind 
+            : _idleEnergyProductionWind;
       }
 
       /// <summary>
