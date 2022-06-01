@@ -43,7 +43,6 @@ namespace VisualizationWeb.Controllers
          if (ModelState.IsValid)
          {
             await SimulationRepository.SaveSetting(setting);
-
             Mediator.UpdateSimulationSettings(setting);
 
             return RedirectToAction("../Dashboard");

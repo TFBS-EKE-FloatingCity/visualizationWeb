@@ -12,6 +12,9 @@ namespace VisualizationWeb.Controllers
    [Authorize]
    public class ManageController : Controller
    {
+      // Used for XSRF protection when adding external logins
+      private const string XsrfKey = "XsrfId";
+
       public ApplicationSignInManager SignInManager
       {
          get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
@@ -66,7 +69,7 @@ namespace VisualizationWeb.Controllers
       [ValidateAntiForgeryToken]
       public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
       {
-         ManageMessageId? message;
+         ManageMessageId? message = ManageMessageId.Error;
          var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
          if (result.Succeeded)
          {
@@ -76,10 +79,6 @@ namespace VisualizationWeb.Controllers
                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             message = ManageMessageId.RemoveLoginSuccess;
-         }
-         else
-         {
-            message = ManageMessageId.Error;
          }
 
          return RedirectToAction("ManageLogins", new { Message = message });
@@ -301,8 +300,6 @@ namespace VisualizationWeb.Controllers
          base.Dispose(disposing);
       }
 
-      #region Helpers
-
       private IAuthenticationManager AuthenticationManager
       {
          get
@@ -310,9 +307,6 @@ namespace VisualizationWeb.Controllers
             return HttpContext.GetOwinContext().Authentication;
          }
       }
-
-      // Used for XSRF protection when adding external logins
-      private const string XsrfKey = "XsrfId";
 
       public enum ManageMessageId
       {
@@ -352,7 +346,5 @@ namespace VisualizationWeb.Controllers
          }
          return false;
       }
-
-      #endregion Helpers
    }
 }
