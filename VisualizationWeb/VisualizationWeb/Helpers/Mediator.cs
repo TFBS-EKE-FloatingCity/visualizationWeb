@@ -64,6 +64,8 @@ namespace VisualizationWeb.Helpers
       /// </summary>
       /// <param name="simScenario"> </param>
       /// <param name="duration"> </param>
+      /// <exception cref="Simulation.Library.Exceptions.InvalidDurationException"/>
+      /// <exception cref="Simulation.Library.Exceptions.InvalidScenarioException"/>
       public static void StartSimulation(SimScenario simScenario, TimeSpan duration)
       {
          _simService.Run(simScenario, duration);

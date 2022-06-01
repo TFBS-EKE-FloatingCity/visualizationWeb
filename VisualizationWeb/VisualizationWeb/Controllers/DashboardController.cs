@@ -1,4 +1,6 @@
-﻿using Simulation.Library.Models;
+﻿using Simulation.Library.Exceptions;
+using Simulation.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -52,7 +54,15 @@ namespace VisualizationWeb.Controllers
          var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
          _currentScenario = vm;
          simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
-         Helpers.Mediator.StartSimulation(simScenarioID, vm.Duration);
+
+         try
+         {
+            Helpers.Mediator.StartSimulation(simScenarioID, vm.Duration);
+         }
+         catch (Exception ex)
+         {
+            TempData["StartSimulationError"] = ex.Message;
+         }
 
          return RedirectToAction("../Dashboard");
       }

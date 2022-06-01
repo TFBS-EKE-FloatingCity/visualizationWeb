@@ -1,4 +1,5 @@
 ﻿using Simulation.Library.Calculations;
+using Simulation.Library.Exceptions;
 using Simulation.Library.Models;
 using Simulation.Library.Models.Interfaces;
 using System;
@@ -9,6 +10,8 @@ namespace Simulation.Library
 {
    public class SimulationService : IDisposable, ISimulationService
    {
+      private readonly TimeSpan _maxValidDuration = new TimeSpan(0, 0, 0, 0, int.MaxValue);
+
       private DateTime? _startDateTimeReal;
       private SimPosition _prevPosition;
       private SimPosition _nextPosition;
@@ -93,7 +96,8 @@ namespace Simulation.Library
          }
          catch (Exception e)
          {
-            throw new Exception($"Could not run the Simulation. {e.Message}", e);
+            if (e is InvalidDurationException | e is InvalidScenarioException) throw e;
+            else throw new Exception($"Could not run the Simulation. {e.Message}", e);
          }
       }
 
@@ -284,13 +288,12 @@ namespace Simulation.Library
       {
          if (!IsValidScenario(scenario))
          {
-            throw new Exception("Scenario is invalid. The Scenario has to have at least 2 positions and must last at least 1 second.");
+            throw new InvalidScenarioException();
          }
 
          if (!IsValidDuration(duration))
          {
-            TimeSpan maxTime = new TimeSpan(0, 0, 0, 0, Int32.MaxValue);
-            throw new Exception($"Duration is invalid. The Duration has to be a value greater than 0 and less than {maxTime}!");
+            throw new InvalidDurationException(_maxValidDuration);
          }
 
          if (IsSimulationRunning) Stop();   // Stops the previous Scenario if there is one running.
@@ -312,7 +315,7 @@ namespace Simulation.Library
 
       protected bool IsValidDuration(TimeSpan duration)
       {
-         return duration.Ticks > 0 && duration <= new TimeSpan(0, 0, 0, 0, int.MaxValue);
+         return duration.Ticks > 0 && duration <= _maxValidDuration;
       }
 
       /// <summary>

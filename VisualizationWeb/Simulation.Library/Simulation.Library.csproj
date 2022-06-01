@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\InterpolationHelper.cs" />
+    <Compile Include="Exceptions\InvalidDurationException.cs" />
+    <Compile Include="Exceptions\InvalidScenarioException.cs" />
     <Compile Include="Interfaces\ISimulationService.cs" />
     <Compile Include="Interfaces\ISimulationServiceSetting.cs" />
     <Compile Include="Models\SimPosition.cs" />
