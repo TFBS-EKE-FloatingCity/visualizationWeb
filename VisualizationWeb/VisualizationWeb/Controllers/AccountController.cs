@@ -338,14 +338,10 @@ namespace VisualizationWeb.Controllers
             }
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await UserManager.CreateAsync(user);
-            if (result.Succeeded)
+            if (result.Succeeded && (result = await UserManager.AddLoginAsync(user.Id, info.Login)).Succeeded)
             {
-               result = await UserManager.AddLoginAsync(user.Id, info.Login);
-               if (result.Succeeded)
-               {
-                  await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                  return RedirectToLocal(returnUrl);
-               }
+               await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+               return RedirectToLocal(returnUrl);
             }
             AddErrors(result);
          }
@@ -390,7 +386,6 @@ namespace VisualizationWeb.Controllers
          base.Dispose(disposing);
       }
 
-      #region Helpers
 
       // Used for XSRF protection when adding external logins
       private const string XsrfKey = "XsrfId";
@@ -436,7 +431,5 @@ namespace VisualizationWeb.Controllers
             context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
          }
       }
-
-      #endregion Helpers
    }
 }

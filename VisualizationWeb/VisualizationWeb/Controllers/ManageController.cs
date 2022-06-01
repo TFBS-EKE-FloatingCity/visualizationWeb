@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using VisualizationWeb.Models;
 using VisualizationWeb.ViewModel.ManageViewModels;
 
 namespace VisualizationWeb.Controllers
@@ -74,10 +75,7 @@ namespace VisualizationWeb.Controllers
          if (result.Succeeded)
          {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-               await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
+            if (user != null) await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             message = ManageMessageId.RemoveLoginSuccess;
          }
 
@@ -119,10 +117,7 @@ namespace VisualizationWeb.Controllers
       {
          await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
          var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-         if (user != null)
-         {
-            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-         }
+         if (user != null) await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
          return RedirectToAction("Index", "Manage");
       }
 
@@ -133,10 +128,7 @@ namespace VisualizationWeb.Controllers
       {
          await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), false);
          var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-         if (user != null)
-         {
-            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-         }
+         if (user != null) await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
          return RedirectToAction("Index", "Manage");
       }
 
@@ -156,18 +148,16 @@ namespace VisualizationWeb.Controllers
          if (!ModelState.IsValid) return View(vm);
 
          var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), vm.PhoneNumber, vm.Code);
-         if (result.Succeeded)
+         if (!result.Succeeded)
          {
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-               await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
+            ModelState.AddModelError("", "Failed to verify phone");
+            return View(vm);
          }
 
-         ModelState.AddModelError("", "Failed to verify phone");
-         return View(vm);
+         var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+         if (user != null) await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+         return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
       }
 
       // POST: /Manage/RemovePhoneNumber
@@ -199,22 +189,19 @@ namespace VisualizationWeb.Controllers
       [ValidateAntiForgeryToken]
       public async Task<ActionResult> ChangePassword(ChangePasswordViewModel vm)
       {
-         if (!ModelState.IsValid)
+         if (!ModelState.IsValid) return View(vm);
+
+         var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), vm.OldPassword, vm.NewPassword);
+         if (!result.Succeeded)
          {
+            AddErrors(result);
             return View(vm);
          }
-         var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), vm.OldPassword, vm.NewPassword);
-         if (result.Succeeded)
-         {
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-               await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-         }
-         AddErrors(result);
-         return View(vm);
+
+         var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+         if (user != null) await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+         return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
       }
 
       // GET: /Manage/SetPassword
@@ -228,36 +215,32 @@ namespace VisualizationWeb.Controllers
       [ValidateAntiForgeryToken]
       public async Task<ActionResult> SetPassword(SetPasswordViewModel vm)
       {
-         if (ModelState.IsValid)
+         if (!ModelState.IsValid) return View(vm);
+
+         var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), vm.NewPassword);
+         if (!result.Succeeded)
          {
-            var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), vm.NewPassword);
-            if (result.Succeeded)
-            {
-               var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-               if (user != null)
-               {
-                  await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-               }
-               return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-            }
             AddErrors(result);
+            return View(vm);
          }
 
-         return View(vm);
+         var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+         if (user != null) await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+         return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
       }
 
       // GET: /Manage/ManageLogins
       public async Task<ActionResult> ManageLogins(ManageMessageId? message)
       {
-         ViewBag.StatusMessage =
-             message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-             : message == ManageMessageId.Error ? "An error has occurred."
-             : "";
+         ViewBag.StatusMessage = message == ManageMessageId.RemoveLoginSuccess 
+            ? "The external login was removed."
+            : message == ManageMessageId.Error 
+            ? "An error has occurred."
+            : "";
          var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-         if (user == null)
-         {
-            return View("Error");
-         }
+         if (user == null) return View("Error");
+
          var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
          var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
          ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
@@ -281,12 +264,13 @@ namespace VisualizationWeb.Controllers
       public async Task<ActionResult> LinkLoginCallback()
       {
          var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-         if (loginInfo == null)
-         {
-            return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-         }
+         if (loginInfo == null) return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+
          var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-         return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+
+         return result.Succeeded 
+            ? RedirectToAction("ManageLogins") 
+            : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
       }
 
       protected override void Dispose(bool disposing)
@@ -300,13 +284,7 @@ namespace VisualizationWeb.Controllers
          base.Dispose(disposing);
       }
 
-      private IAuthenticationManager AuthenticationManager
-      {
-         get
-         {
-            return HttpContext.GetOwinContext().Authentication;
-         }
-      }
+      private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
       public enum ManageMessageId
       {
@@ -329,22 +307,16 @@ namespace VisualizationWeb.Controllers
 
       private bool HasPassword()
       {
-         var user = UserManager.FindById(User.Identity.GetUserId());
-         if (user != null)
-         {
-            return user.PasswordHash != null;
-         }
-         return false;
+         var user = GetUser();
+         return user != null && user.PasswordHash != null;
       }
 
       private bool HasPhoneNumber()
       {
-         var user = UserManager.FindById(User.Identity.GetUserId());
-         if (user != null)
-         {
-            return user.PhoneNumber != null;
-         }
-         return false;
+         var user = GetUser();
+         return user != null && user.PhoneNumber != null;
       }
+
+      private ApplicationUser GetUser() => UserManager.FindById(User.Identity.GetUserId());
    }
 }

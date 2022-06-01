@@ -97,7 +97,7 @@ namespace Simulation.Library
          catch (Exception e)
          {
             if (e is InvalidDurationException | e is InvalidScenarioException) throw e;
-            else throw new Exception($"Could not run the Simulation. {e.Message}", e);
+            else throw new Exception(e.Message, e);
          }
       }
 
@@ -126,6 +126,7 @@ namespace Simulation.Library
       ///   Updates to the given timeStamp and returns the simulatedTimeStamp. Returns Null if the
       ///   requested timeStamp is outside the simulated time.
       /// </summary>
+      /// <exception cref="InvalidScenarioException"/>
       private DateTime? Update(DateTime timeStamp)
       {
          if (IsSimulationRunning == false || IsTimeStampValid(timeStamp) == false)
@@ -138,7 +139,7 @@ namespace Simulation.Library
 
          if (_prevPosition is null || _nextPosition is null)  //If either of the positions is null means that the given timeStamp is outside the SimulationTimeRange.
          {                                                    //This shouldn't occur since we check if the given timeStamp is valid.
-            throw new Exception("At least one SimulationPosition was null.");
+            throw new InvalidScenarioException("At least one SimulationPosition was null.");
          }
 
          return simTimeStamp;
@@ -276,9 +277,9 @@ namespace Simulation.Library
 
          int balanceValue = windValue + sunValue - consumptionValue;
 
-         return balanceValue >= 0 
-            ? (int)InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue)
-            : (int)InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue);
+         return (int)(balanceValue >= 0 
+            ? InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue)
+            : InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue));
       }
 
       /// <summary>
