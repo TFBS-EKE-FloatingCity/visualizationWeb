@@ -18,6 +18,10 @@
         <div class="col-md-2">
             @Html.Partial("../Charts/Partials/_StartSimulationModalPartial")
         </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary btn-lg col-md-12" style="margin-top: 10px"
+                    onclick="RequestReconnect()">Reconnect</button>
+        </div>
     }
 </div>
 @if ((simulationError = (string)TempData["StartSimulationError"]) != null)
@@ -87,3 +91,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    function RequestReconnect() {
+        $.ajax(
+        {
+            type: "Get",
+            url: "/Dashboard/RequestReconnect",
+            success: function () {
+                location.reload();
+            }
+        })
+    }
+</script>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using VisualizationWeb.Context;
+using VisualizationWeb.Helpers;
 using VisualizationWeb.Models;
 using VisualizationWeb.Models.Repository;
 using VisualizationWeb.ViewModel.SimScenarioVM;
@@ -46,6 +47,13 @@ namespace VisualizationWeb.Controllers
       public ActionResult Open3DModel()
       {
          return View("../Charts/ViewCityRotationChart");
+      }
+
+      public ActionResult RequestReconnect()
+      {
+         Mediator.RestartWebsocketClient();
+         Mediator.StopSimulation();
+         return View("../Dashboard");
       }
 
       [Authorize(Roles = "Admin, Simulant")]

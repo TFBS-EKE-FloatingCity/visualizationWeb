@@ -68,6 +68,8 @@ namespace VisualizationWeb.Helpers
       /// <exception cref="Simulation.Library.Exceptions.InvalidScenarioException"/>
       public static void StartSimulation(SimScenario simScenario, TimeSpan duration)
       {
+         if (_simService.IsSimulationRunning) return;
+
          _simService.Run(simScenario, duration);
 
          _simService.SimulationEnded += HandleStopSimulationEvent;
@@ -109,6 +111,8 @@ namespace VisualizationWeb.Helpers
       /// </summary>
       public static void StopSimulation()
       {
+         if (!_simService.IsSimulationRunning) return;
+
          _simService.Stop();
 
          CityDataHead head = _context.CityDataHeads.Find(CurrentCityDataHeadID);

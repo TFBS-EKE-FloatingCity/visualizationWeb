@@ -103,15 +103,18 @@ namespace Simulation.Library
 
       public void Stop()
       {
-         IsSimulationRunning = false;
-         StartDateTimeReal = null;
-         TimeFactor = 1;
-         _simScenario = null;
-         _prevPosition = null;
-         _nextPosition = null;
-         _timer.Stop();
-         _timer.Elapsed -= OnSimDurationElapsed;
-         OnSimulationEnded();
+         if (IsSimulationRunning)
+         {
+            IsSimulationRunning = false;
+            StartDateTimeReal = null;
+            TimeFactor = 1;
+            _simScenario = null;
+            _prevPosition = null;
+            _nextPosition = null;
+            _timer.Stop();
+            _timer.Elapsed -= OnSimDurationElapsed;
+            OnSimulationEnded();
+         }
       }
 
       /// <summary>
