@@ -78,12 +78,12 @@ loader.load(
     function (gltf) {
         // scale 3d model
         gltf.scene.scale.x = .0009;
-        gltf.scene.scale.y = .0009;
+        gltf.scene.scale.y = .0022;
         gltf.scene.scale.z = .0009;
 
         // position 3d model in middle
         gltf.scene.position.x = 0.4;
-        gltf.scene.position.y = translateYValue;
+        gltf.scene.position.y = translateYValue + .45;
         gltf.scene.position.z = .4;
 
         cube = gltf.scene;
