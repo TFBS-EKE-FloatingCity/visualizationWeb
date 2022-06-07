@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Simulation.Library;
 using Simulation.Library.Calculations;
+using Simulation.Library.Exceptions;
 using Simulation.Library.Models;
 using Simulation.Library.Models.Interfaces;
 using System;
@@ -164,8 +165,8 @@ namespace VisualisationTests
             eventSender = (SimulationService)sender;
          };
 
-         Assert.ThrowsException<Exception>(() => service.Run(null, new TimeSpan(1, 0, 0)));
-         Assert.ThrowsException<Exception>(() => service.Run(new SimScenario(), new TimeSpan()));
+         Assert.ThrowsException<InvalidScenarioException>(() => service.Run(null, new TimeSpan(1, 0, 0)));
+         Assert.ThrowsException<InvalidScenarioException>(() => service.Run(new SimScenario(), new TimeSpan()));
          Assert.IsTrue(eventSender is null);
          simulationService_AssertNotRunning(service);
       }
@@ -182,8 +183,8 @@ namespace VisualisationTests
             eventSender = (SimulationService)sender;
          };
 
-         Assert.ThrowsException<Exception>(() => service.Run(scenario, TimeSpan.MaxValue));
-         Assert.ThrowsException<Exception>(() => service.Run(scenario, new TimeSpan()));
+         Assert.ThrowsException<InvalidDurationException>(() => service.Run(scenario, TimeSpan.MaxValue));
+         Assert.ThrowsException<InvalidDurationException>(() => service.Run(scenario, new TimeSpan()));
          Assert.IsTrue(eventSender is null);
          simulationService_AssertNotRunning(service);
       }
