@@ -1,11 +1,11 @@
 const IS_ROTATING = false;
 const AUTO_ROTATION_STEP = 0.005;
-const ROTATION_STEP = 0.0001;
+const ROTATION_STEP = 0.00025;
 const IS_WATER_TRANSPARENT = true;
 const WATER_TRANSPARENCY = 0.5;
 const BACKGROUND_COLOR = '#fff';
 
-var translateY = 1.15;
+var translateY = 1.05;
 
 var cubeLengths = {
     width: 2,
@@ -113,7 +113,8 @@ function render() {
         if (cube.rotation.z < globals.cubeRotationZ) {
             cube.rotation.z += ROTATION_STEP;
         }
-        else if (cube.rotation.z > globals.cubeRotationZ) {
+
+        if (cube.rotation.z > globals.cubeRotationZ) {
             cube.rotation.z -= ROTATION_STEP;
         }
 
@@ -121,7 +122,8 @@ function render() {
         if (cube.rotation.x < globals.cubeRotationX) {
             cube.rotation.x += ROTATION_STEP;
         }
-        else if (cube.rotation.x > globals.cubeRotationX) {
+
+        if (cube.rotation.x > globals.cubeRotationX) {
             cube.rotation.x -= ROTATION_STEP;
         }
 
@@ -130,13 +132,14 @@ function render() {
         // calculate percent for height
         var percentHeightIncreaseFromZero = currentHeight / 400 * 100;
         var newTranslateYValue = .62 + 0.18 / 100 * percentHeightIncreaseFromZero;
-
+        
         // update height of model
         if (translateY < newTranslateYValue) {
-            translateYCube(ROTATION_STEP);
+            translateYCube(0.0001);
         }
-        else if (translateY > newTranslateYValue) {
-            translateYCube(ROTATION_STEP);
+
+        if (translateY > newTranslateYValue) {
+            translateYCube(0.0001);
         }
     }
 
