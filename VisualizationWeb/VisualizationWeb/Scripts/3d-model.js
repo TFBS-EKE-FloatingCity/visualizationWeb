@@ -19,24 +19,20 @@ var cubeWaterLengths = {
     depth: 4,
 };
 
-
 var height = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
 var width = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
 
-//Creates scene and camera
-
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(BACKGROUND_COLOR);
-// LIGHTS
-var light = new THREE.AmbientLight(0xffffff, 2);
-scene.add(light);
 
-var light2 = new THREE.PointLight(0xffffff, 0.5);
-scene.add(light2);
+var ambientLight = new THREE.AmbientLight(0xffffff, 2);
+scene.add(ambientLight);
+var pointLight = new THREE.PointLight(0xffffff, 0.5);
+scene.add(pointLight);
+
 var camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 
 //Creates renderer and adds it to the DOM
-
 var renderer,
     cubeAxis,
     plane,
@@ -44,11 +40,8 @@ var renderer,
 
 var controls = new THREE.OrbitControls(camera, myCanvas);
 
-// RENDERER
 renderer = new THREE.WebGLRenderer({canvas: myCanvas, antialias: true});
 renderer.setSize(width, height);
-
-//The Box!
 
 //BoxGeometry (makes a geometry)
 var geometry = new THREE.BoxGeometry(cubeLengths.width, cubeLengths.height, cubeLengths.depth);
@@ -56,8 +49,6 @@ var geometry = new THREE.BoxGeometry(cubeLengths.width, cubeLengths.height, cube
 var material = new THREE.MeshBasicMaterial({color: '#CD5C5C'});
 //Applies material to BoxGeometry
 var cube = new THREE.Mesh(geometry, material);
-//Adds cube to the scene
-// scene.add(cube);
 
 // water
 var waterGeometry = new THREE.BoxGeometry(cubeWaterLengths.width, cubeWaterLengths.height, cubeWaterLengths.depth);
@@ -91,7 +82,6 @@ loader.load(
         gltf.scene.position.z = .4;
 
         cube = gltf.scene;
-
         scene.add(gltf.scene);
     },
     // called while loading is progressing
@@ -123,8 +113,7 @@ function render() {
         if (cube.rotation.z < globals.cubeRotationZ) {
             cube.rotation.z += ROTATION_STEP;
         }
-
-        if (cube.rotation.z > globals.cubeRotationZ) {
+        else if (cube.rotation.z > globals.cubeRotationZ) {
             cube.rotation.z -= ROTATION_STEP;
         }
 
@@ -132,8 +121,7 @@ function render() {
         if (cube.rotation.x < globals.cubeRotationX) {
             cube.rotation.x += ROTATION_STEP;
         }
-
-        if (cube.rotation.x > globals.cubeRotationX) {
+        else if (cube.rotation.x > globals.cubeRotationX) {
             cube.rotation.x -= ROTATION_STEP;
         }
 
@@ -143,14 +131,11 @@ function render() {
         var percentHeightIncreaseFromZero = currentHeight / 400 * 100;
         var newTranslateYValue = .62 + 0.18 / 100 * percentHeightIncreaseFromZero;
 
-        //console.log(newTranslateYValue);
-
         // update height of model
         if (translateY < newTranslateYValue) {
             translateYCube(ROTATION_STEP);
         }
-
-        if (translateY > newTranslateYValue) {
+        else if (translateY > newTranslateYValue) {
             translateYCube(ROTATION_STEP);
         }
     }
