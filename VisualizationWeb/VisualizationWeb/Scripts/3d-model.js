@@ -1,3 +1,12 @@
+const IS_ROTATING = false;
+const ROTATION_SPEED = 0.005;
+const ROTATION_STEP = 0.0001;
+const IS_WATER_TRANSPARENT = true;
+const WATER_TRANSPARENCY = 0.5;
+const BACKGROUND_COLOR = '#fff';
+
+var translateY = 1.15;
+
 var cubeLengths = {
     width: 2,
     height: .5,
@@ -10,7 +19,6 @@ var cubeWaterLengths = {
     depth: 4,
 };
 
-var translateYValue = .7; // max: .8, min: .62
 
 var height = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
 var width = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
@@ -18,7 +26,7 @@ var width = $('#CityRotationChartPanel').width(); // window.innerWidth / 2;
 //Creates scene and camera
 
 var scene = new THREE.Scene();
-scene.background = new THREE.Color('#fff');
+scene.background = new THREE.Color(BACKGROUND_COLOR);
 // LIGHTS
 var light = new THREE.AmbientLight(0xffffff, 2);
 scene.add(light);
@@ -33,8 +41,6 @@ var renderer,
     cubeAxis,
     plane,
     myCanvas = document.getElementById('3d-model');
-
-var shouldRotate = false;
 
 var controls = new THREE.OrbitControls(camera, myCanvas);
 
@@ -60,10 +66,8 @@ var waterMaterial = new THREE.MeshBasicMaterial({color: 'blue'});
 //Applies material to BoxGeometry
 var waterCube = new THREE.Mesh(waterGeometry, waterMaterial);
 
-// enable transparency
-waterCube.material.transparent = true;
-// set opacity to 50%
-waterCube.material.opacity = 0.5;
+waterCube.material.transparent = IS_WATER_TRANSPARENT;
+waterCube.material.opacity = WATER_TRANSPARENCY;
 
 scene.add(waterCube);
 
@@ -78,12 +82,12 @@ loader.load(
     function (gltf) {
         // scale 3d model
         gltf.scene.scale.x = .0009;
-        gltf.scene.scale.y = .0022;
+        gltf.scene.scale.y = .0022; //increased height scale for bigger body
         gltf.scene.scale.z = .0009;
 
         // position 3d model in middle
         gltf.scene.position.x = 0.4;
-        gltf.scene.position.y = translateYValue + .45;
+        gltf.scene.position.y = translateY;
         gltf.scene.position.z = .4;
 
         cube = gltf.scene;
@@ -117,20 +121,20 @@ function render() {
         && globals.cubeRotationX) {
         // update rotation of y-axis
         if (cube.rotation.z < globals.cubeRotationZ) {
-            cube.rotation.z += 0.0001;
+            cube.rotation.z += ROTATION_STEP;
         }
 
         if (cube.rotation.z > globals.cubeRotationZ) {
-            cube.rotation.z -= 0.0001;
+            cube.rotation.z -= ROTATION_STEP;
         }
 
         // update rotation of x-axis
         if (cube.rotation.x < globals.cubeRotationX) {
-            cube.rotation.x += 0.0001;
+            cube.rotation.x += ROTATION_STEP;
         }
 
         if (cube.rotation.x > globals.cubeRotationX) {
-            cube.rotation.x -= 0.0001;
+            cube.rotation.x -= ROTATION_STEP;
         }
 
         // 400mm maxHeight => 100%
@@ -142,17 +146,17 @@ function render() {
         //console.log(newTranslateYValue);
 
         // update height of model
-        if (translateYValue < newTranslateYValue) {
-           translateYCube(0.0001);
+        if (translateY < newTranslateYValue) {
+            translateYCube(0.0001);
         }
 
-        if (translateYValue > newTranslateYValue) {
-           translateYCube(-0.0001);
+        if (translateY > newTranslateYValue) {
+            translateYCube(0.0001);
         }
     }
 
-    if (shouldRotate) {
-        scene.rotation.y += 0.01;
+    if (IS_ROTATING) {
+        scene.rotation.y += ROTATION_SPEED;
     }
 }
 
@@ -166,8 +170,8 @@ function getDegreeFromRadiant(radiant) {
     return radiant * 180 / Math.PI;
 }
 
-function toggleHelpers(shouldShow) {
-    if (shouldShow === true) {
+function toggleHelpers(isShowing) {
+    if (isShowing === true) {
         cubeAxis = new THREE.AxesHelper(200);
         cube.add(cubeAxis);
 
@@ -181,5 +185,5 @@ function toggleHelpers(shouldShow) {
 
 function translateYCube(value) {
     cube.translateY(value);
-    translateYValue += value;
+    translateY += value;
 }
