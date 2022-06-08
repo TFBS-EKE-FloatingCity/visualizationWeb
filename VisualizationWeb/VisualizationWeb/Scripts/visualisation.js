@@ -100,7 +100,7 @@ $(function () {
         var diffNow = endTime.getTime() - now.getTime();
 
         //var actualTime = Math.round((100.00 - ((diffNow / diff) * 100))).toFixed(2);
-        var actualTime = Math.round(100.00 - (diffNow / diff) * 100).toFixed(2);
+        var actualTime = Math.max(Math.round(100.00 - (diffNow / diff) * 100).toFixed(2), 100);
         currentProgress = actualTime;
 
         $("#simulationTimeProgressBar")
