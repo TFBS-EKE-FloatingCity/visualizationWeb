@@ -1,5 +1,5 @@
 const IS_ROTATING = false;
-const ROTATION_SPEED = 0.005;
+const AUTO_ROTATION_STEP = 0.005;
 const ROTATION_STEP = 0.0001;
 const IS_WATER_TRANSPARENT = true;
 const WATER_TRANSPARENCY = 0.5;
@@ -147,16 +147,16 @@ function render() {
 
         // update height of model
         if (translateY < newTranslateYValue) {
-            translateYCube(0.0001);
+            translateYCube(ROTATION_STEP);
         }
 
         if (translateY > newTranslateYValue) {
-            translateYCube(0.0001);
+            translateYCube(ROTATION_STEP);
         }
     }
 
     if (IS_ROTATING) {
-        scene.rotation.y += ROTATION_SPEED;
+        scene.rotation.y += AUTO_ROTATION_STEP;
     }
 }
 
