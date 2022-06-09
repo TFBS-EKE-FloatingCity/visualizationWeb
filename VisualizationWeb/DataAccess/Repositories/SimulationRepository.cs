@@ -17,7 +17,7 @@ namespace DataAccess.Repositories
          _context = context ?? throw new ArgumentNullException(nameof(context));
       }
 
-      public async Task CreatePosition(SimPositionCreateAndEditViewModel position)
+      public async Task CreatePosition(SimPositionCreateAndEdit position)
       {
          if (position != null)
          {
@@ -40,7 +40,7 @@ namespace DataAccess.Repositories
          }
       }
 
-      public async Task CreateScenario(SimScenarioCreateAndEditViewModel scenario)
+      public async Task CreateScenario(SimScenarioCreateAndEdit scenario)
       {
          if (scenario == null) return;
 
@@ -51,12 +51,12 @@ namespace DataAccess.Repositories
          });
       }
 
-      public async Task<IEnumerable<SimPositionBindingViewModel>> GetSimPositionBindingList(int simScenarioID)
+      public async Task<IEnumerable<SimPositionBinding>> GetSimPositionBindingList(int simScenarioID)
       {
          var pos = from c in _context.SimPositions
                    orderby c.TimeRegistered
                    where c.SimScenarioID == simScenarioID
-                   select new SimPositionBindingViewModel
+                   select new SimPositionBinding
                    {
                       SimPositionID = c.SimPositionID,
                       SunValue = c.SunValue,
@@ -67,12 +67,12 @@ namespace DataAccess.Repositories
          return await pos.ToListAsync();
       }
 
-      public async Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex(int simScenarioID)
+      public async Task<IEnumerable<SimPositionIndex>> GetSimPositionIndex(int simScenarioID)
       {
          var pos = from c in _context.SimPositions
                    orderby c.TimeRegistered
                    where c.SimScenarioID == simScenarioID
-                   select new SimPositionIndexViewModel
+                   select new SimPositionIndex
                    {
                       SimPositionID = c.SimPositionID,
                       SunValue = c.SunValue,
@@ -93,16 +93,16 @@ namespace DataAccess.Repositories
          return await _context.SimScenarios.FindAsync(simScenarioID);
       }
 
-      public async Task<SimScenarioDetailsViewModel> GetSimScenarioDetails(int simScenarioID)
+      public async Task<SimScenarioDetails> GetSimScenarioDetails(int simScenarioID)
       {
          SimScenario simscenario = await _context.SimScenarios.FindAsync(simScenarioID);
 
-         return new SimScenarioDetailsViewModel
+         return new SimScenarioDetails
          {
             SimScenarioID = simscenario.SimScenarioID,
             Title = simscenario.Title,
             Notes = simscenario.Notes,
-            SimPositions = simscenario.SimPositions?.Select(sp => new SimPositionIndexViewModel
+            SimPositions = simscenario.SimPositions?.Select(sp => new SimPositionIndex
             {
                SimPositionID = sp.SimPositionID,
                SunValue = sp.SunValue,
@@ -113,14 +113,14 @@ namespace DataAccess.Repositories
          };
       }
 
-      public async Task<IEnumerable<SimScenarioIndexViewModel>> GetSimScenarioIndex()
+      public async Task<IEnumerable<SimScenarioIndex>> GetSimScenarioIndex()
       {
          return await _context.SimScenarios.Include(x => x.SimPositions)
-             .Select(sc => new SimScenarioIndexViewModel
+             .Select(sc => new SimScenarioIndex
              {
                 SimScenarioID = sc.SimScenarioID,
                 Title = sc.Title,
-                SimPositions = sc.SimPositions.Select(sp => new SimPositionIndexViewModel
+                SimPositions = sc.SimPositions.Select(sp => new SimPositionIndex
                 {
                    SimPositionID = sp.SimPositionID,
                    SunValue = sp.SunValue,
@@ -141,11 +141,11 @@ namespace DataAccess.Repositories
          _context.SimScenarios.Remove(await _context.SimScenarios.FindAsync(scenarioID));
       }
 
-      public async Task<IList<SelectListItemVM>> SimScenarioSelect()
+      public async Task<IList<SelectListItem>> SimScenarioSelect()
       {
          var select = from c in _context.SimScenarios
                       orderby c.Title
-                      select new SelectListItemVM
+                      select new SelectListItem
                       {
                          ValueMember = c.SimScenarioID,
                          DisplayMember = c.Title

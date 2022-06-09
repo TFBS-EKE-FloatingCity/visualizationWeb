@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-   public class JsonResponseVM
+   public class JsonResponse
    {
       public string status { get; set; }
       public string uuid { get; set; }

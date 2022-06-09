@@ -1,11 +1,12 @@
-﻿using Core;
+﻿using Application.Functions;
+using Core;
 using Core.Exceptions;
 using DataAccess.Entities;
 using System;
 using System.Linq;
 using System.Timers;
 
-namespace Application
+namespace Application.Services
 {
    public class SimulationService : IDisposable, ISimulationService
    {
@@ -157,7 +158,7 @@ namespace Application
       {
          if (StartDateTimeReal == null) return null;
 
-         return new DateTime((long)InterpolationHelper.GetValue(StartDateTimeReal.Value.Ticks,
+         return new DateTime((long)Interpolation.GetValue(StartDateTimeReal.Value.Ticks,
              _simScenario.StartDate.Value.Ticks,
              EndDateTimeReal.Value.Ticks,
              _simScenario.EndDate.Value.Ticks,
@@ -176,7 +177,7 @@ namespace Application
          DateTime? simTimeStamp = Update(timeStamp);
          if (simTimeStamp == null) return _idleEnergyProductionWind;
 
-         return (int)InterpolationHelper.GetValue(
+         return (int)Interpolation.GetValue(
             _prevPosition.TimeRegistered.Ticks,
             _prevPosition.WindValue,
             _nextPosition.TimeRegistered.Ticks,
@@ -196,7 +197,7 @@ namespace Application
          DateTime? simTimeStamp = Update(timeStamp);
          if (simTimeStamp == null) return _idleEnergyProductionSun;
 
-         return (int)InterpolationHelper.GetValue(
+         return (int)Interpolation.GetValue(
             _prevPosition.TimeRegistered.Ticks,
             _prevPosition.SunValue,
             _nextPosition.TimeRegistered.Ticks,
@@ -216,7 +217,7 @@ namespace Application
          DateTime? simTimeStamp = Update(timeStamp);
          if (simTimeStamp == null) return _idleEnergyConsumption;
 
-         return (int)InterpolationHelper.GetValue(
+         return (int)Interpolation.GetValue(
             _prevPosition.TimeRegistered.Ticks,
             _prevPosition.EnergyConsumptionValue,
             _nextPosition.TimeRegistered.Ticks,
@@ -280,8 +281,8 @@ namespace Application
          int balanceValue = windValue + sunValue - consumptionValue;
 
          return (int)(balanceValue >= 0 
-            ? InterpolationHelper.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue)
-            : InterpolationHelper.InverseLerp(0, MaxEnergyConsumption, balanceValue));
+            ? Interpolation.InverseLerp(0, MaxEnergyProductionWind + MaxEnergyProductionSun, balanceValue)
+            : Interpolation.InverseLerp(0, MaxEnergyConsumption, balanceValue));
       }
 
       /// <summary>
@@ -303,7 +304,7 @@ namespace Application
 
          _simScenario = scenario;
          Duration = duration;
-         TimeFactor = InterpolationHelper.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
+         TimeFactor = Interpolation.InverseLerp(0, Duration.Ticks, _simScenario.GetDuration().Ticks);
          _timer = new Timer(duration.TotalMilliseconds);
          _timer.Elapsed += OnSimDurationElapsed;
       }

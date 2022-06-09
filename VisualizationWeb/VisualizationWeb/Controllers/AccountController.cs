@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using VisualizationWeb.ViewModel.AccountViewModels;
+using UI.ViewModel.AccountViewModels;
 
-namespace VisualizationWeb.Controllers
+namespace UI.Controllers
 {
    public class AccountController : Controller
    {

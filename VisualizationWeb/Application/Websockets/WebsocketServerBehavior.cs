@@ -1,9 +1,9 @@
 ﻿using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace Application
+namespace Application.WebSockets
 {
-   public class WebSocketServerConfiguration : WebSocketBehavior
+   public class WebsocketServerBehavior : WebSocketBehavior
    {
       protected override void OnOpen()
       {

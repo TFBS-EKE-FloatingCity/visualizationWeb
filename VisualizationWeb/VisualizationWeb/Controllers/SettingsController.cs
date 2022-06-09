@@ -5,7 +5,7 @@ using DataAccess.Repositories;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace VisualizationWeb.Controllers
+namespace UI.Controllers
 {
    [Authorize(Roles = "Admin")]
    public class SettingsController : Controller

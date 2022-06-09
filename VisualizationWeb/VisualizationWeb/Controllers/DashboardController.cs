@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using VisualizationWeb.ViewModel;
+using UI.ViewModel;
 
-namespace VisualizationWeb.Controllers
+namespace UI.Controllers
 {
    public class DashboardController : Controller
    {

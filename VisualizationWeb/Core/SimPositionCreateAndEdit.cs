@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Entities
 {
-   public class SimPositionCreateAndEditViewModel
+   public class SimPositionCreateAndEdit
    {
       [Key]
       public int SimPositionID { get; set; }

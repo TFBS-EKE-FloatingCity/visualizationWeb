@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-   public class modulesVM
+   public class Module
    {
       public static class Sectors
       {

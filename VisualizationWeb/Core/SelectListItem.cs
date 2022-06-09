@@ -2,7 +2,7 @@
 
 namespace DataAccess.Entities
 {
-   public class SelectListItemVM
+   public class SelectListItem
    {
       [Key]
       public int ValueMember { get; set; }

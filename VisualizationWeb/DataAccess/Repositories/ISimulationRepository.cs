@@ -10,40 +10,40 @@ namespace DataAccess.Repositories
       ///   Gets All SimPositions for the given simScenarioID. Converts SimPosition to SimPositionIndexViewModel.
       /// </summary>
       /// <param name="simScenarioID"> The selected SimScenario </param>
-      Task<IEnumerable<SimPositionIndexViewModel>> GetSimPositionIndex(int simScenarioID);
+      Task<IEnumerable<SimPositionIndex>> GetSimPositionIndex(int simScenarioID);
 
       /// <summary>
       ///   Gets All SimPositions for the given simScenarioID. Converts SimPosition to SimPositionBindingViewModel.
       /// </summary>
       /// <param name="simScenarioID"> The selected SimScenario </param>
-      Task<IEnumerable<SimPositionBindingViewModel>> GetSimPositionBindingList(int simScenarioID);
+      Task<IEnumerable<SimPositionBinding>> GetSimPositionBindingList(int simScenarioID);
 
       /// <summary>
       ///   Gets All SimScenarios. Converts SimScenario to SimScenarioIndexViewModel. Includes
       ///   SimPositions. Converts SimPositions to SimPositionIndexViewModel.
       /// </summary>
-      Task<IEnumerable<SimScenarioIndexViewModel>> GetSimScenarioIndex();
+      Task<IEnumerable<SimScenarioIndex>> GetSimScenarioIndex();
 
       /// <summary>
       ///   Gets the SimScenario for the given simScenarioID. Converts SimScenario to
       ///   SimScenarioDetailViewModel. Includes SimPositions. Converts SimPositions to SimPositionIndexViewModel.
       /// </summary>
       /// <param name="simScenarioID"> The selected SimScenario </param>
-      Task<SimScenarioDetailsViewModel> GetSimScenarioDetails(int simScenarioID);
+      Task<SimScenarioDetails> GetSimScenarioDetails(int simScenarioID);
 
       /// <summary>
       ///   Creates and adds SimScenario from given scenario. Converts
       ///   SimScenarioCreateAndEditViewModel to SimScenario.
       /// </summary>
       /// <param name="scenario"> SimScenario to add </param>
-      Task CreateScenario(SimScenarioCreateAndEditViewModel scenario);
+      Task CreateScenario(SimScenarioCreateAndEdit scenario);
 
       /// <summary>
       ///   Creates and adds SimPosition from given position. Converts
       ///   SimPositionCreateAndEditViewModel to SimPosition.
       /// </summary>
       /// <param name="position"> SimPosition to add </param>
-      Task CreatePosition(SimPositionCreateAndEditViewModel position);
+      Task CreatePosition(SimPositionCreateAndEdit position);
 
       /// <summary>
       ///   Deletes the SimScenario with the given scenarioID.
@@ -66,7 +66,7 @@ namespace DataAccess.Repositories
       /// <summary>
       ///   Gets all SimScenarios. Converts SimScenario to vmSelectListItem
       /// </summary>
-      Task<IList<SelectListItemVM>> SimScenarioSelect();
+      Task<IList<SelectListItem>> SimScenarioSelect();
 
       /// <summary>
       ///   Gets the Title from the given simScenarioID.

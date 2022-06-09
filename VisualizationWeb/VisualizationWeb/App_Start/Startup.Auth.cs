@@ -7,7 +7,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
 
-namespace VisualizationWeb
+namespace UI
 {
    public partial class Startup
    {

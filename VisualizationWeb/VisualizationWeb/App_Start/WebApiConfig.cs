@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace VisualizationWeb
+namespace UI
 {
    public static class WebApiConfig
    {

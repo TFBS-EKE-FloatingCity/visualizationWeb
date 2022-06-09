@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Application
+namespace Application.Functions
 {
-   public static class InterpolationHelper
+   public static class Interpolation
    {
       //Returns searched Value between 2 Function positions
       public static decimal GetValue(long x1, long y1, long x2, long y2, decimal givenX)

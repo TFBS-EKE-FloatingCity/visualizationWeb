@@ -2,9 +2,9 @@
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(VisualizationWeb.Startup))]
+[assembly: OwinStartup(typeof(UI.Startup))]
 
-namespace VisualizationWeb
+namespace UI
 {
    public partial class Startup
    {

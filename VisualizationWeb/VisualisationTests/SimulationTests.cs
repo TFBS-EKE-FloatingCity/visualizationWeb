@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using Application.Functions;
+using Application.Services;
 using Core;
 using Core.Exceptions;
 using DataAccess.Entities;
@@ -14,8 +15,6 @@ namespace VisualisationTests
    [TestClass]
    public class SimulationTests
    {
-      #region CalculationHelper Tests
-
       [TestMethod]
       [DataRow(0, 10, 0.5, 5)]
       [DataRow(-10, 0, 0.5, -5)]
@@ -28,7 +27,7 @@ namespace VisualisationTests
          decimal dValue = Convert.ToDecimal(value);
          decimal dExpected = Convert.ToDecimal(expected);
 
-         decimal result = InterpolationHelper.Lerp(dMin, dMax, dValue);
+         decimal result = Interpolation.Lerp(dMin, dMax, dValue);
          Assert.AreEqual(dExpected, result);
       }
 
@@ -43,18 +42,18 @@ namespace VisualisationTests
          decimal dValue = Convert.ToDecimal(value);
          decimal dExpected = Convert.ToDecimal(expected);
 
-         decimal result = InterpolationHelper.InverseLerp(dMin, dMax, dValue);
+         decimal result = Interpolation.InverseLerp(dMin, dMax, dValue);
          Assert.AreEqual(dExpected, result);
       }
 
       [TestMethod]
       public void GetValueTest()
       {
-         int result1 = (int)InterpolationHelper.GetValue(0, 0, 10, 100, 5);
-         int result2 = (int)InterpolationHelper.GetValue(-10, 0, 10, 100, -5);
-         int result3 = (int)InterpolationHelper.GetValue(-10, -100, 10, 100, -5);
-         int result4 = (int)InterpolationHelper.GetValue(10, 100, 0, 0, 5);
-         int result5 = (int)InterpolationHelper.GetValue(0, 0, 0, 0, 0);
+         int result1 = (int)Interpolation.GetValue(0, 0, 10, 100, 5);
+         int result2 = (int)Interpolation.GetValue(-10, 0, 10, 100, -5);
+         int result3 = (int)Interpolation.GetValue(-10, -100, 10, 100, -5);
+         int result4 = (int)Interpolation.GetValue(10, 100, 0, 0, 5);
+         int result5 = (int)Interpolation.GetValue(0, 0, 0, 0, 0);
 
          Assert.AreEqual(50, result1);
          Assert.AreEqual(25, result2);
@@ -62,12 +61,8 @@ namespace VisualisationTests
          Assert.AreEqual(50, result4);
          Assert.AreEqual(0, result5);
 
-         Assert.ThrowsException<DivideByZeroException>(() => InterpolationHelper.GetValue(0, 0, 0, 10, 0));
+         Assert.ThrowsException<DivideByZeroException>(() => Interpolation.GetValue(0, 0, 0, 10, 0));
       }
-
-      #endregion CalculationHelper Tests
-
-      #region SimulationService Tests
 
       private SimScenario getValidTestScenario()
       {
@@ -383,7 +378,5 @@ namespace VisualisationTests
          Assert.AreEqual(expectedEnergyProductionSun, service.GetEnergyProductionSun(DateTime.Now));
          Assert.AreEqual(expectedEnergyProductionWind, service.GetEnergyProductionWind(DateTime.Now));
       }
-
-      #endregion SimulationService Tests
    }
 }

@@ -2,7 +2,7 @@
 
 namespace DataAccess.Entities
 {
-   public class SimScenarioCreateAndEditViewModel
+   public class SimScenarioCreateAndEdit
    {
       [Key]
       public int SimScenarioID { get; set; }

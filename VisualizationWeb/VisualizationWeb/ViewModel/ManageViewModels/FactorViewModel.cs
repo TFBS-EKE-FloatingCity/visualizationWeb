@@ -1,4 +1,4 @@
-﻿namespace VisualizationWeb.ViewModel.ManageViewModels
+﻿namespace UI.ViewModel.ManageViewModels
 {
    public class FactorViewModel
    {

@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using Application.Services;
+using Core;
 using DataAccess;
 using DataAccess.Entities;
 using H.Socket.IO;
@@ -6,7 +7,7 @@ using H.Socket.IO.EventsArgs;
 using Newtonsoft.Json;
 using System;
 
-namespace Application
+namespace Application.Websockets
 {
    public class ApplicationWebSocketClient
    {
@@ -52,8 +53,8 @@ namespace Application
       {
          DateTime recieved = DateTime.Now;
 
-         JsonDataVM jsonData = JsonConvert.DeserializeObject<JsonDataVM>(json);
-         JsonResponseVM response = new JsonResponseVM();
+         JsonData jsonData = JsonConvert.DeserializeObject<JsonData>(json);
+         JsonResponse response = new JsonResponse();
 
          CityData data = new CityData()
          {
@@ -65,19 +66,19 @@ namespace Application
          {
             switch (module.sector)
             {
-               case modulesVM.Sectors.One:
+               case Module.Sectors.One:
                   data.USonicInner1 = Int32ToShort(module.sensorInside);
                   data.USonicOuter1 = Int32ToShort(module.sensorOutside);
                   data.Pump1 = Int32ToShort(module.pumpLevel);
                   break;
 
-               case modulesVM.Sectors.Two:
+               case Module.Sectors.Two:
                   data.USonicInner2 = Int32ToShort(module.sensorInside);
                   data.USonicOuter2 = Int32ToShort(module.sensorOutside);
                   data.Pump2 = Int32ToShort(module.pumpLevel);
                   break;
 
-               case modulesVM.Sectors.Three:
+               case Module.Sectors.Three:
                   data.USonicInner3 = Int32ToShort(module.sensorInside);
                   data.USonicOuter3 = Int32ToShort(module.sensorOutside);
                   data.Pump3 = Int32ToShort(module.pumpLevel);

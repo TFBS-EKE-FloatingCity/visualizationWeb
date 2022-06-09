@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using VisualizationWeb.ViewModel.ManageViewModels;
+using UI.ViewModel.ManageViewModels;
 
-namespace VisualizationWeb.Controllers
+namespace UI.Controllers
 {
    [Authorize]
    public class ManageController : Controller

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Application
+namespace Application.Functions
 {
-   public static class UnitConverter
+   public static class UnitConversion
    {
       public static double PrefixToNumber(string stringValue)
       {

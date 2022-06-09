@@ -1,4 +1,6 @@
-﻿using DataAccess;
+﻿using Application.Services;
+using Application.Websockets;
+using DataAccess;
 using DataAccess.Entities;
 using DataAccess.Repositories;
 using Newtonsoft.Json;
@@ -62,8 +64,8 @@ namespace Application
       /// </summary>
       /// <param name="simScenario"> </param>
       /// <param name="duration"> </param>
-      /// <exception cref="Simulation.Library.Exceptions.InvalidDurationException"/>
-      /// <exception cref="Simulation.Library.Exceptions.InvalidScenarioException"/>
+      /// <exception cref="Core.Exceptions.InvalidDurationException"/>
+      /// <exception cref="Core.Exceptions.InvalidScenarioException"/>
       public static void StartSimulation(SimScenario simScenario, TimeSpan duration)
       {
          if (_simService.IsSimulationRunning) return;

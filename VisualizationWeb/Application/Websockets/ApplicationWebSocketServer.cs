@@ -1,6 +1,7 @@
-﻿using WebSocketSharp.Server;
+﻿using Application.WebSockets;
+using WebSocketSharp.Server;
 
-namespace Application
+namespace Application.Websockets
 {
    public class ApplicationWebSocketServer
    {
@@ -8,7 +9,7 @@ namespace Application
 
       public void OpenConnection()
       {
-         _webServer.AddWebSocketService<WebSocketServerConfiguration>("/Connection");
+         _webServer.AddWebSocketService<WebsocketServerBehavior>("/Connection");
          _webServer.Start();
       }
 

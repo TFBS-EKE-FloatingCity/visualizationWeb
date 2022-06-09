@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web.Http;
 
-namespace VisualizationWeb.Controllers
+namespace UI.Controllers
 {
    [RoutePrefix("API/Dashboard")]
    public class APIVDashboardController : ApiController

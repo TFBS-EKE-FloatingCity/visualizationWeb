@@ -2,7 +2,7 @@
 using DataAccess.Entities;
 using System;
 
-namespace Application
+namespace Application.Services
 {
    public interface ISimulationService : IDisposable
    {

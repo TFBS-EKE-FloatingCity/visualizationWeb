@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace VisualizationWeb
+namespace UI
 {
    public class FilterConfig
    {

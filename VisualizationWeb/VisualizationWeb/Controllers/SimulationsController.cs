@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace VisualizationWeb.Controllers
+namespace UI.Controllers
 {
    [Authorize(Roles = "Admin")]
    public class SimulationsController : Controller
@@ -60,7 +60,7 @@ namespace VisualizationWeb.Controllers
       public async Task<ActionResult> Details(int? id)
       {
          if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         SimScenarioDetailsViewModel scenario = await SimulationRepository.GetSimScenarioDetails(id.Value);
+         SimScenarioDetails scenario = await SimulationRepository.GetSimScenarioDetails(id.Value);
          var test = await SimulationRepository.GetSimPositionIndex(id.Value);
          scenario.SimPositions = test.OrderBy(x => x.TimeRegistered.TimeOfDay);
          return View(scenario);
@@ -71,7 +71,7 @@ namespace VisualizationWeb.Controllers
       /// </summary>
       public ActionResult Create()
       {
-         return View(new SimScenarioCreateAndEditViewModel());
+         return View(new SimScenarioCreateAndEdit());
       }
 
       /// <summary>
@@ -80,7 +80,7 @@ namespace VisualizationWeb.Controllers
       /// <param name="vm"> Newly created SimScenario </param>
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<ActionResult> Create([Bind(Include = "SimScenarioID, Title, TimeFactor, Notes")] SimScenarioCreateAndEditViewModel vm)
+      public async Task<ActionResult> Create([Bind(Include = "SimScenarioID, Title, TimeFactor, Notes")] SimScenarioCreateAndEdit vm)
       {
          var errors = ModelState.Values.SelectMany(v => v.Errors);
          if (ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace VisualizationWeb.Controllers
       /// </summary>
       /// <param name="vm"> Newly created SimPosition </param>
       [HttpPost]
-      public async Task<ActionResult> PartialPositionCreate([Bind(Include = "SimPositionID, SunValue, WindValue, EnergyConsumptionValue, TimeRegistered, SimScenarioID")] SimPositionCreateAndEditViewModel vm)
+      public async Task<ActionResult> PartialPositionCreate([Bind(Include = "SimPositionID, SunValue, WindValue, EnergyConsumptionValue, TimeRegistered, SimScenarioID")] SimPositionCreateAndEdit vm)
       {
          if (ModelState.IsValid)
          {

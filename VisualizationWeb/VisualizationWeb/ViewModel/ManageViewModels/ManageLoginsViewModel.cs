@@ -2,7 +2,7 @@
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 
-namespace VisualizationWeb.ViewModel.ManageViewModels
+namespace UI.ViewModel.ManageViewModels
 {
    public class ManageLoginsViewModel
    {

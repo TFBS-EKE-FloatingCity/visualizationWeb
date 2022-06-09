@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VisualizationWeb.ViewModel
+namespace UI.ViewModel
 {
    public class SimStartViewModel
    {

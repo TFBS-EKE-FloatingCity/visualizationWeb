@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace VisualizationWeb
+namespace UI
 {
    public class BundleConfig
    {

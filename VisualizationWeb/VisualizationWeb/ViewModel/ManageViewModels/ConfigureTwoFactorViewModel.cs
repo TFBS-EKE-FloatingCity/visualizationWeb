@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VisualizationWeb.ViewModel.ManageViewModels
+namespace UI.ViewModel.ManageViewModels
 {
    public class ConfigureTwoFactorViewModel
    {

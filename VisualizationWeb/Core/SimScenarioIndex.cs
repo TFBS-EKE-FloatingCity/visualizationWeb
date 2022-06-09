@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataAccess.Entities
 {
-   public class SimScenarioDetailsViewModel
+   public class SimScenarioIndex
    {
       [Key]
       public int SimScenarioID { get; set; }
@@ -15,7 +15,6 @@ namespace DataAccess.Entities
       public string Title { get; set; }
 
       [Display(Name = "Start Time")]
-      [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
       public DateTime? StartDate
       {
          get
@@ -25,7 +24,6 @@ namespace DataAccess.Entities
       }
 
       [Display(Name = "End Time")]
-      [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
       public DateTime? EndDate
       {
          get
@@ -34,14 +32,8 @@ namespace DataAccess.Entities
          }
       }
 
-      [StringLength(500)]
-      public string Notes { get; set; }
+      public bool isChecked { get; set; }
 
-      public IEnumerable<SimPositionIndexViewModel> SimPositions { get; set; }
-
-      public SimScenarioDetailsViewModel()
-      {
-         SimPositions = new List<SimPositionIndexViewModel>();
-      }
+      public IEnumerable<SimPositionIndex> SimPositions { get; set; }
    }
 }
