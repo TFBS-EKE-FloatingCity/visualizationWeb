@@ -1,6 +1,6 @@
 const IS_ROTATING = false;
 const AUTO_ROTATION_STEP = 0.005;
-const ROTATION_STEP = 0.00025;
+const ROTATION_STEP = 0.0025;
 const IS_WATER_TRANSPARENT = true;
 const WATER_TRANSPARENCY = 0.5;
 const BACKGROUND_COLOR = '#fff';
