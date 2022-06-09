@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Core;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using VisualizationWeb.Models;
 
 namespace VisualizationWeb
 {
@@ -24,7 +24,7 @@ namespace VisualizationWeb
 
       public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
       {
-         return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+         return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager, Startup.CookieAuthenticationType);
       }
    }
 }

@@ -1,15 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Application;
+using Core;
+using Core.Exceptions;
+using DataAccess.Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using Simulation.Library;
-using Simulation.Library.Calculations;
-using Simulation.Library.Exceptions;
-using Simulation.Library.Models;
-using Simulation.Library.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using VisualizationWeb.Models;
 
 namespace VisualisationTests
 {

@@ -1,11 +1,10 @@
-﻿using System.Linq;
+﻿using DataAccess;
+using DataAccess.Entities;
+using DataAccess.Repositories;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using VisualizationWeb.Context;
-using VisualizationWeb.Models.Repository;
-using VisualizationWeb.ViewModel.SimPositionVM;
-using VisualizationWeb.ViewModel.SimScenarioVM;
 
 namespace VisualizationWeb.Controllers
 {

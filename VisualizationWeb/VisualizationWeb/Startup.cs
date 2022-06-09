@@ -1,8 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using Application;
+using Microsoft.Owin;
 using Owin;
-using VisualizationWeb.Helpers;
 
-[assembly: OwinStartupAttribute(typeof(VisualizationWeb.Startup))]
+[assembly: OwinStartup(typeof(VisualizationWeb.Startup))]
 
 namespace VisualizationWeb
 {

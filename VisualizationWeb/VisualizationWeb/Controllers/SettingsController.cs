@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using Application;
+using DataAccess;
+using DataAccess.Entities;
+using DataAccess.Repositories;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using VisualizationWeb.Context;
-using VisualizationWeb.Helpers;
-using VisualizationWeb.Models;
-using VisualizationWeb.Models.Repository;
 
 namespace VisualizationWeb.Controllers
 {

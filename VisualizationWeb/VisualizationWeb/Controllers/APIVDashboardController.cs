@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Application;
+using DataAccess;
+using Newtonsoft.Json;
 using System.Data;
 using System.Linq;
 using System.Web.Http;
-using VisualizationWeb.Context;
-using VisualizationWeb.Helpers;
 
 namespace VisualizationWeb.Controllers
 {

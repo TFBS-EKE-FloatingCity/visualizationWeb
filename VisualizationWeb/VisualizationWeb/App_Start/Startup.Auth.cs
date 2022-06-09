@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Core;
+using DataAccess;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
-using VisualizationWeb.Context;
-using VisualizationWeb.Models;
 
 namespace VisualizationWeb
 {
@@ -35,7 +35,7 @@ namespace VisualizationWeb
                // login to your account.
                OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                      validateInterval: TimeSpan.FromMinutes(30),
-                     regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                     regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, CookieAuthenticationType))
             }
          });
          app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);

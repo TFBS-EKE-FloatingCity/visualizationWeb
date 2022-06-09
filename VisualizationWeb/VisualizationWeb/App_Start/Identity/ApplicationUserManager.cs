@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Core;
+using DataAccess;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
-using VisualizationWeb.Context;
-using VisualizationWeb.Models;
 
 namespace VisualizationWeb
 {

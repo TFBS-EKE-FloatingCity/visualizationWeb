@@ -1,14 +1,12 @@
-﻿using Simulation.Library.Exceptions;
-using Simulation.Library.Models;
+﻿using Application;
+using DataAccess;
+using DataAccess.Entities;
+using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using VisualizationWeb.Context;
-using VisualizationWeb.Helpers;
-using VisualizationWeb.Models;
-using VisualizationWeb.Models.Repository;
-using VisualizationWeb.ViewModel.SimScenarioVM;
+using VisualizationWeb.ViewModel;
 
 namespace VisualizationWeb.Controllers
 {
@@ -65,7 +63,7 @@ namespace VisualizationWeb.Controllers
 
          try
          {
-            Helpers.Mediator.StartSimulation(simScenarioID, vm.Duration);
+            Mediator.StartSimulation(simScenarioID, vm.Duration);
          }
          catch (Exception ex)
          {
