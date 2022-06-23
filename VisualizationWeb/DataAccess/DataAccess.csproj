@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Entities\CityData.cs" />
     <Compile Include="Entities\CityDataHead.cs" />
     <Compile Include="Entities\Setting.cs" />

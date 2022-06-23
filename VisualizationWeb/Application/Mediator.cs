@@ -21,7 +21,7 @@ namespace Application
       /// </summary>
       public static CityDataHead CurrentCityDataHead { get; private set; }
 
-      private static ApplicationDbContext _context = new ApplicationDbContext();
+      private static Context _context = new Context();
 
       /// <summary>
       ///   Aus dem Simulationrepository werden hier die Settings geholt und abgespeichert
@@ -39,13 +39,13 @@ namespace Application
       /// <summary>
       ///   Websocketserver mit welchem sich der Browser verbindet um Live Daten zu holen
       /// </summary>
-      private static readonly ApplicationWebSocketServer _server = new ApplicationWebSocketServer();
+      private static readonly SocketServer _server = new SocketServer();
    
       /// <summary>
       ///   Websocketclient welcher sich mit dem Raspberry verbindet um die Live Daten zu bekommen,
       ///   abzuspeichern und über den Websocketserver an die Browser zu verteilen
       /// </summary>
-      private static readonly ApplicationWebSocketClient _wsClient = new ApplicationWebSocketClient(_server, _simService, _settings.rbPiConnectionString);
+      private static readonly SocketClient _wsClient = new SocketClient(_server, _simService, _settings.rbPiConnectionString);
 
       /// <summary>
       ///   Wenn auf der Settings unterseite Settings geändert werden werden diese auch hier im

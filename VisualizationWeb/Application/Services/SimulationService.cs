@@ -347,7 +347,7 @@ namespace Application.Services
             : _idleEnergyProductionSun;
 
          _idleEnergyProductionWind = energyProductionWind >= 0 
-            && energyProductionWind <= 100 
+            && energyProductionWind <= 100
             ? energyProductionWind 
             : _idleEnergyProductionWind;
       }

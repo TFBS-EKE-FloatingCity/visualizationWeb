@@ -19,7 +19,7 @@ namespace UI.Controllers
          }
       }
 
-      private ApplicationDbContext _context = new ApplicationDbContext();
+      private Context _context = new Context();
       private object _lock = new object();
 
       private ISimulationRepository _simRepo;

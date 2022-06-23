@@ -9,16 +9,16 @@ using System;
 
 namespace Application.Websockets
 {
-   public class ApplicationWebSocketClient
+   public class SocketClient
    {
       public static SocketIoClient Client { get; private set; } = new SocketIoClient();
 
-      private readonly ApplicationDbContext _context = new ApplicationDbContext();
-      private readonly ApplicationWebSocketServer _server;
+      private readonly Context _context = new Context();
+      private readonly SocketServer _server;
       private readonly SimulationService _service;
       private readonly Uri _uri;
 
-      public ApplicationWebSocketClient(ApplicationWebSocketServer server, SimulationService simService, string connectionString)
+      public SocketClient(SocketServer server, SimulationService simService, string connectionString)
       {
          if (connectionString != null) _uri = new Uri(connectionString);
 

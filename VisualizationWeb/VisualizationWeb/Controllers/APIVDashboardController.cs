@@ -10,7 +10,7 @@ namespace UI.Controllers
    [RoutePrefix("API/Dashboard")]
    public class APIVDashboardController : ApiController
    {
-      private ApplicationDbContext _db = new ApplicationDbContext();
+      private Context _db = new Context();
 
       [Route("GetCurrentCityDataHeadID")]
       [HttpGet]

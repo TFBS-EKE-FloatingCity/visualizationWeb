@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace DataAccess
 {
-   public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+   public class Context : IdentityDbContext<ApplicationUser>
    {
       public virtual DbSet<Setting> Settings { get; set; }
 
@@ -17,11 +17,11 @@ namespace DataAccess
 
       public virtual DbSet<CityDataHead> CityDataHeads { get; set; }
 
-      public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
+      public Context() : base("DefaultConnection", throwIfV1Schema: false) { }
 
-      public static ApplicationDbContext Create()
+      public static Context Create()
       {
-         return new ApplicationDbContext();
+         return new Context();
       }
    }
 }

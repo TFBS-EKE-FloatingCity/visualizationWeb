@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Entities
+namespace DataAccess.Entities.ViewModel
 {
    public class SimPositionCreateAndEdit
    {

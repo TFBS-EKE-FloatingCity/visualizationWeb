@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using DataAccess.Entities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,9 +11,9 @@ namespace DataAccess.Repositories
 {
    public class SimulationRepository : ISimulationRepository
    {
-      private readonly ApplicationDbContext _context;
+      private readonly Context _context;
 
-      public SimulationRepository(ApplicationDbContext context)
+      public SimulationRepository(Context context)
       {
          _context = context ?? throw new ArgumentNullException(nameof(context));
       }
@@ -53,18 +54,19 @@ namespace DataAccess.Repositories
 
       public async Task<IEnumerable<SimPositionBinding>> GetSimPositionBindingList(int simScenarioID)
       {
-         var pos = from c in _context.SimPositions
-                   orderby c.TimeRegistered
-                   where c.SimScenarioID == simScenarioID
-                   select new SimPositionBinding
-                   {
-                      SimPositionID = c.SimPositionID,
-                      SunValue = c.SunValue,
-                      WindValue = c.WindValue,
-                      EnergyConsumptionValue = c.EnergyConsumptionValue,
-                      TimeRegistered = c.TimeRegistered,
-                   };
-         return await pos.ToListAsync();
+         var positions = await _context.SimPositions
+            .Where(x => x.SimScenarioID == simScenarioID)
+            .OrderBy(x => x.TimeRegistered)
+            .ToListAsync();
+
+         return positions.Select(x => new SimPositionBinding
+         {
+            SimPositionID = x.SimPositionID,
+            SunValue = x.SunValue,
+            WindValue = x.WindValue,
+            EnergyConsumptionValue = x.EnergyConsumptionValue,
+            TimeRegistered = x.TimeRegistered,
+         });
       }
 
       public async Task<IEnumerable<SimPositionIndex>> GetSimPositionIndex(int simScenarioID)
@@ -113,7 +115,7 @@ namespace DataAccess.Repositories
          };
       }
 
-      public async Task<IEnumerable<SimScenarioIndex>> GetSimScenarioIndex()
+      public async Task<IEnumerable<SimScenarioIndex>> GetAllSimScenarioIndices()
       {
          return await _context.SimScenarios.Include(x => x.SimPositions)
              .Select(sc => new SimScenarioIndex
@@ -131,17 +133,17 @@ namespace DataAccess.Repositories
              }).ToListAsync();
       }
 
-      public async Task RemovePosition(int positionID)
+      public async Task DeletePosition(int positionID)
       {
          _context.SimPositions.Remove(await _context.SimPositions.FindAsync(positionID));
       }
 
-      public async Task RemoveScenario(int scenarioID)
+      public async Task DeleteScenario(int scenarioID)
       {
          _context.SimScenarios.Remove(await _context.SimScenarios.FindAsync(scenarioID));
       }
 
-      public async Task<IList<SelectListItem>> SimScenarioSelect()
+      public async Task<IList<SelectListItem>> GetSimScenarioSelectList()
       {
          var select = from c in _context.SimScenarios
                       orderby c.Title
@@ -155,10 +157,7 @@ namespace DataAccess.Repositories
 
       public Setting GetSimulationSetting()
       {
-         Setting setting = _context.Settings.FirstOrDefault();
-         if (setting != null) return setting;
-
-         return new Setting
+         return _context.Settings.FirstOrDefault() ?? new Setting
          {
             SettingID = 1,
             WindMax = 0,
@@ -166,7 +165,7 @@ namespace DataAccess.Repositories
             ConsumptionMax = 0
          };
       }
-      
+
       /// <summary>
       /// 
       /// </summary>
@@ -174,11 +173,6 @@ namespace DataAccess.Repositories
       /// <returns>True if connectionstring changed, false if not</returns>
       public async Task<bool> SaveSetting(Setting setting)
       {
-         //if ()
-         //{
-         //   Mediator.RestartWebsocketClient();
-         //}
-
          _context.Settings.AddOrUpdate(setting);
          await _context.SaveChangesAsync();
 

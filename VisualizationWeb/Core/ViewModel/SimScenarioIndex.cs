@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace DataAccess.Entities
+namespace DataAccess.Entities.ViewModel
 {
    public class SimScenarioIndex
    {
@@ -15,22 +15,17 @@ namespace DataAccess.Entities
       public string Title { get; set; }
 
       [Display(Name = "Start Time")]
-      public DateTime? StartDate
-      {
-         get
-         {
-            return SimPositions?.OrderBy(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
-         }
-      }
+      public DateTime? StartDate => SimPositions?
+         .OrderBy(x => x.TimeRegistered.TimeOfDay)
+         .FirstOrDefault()?
+         .TimeRegistered;
 
       [Display(Name = "End Time")]
-      public DateTime? EndDate
-      {
-         get
-         {
-            return SimPositions?.OrderByDescending(x => x.TimeRegistered.TimeOfDay).FirstOrDefault()?.TimeRegistered;
-         }
-      }
+      public DateTime? EndDate => SimPositions?
+         .OrderByDescending(x => x.TimeRegistered.TimeOfDay)
+         .FirstOrDefault()?
+         .TimeRegistered;
+
 
       public bool isChecked { get; set; }
 

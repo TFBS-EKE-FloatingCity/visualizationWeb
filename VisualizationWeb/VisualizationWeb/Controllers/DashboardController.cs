@@ -22,7 +22,7 @@ namespace UI.Controllers
       }
 
       private static SimStartViewModel _currentScenario;
-      private ApplicationDbContext _context = new ApplicationDbContext();
+      private Context _context = new Context();
       private object _lock = new object();
       private ISimulationRepository _simRepo;
 
@@ -77,7 +77,7 @@ namespace UI.Controllers
       public async Task<ActionResult> PartialSimulationStart()
       {
          ViewBag.SimScenarioID = new SelectList(
-            await SimulationRepository.SimScenarioSelect(), 
+            await SimulationRepository.GetSimScenarioSelectList(), 
             "ValueMember", 
             "DisplayMember"
             );

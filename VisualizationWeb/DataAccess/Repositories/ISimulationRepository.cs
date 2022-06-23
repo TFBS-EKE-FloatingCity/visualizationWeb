@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using DataAccess.Entities.ViewModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace DataAccess.Repositories
       ///   Gets All SimScenarios. Converts SimScenario to SimScenarioIndexViewModel. Includes
       ///   SimPositions. Converts SimPositions to SimPositionIndexViewModel.
       /// </summary>
-      Task<IEnumerable<SimScenarioIndex>> GetSimScenarioIndex();
+      Task<IEnumerable<SimScenarioIndex>> GetAllSimScenarioIndices();
 
       /// <summary>
       ///   Gets the SimScenario for the given simScenarioID. Converts SimScenario to
@@ -49,13 +50,13 @@ namespace DataAccess.Repositories
       ///   Deletes the SimScenario with the given scenarioID.
       /// </summary>
       /// <param name="scenarioID"> SimScenarioID to delete </param>
-      Task RemoveScenario(int scenarioID);
+      Task DeleteScenario(int scenarioID);
 
       /// <summary>
       ///   Deletes the SimPosition with the given positionID.
       /// </summary>
       /// <param name="positionID"> SimPositionID to delete </param>
-      Task RemovePosition(int positionID);
+      Task DeletePosition(int positionID);
 
       /// <summary>
       ///   FGets SimScenario for the given simScenarioID
@@ -66,7 +67,7 @@ namespace DataAccess.Repositories
       /// <summary>
       ///   Gets all SimScenarios. Converts SimScenario to vmSelectListItem
       /// </summary>
-      Task<IList<SelectListItem>> SimScenarioSelect();
+      Task<IList<SelectListItem>> GetSimScenarioSelectList();
 
       /// <summary>
       ///   Gets the Title from the given simScenarioID.

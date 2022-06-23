@@ -3,13 +3,13 @@ using WebSocketSharp.Server;
 
 namespace Application.Websockets
 {
-   public class ApplicationWebSocketServer
+   public class SocketServer
    {
       private readonly WebSocketServer _webServer = new WebSocketServer("ws://localhost:8109");
 
       public void OpenConnection()
       {
-         _webServer.AddWebSocketService<WebsocketServerBehavior>("/Connection");
+         _webServer.AddWebSocketService<SockerBehavior>("/Connection");
          _webServer.Start();
       }
 

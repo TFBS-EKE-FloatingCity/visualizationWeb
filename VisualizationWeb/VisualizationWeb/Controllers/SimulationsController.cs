@@ -1,5 +1,5 @@
 ﻿using DataAccess;
-using DataAccess.Entities;
+using DataAccess.Entities.ViewModel;
 using DataAccess.Repositories;
 using System.Linq;
 using System.Net;
@@ -20,7 +20,7 @@ namespace UI.Controllers
          }
       }
 
-      private ApplicationDbContext _context = new ApplicationDbContext();
+      private Context _context = new Context();
       private object _lock = new object();
 
       /// <summary>
@@ -38,7 +38,7 @@ namespace UI.Controllers
       /// </summary>
       public async Task<ActionResult> Index()
       {
-         return View(await SimulationRepository.GetSimScenarioIndex());
+         return View(await SimulationRepository.GetAllSimScenarioIndices());
       }
 
       /// <summary>
@@ -120,7 +120,7 @@ namespace UI.Controllers
          if (!simPositionId.HasValue && !simScenarioId.HasValue)
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-         await SimulationRepository.RemovePosition(simPositionId.Value);
+         await SimulationRepository.DeletePosition(simPositionId.Value);
          await _context.SaveChangesAsync();
 
          return RedirectToAction($"Details/{simScenarioId}");
@@ -135,7 +135,7 @@ namespace UI.Controllers
          if (!simScenarioId.HasValue)
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-         await SimulationRepository.RemoveScenario(simScenarioId.Value);
+         await SimulationRepository.DeleteScenario(simScenarioId.Value);
          await _context.SaveChangesAsync();
 
          return RedirectToAction("Index");
