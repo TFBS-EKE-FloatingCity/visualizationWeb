@@ -1,36 +1,27 @@
-﻿using DataAccess;
-using DataAccess.Entities.ViewModel;
+﻿using Application.Services;
+using Application.Services.Interfaces;
+using DataAccess;
+using DataAccess.Entities;
 using DataAccess.Repositories;
+using DataAccess.Repositories.Interfaces;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UI.ViewModel;
 
 namespace UI.Controllers
 {
    [Authorize(Roles = "Admin")]
    public class SimulationsController : Controller
    {
-      public ISimulationRepository SimulationRepository
-      {
-         get
-         {
-            if (_simRepo != null) return _simRepo;
-            lock (_lock) return _simRepo ?? (_simRepo = new SimulationRepository(_context));
-         }
-      }
 
-      private Context _context = new Context();
-      private object _lock = new object();
-
-      /// <summary>
-      ///   Initialise Repository only if needed Thread save (lobject)
-      /// </summary>
-      private ISimulationRepository _simRepo;
+      private IScenarioService _service;
 
       public SimulationsController()
       {
          ViewBag.ActiveNav = "simulation";
+         _service = new ScenarioService();
       }
 
       /// <summary>
@@ -38,7 +29,24 @@ namespace UI.Controllers
       /// </summary>
       public async Task<ActionResult> Index()
       {
-         return View(await SimulationRepository.GetAllSimScenarioIndices());
+         var scenarios = await _service.GetScenariosWithPositionsAsync();
+
+         var vm = scenarios.Select(x => new SimScenarioIndex
+         {
+            Title = x.Title,
+            isChecked = false,
+            SimScenarioID = x.SimScenarioID,
+            SimPositions = x.SimPositions.Select(y => new SimPositionIndex
+            {
+               EnergyConsumptionValue = y.EnergyConsumptionValue,
+               SimPositionID = y.SimPositionID,
+               SunValue = y.SunValue,
+               TimeRegistered = y.TimeRegistered,
+               WindValue = y.WindValue
+            })
+         });
+
+         return View(vm);
       }
 
       /// <summary>
@@ -49,7 +57,18 @@ namespace UI.Controllers
       public async Task<ActionResult> PartialPositionIndex(int? id)
       {
          if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         return View(await SimulationRepository.GetSimPositionIndex(id.Value));
+
+         var positions = await _service.GetPositionsForScenarioAsync(id.Value);
+         var vm = positions.Select(x => new SimPositionIndex
+         {
+            EnergyConsumptionValue = x.EnergyConsumptionValue,
+            SimPositionID = x.SimPositionID,
+            SunValue = x.SunValue,
+            TimeRegistered = x.TimeRegistered,
+            WindValue = x.WindValue
+         });
+
+         return View(vm);
       }
 
       /// <summary>
@@ -60,10 +79,26 @@ namespace UI.Controllers
       public async Task<ActionResult> Details(int? id)
       {
          if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-         SimScenarioDetails scenario = await SimulationRepository.GetSimScenarioDetails(id.Value);
-         var test = await SimulationRepository.GetSimPositionIndex(id.Value);
-         scenario.SimPositions = test.OrderBy(x => x.TimeRegistered.TimeOfDay);
-         return View(scenario);
+
+         var scenario = await _service.GetScenarioByIdAsync(id.Value);
+
+         SimScenarioDetails vm = new SimScenarioDetails
+         {
+            Notes = scenario.Notes,
+            SimScenarioID = scenario.SimScenarioID,
+            Title = scenario.Title,
+            SimPositions = (await _service.GetPositionsForScenarioAsync(scenario.SimScenarioID))
+               .Select(x => new SimPositionIndex
+               {
+                  EnergyConsumptionValue = x.EnergyConsumptionValue,
+                  SimPositionID = x.SimPositionID,
+                  SunValue = x.SunValue,
+                  WindValue = x.WindValue,
+                  TimeRegistered = x.TimeRegistered
+               })
+         };
+
+         return View(vm);
       }
 
       /// <summary>
@@ -85,8 +120,13 @@ namespace UI.Controllers
          var errors = ModelState.Values.SelectMany(v => v.Errors);
          if (ModelState.IsValid)
          {
-            await SimulationRepository.CreateScenario(vm);
-            await _context.SaveChangesAsync();
+            await _service.CreateScenarioAsync(new SimScenario
+            {
+               IsSimulationRunning = false,
+               Notes = vm.Notes,
+               Title = vm.Title
+            });
+
             return RedirectToAction("Index");
          }
 
@@ -102,8 +142,24 @@ namespace UI.Controllers
       {
          if (ModelState.IsValid)
          {
-            await SimulationRepository.CreatePosition(vm);
-            await _context.SaveChangesAsync();
+            //calculate new time registered
+            var positions = await _service.GetPositionsForScenarioAsync(vm.SimScenarioID);
+            if (positions.FirstOrDefault() != null)
+            {
+               var date = positions.First().TimeRegistered.Date;
+               var time = vm.TimeRegistered.TimeOfDay;
+               vm.TimeRegistered = date + time;
+            }
+
+            await _service.CreatePositionAsync(new SimPosition
+            {
+               EnergyConsumptionValue = vm.EnergyConsumptionValue,
+               SimScenarioID = vm.SimScenarioID,
+               SunValue = vm.SunValue,
+               WindValue = vm.WindValue,
+               TimeRegistered = vm.TimeRegistered
+            });
+
             return RedirectToAction($"Details/{vm.SimScenarioID}");
          }
 
@@ -120,8 +176,7 @@ namespace UI.Controllers
          if (!simPositionId.HasValue && !simScenarioId.HasValue)
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-         await SimulationRepository.DeletePosition(simPositionId.Value);
-         await _context.SaveChangesAsync();
+         await _service.DeletePositionAsync(simPositionId.Value);
 
          return RedirectToAction($"Details/{simScenarioId}");
       }
@@ -135,8 +190,7 @@ namespace UI.Controllers
          if (!simScenarioId.HasValue)
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-         await SimulationRepository.DeleteScenario(simScenarioId.Value);
-         await _context.SaveChangesAsync();
+         await _service.DeleteScenarioAsync(simScenarioId.Value);
 
          return RedirectToAction("Index");
       }

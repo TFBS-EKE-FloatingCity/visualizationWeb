@@ -2,6 +2,7 @@
 using DataAccess;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using DataAccess.Repositories.Interfaces;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 

@@ -1,8 +1,9 @@
 ﻿using Core;
 using DataAccess.Entities;
 using System;
+using System.Threading.Tasks;
 
-namespace Application.Services
+namespace Application.Services.Interfaces
 {
    public interface ISimulationService : IDisposable
    {

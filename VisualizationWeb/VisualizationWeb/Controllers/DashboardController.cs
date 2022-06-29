@@ -2,6 +2,7 @@
 using DataAccess;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,19 +13,10 @@ namespace UI.Controllers
 {
    public class DashboardController : Controller
    {
-      public ISimulationRepository SimulationRepository
-      {
-         get
-         {
-            if (_simRepo != null) return _simRepo;
-            lock (_lock) return _simRepo ?? (_simRepo = new SimulationRepository(_context));
-         }
-      }
 
       private static SimStartViewModel _currentScenario;
       private Context _context = new Context();
       private object _lock = new object();
-      private ISimulationRepository _simRepo;
 
       public DashboardController()
       {
@@ -39,7 +31,7 @@ namespace UI.Controllers
 
       public string GetIPFromSettings()
       {
-         return SimulationRepository.GetSimulationSetting().browserConnectionString;
+         return new SettingsRepository().GetSimulationSettings().browserConnectionString;
       }
 
       public ActionResult Open3DModel()

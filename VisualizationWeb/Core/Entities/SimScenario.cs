@@ -42,7 +42,7 @@ namespace DataAccess.Entities
       [StringLength(500)]
       public string Notes { get; set; }
 
-      public ICollection<SimPosition> SimPositions { get; set; }
+      public List<SimPosition> SimPositions { get; set; }
 
       public bool IsSimulationRunning { get; set; }
 

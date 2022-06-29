@@ -217,6 +217,13 @@
     <Compile Include="ViewModel\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\SelectListItem.cs" />
+    <Compile Include="ViewModel\SimPositionBinding.cs" />
+    <Compile Include="ViewModel\SimPositionCreateAndEdit.cs" />
+    <Compile Include="ViewModel\SimPositionIndex.cs" />
+    <Compile Include="ViewModel\SimScenarioCreateAndEdit.cs" />
+    <Compile Include="ViewModel\SimScenarioDetails.cs" />
+    <Compile Include="ViewModel\SimScenarioIndex.cs" />
     <Compile Include="ViewModel\SimStartViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

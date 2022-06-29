@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace DataAccess.Entities.ViewModel
+namespace UI.ViewModel
 {
    public class SimScenarioIndex
    {

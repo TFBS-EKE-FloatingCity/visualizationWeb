@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Entities.ViewModel
+namespace UI.ViewModel
 {
    public class SelectListItem
    {
