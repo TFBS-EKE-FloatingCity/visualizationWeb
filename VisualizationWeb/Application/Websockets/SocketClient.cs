@@ -1,7 +1,7 @@
 ﻿using Application.Services;
 using Core;
+using Core.Entities;
 using DataAccess;
-using DataAccess.Entities;
 using H.Socket.IO;
 using H.Socket.IO.EventsArgs;
 using Newtonsoft.Json;

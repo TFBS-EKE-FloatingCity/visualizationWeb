@@ -1,8 +1,8 @@
 ﻿using Application.Functions;
 using Application.Services.Interfaces;
 using Core;
+using Core.Entities;
 using Core.Exceptions;
-using DataAccess.Entities;
 using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;

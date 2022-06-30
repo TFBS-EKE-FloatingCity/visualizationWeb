@@ -1,6 +1,6 @@
 ﻿using Application;
+using Core.Entities;
 using DataAccess;
-using DataAccess.Entities;
 using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
 using System.Linq;
@@ -14,10 +14,10 @@ namespace UI.Controllers
    {
       private SettingsRepository _settings;
 
-      public SettingsController(SettingsRepository settings)
+      public SettingsController()
       {
          ViewBag.ActiveNav = "settings";
-         _settings = settings;
+         _settings = new SettingsRepository();
       }
 
       // GET: Settings

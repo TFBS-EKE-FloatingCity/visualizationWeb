@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Entities
+namespace Core.Entities
 {
    public class CityDataHead
    {

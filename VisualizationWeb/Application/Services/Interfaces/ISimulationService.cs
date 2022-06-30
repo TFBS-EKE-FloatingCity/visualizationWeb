@@ -1,5 +1,5 @@
 ﻿using Core;
-using DataAccess.Entities;
+using Core.Entities;
 using System;
 using System.Threading.Tasks;
 

@@ -224,7 +224,7 @@
     <Compile Include="ViewModel\SimScenarioCreateAndEdit.cs" />
     <Compile Include="ViewModel\SimScenarioDetails.cs" />
     <Compile Include="ViewModel\SimScenarioIndex.cs" />
-    <Compile Include="ViewModel\SimStartViewModel.cs" />
+    <Compile Include="ViewModel\SimulationStart.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Account\Register.css" />

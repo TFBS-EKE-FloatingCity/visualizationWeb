@@ -18,8 +18,6 @@ namespace DataAccess.Repositories.Interfaces
 
       Task<bool> DeleteAsync(int id);
 
-      Task<List<T>> GetAllWhereAsync(Predicate<T> filter);
-
       Task<T> AddAsync(T entity);
       
       Task<List<T>> GetAllWithIncludingAsync(Func<DbSet<T>, IQueryable<T>> includeFunc);

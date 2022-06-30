@@ -1,21 +1,23 @@
 ﻿using Application;
 using Application.Services;
+using Core.Entities;
 using DataAccess;
-using DataAccess.Entities;
 using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UI.ViewModel;
+using SelListItem = UI.ViewModel.SelectListItem;
 
 namespace UI.Controllers
 {
    public class DashboardController : Controller
    {
 
-      private static SimStartViewModel _currentScenario;
+      private static SimulationStart _currentScenario;
       private readonly ScenarioService _service;
       private readonly SettingsRepository _settings;
 
@@ -23,6 +25,7 @@ namespace UI.Controllers
       {
          _service = new ScenarioService();
          ViewBag.ActiveNav = "dashboard";
+         _settings = new SettingsRepository();
       }
 
       // GET: Dashboard
@@ -49,7 +52,7 @@ namespace UI.Controllers
       }
 
       [Authorize(Roles = "Admin, Simulant")]
-      public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
+      public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID, ScenarioSelectList")] SimulationStart vm)
       {
          var simScenarioID = await _service.GetScenarioByIdAsync(vm.SimScenarioID);
          _currentScenario = vm;
@@ -70,13 +73,19 @@ namespace UI.Controllers
       //[Authorize(Roles = "Admin, Simulant")]
       public async Task<ActionResult> PartialSimulationStart()
       {
-         ViewBag.SimScenarioID = new SelectList(
-            await _service., 
+         var vm = new SimulationStart();
+         var scenarios = await _service.GetScenariosWithPositionsAsync();
+         vm.ScenarioSelectList = new SelectList(
+            scenarios.Select(x => new SelListItem
+            {
+               DisplayMember = x.Title,
+               ValueMember = x.SimScenarioID
+            }), 
             "ValueMember", 
             "DisplayMember"
             );
 
-         return PartialView("../Charts/Partials/_StartSimulationPartial", new SimStartViewModel());
+         return PartialView("../Charts/Partials/_StartSimulationPartial", vm);
       }
 
       public string GetSimulationTitle()

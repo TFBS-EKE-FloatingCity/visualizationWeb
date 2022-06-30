@@ -1,5 +1,5 @@
 ﻿using Application.Services.Interfaces;
-using DataAccess.Entities;
+using Core.Entities;
 using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace Application.Services
 
       public async Task<IEnumerable<SimPosition>> GetPositionsForScenarioAsync(int scenarioID)
       {
-         return await _posRepo.GetAllWhereAsync(x => x.SimScenarioID == scenarioID);
+         return (await _posRepo.GetAllAsync()).Where(x => x.SimScenarioID == scenarioID);
       }
 
       public async Task<SimScenario> GetScenarioByIdAsync(int scenarioID)

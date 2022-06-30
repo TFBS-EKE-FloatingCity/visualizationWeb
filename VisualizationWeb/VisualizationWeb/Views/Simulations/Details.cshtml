@@ -1,4 +1,4 @@
-﻿@model UI.ViewModel.SimScenarioVM.SimScenarioDetailsViewModel
+﻿@model UI.ViewModel.SimScenarioDetails
 
 @{
     ViewBag.Title = "Details";
@@ -108,7 +108,7 @@
                         <h4 class="modal-title">Add Position</h4>
                     </div>
                     <div class="modal-body">
-                        @Html.Partial("PartialViews/PartialPositionCreate", new UI.ViewModel.SimPositionVM.SimPositionCreateAndEditViewModel { SimScenarioID = Model.SimScenarioID })
+                        @Html.Partial("PartialViews/PartialPositionCreate", new UI.ViewModel.SimPositionCreateAndEdit { SimScenarioID = Model.SimScenarioID })
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

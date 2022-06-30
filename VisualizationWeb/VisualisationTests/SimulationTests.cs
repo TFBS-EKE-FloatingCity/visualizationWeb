@@ -2,8 +2,8 @@
 using Application.Services;
 using Application.Services.Interfaces;
 using Core;
+using Core.Entities;
 using Core.Exceptions;
-using DataAccess.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System;

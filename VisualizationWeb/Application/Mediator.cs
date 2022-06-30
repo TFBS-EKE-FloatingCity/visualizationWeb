@@ -1,7 +1,7 @@
 ﻿using Application.Services;
 using Application.Websockets;
+using Core.Entities;
 using DataAccess;
-using DataAccess.Entities;
 using DataAccess.Repositories;
 using Newtonsoft.Json;
 using System;

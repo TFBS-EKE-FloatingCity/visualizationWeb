@@ -1,9 +1,6 @@
 ﻿using Application.Services;
 using Application.Services.Interfaces;
-using DataAccess;
-using DataAccess.Entities;
-using DataAccess.Repositories;
-using DataAccess.Repositories.Interfaces;
+using Core.Entities;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;

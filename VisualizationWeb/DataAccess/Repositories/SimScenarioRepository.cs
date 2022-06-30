@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using Core.Entities;
 using DataAccess.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;

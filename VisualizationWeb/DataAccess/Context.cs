@@ -1,5 +1,5 @@
 ﻿using Core;
-using DataAccess.Entities;
+using Core.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 

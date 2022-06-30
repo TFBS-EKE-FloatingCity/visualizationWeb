@@ -1,7 +1,7 @@
 ﻿using Core;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Entities
+namespace Core.Entities
 {
    public class Setting : ISimulationServiceSettings
    {
