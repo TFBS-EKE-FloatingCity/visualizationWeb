@@ -4,7 +4,7 @@ This Solution utilizes (Semi-)Onion architecture.
 
 ## UI
 
-The ´UI´ Project is responsible for the visual presentation of data and processes.
+The **UI** Project is responsible for the visual presentation of data and processes.
 
 ### What belongs here?
 
@@ -28,7 +28,7 @@ This Project is allowed to reference following Projects:
 
 ## Application
 
-The ´Application´ Project is responsible for Business Logic.
+The **Application** Project is responsible for Business Logic.<br>
 (such as but not limited to: Error Handling, Validation and Calculations)
 
 ### What belongs here?
@@ -48,7 +48,7 @@ This Project is allowed to reference following Projects:
 
 ## DataAccess
 
-The ´DataAccess´ Project is responsible for accessing data 
+The **DataAccess** Project is responsible for accessing data 
 through EntityFramework (and other file access providers).
 
 ### What belongs here?
@@ -66,7 +66,7 @@ This Project is allowed to reference following Projects:
 
 ## Core
 
-The ´Core´ Project is responsible for Objects, Models, and Entities used throughout the web application.
+The **Core** Project is responsible for Objects, Models, and Entities used throughout the web application.<br>
 Functionality in any Form does NOT belong here.
 
 ### What belongs here?
@@ -89,5 +89,5 @@ Any documentation or other non-specific files/documents belong into the ´Solutio
 
 ## Tests
 
-All Testing Projects belong into the ´Tests´ folder.
+All Testing Projects belong into the ´Tests´ folder. <br>
 These Projects are to be labeled as such: {Name}Tests.csproj
