@@ -59,5 +59,7 @@ namespace Application.Services
       }
 
       public async Task<List<SimScenario>> GetScenariosAsync() => await _scenRepo.GetAllAsync();
+
+      public string GetScenarioTitle(int id) => _scenRepo.GetScenarioTitle(id);
    }
 }

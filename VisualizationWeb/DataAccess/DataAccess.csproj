@@ -79,7 +79,6 @@
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Repositories\SimPositionRepository.cs" />
     <Compile Include="Repositories\SimScenarioRepository.cs" />
-    <Compile Include="Repositories\SimulationRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202205090859263_init.resx">

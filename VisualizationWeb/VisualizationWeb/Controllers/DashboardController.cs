@@ -1,4 +1,5 @@
 ﻿using Application;
+using Application.Services;
 using DataAccess;
 using DataAccess.Entities;
 using DataAccess.Repositories;
@@ -15,11 +16,12 @@ namespace UI.Controllers
    {
 
       private static SimStartViewModel _currentScenario;
-      private Context _context = new Context();
-      private object _lock = new object();
+      private readonly ScenarioService _service;
+      private readonly SettingsRepository _settings;
 
       public DashboardController()
       {
+         _service = new ScenarioService();
          ViewBag.ActiveNav = "dashboard";
       }
 
@@ -31,7 +33,7 @@ namespace UI.Controllers
 
       public string GetIPFromSettings()
       {
-         return new SettingsRepository().GetSimulationSettings().browserConnectionString;
+         return _settings.GetSimulationSettings().browserConnectionString;
       }
 
       public ActionResult Open3DModel()
@@ -49,9 +51,9 @@ namespace UI.Controllers
       [Authorize(Roles = "Admin, Simulant")]
       public async Task<ActionResult> StartSimulation([Bind(Include = "Duration, SimScenarioID")] SimStartViewModel vm)
       {
-         var simScenarioID = await SimulationRepository.GetSimScenarioByID(vm.SimScenarioID);
+         var simScenarioID = await _service.GetScenarioByIdAsync(vm.SimScenarioID);
          _currentScenario = vm;
-         simScenarioID.SimPositions = new List<SimPosition>(await SimulationRepository.GetSimPositionsByID(vm.SimScenarioID));
+         simScenarioID.SimPositions = new List<SimPosition>(await _service.GetPositionsForScenarioAsync(vm.SimScenarioID));
 
          try
          {
@@ -69,7 +71,7 @@ namespace UI.Controllers
       public async Task<ActionResult> PartialSimulationStart()
       {
          ViewBag.SimScenarioID = new SelectList(
-            await SimulationRepository.GetSimScenarioSelectList(), 
+            await _service., 
             "ValueMember", 
             "DisplayMember"
             );
@@ -81,7 +83,7 @@ namespace UI.Controllers
       {
          if (_currentScenario is null) return "No Simulation started";
          ViewBag.Started = true;
-         return SimulationRepository.GetSimulationTitle(_currentScenario.SimScenarioID);
+         return _service.GetScenarioTitle(_currentScenario.SimScenarioID);
       }
    }
 }

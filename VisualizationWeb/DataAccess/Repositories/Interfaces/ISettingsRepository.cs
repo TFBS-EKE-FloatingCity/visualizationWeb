@@ -10,6 +10,6 @@ namespace DataAccess.Repositories.Interfaces
    public interface ISettingsRepository : IRepository<Setting>
    {
       Setting GetSimulationSettings();
-      Task<bool> SaveSetting(Setting setting);
+      Task<bool> SaveSettingsAsync(Setting setting);
    }
 }

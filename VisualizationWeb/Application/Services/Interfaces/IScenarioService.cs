@@ -17,5 +17,6 @@ namespace Application.Services.Interfaces
       Task<IEnumerable<SimPosition>> GetPositionsForScenarioAsync(int scenarioID);
       Task<SimScenario> GetScenarioByIdAsync(int scenarioID);
       Task<List<SimScenario>> GetScenariosAsync();
+      string GetScenarioTitle(int id);
    }
 }

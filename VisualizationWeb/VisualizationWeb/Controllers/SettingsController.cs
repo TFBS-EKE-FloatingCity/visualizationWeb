@@ -3,6 +3,7 @@ using DataAccess;
 using DataAccess.Entities;
 using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -11,29 +12,18 @@ namespace UI.Controllers
    [Authorize(Roles = "Admin")]
    public class SettingsController : Controller
    {
-      public ISimulationRepository SimulationRepository
-      {
-         get
-         {
-            if (_simRepo != null) return _simRepo;
-            lock (_lock) return _simRepo ?? (_simRepo = new SimulationRepository(_context));
-         }
-      }
+      private SettingsRepository _settings;
 
-      private Context _context = new Context();
-      private object _lock = new object();
-
-      private ISimulationRepository _simRepo;
-
-      public SettingsController()
+      public SettingsController(SettingsRepository settings)
       {
          ViewBag.ActiveNav = "settings";
+         _settings = settings;
       }
 
       // GET: Settings
       public ActionResult Index()
       {
-         return View(SimulationRepository.GetSimulationSetting());
+         return View(_settings.GetSimulationSettings());
       }
 
       // POST: Settings/Edit/
@@ -43,7 +33,7 @@ namespace UI.Controllers
       {
          if (ModelState.IsValid)
          {
-            await SimulationRepository.SaveSetting(setting);
+            await _settings.SaveSettingsAsync(setting);
             Mediator.UpdateSimulationSettings(setting);
 
             return RedirectToAction("../Dashboard");
@@ -54,11 +44,6 @@ namespace UI.Controllers
 
       protected override void Dispose(bool disposing)
       {
-         if (disposing)
-         {
-            _context.Dispose();
-         }
-
          base.Dispose(disposing);
       }
    }

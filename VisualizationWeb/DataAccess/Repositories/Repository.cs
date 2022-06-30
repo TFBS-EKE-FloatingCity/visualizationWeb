@@ -65,4 +65,4 @@ namespace DataAccess.Repositories
          return await includeFunc.Invoke(_context.Set<T>()).ToListAsync();
       }
    }
-}a
+}

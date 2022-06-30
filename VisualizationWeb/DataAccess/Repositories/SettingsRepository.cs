@@ -23,7 +23,7 @@ namespace DataAccess.Repositories
       }
 
       /// <returns>True if connectionstring changed, false if not</returns>
-      public async Task<bool> SaveSetting(Setting setting)
+      public async Task<bool> SaveSettingsAsync(Setting setting)
       {
          _context.Settings.AddOrUpdate(setting);
          await _context.SaveChangesAsync();

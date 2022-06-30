@@ -23,18 +23,13 @@ namespace Application
 
       private static Context _context = new Context();
 
-      /// <summary>
-      ///   Aus dem Simulationrepository werden hier die Settings geholt und abgespeichert
-      /// </summary>
-      private static SimulationRepository _simRepo = new SimulationRepository(_context);
-
-      private static Setting _settings = _simRepo.GetSimulationSetting();
+      private static Setting _settings = new SettingsRepository().GetSimulationSettings();
 
       /// <summary>
       ///   Instanz des SimulationService welcher von Max Hiltpolt geschrieben wurde An diesen
       ///   werden die Settings übergeben
       /// </summary>
-      private static readonly SimulationService _simService = new SimulationService(_settings);
+      private static readonly SimulationService _simService = new SimulationService();
 
       /// <summary>
       ///   Websocketserver mit welchem sich der Browser verbindet um Live Daten zu holen
