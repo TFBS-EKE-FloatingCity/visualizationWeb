@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		Projektbericht_FloatingCity.pdf = Projektbericht_FloatingCity.pdf
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{790C68C6-FAA0-4CAF-A5C2-833F93C02705}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{6EEA1547-E2A6-4E1F-B15E-B15496564A09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualizationTests", "Tests\VisualisationTests\VisualizationTests.csproj", "{5004BD9D-3367-4AA3-8D52-511F8C36361C}"
