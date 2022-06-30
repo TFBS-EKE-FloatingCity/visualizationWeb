@@ -22,6 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualizationTests", "Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{78C10C67-09A4-443C-9ACB-E133C1BE3067}"
 	ProjectSection(SolutionItems) = preProject
+		Connectivity.md = Connectivity.md
 		File Structure.md = File Structure.md
 	EndProjectSection
 EndProject

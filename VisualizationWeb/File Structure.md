@@ -29,7 +29,7 @@ This Project is allowed to reference following Projects:
 ## Application
 
 The ´Application´ Project is responsible for Business Logic.
-(such as Error Handling, Validation and Calculations)
+(such as but not limited to: Error Handling, Validation and Calculations)
 
 ### What belongs here?
 
@@ -37,7 +37,7 @@ The ´Application´ Project is responsible for Business Logic.
 - Calculation + Functions
 - Serversided WebSocket functionality
 - Mediator (for now, refactor and resolve later)
-- Other Business-relevant configuration and files
+- Other business-relevant configuration and files
 
 ### References
 

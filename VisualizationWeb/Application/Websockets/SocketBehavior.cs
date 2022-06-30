@@ -3,7 +3,7 @@ using WebSocketSharp.Server;
 
 namespace Application.WebSockets
 {
-   public class SockerBehavior : WebSocketBehavior
+   public class SocketBehavior : WebSocketBehavior
    {
       protected override void OnOpen()
       {

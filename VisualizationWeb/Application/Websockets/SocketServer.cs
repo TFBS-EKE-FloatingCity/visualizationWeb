@@ -9,7 +9,7 @@ namespace Application.Websockets
 
       public void OpenConnection()
       {
-         _webServer.AddWebSocketService<SockerBehavior>("/Connection");
+         _webServer.AddWebSocketService<SocketBehavior>("/Connection");
          _webServer.Start();
       }
 

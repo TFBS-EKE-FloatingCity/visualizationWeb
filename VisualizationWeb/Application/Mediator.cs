@@ -14,7 +14,7 @@ namespace Application
       /// <summary>
       ///   Die ID des Kopfdatensatzes der aktuell laufenden Simulation
       /// </summary>
-      public static int? CurrentCityDataHeadID { get; private set; }
+      public static int? CurrentCityDataHeadID => CurrentCityDataHead?.CityDataHeadID;
 
       /// <summary>
       ///   der Kopfdatensatz der aktuell laufenden Simulation
@@ -84,8 +84,8 @@ namespace Application
                                 orderby cdh.CityDataHeadID descending
                                 select cdh.CityDataHeadID).FirstOrDefault();
 
-         CurrentCityDataHeadID = head.CityDataHeadID;
          CurrentCityDataHead = head;
+         //CurrentCityDataHeadID = head.CityDataHeadID;
 
          SendCityDataHead();
       }
@@ -118,7 +118,7 @@ namespace Application
          _context.SaveChanges();
 
          CurrentCityDataHead = null;
-         CurrentCityDataHeadID = null;
+         //CurrentCityDataHeadID = null;
 
          _server.SendData(JsonConvert.SerializeObject(head));
       }
@@ -164,7 +164,7 @@ namespace Application
       /// </summary>
       /// <param name="sender"> </param>
       /// <param name="a"> </param>
-      private static void HandleStopSimulationEvent(object sender, System.EventArgs a)
+      private static void HandleStopSimulationEvent(object sender, EventArgs a)
       {
          _simService.SimulationEnded -= HandleStopSimulationEvent;
 
