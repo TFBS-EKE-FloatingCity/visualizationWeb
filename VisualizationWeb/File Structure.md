@@ -20,7 +20,7 @@ The **UI** Project is responsible for the visual presentation of data and proces
 
 ### References
 
-This Project is allowed to reference following Projects:
+This project is allowed to reference following projects:
 - Application
 - DataAccess (avoid as much as possible. Preferably accessed through Application)
 - Core
@@ -36,12 +36,12 @@ The **Application** Project is responsible for Business Logic.<br>
 - Services
 - Calculation + Functions
 - Serversided WebSocket functionality
-- Mediator (for now, refactor and resolve later)
+- Mediator (for now; refactor and resolve later)
 - Other business-relevant configuration and files
 
 ### References
 
-This Project is allowed to reference following Projects:
+This project is allowed to reference following projects:
 - DataAccess
 - Core
 
@@ -60,7 +60,7 @@ through EntityFramework (and other file access providers).
 
 ### References
 
-This Project is allowed to reference following Projects:
+This project is allowed to reference following projects:
 - Core
 
 
@@ -77,7 +77,7 @@ Functionality in any Form does NOT belong here.
 
 ### References
 
-This Project shouldn't have any references.
+This Project doesn't have any project references.
 
 
 # Folders and their contents

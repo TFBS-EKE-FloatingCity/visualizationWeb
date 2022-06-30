@@ -1,6 +1,10 @@
-# Connectivity
+# WebSockets
 
-## WebSocket-Client (Responder) <--> RaspberryPI (Sender)
+This Web Application contains a WebSocket-Server and -Client (Proj: Application).
+
+## Connectivity
+
+### WebSocket-Client (Responder) <--> RaspberryPI (Sender)
 
 Connection String Form: *ws://{static IP-address Raspberry}:{defined port}*<br>
 Connection String Example: *ws://192.168.1.1:8080*
@@ -14,7 +18,7 @@ If the response is *error* instead, something went wrong. Check:
 - Is the received data sent in a malformed/invalid form?
 
 
-## WebSocket-Server (Sender) <--> Browser (Receiver)
+### WebSocket-Server (Sender) <--> Browser (Receiver)
 
 Connection String Form: ??<br>
 Connection String Example: *ws://localhost:8109/Connection* ??

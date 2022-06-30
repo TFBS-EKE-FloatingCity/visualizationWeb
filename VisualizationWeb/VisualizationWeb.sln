@@ -12,9 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{559DC6AD-D09F-40B5-9BCF-E8320126D9B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{D56BB199-95D7-43D9-9438-257240D032A0}"
-	ProjectSection(SolutionItems) = preProject
-		Projektbericht_FloatingCity.pdf = Projektbericht_FloatingCity.pdf
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{6EEA1547-E2A6-4E1F-B15E-B15496564A09}"
 EndProject
@@ -22,10 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualizationTests", "Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{78C10C67-09A4-443C-9ACB-E133C1BE3067}"
 	ProjectSection(SolutionItems) = preProject
-		Connectivity.md = Connectivity.md
 		Database.md = Database.md
 		DatabaseDiagramm.jpg = DatabaseDiagramm.jpg
 		File Structure.md = File Structure.md
+		WebSockets.md = WebSockets.md
 	EndProjectSection
 EndProject
 Global
