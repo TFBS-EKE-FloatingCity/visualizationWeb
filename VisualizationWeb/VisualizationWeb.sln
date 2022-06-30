@@ -23,6 +23,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{78C10C67-09A4-443C-9ACB-E133C1BE3067}"
 	ProjectSection(SolutionItems) = preProject
 		Connectivity.md = Connectivity.md
+		Database.md = Database.md
+		..\..\..\..\Desktop\DatabaseDiagramm.jpg = ..\..\..\..\Desktop\DatabaseDiagramm.jpg
 		File Structure.md = File Structure.md
 	EndProjectSection
 EndProject
