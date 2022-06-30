@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		Connectivity.md = Connectivity.md
 		Database.md = Database.md
-		..\..\..\..\Desktop\DatabaseDiagramm.jpg = ..\..\..\..\Desktop\DatabaseDiagramm.jpg
+		DatabaseDiagramm.jpg = DatabaseDiagramm.jpg
 		File Structure.md = File Structure.md
 	EndProjectSection
 EndProject
