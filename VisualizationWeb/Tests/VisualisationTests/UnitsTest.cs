@@ -1,7 +1,7 @@
 ﻿using Application.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace VisualisationTests
+namespace VisualizationTests
 {
    [TestClass]
    public class UnitsTest

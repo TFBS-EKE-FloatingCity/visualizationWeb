@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
-namespace VisualisationTests
+namespace VisualizationTests
 {
    [TestClass]
    public class SimulationTests

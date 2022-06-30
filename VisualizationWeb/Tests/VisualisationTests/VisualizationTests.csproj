@@ -61,19 +61,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj">
+    <ProjectReference Include="..\..\Application\Application.csproj">
       <Project>{058F8844-C67C-49F7-9DE7-EFD8AB626603}</Project>
       <Name>Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\..\Core\Core.csproj">
       <Project>{F8FDB181-B0FF-4191-83F8-AC7737215EF5}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+    <ProjectReference Include="..\..\DataAccess\DataAccess.csproj">
       <Project>{CCDE1C23-4163-46FF-9557-0EE7EC16AF68}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualizationWeb\UI.csproj">
+    <ProjectReference Include="..\..\UI\UI.csproj">
       <Project>{6eea1547-e2a6-4e1f-b15e-b15496564a09}</Project>
       <Name>UI</Name>
     </ProjectReference>
