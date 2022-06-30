@@ -15,7 +15,7 @@ namespace Application.Services
 {
    public class SimulationService : IDisposable, ISimulationService
    {
-      private readonly SettingsRepository _settingsRepo;
+      private readonly Setting _settings;
       private SimPosition _nextPosition;
       private SimPosition _prevPosition;
       private SimScenario _simScenario;
@@ -66,11 +66,11 @@ namespace Application.Services
          }
       }
 
-      public SimulationService()
+      public SimulationService(Setting configuration = null)
       {
-         _settingsRepo = new SettingsRepository();
+         _settings = configuration ?? new SettingsRepository().GetSimulationSettings();
          SetIdleValues(0, 0, 0);
-         SetSettings(_settingsRepo.GetSimulationSettings());
+         SetSettings(_settings);
          TimeFactor = 1;
       }
 
