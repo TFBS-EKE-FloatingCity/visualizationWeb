@@ -3,8 +3,8 @@
 ## Pending Improvements
 
 Due to time constraints and limited initial documentation, 
-so although the code is completely functional,
 the previous code base has not been completely refactored.
+However, the code itself is completely functional.
 
 Recommended pending improvements and refactorings:
 - The *Mediator* class has to many unclear responsibilites. It is advised to completely move its
