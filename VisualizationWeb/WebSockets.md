@@ -20,7 +20,7 @@ If the response is *error* instead, something went wrong. Check:
 
 ### WebSocket-Server (Sender) <--> Browser (Receiver)
 
-Connection String Form: ??<br>
+Connection String Form: *ws://{IP-address WebSocket Server}:{WS Port}/Connection*<br>
 Connection String Example: *ws://localhost:8109/Connection* ??
 
 The browser(client) connects to the websocket server.<br>
