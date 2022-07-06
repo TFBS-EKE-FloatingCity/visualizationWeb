@@ -84,10 +84,10 @@ This Project doesn't have any project references.
 
 ## Solution Files
 
-Any documentation or other non-specific files/documents belong into the ´Solution Files´ folder.
+Any documentation or other non-specific files/documents belong into the Â´Solution FilesÂ´ folder.
 
 
 ## Tests
 
-All Testing Projects belong into the ´Tests´ folder. <br>
+All Testing Projects belong into the Â´TestsÂ´ folder. <br>
 These Projects are to be labeled as such: {Name}Tests.csproj
